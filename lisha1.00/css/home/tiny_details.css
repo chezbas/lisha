@@ -1,0 +1,447 @@
+.normal
+{
+	color: #000;
+	font-family: 'Lucida Grande',Geneva,Helvetica,Arial,sans-serif;
+	font-size: 14px;
+}
+.title
+{
+	color: #3c4c6c;
+	font-family: 'Lucida Grande',Geneva,Helvetica,Arial,sans-serif;
+	font-size: 24px;
+	margin-top: 1em;
+	margin-bottom: 0.5em;
+}
+.subtitle
+{
+	color: #2b3b5b;
+	font-family: 'Lucida Grande',Geneva,Helvetica,Arial,sans-serif;
+	font-size: 20px;
+	margin-top: 2em;
+	margin-bottom: 0.5em;
+}
+
+.image
+{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 1px;
+	border-radius : 10px 10px 10px 10px;
+	border-style:solid;
+	borer: 2px;
+	border-color: #fff;
+	box-shadow: 5px 5px 10px #333;
+	cursor: pointer;
+}
+
+.main_table
+{
+	background: #93A5BB;
+	border-width: 0;
+	border-radius : 5px 5px 5px 5px;
+	box-shadow: 5px 5px 10px #333;	
+}
+
+.main_tr
+{
+	margin: 0;
+	padding: 0;
+	border-width: 0;
+}	
+
+.head_table
+{
+	padding: .3em .667em .3em .667em;
+	background: #93A5BB;
+	font-weight: normal;
+	color: white;
+	font: 13px 'Lucida Grande',Geneva,Helvetica
+}
+.row_table
+{
+	padding: 2px 10px 2px 10px;
+	margin: 0;
+	background-color: #fff;
+	font-weight: normal;
+	color: black;
+	font: 13px 'Lucida Grande',Geneva,Helvetica
+}
+
+.blink_off
+{
+}
+.blink_on
+{
+	color: #f00;
+	box-shadow: 5px 5px 10px #333;
+}
+
+.icon_load_view 
+{
+	width: 20px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-image: url("../../images/icons/img_16.png");
+	background-position: -380px 0;
+}
+
+.icon_load_view:hover
+{
+	width: 20px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-image: url("../../images/icons/img_16.png");
+	background-position: -380px -20px;
+}
+
+
+.icon_doc_user
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(../../images/all.png);
+	background-repeat: no-repeat;
+	background-position: -400px 0;
+}
+.icon_doc_user:hover
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(../../images/all.png);
+	background-repeat: no-repeat;
+	background-position: -880px -20px;
+	cursor: pointer;
+}
+.icon_doc_tech
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(../../images/all.png);
+	background-repeat: no-repeat;
+	background-position: -880px 0;
+}
+.icon_doc_tech:hover
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(../../images/all.png);
+	background-repeat: no-repeat;
+	background-position: -400px -20px;
+	cursor: pointer;
+}
+.icon_update
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-70px 0;	
+}
+.icon_update:hover
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-70px -35px;	
+}
+.icon_home
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-245px 0;	
+}
+.icon_home:hover
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-245px -35px;	
+}
+.icon_link
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-175px 0;	
+}
+.icon_link:hover
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-175px -35px;	
+}
+.icon_unval
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-210px 0;	
+}
+.icon_unval:hover
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-210px -35px;	
+}
+.icon_default_on
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-350px 0;	
+}
+.icon_default_on:hover
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-350px -35px;	
+}
+.icon_default_off
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-315px 0;	
+}
+.icon_default_off:hover
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-315px -35px;	
+}
+.icon_neutral_on
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-420px 0;	
+}
+.icon_neutral_on:hover
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-420px -35px;	
+}
+.icon_neutral_off
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-385px 0;	
+}
+.icon_neutral_off:hover
+{
+	display: block;
+	width: 35px;
+	height: 35px;
+	background-image: url(../../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-385px -35px;	
+}
+
+.icon_iknow_flag_warning
+{
+	display: block;
+	width: 20px;
+	height: 20px;
+	background-image: url(../../images/icons_menu.png);
+	background-repeat: no-repeat;
+	background-position:-180px 0;	
+}
+.icon_iknow_flag_warning:hover
+{
+	display: block;
+	width: 20px;
+	height: 20px;
+	background-image: url(../../images/icons_menu.png);
+	background-repeat: no-repeat;
+	background-position:-180px -20px;	
+}
+.icon_iknow_flag_last
+{
+	display: block;
+	width: 20px;
+	height: 20px;
+	background-image: url(../../images/icons_menu.png);
+	background-repeat: no-repeat;
+	background-position:-160px 0;	
+}
+.icon_iknow_flag_last:hover
+{
+	display: block;
+	width: 20px;
+	height: 20px;
+	background-image: url(../../images/icons_menu.png);
+	background-repeat: no-repeat;
+	background-position:-160px -20px;	
+}
+
+.icon_iknow_mandatory_flag
+{
+	display: block;
+	width: 20px;
+	height: 20px;
+	background-image: url(../../images/icons_menu.png);
+	background-repeat: no-repeat;
+	background-position:-340px 0;	
+}
+.icon_lisha_valorized
+{
+	display: block;
+	width: 20px;
+	height: 20px;
+	background-image: url(../../images/1valorised.png);
+	background-repeat: no-repeat;
+}
+.icon_lisha_unvalorized
+{
+	display: block;
+	width: 20px;
+	height: 20px;
+	background-image: url(../../images/0unvalorised.png);
+	background-repeat: no-repeat;
+}
+
+.bbvarin
+{
+	font-weight: bold;
+	color: #FF0000;
+}
+.bbvarout 
+{
+	font-weight: bold;
+	color: #0000FF;
+}
+.bbvarext 
+{
+	font-weight: bold;
+	font-size: 12px;
+	color: #318CE7;
+}
+.language_not_exists
+{
+	color: #f00;
+	font-style:italic;
+	opacity: 0.3;
+}
+.onglet_icn_general
+{
+    height:20px;
+    width:20px;
+    float: left;
+    margin-top: 2px;
+    margin-left: -2px;
+    background-image: url(../../images/icons_menu.png);
+    background-repeat: no-repeat;
+	background-position:-800px 0;
+	padding-left:2px;
+}
+.onglet_icn_code
+{
+    height:20px;
+    width:20px;
+    float: left;
+    margin-left: -2px;
+    background-image: url(../../images/icons_menu.png);
+    background-repeat: no-repeat;
+	background-position:-820px 0;
+	padding-left:2px;
+}
+.onglet_icn_input
+{
+    height:20px;
+    width:20px;
+    float: left;
+    margin-left: -2px;
+    background-image: url(../../images/icons_menu.png);
+    background-repeat: no-repeat;
+	background-position:-60px 0;
+}
+.onglet_icn_output
+{
+    height:20px;
+    width:20px;
+    float: left;
+    margin-left: -2px;
+    background-image: url(../../images/icons_menu.png);
+    background-repeat: no-repeat;
+	background-position:-80px 0;
+}
+.__blue_ico
+{
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-image: url("../../images/icons/img_16.png");
+}
+
+.__blue_ico_sort-ascend {
+    background-position: -600px 0;
+}
+
+.__blue_ico_sort-ascend:hover {
+    background-position: -600px -20px;
+}
+
+.__blue_ico_sort-descend {
+    background-position: -640px 0;
+}
+
+.__blue_ico_sort-descend:hover {
+    background-position: -640px -20px;
+}

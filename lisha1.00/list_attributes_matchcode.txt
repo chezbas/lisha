@@ -1,0 +1,228 @@
+List of attributes transformation
+
+	//$obj_lisha_tran->display_help_button(true);		// Enable use doc button
+	//$obj_lisha_tran->define_attribute('__active_user_doc', false);	// user documentation button
+
+	//$obj_lisha_tran->display_tech_help_button(true);
+	//$obj_lisha_tran->define_attribute('__active_tech_doc', false);	// technical documentation button
+
+	//$obj_lisha_tran->tickets_link_enable(false);										
+	//$obj_lisha_tran->define_attribute('__active_ticket', false);	// Tickets link	
+
+
+
+public function define_query($query)
+c_query
+$obj_lisha_tran->define_query($query);
+$obj_lisha_tran->define_attribute('__main_query', $query);
+
+	//$obj_lisha_tran->define_query($query);
+	$obj_lisha_tran->define_attribute('__main_query', $query);
+
+
+public function define_readonly($p_readonly)
+$this->c_readonly = $p_readonly;
+
+$obj_lisha_tran->define_readonly(__RW__);	
+$obj_lisha_tran->define_attribute('__active_readonly_mode', __RW__);
+
+
+define_theme
+			'__id_theme'		=> array('c_theme','A'),
+
+
+	$obj_lisha_tran->define_title($_SESSION[$ssid]['message'][2]);			// Define Lisha title
+	$obj_lisha_tran->define_attribute('__title', $_SESSION[$ssid]['message'][2]);		// Title	
+
+define_title(
+define_attribute('__title',
+
+
+$this->define_title_display(true);
+$this->c_title_display = $display;
+
+
+define_sep_col_row($p_cols = true,$p_rows = true)
+			$this->c_cols_sep_display = $p_cols;
+			$this->c_rows_sep_display = $p_rows;
+
+			'__active_columns_separation'				=> array('c_cols_sep_display','A'),
+			'__active_row_separation'				=> array('c_rows_sep_display','A'),
+$this->define_attribute('__active_columns_separation',true);
+$this->define_attribute('__active_row_separation',true);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_columns_separation',$this->c_cols_sep_display);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_row_separation',$this->c_rows_sep_display);
+
+
+		public function define_max_nb_line($p_nb_line)
+		{
+			$this->c_max_line_per_page = $p_nb_line;
+		}
+
+'__max_lines_by_page'	=> array('c_max_line_per_page','A'),
+
+
+
+		public function define_page_selection_display($p_header,$p_footer)
+		{
+			$this->c_page_selection_display['header'] = $p_header;
+			$this->c_page_selection_display['footer'] = $p_footer;
+			$this->c_obj_graphic->define_page_selection_display($p_header,$p_footer);
+		}
+
+		private $c_page_selection_display_header;
+		private $c_page_selection_display_footer;
+
+'__active_top_bar_page'	=> array('c_page_selection_display_header','A'),
+'__active_bottom_bar_page' => array('c_page_selection_display_footer','A'),
+
+
+
+		public function define_column_date_format($column,$p_format)
+		{
+			$this->c_columns[$this->get_id_column($column)]['date_format'] = $p_format;
+		}
+
+
+
+		/**==================================================================
+		 * define_mode
+		 * Kind of Lisha return
+		 * @lisha_mode	:	???
+		 * @return _mode	:	( __SIMPLE__, __MULTIPLE__ )
+		 ====================================================================*/
+		public function define_mode($lisha_mode,$return_mode = __MULTIPLE__)
+		{
+			$this->c_mode = $lisha_mode;
+			$this->c_return_mode = $return_mode;
+			$this->c_obj_graphic->define_mode($lisha_mode,$return_mode);
+		}
+			$this->define_mode(__NMOD__);			// Normal mode
+
+$this->define_attribute('__display_mode',__NMOD__);	// Display in normal mode ( full display )
+$this->define_attribute('__return_mode',__MULTIPLE__);	// return mode if any
+
+
+$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_mode(__CMOD__);
+$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__display_mode',__CMOD__);
+
+
+//$obj_lisha_tran->define_column_date_format('date_format','%d/%m/%Y');
+$obj_lisha_tran->define_attribute('date_format','%d/%m/%Y','daterec');
+'__column_date_format'	=> array('date_format','A'),
+
+
+'__column_display_name'	=> array('name','A'),
+'__column_display_mode'	=> array('display','A'),
+'__column_data_type'		=> array('data_type','A'),
+'__column_text_alignment'		=> array('alignment','A'),
+'__column_no_wrap'		=> array('nowrap','A'),
+'__column_search_mode'		=> array('search_mode','A'),
+
+
+		private function define_active_page($page)
+		{
+			$this->c_active_page = $page;
+			$this->c_obj_graphic->define_active_page($this->c_active_page);
+		}
+'__current_page'		=> array('c_active_page','A'),
+$this->define_attribute('__current_page',1);
+
+
+$this->define_param_adv_filter($_SESSION[$p_ssid]['lisha']['configuration'][8]); // Default filter url key
+
+public function define_param_adv_filter($p_param_adv_filter)
+		{
+			$this->c_param_adv_filter = $p_param_adv_filter;
+			$this->c_obj_graphic->define_param_adv_filter($p_param_adv_filter);
+		}
+'__key_url_custom_view'	=> array('c_param_adv_filter','A'),
+
+$this->define_col_return(1);
+$this->define_attribute('__return_column_id', 1);
+
+		public function define_col_return($p_col_return)
+		{
+			$this->c_col_return = $p_col_return;
+			$this->c_obj_graphic->define_col_return($p_col_return);
+		}
+
+$this->define_theme('grey');
+'__id_theme'	=> array('c_theme','A'),
+
+$this->define_attribute('__id_theme', 'grey');
+$this->define_theme('grey');			
+
+
+		public function define_update_table($p_update_table)
+		{
+			$this->c_update_table = $p_update_table;
+		}
+
+'__update_table_name'	=> array('c_col_return','A'),
+
+// Define table to update
+$obj_lisha_tran->define_update_table("transaction");
+$obj_lisha_tran->define_attribute('__update_table_name', "transaction");
+
+
+public function define_rw_flag_column($p_column,$p_rw)
+{
+	$this->c_columns[$this->get_id_column($p_column)]['rw_flag'] = $p_rw;
+}
+$obj_lisha_tran->define_rw_flag_column('id',__FORBIDDEN__);
+$obj_lisha_tran->define_attribute('__column_input_check', __FORBIDDEN__,'id');
+
+
+
+public function define_order_column($column_name,$priority,$order,$id_column = null)
+		{
+			// Get the id of the column
+			if(!is_numeric($id_column))
+			{
+				$id_column = $this->get_id_column($column_name);
+			}
+			$this->c_columns[$id_column]['order_priority'] = $priority;
+			$this->c_columns[$id_column]['order_by'] = $order;
+		}
+$obj_lisha_tran->define_order_column('daterec',__ASC__);				
+$obj_lisha_tran->define_order_column('description',__DESC__);
+
+
+
+		public function define_c_color_mask($p_color_mask)
+		{
+			$this->c_color_mask = $p_color_mask;
+			$this->c_obj_graphic->define_c_color_mask($p_color_mask);
+		}
+
+'__internal_color_mask'		=> array('c_color_mask','A'),
+$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__internal_color_mask',$this->c_color_mask);
+
+
+$obj_lisha_bug->define_color_mask("DDDDFF","0.7em","CCCCEE","0.8em","68B7E0","0.7em","46A5C0","0.8em","000","000");
+$obj_lisha_bug->define_line_theme("DDDDFF","0.7em","CCCCEE","0.8em","68B7E0","0.7em","46A5C0","0.8em","000","000");
+
+
+
+
+
+'__internal_HTML_position'	=> array('c_position_mode','W')
+$this->define_c_position_mode(__RELATIVE__);
+
+__active_read_only_cells_edit
+
+
+
+		public function define_toolbar_add_button($p_state)
+		{
+			$this->c_toolbar_add_btn = $p_state;
+		}
+
+
+$c_columns_init dans general leader
+
+
+Remove 1 parameter
+$obj_lisha_bug->define_column_lov_order('ord',0,__ASC__); ==> $obj_lisha_bug->define_column_lov_order('ord',__ASC__);
+define_column_lov_order ==> define_lov_order_column

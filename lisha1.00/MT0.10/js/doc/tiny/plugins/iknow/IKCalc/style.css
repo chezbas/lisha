@@ -1,0 +1,16 @@
+body
+{
+	background-color: #F0F0EE;
+	margin:0;
+	padding: 0;	
+	font-family: arial;
+	font-size: 14px;
+}
+
+.formule_input
+{
+	background: url(../../../../../../images/math.png) no-repeat left #FFF;
+	padding-left:20px;
+	margin:5px;
+	width:805px;
+}

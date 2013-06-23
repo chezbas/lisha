@@ -1,0 +1,128 @@
+body,html
+{
+	margin:0;
+	padding:0;	
+}
+
+.lisha_input_lmod
+{
+	width: 80px;
+	border:0;
+	border-left:2px inset #EEE;
+	/*border-top:2px inset #EEE;*/
+	height:16px;
+	outline: 0 none;
+}
+		
+.lisha_lmod
+{
+	padding-right:20px;
+	background-image: url(../images/default/lmod_arrow_hover.png);
+	background-position: right 0;
+	background-repeat: no-repeat;
+	/*background-position: 0 0;
+	height:20px;
+	width:20px;*/
+}
+
+.lisha_lmod:hover
+{
+	background-image: url(../images/default/lmod_arrow_hover.png);
+	background-position: right bottom;
+}
+
+.lisha_lmod_container
+{
+	background-color: #FFF;
+	width:100px;
+	padding-right: 1px;
+	margin: 2px 0;
+	border-top:2px inset #EEE;
+}
+			
+.full_width
+{
+	width: 100%;	
+}
+
+.align_center
+{
+	text-align: center;	
+}
+
+.align_left
+{
+	text-align: left;	
+}
+
+.align_right
+{
+	text-align: right;	
+}
+
+.grey_el
+{
+	opacity : 0.25;
+	filter: alpha(opacity=25);
+}
+
+.__body_no_select
+{
+	-moz-user-select: none;
+   	-khtml-user-select: none;
+}
+
+.__lisha_unselectable
+{
+	-moz-user-select: none;
+   	-khtml-user-select: none;		
+}
+
+div.column_menu
+{
+	width: 100%;
+	position: static;
+}
+
+.c_pointer
+{
+	cursor:pointer;	
+}
+
+.no_pad_marg
+{
+	padding:0;
+	margin:0;	
+}
+
+input.lisha_checkbox
+{
+	margin:0;
+}
+
+.__lisha_txt_mini_
+{
+	font-size: 8px;
+	font-family: sans-serif;
+	float:right;
+}
+
+.lisha_txt_top
+{
+	vertical-align: top;
+}
+
+tr.lisha_line_separator
+{
+	height:1px;
+}
+
+.lisha_txt_bold
+{
+	font-weight: bold;	
+}
+
+.lisha_txt_lighter
+{
+	font-weight: lighter;
+}

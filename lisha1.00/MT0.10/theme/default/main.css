@@ -1,0 +1,850 @@
+.TreeView_default
+{
+	font-family: arial;
+    line-height: 1.2em;
+	font-style: normal;
+	font-size: 1em;
+	background-color: #fff;
+	display: block;
+    top: 0;  
+	left:0;
+    height: 100%;  
+    width: 100%;
+    box-shadow: 0 2px 8px #333;
+}
+
+.TreeView_default_overflow
+{
+	float: left;
+	display: block;
+	overflow:auto;
+	top: 10%;
+	left: 0;
+    height: 90%;  
+    width: 100%; 
+}
+
+/*========== Waiting Ajax ============*/
+.TreeView_default_main_wait_ajax
+{
+	position: absolute;  
+	display: block;
+	opacity: 0.7;
+	background-color: #000;
+	top: 0;
+	left: 0;
+    height: 100%;  
+    width: 100%;
+}
+.TreeView_default_wait_ajax
+{
+	position: absolute;  
+	display: block;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+    background: url(images/wait.gif) no-repeat center center;
+}
+/*=================================*/
+
+.TreeView_default_add_child_button
+{
+	float: right;
+	display: block;
+	top:0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-60px 0;
+}
+
+.TreeView_default_delete_item_button
+{
+	float: left;
+	display: block;
+	top:0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-260px 0;
+}
+
+
+/* Head bar*/
+/*===============*/
+
+.TreeView_default_headbar
+{
+	float: left;
+	display: block;
+	top:0;
+	left:0;
+	border-radius: 5px;
+	background-color: #def;
+	opacity: 1;
+	border-width: 0;
+	border-style: solid;
+	border-color: #AAA;
+	box-shadow: 0 6px 8px #333;
+    width: 100%;  
+}
+
+.TreeView_default_version
+{
+	float: left; 
+	margin-left: 2px;
+	margin-right: 2px;
+	display: block;
+	top: 0;
+    height: 100%;  
+    font-size: 0.6em;
+    font-style:italic;
+    opacity: 0.6;
+    color: #333;
+}
+
+.TreeView_default_search
+{
+	float: left; 
+	margin-left: 2px;
+	display: block;
+	top: 0;
+    height: 100%;  
+}
+
+.TreeView_default_button_refresh:hover
+{
+	float: left;
+	display: block;
+	top:0;
+	left:0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-660px -20px;
+	cursor: pointer;
+}
+.TreeView_default_button_refresh
+{
+	float: left;
+	display: block;
+	top:0;
+	left:0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-660px 0;
+}
+
+.TreeView_default_button_search:hover
+{
+	float: left;
+	display: block;
+	top:0;
+	left:0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-580px -20px;
+	cursor: pointer;
+}
+.TreeView_default_button_search
+{
+	float: left;
+	display: block;
+	top:0;
+	left:0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-580px 0;
+}
+
+.TreeView_default_button_collapse:hover
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top:0;
+	left:0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-420px -20px;
+	cursor: pointer;
+}
+.TreeView_default_button_collapse
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top:0;
+	left:0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-420px 0;
+}
+
+.TreeView_default_button_expand:hover
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top:0;
+	left:0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-780px -20px;
+	cursor: pointer;
+}
+.TreeView_default_button_expand
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top:0;
+	left:0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-780px 0;
+}
+
+
+.TreeView_default_navigation
+{
+	float: left;
+	border: 1px;
+	border-style:solid;
+	font-size: 0.9em;
+	display: none;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	height: 20px;
+}
+.TreeView_default_bar_button
+{
+	float: left;
+	border: 0;
+	border-style:solid;
+	font-size: 0.9em;
+	display: block;
+	margin: 0;
+	top: 0;
+	left: 0;
+	height: 20px;
+}
+.TreeView_default_bar_navigation
+{
+	float: left;
+	border: 0;
+	border-style:solid;
+	font-size: 0.9em;
+	display: none;
+	margin: 0;
+	top: 0;
+	left: 0;
+	height: 20px;
+}
+.TreeView_default_button_navigation_first
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -120px 0;
+}
+.TreeView_default_button_navigation_first:hover
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -120px -20px;
+	cursor: pointer;
+}
+
+.TreeView_default_button_navigation_before
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -100px 0;
+}
+.TreeView_default_button_navigation_before:hover
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -100px -20px;
+	cursor: pointer;
+}
+
+.TreeView_default_button_navigation_next
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -160px 0;
+}
+.TreeView_default_button_navigation_next:hover
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -160px -20px;
+	cursor: pointer;
+}
+.TreeView_default_button_navigation_last
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -140px 0;
+}
+.TreeView_default_button_navigation_last:hover
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -140px -20px;
+	cursor: pointer;
+}
+
+.TreeView_default_button_doc_user
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -400px 0;
+}
+.TreeView_default_button_doc_user:hover
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -400px -20px;
+	cursor: pointer;
+}
+
+.TreeView_default_button_doc_tech
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -880px 0;
+}
+.TreeView_default_button_doc_tech:hover
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -880px -20px;
+	cursor: pointer;
+}
+
+.TreeView_default_bar_edit
+{
+	float: left;
+	border: 0;
+	border-style:solid;
+	font-size: 0.9em;
+	display: block;
+	margin: 0;
+	top: 0;
+	left: 0;
+	height: 20px;
+}
+.TreeView_default_button_add_brother_item
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -60px 0;
+}
+.TreeView_default_button_add_brother_item:hover
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top:0;
+	left:0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-60px -20px;
+	cursor: pointer;
+}
+.TreeView_default_button_add_child_item
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+.TreeView_default_button_add_child_item:hover
+{
+	float: left;
+	display: block;
+	margin: 1px;
+	top:0;
+	left:0;
+	width: 20px;
+	height: 20px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: 0 -20px;
+	cursor: pointer;
+}
+
+.TreeView_default_message
+{
+	float: left;
+	font-style: italic;
+	color: #BBB;
+	font-size: 0.8em;
+	display: block;
+	margin: 1px;
+}
+
+/*===============*/
+
+/*==BACKGROUND GREY===*/
+.TreeView_default_mask
+{
+	position: absolute;
+	background-color: #FFF;
+	display: none;
+	opacity: 0.5;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+/*===============*/
+
+/*==INFO BULLE===*/
+.TreeView_default_infobulle
+{
+	position: absolute;
+	font-style: normal;
+	color: #F00;
+	background-color: #EE3;
+	font-size: 0.9em;
+	font-weight: bold;
+	display: none;
+	opacity: 1;
+	padding: 5px;
+	overflow:auto;
+	top: 25%;
+	left: 25%;
+	width: 50%;
+	height: 50%;
+	border-radius : 10px 10px 10px 10px;
+	box-shadow: 3px 3px 2px #555;
+	-webkit-box-shadow: 3px 3px 2px #555; 
+}
+
+/*==MOVE ITEM===*/
+.TreeView_default_move_item
+{
+	position: absolute;
+	font-style: normal;
+	color: #000;
+	background-color: #777;
+	font-size: 0.9em;
+	font-weight: bold;
+	display: none;
+	opacity: 1;
+	padding: 5px;
+	overflow:auto;
+	border-radius : 10px 10px 10px 10px;
+	box-shadow: 3px 3px 2px #555;
+	-webkit-box-shadow: 3px 3px 2px #555; 
+}
+
+.TreeView_default_infobulle_cancel:hover
+{
+	position: absolute;
+	font-style: normal;
+	font-size: 0.9em;
+	font-weight: bold;
+	display: none;
+	padding: 5px;
+	top: 25%;
+	right: 25%;
+	width: 10px;
+	height: 10px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-240px -20px;
+	cursor: pointer;
+}
+.TreeView_default_infobulle_cancel
+{
+	position: absolute;
+	font-style: normal;
+	font-size: 0.9em;
+	font-weight: bold;
+	display: none;
+	padding: 5px;
+	top: 25%;
+	right: 25%;
+	width: 10px;
+	height: 10px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-240px 0;
+}
+
+
+.TreeView_default_infobulle_ok:hover
+{
+	position: absolute;
+	font-style: normal;
+	font-size: 0.9em;
+	font-weight: bold;
+	display: none;
+	padding: 5px;
+	top: 60%;
+	right: 25%;
+	width: 10px;
+	height: 10px;
+	background-color: #FF3;
+	box-shadow: 2px 6px 8px #333;
+	border-color: #000;
+	border-style:solid;
+	border-width: 1px;
+	border-radius : 5px 5px 5px 5px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-80px -20px;
+	cursor: pointer;
+}
+
+.TreeView_default_infobulle_ok
+{
+	position: absolute;
+	font-style: normal;
+	font-size: 0.9em;
+	font-weight: bold;
+	display: none;
+	padding: 5px;
+	top: 60%;
+	right: 25%;
+	width: 10px;
+	height: 10px;
+	background-color: #FF3;
+	box-shadow: 2px 6px 8px #333;
+	border-color: #000;
+	border-style:solid;
+	border-width: 1px;
+	border-radius : 5px 5px 5px 5px;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position: -80px -20px;	
+	cursor: pointer;
+}
+/*===============*/
+
+
+/*=====HIGHLIGHT OR NOT =========*/
+.TreeView_default_item_caption_highlight:hover
+{
+	float:left;
+	margin-left: 2px;
+	margin-right: 0;
+	background-color: #eee;
+	padding: 1px 1px 1px 1px;
+	opacity: 1;
+	box-shadow: 2px 6px 8px #333;
+	border-color: #000;
+	border-style:solid;
+	border-width: 1px;
+	border-radius : 5px 5px 5px 5px;
+	cursor: pointer;
+}
+.TreeView_default_item_caption_highlight
+{
+	float:left;
+	display: block;
+	font-style: normal;
+	padding: 2px;
+	background-color: #999;
+	border-radius : 3px 3px 3px 3px;
+	box-shadow: 3px 3px 2px #333;
+	-webkit-box-shadow: 3px 3px 2px #333; 
+}
+/*==============================*/
+
+
+.TreeView_default_item_caption_none:hover
+{
+	float:left;
+	margin-left: 2px;
+	margin-right: 0;
+	background-color: #eee;
+	padding: 1px 1px 1px 1px;
+	opacity: 1;
+	box-shadow: 2px 6px 8px #333;
+	/*box-shadow: 0 2px 2px 0 rgba(0,0,0,1) inset, 0 2px 2px 0 rgba(255,255,255,1);*/
+	border-color: #000;
+	border-style:solid;
+	border-width: 1px;
+	border-radius : 5px 5px 5px 5px;
+	cursor: pointer;
+}
+.TreeView_default_item_caption_none
+{
+	float:left;
+	padding: 0 0 0 0;
+	margin-left: 2px;
+	display: block;
+	margin-right: 0;
+}
+
+.TreeView_default_language_not_exists
+{
+	color: #f00;
+	font-style:italic;
+	opacity: 0.3;
+}	
+
+
+.TreeView_default_mark 
+{
+	float: left;
+	padding: 0 0 0 0;
+	margin-left: -2px;
+	margin-right: 0;
+	display: block;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-540px 0;
+	width: 18px;
+	height: 18px;
+}
+.TreeView_default_unmark 
+{
+	float: left;
+	padding: 0 0 0 0;
+	margin-left: -2px;
+	margin-right: 0;
+	display: block;
+	background-image: url(images/all.png);
+	background-repeat: no-repeat;
+	background-position:-520px 0;
+	width: 18px;
+	height: 18px;
+}
+.TreeView_default_nonemark 
+{
+	float: left;
+	padding: 0 0 0 0;
+	margin-left: 0;
+	margin-right: 0;
+	display: block;
+	width: 1px;
+	height: 1px;
+}
+
+.TreeView_default_interow:hover
+{
+	float: left;
+	padding: 0 0 0 0;
+	margin-left: 0;
+	margin-right: 0;
+	display: block;
+	width: 100%;
+	height: 10px;
+	background-color: #f00;
+	opacity: 0.3;
+}
+
+.TreeView_default_interow
+{
+	float: left;
+	padding: 0 0 0 0;
+	margin-left: 0;
+	margin-right: 0;
+	display: block;
+	width: 100%;
+	height: 5px;
+	background-color: #000;
+	opacity: 0.1;
+}
+
+
+.TreeView_default_click_expand
+{
+	float: left;
+	display: block;
+	height: 16px;
+	width: 16px;
+	margin-left: -2px;
+	margin-right: 0;
+	cursor: pointer;
+}
+
+
+.TreeView_default
+{
+    margin: 0;
+    padding: 0;
+}
+
+.TreeView_default_ul_first
+{
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+	font-size: 1em; /* Change first row item font size */
+}	
+.TreeView_default_ul
+{
+    margin: 0 0 0 12px;
+    padding: 0 0 0 0;
+	font-size: 1em; /* Change all item font size */
+}	
+
+.TreeView_default LI
+{
+    /* The padding is for the tree view nodes */
+    margin: 0 0 0 12px;
+    float: left;
+    width: 96%;
+    font-size: 0.97em; /* Reduce font size at each level : Caution use value near 0.95*/
+    list-style: none;
+}
+
+LI.expanded 
+{
+    background: url(images/minus.gif) no-repeat left top;
+}
+
+LI.expanded ul
+{
+	display: block;
+}
+
+LI.collapsed 
+{
+    background: url(images/plus.gif) no-repeat left top;
+}
+
+LI.collapsed ul
+{
+    display: none;
+}
+
+.TreeView_default_empty_icon
+{
+	display: block;
+	float:left;
+    height:20px;
+    width:20px;
+    opacity: 0.5;
+    background-color: #00f;
+    border-radius : 10px 10px 10px 10px;
+    box-shadow: 0 3px 3px #333;
+}
+.void_icon
+{
+	display: none;
+}	
