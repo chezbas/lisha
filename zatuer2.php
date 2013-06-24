@@ -52,6 +52,7 @@
 
     //$tata = substr($tata,0,-7);
 
+    echo 'jjhdfgkjhsdfgkjdsfhk';
     //preg_match_all('`<span class="ikcalc">[^>]*>([^<]*)`i',$tata,$out);
     //preg_match_all('`<span onmouseover="ikdoc.+">(.)+</span>`i',$tata,$out);
 
