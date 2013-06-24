@@ -52,9 +52,9 @@
 		private $c_lmod_specified_width;
 		private $c_toolbar_delete_btn;
 		private $c_toolbar_add_btn;
-        private $c_quick_search;        // true means quick search on head column is enable
+        private $c_quick_search;                    // true means quick search on head column is enable
 
-		private $matchcode;				// Matchcode between internal external call and function name
+		private $matchcode;				            // Matchcode between internal external call and function name
 		//==================================================================
 
 		//==================================================================
@@ -1448,21 +1448,26 @@
 					break;
 			}
 		}
-		
-		/**
-		 * Get the id of the last displayed column
-		 */
+
+
+        /**==================================================================
+         * Get id number of last displayed column
+        ====================================================================*/
 		private function get_last_display_column()
 		{
 			$last_display_col = 0;
 			
 			foreach($this->c_columns as $key_col => $val_col)
 			{
-				if($val_col['display']) $last_display_col = $key_col;
+				if($val_col['display'])
+                {
+                    $last_display_col = $key_col;
+                }
 			}
-			
-			return $last_display_col;
+
+            return $last_display_col;
 		}
+        /**===================================================================*/
 
 
         /**==================================================================
@@ -2193,39 +2198,6 @@
             $p_text = str_replace($temp_str,'[hr]',$p_text);
 
             return $p_text;
-            /*
-             $remplacement=true;
-             while($remplacement)
-             {
-                 $remplacement=false;
-                 $oldtxt=$txt;
-                 $txt = preg_replace('`\[BBTITRE\]([^\[]*)\[/BBTITRE\]`i','<b><u><span class="bbtitre">\\1</span></u></b>',$txt);
-                 $txt = preg_replace('`\[EMAIL\]([^\[]*)\[/EMAIL\]`i','<a href="mailto:\\1">\\1</a>',$txt);
-                 $txt = preg_replace('`\[b\]([^\[]*)\[/b\]`i','<b>\\1</b>',$txt);
-                 $txt = preg_replace('`\[i\]([^\[]*)\[/i\]`i','<i>\\1</i>',$txt);
-                 $txt = preg_replace('`\[u\]([^\[]*)\[/u\]`i','<u>\\1</u>',$txt);
-                 $txt = preg_replace('`\[s\]([^\[]*)\[/s\]`i','<label style="text-decoration:line-through;">\\1</label>',$txt);
-                 $txt = preg_replace('`\[br\]`','<br>',$txt);
-                 $txt = preg_replace('`\[center\]([^\[]*)\[/center\]`','<div style="text-align: center;">\\1</div>',$txt);
-                 $txt = preg_replace('`\[left\]([^\[]*)\[/left\]`i','<div style="text-align: left;">\\1</div>',$txt);
-                 $txt = preg_replace('`\[right\]([^\[]*)\[/right\]`i','<div style="text-align: right;">\\1</div>',$txt);
-                 $txt = preg_replace('`\[img\]([^\[]*)\[/img\]`i','<img src="\\1" alt=""/>',$txt);
-                 $txt = preg_replace('`\[color=([^[]*)\]([^[]*)\[/color\]`i','<span style="color:\\1;">\\2</span>',$txt);
-                 $txt = preg_replace('`\[bg=([^[]*)\]([^[]*)\[/bg\]`i','<span style="background-color: \\1;">\\2</span>',$txt);
-                 $txt = preg_replace('`\[size=([^[]*)\]([^[]*)\[/size\]`i','<span style="size:"\\1px;">\\2</span>',$txt);
-                 $txt = preg_replace('`\[font=([^[]*)\]([^[]*)\[/font\]`i','<font face="\\1">\\2</font>',$txt);
-                 //$txt = preg_replace('`\[url\]([^\[]*)\[/url\]`i','<a  target="_blank" href="\\1">\\1</a>',$txt);
-                 $txt = preg_replace('`\[url\]([^\[]*)\[/url\]`i','<a target="_blank" href="\\1">\\1</a>',$txt);
-                 $txt = preg_replace('`\[url=([^[]*)\]([^[]*)\[/url\]`i','<a target="_blank" href="\\1">\\2</a>',$txt);
-
-                 if ($oldtxt<>$txt)
-                 {
-                     $remplacement=true;
-                 }
-             }
-             return $txt;
-             */
-
 		}
 		
 		/**===================================================================*/
