@@ -98,7 +98,7 @@
 		//==================================================================
 		// define column : Description
 		//==================================================================
-		$obj_lisha_tran->define_column('description','descriptionddd',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column('description','descriptionddd',__BBCODE__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'description');
 		//==================================================================
 

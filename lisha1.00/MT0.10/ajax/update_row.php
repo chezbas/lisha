@@ -33,7 +33,7 @@
 	
 	
 	//==================================================================
-	// Manage BBCode entites if setup
+	// Manage BBCode entities if setup
 	//==================================================================
 	$final_title = htmlentities($_POST["caption"],ENT_QUOTES);
 	

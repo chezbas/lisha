@@ -2177,8 +2177,20 @@
             $p_text = preg_replace('`\[url\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" href=\"".str_replace("[/url][/url]","[/url]","\\1")."\">".str_replace("[/url][/url]","[/url]","\\1")."</a>"',$p_text);
             $p_text = preg_replace('`\[url=(.*?)\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" href=\"\\1\">".str_replace("[/url][/url]","[/url]","\\2")."</a>"',$p_text);
 
-            $p_text = preg_replace('`\[br\]`','<br>',$p_text);
-            $p_text = preg_replace('`\[hr\]`','<hr>',$p_text);
+            //$p_text = preg_replace('`\[br\]`','<br>',$p_text);
+            //$p_text = preg_replace('`\[hr\]`','<hr>',$p_text);
+
+            // Found a randomized string do not exists in string to convert
+            $temp_str = '7634253332';while(stristr($p_text,$temp_str)){$temp_str = mt_rand();}
+            $p_text = str_replace('[br][br]',$temp_str,$p_text);
+            $p_text = preg_replace('`(?<!\[br\])\[br\](?!(\[br\]))`ie','str_replace("[br]","<br>","\\0")',$p_text);
+            $p_text = str_replace($temp_str,'[br]',$p_text);
+
+            // Found a randomized string do not exists in string to convert
+            $temp_str = '7634253332';while(stristr($p_text,$temp_str)){$temp_str = mt_rand();}
+            $p_text = str_replace('[hr][hr]',$temp_str,$p_text);
+            $p_text = preg_replace('`(?<!\[hr\])\[hr\](?!(\[hr\]))`ie','str_replace("[hr]","<hr>","\\0")',$p_text);
+            $p_text = str_replace($temp_str,'[hr]',$p_text);
 
             return $p_text;
             /*

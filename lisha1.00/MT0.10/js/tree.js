@@ -284,6 +284,13 @@ function item_update(internal_id,row_id,style,full_update)
 		//var caption = document.getElementById('up_cap_'+internal_id+row_id).innerHTML;
 		var caption = document.getElementById(internal_id+row_id+"_origin").innerHTML;
 
+        var caption_length = caption.length;
+        // Protect minimum length of input field
+        if(caption_length < 20)
+        {
+            caption_length = 20;
+        }
+
 		caption = caption.replace(/"/g,"&quot;"); // Replace all " by &quot;
 		if( MT_row_id != '')
 		{
@@ -307,11 +314,11 @@ function item_update(internal_id,row_id,style,full_update)
 		
 		if(full_update)
 		{
-			document.getElementById(string_id).innerHTML = '<input id="'+input_id+'" onkeydown="return input_key_manager(event,\''+internal_id+'\',\''+row_id+'\')" type="text" size=20 value="'+caption+'"><div class="'+style+'_add_child_button" id="'+parent_id+'" onClick="add_new_child(\''+internal_id+'\',\''+row_id+'\')"></div><div class="'+style+'_delete_item_button" id="'+parent_id+'" onClick="delete_item(\''+internal_id+'\',\''+row_id+'\')"></div>';
+			document.getElementById(string_id).innerHTML = '<input id="'+input_id+'" onkeydown="return input_key_manager(event,\''+internal_id+'\',\''+row_id+'\')" type="text" size='+caption_length+' value="'+caption+'"><div class="'+style+'_add_child_button" id="'+parent_id+'" onClick="add_new_child(\''+internal_id+'\',\''+row_id+'\')"></div><div class="'+style+'_delete_item_button" id="'+parent_id+'" onClick="delete_item(\''+internal_id+'\',\''+row_id+'\')"></div>';
 		}
 		else
 		{
-			document.getElementById(string_id).innerHTML = '<input id="'+input_id+'" onkeydown="return input_key_manager(event,\''+internal_id+'\',\''+row_id+'\')" type="text" size=20 value="'+caption+'">';
+			document.getElementById(string_id).innerHTML = '<input id="'+input_id+'" onkeydown="return input_key_manager(event,\''+internal_id+'\',\''+row_id+'\')" type="text" size='+caption_length+' value="'+caption+'">';
 		}
 		
 		document.getElementById(input_id).focus();
