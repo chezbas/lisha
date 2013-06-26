@@ -854,7 +854,7 @@
 		{
 			// Set the selected lines to edit
 			$this->define_selected_line($post['selected_lines']);
-			
+
 			//==================================================================
 			// Browse the updated filter
 			//==================================================================
@@ -951,18 +951,18 @@
 			//==================================================================
 			// Execute the query and display the elements
 			//==================================================================
-			//$this->prepare_query();       // SRX optimization
+			$this->prepare_query();       // SRX optimization
 
-            error_log('xxx');
-			//$json = $this->generate_lisha_json_param();
-			//$json_line = $this->generate_json_line();
+            //error_log(print_r($this->c_columns,true));
+			$json = $this->generate_lisha_json_param();
+			$json_line = $this->generate_json_line();
 			
 			// XML return	
 			header("Content-type: text/xml");
 			$xml = "<?xml version='1.0' encoding='UTF8'?>";
 			$xml .= "<lisha>";
-			//$xml .= "<json_line>".$this->protect_xml($json_line)."</json_line>";
-			//$xml .= "<json>".$this->protect_xml($json)."</json>";
+			$xml .= "<json_line>".$this->protect_xml($json_line)."</json_line>";
+			$xml .= "<json>".$this->protect_xml($json)."</json>";
 			$xml .= "</lisha>";
 			echo $xml;
 			//==================================================================
@@ -3089,7 +3089,7 @@
 						
 			// Transform input area line to php array
 			$tab_val_col = json_decode($val_col,true);
-			//error_log(print_r($tab_val_col,true));
+
 			//==================================================================
 			// Data control
 			//==================================================================
@@ -3624,6 +3624,7 @@
 			$sql_filter = '';
             $sql_filter_fast = '';
 
+            // Scan custom filter defined on each column
             foreach($this->c_columns as $column_key => $column_value)
 			{
 				if(isset($column_value['filter']) && $column_key != $column)
@@ -3661,13 +3662,12 @@
 				}
 			}
 			//==================================================================
-            //error_log($sql_filter);
+
 			//==================================================================
 			// Browse the updated filter
 			//==================================================================
 			$post['filter'] = $txt;
 
-            //error_log('zzzzzzzz'.$txt); // SRX
 			if($post['filter'] == '')
 			{
 				// No filter defined, clear the filter clause
@@ -3676,34 +3676,41 @@
 			}
 			else
 			{
+                // Something input in input box, so continue
+
+                //==================================================================
+                // Convert date in native form if any
+                //==================================================================
 				if($this->c_columns[$column]['data_type'] == 'date')
-				{					
+				{
 					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter'],__MYSQL__); // Database engine hard coded TODO
-					
+
 					$this->c_columns[$column]['filter']['input'] = array('filter' => $tmp_result,
 																		'filter_display' => rawurldecode($post['filter'])
 																		);
 				}
 				else
-				{				
+				{
 					$this->c_columns[$column]['filter']['input'] = array('filter' => rawurldecode($post['filter']),
 																		'filter_display' => rawurldecode($post['filter'])
 																		);
 				}
-				
-				if(isset($this->c_columns[$column]['lov']))
+                //==================================================================
+
+                if(isset($this->c_columns[$column]['lov']))
 				{
+                    // PERCENT
 					$sql = 'SELECT * FROM ('.$this->c_columns[$column]['lov']['sql'].') AS `ret` WHERE '.$this->c_columns[$column]['lov']['col_return'].' LIKE "%'.$this->protect_sql(rawurldecode($post['filter']),$this->link).'%"';
-					
+
 					$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 
-					if($this->c_columns[$column]['quick_help'])
-					{
-						// Quick help : true
+					//if($this->c_columns[$column]['quick_help'])
+					//{
+						// Quick help : Strict
 						if($this->rds_num_rows($this->resultat) == 1)
 						{
 							$this->c_columns[$column]['taglov_possible'] = true;
-							
+
 							while($row = $this->rds_fetch_array($this->resultat))
 							{
 								$this->c_columns[$column]['filter']['input']['taglov'] = $row;
@@ -3713,19 +3720,22 @@
 						{
 							unset($this->c_columns[$column]['taglov_possible']);
 						}
-					}
-					else
+					//}
+					/*else
 					{
-						// Quick help : false
-						
+					    // Wont work in tinyint field on strict value no numeric
+						// Quick help : STRICT
+
 						// Search if the exact value exist
 						$sql = 'SELECT * FROM ('.$this->c_columns[$column]['lov']['sql'].') AS `ret` WHERE '.$this->c_columns[$column]['lov']['col_return'].' = "'.$this->protect_sql(rawurldecode($post['filter']),$this->link).'"';
-						$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
-						
-						if($this->rds_result($this->resultat,0, 'ret') > 0)
+                        error_log("hhhhhhhhh".$sql);
+                        $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
+                        // SRX fix it please !!
+                        // Error due to field in tinyint(3)
+                        //if($this->rds_result($this->resultat,0, 'ret') > 0)
+						if($this->rds_num_rows($this->resultat) > 0)
 						{
 							$this->c_columns[$column]['taglov_possible'] = true;
-							
 							while($row = $this->rds_fetch_array($this->resultat))
 							{
 								$this->c_columns[$column]['filter']['input']['taglov'] = $row;
@@ -3735,13 +3745,13 @@
 						{
 							unset($this->c_columns[$column]['taglov_possible']);
 						}
-					}
+					}*/
 				}
 			}
 			//==================================================================
-			
-			$this->check_column_lovable();
-			
+
+            $this->check_column_lovable();
+
 			if(isset($this->c_columns[$column]['filter']) && count($this->c_columns[$column]['filter']) == 0)
 			{
 				unset($this->c_columns[$column]['filter']);

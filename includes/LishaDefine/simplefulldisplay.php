@@ -138,7 +138,7 @@
 										FROM
 												`transaction2` TRANS2
 										WHERE 1 = 1
-												AND TRANS2.`mode` = '||TAGLOV_module**mode||'",
+												AND TRANS2.`mode` = '||TAGLOV_mode**mode||'",
 									  	'Title of description',
 									  	'text'
 									);

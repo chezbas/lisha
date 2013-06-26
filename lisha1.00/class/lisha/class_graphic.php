@@ -1078,6 +1078,7 @@
 					}
 
                     // Active or not quick search on change into input text box area
+                    // Event call when get/lost focus on inpiut box
                     if($this->c_quick_search)
                     {
                         $onchange = 'onchange="lisha_col_input_change(\''.$this->c_id.'\','.$key_col.');"';

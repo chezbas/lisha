@@ -91,7 +91,7 @@ function lisha_input_keydown(evt,el,lisha_id,column, quick_search_mode, edit_mod
 							//toggle_wait_input(lisha_id,column);
 							//====================================================================
 							// Carriage return pressed
-						//====================================================================
+						    //====================================================================
 							if(edit_mode == __EDIT_MODE__)
 							{
 								//eval('clearTimeout(lisha.'+lisha_id+'.time_input_search);');
@@ -148,7 +148,7 @@ function lisha_input_keydown(evt,el,lisha_id,column, quick_search_mode, edit_mod
 
 
 /**==================================================================
- * Call to hide or display ajax call to get quick search results
+ * Hide or display progression bar of ajax call in input box
  * @lisha_id		    : internal lisha identifier
  * @column      	    : Column id where something changed
  ====================================================================*/
@@ -162,11 +162,11 @@ function toggle_wait_input(lisha_id,column)
 		 ====================================================================*/	
 		try
         {
-			var pos_input = lisha_getPosition('th_input_'+column+'__'+lisha_id); 
+			var pos_input = lisha_getPosition('th_input_'+column+'__'+lisha_id);
 		}
         catch (e)
         {
-			alert('zzzzzzzth_input_'+column+'__'+lisha_id);
+			//alert('zzzzzzzth_input_'+column+'__'+lisha_id);
 		}
 		
 		var pos_lisha = lisha_getPosition('lis__'+eval('lisha.'+lisha_id+'.theme')+'__lisha_table_'+lisha_id+'__'); 
@@ -233,9 +233,10 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
         // Display ajax call in input area
 		toggle_wait_input(lisha_id,column);
 
+        // Recover last value input by user in header column input box
         var txt = encodeURIComponent(document.getElementById('th_input_'+column+'__'+lisha_id).value);
         txt = txt.replace(/\'/g,"\\\\\\\\\\\\\\'");
-        //alert(txt);
+
         /**==================================================================
 		 * Ajax init
 		 ====================================================================*/	
@@ -248,9 +249,11 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
 		conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=5&column='+column+'&txt='+txt+'&selected_lines='+encodeURIComponent(get_selected_lines(lisha_id));
 		conf['fonction_a_executer_reponse'] = 'lisha_input_search';
 		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"','"+column+"','"+quick_search+"'";
-		ajax_call(conf);
+
+        ajax_call(conf);
 		/**==================================================================*/
-		
+
+        // Active red marble animation
 		wait_column_bullet(lisha_id);
 	}
 	else
