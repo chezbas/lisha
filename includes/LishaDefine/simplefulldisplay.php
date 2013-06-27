@@ -216,8 +216,20 @@
     //==================================================================
     // Native field name in main table
     // Optional declaration but can provide fast response time
+    // Don't add anything here if your have a doubt
+    // null means use main table name
     //==================================================================
-    $obj_lisha_tran->define_fast_field(Array('description','daterec','amount','status','checkme','datum','mode','text'));
+    $obj_lisha_tran->define_fast_field(Array(
+                                                Array(null,'description'),
+                                                Array(null,'daterec'),
+                                                Array(null,'amount'),
+                                                Array(null,'status'),
+                                                Array(null,'checkme'),
+                                                Array(null,'datum'),
+                                                Array(null,'mode'),
+                                                Array('TRAN2','text')
+                                            )
+                                        );
     //==================================================================
 
 	//==================================================================

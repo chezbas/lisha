@@ -1265,8 +1265,38 @@
 			}
 		}
 		/**===================================================================*/
-		
-		
+
+
+        /**==================================================================
+         * in_array_lisha
+         * Search value into Array(Array(table0,field0),Array(table1,field1)...)
+         * @valeur      :   Name of filed to find
+         * @tab         :   Multi dimensional array
+         * return table or alias name or false if field name not found
+        ====================================================================*/
+        private function in_array_lisha($valeur,&$tab)
+        {
+            foreach ($tab as $val)
+            {
+                if($val[1]==$valeur)
+                {
+                    if($val[0] == null)
+                    {
+                        $retour = 'null';
+                    }
+                    else
+                    {
+                        $retour = $val[0];
+                    }
+
+                    return $retour;
+                }
+            }
+            return false;
+        }
+        /**===================================================================*/
+
+
 		/**==================================================================
 		 * prepare_query
 		 * build and run query with all WHERE condition
@@ -1290,10 +1320,18 @@
                         // Defined as fast field ??
                         if(isset($this->c_db_fast_field))
                         {
-                            if(in_array($column_value['sql_as'],$this->c_db_fast_field))
+                            if($tab_alias_name = $this->in_array_lisha($column_value['sql_as'],$this->c_db_fast_field))
                             {
                                 // Add fast field closer in core in query
-                                $sql_filter_fast .= ' AND '.$this->get_quote_col($this->c_update_table).'.'.$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).$column_value['search_mode']);
+                                if($tab_alias_name == 'null')
+                                {
+                                    $alias_table_name = $this->c_update_table;
+                                }
+                                else
+                                {
+                                    $alias_table_name = $tab_alias_name;
+                                }
+                                $sql_filter_fast .= ' AND '.$this->get_quote_col($alias_table_name).'.'.$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).$column_value['search_mode']);
                             }
                             else
                             {
@@ -3634,10 +3672,18 @@
                         // Defined as fast field ??
                         if(isset($this->c_db_fast_field))
                         {
-                            if(in_array($column_value['filter'],$this->c_db_fast_field))
+                            if($tab_alias_name = $this->in_array_lisha($column_value['filter'],$this->c_db_fast_field))
                             {
                                 // Add fast field closer in core in query
-                                $sql_filter_fast .= ' AND '.$this->get_quote_col($this->c_update_table).$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($filter_value['filter'],$this->link).$column_value['search_mode']);
+                                if($tab_alias_name == 'null')
+                                {
+                                    $alias_table_name = $this->c_update_table;
+                                }
+                                else
+                                {
+                                    $alias_table_name = $tab_alias_name;
+                                }
+                                $sql_filter_fast .= ' AND '.$this->get_quote_col($alias_table_name).$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($filter_value['filter'],$this->link).$column_value['search_mode']);
                             }
                             else
                             {

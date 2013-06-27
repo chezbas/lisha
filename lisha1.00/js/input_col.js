@@ -92,7 +92,7 @@ function lisha_input_keydown(evt,el,lisha_id,column, quick_search_mode, edit_mod
 							//====================================================================
 							// Carriage return pressed
 						    //====================================================================
-							if(edit_mode == __EDIT_MODE__)
+							if(edit_mode == true)
 							{
 								//eval('clearTimeout(lisha.'+lisha_id+'.time_input_search);');
                                 document.getElementById('th_input_'+column+'__'+lisha_id).blur();
@@ -206,7 +206,7 @@ function lisha_col_input_change(lisha_id,column)
 	if(eval('lisha.'+lisha_id+'.edit_mode') != __EDIT_MODE__)
 	{
         //alert(3);
-		//lisha_define_filter(lisha_id,document.getElementById(encodeURIComponent('th_input_'+column+'__'+lisha_id)).value,column,false);
+		lisha_define_filter(lisha_id,document.getElementById(encodeURIComponent('th_input_'+column+'__'+lisha_id)).value,column,false);
 	}
 }
 /**==================================================================*/
