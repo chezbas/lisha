@@ -302,7 +302,9 @@
     // Native field name in main table
     // Optional declaration but can provide fast response time
     // Don't add anything here if your have a doubt
-    // null means use main table name
+    // null in table_name_space means use main table name ( update table name )
+    // Do not add primary key already define by define_key function
+    // Do not add any field with transformation ( eg: CONCATE('--','id','---') AS 'custom' )
     //==================================================================
     $obj_lisha_bug->define_fast_field(  Array('TEXD','business'),
                                         Array('TEXC','classe')

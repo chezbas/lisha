@@ -206,7 +206,7 @@ function lisha_col_input_change(lisha_id,column)
 	if(eval('lisha.'+lisha_id+'.edit_mode') != __EDIT_MODE__)
 	{
         //alert(3);
-		lisha_define_filter(lisha_id,document.getElementById(encodeURIComponent('th_input_'+column+'__'+lisha_id)).value,column,false);
+		//lisha_define_filter(lisha_id,document.getElementById(encodeURIComponent('th_input_'+column+'__'+lisha_id)).value,column,false);
 	}
 }
 /**==================================================================*/
@@ -490,7 +490,7 @@ function lisha_input_result_click(lisha_id,column,line,txt)
     lisha_cover_with_filter(lisha_id);
 
 	// Launch automatic Search
-    alert(4);
+    //alert(4);
 	lisha_define_filter(lisha_id,encodeURIComponent(document.getElementById('th_input_'+column+'__'+lisha_id).value),column,true);
 }
 /**==================================================================*/
