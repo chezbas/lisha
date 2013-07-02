@@ -26,7 +26,7 @@
 				`transaction`.`daterec` 		AS `daterec`,
 				`transaction`.`description`	    AS `description`,
 				`transaction`.`amount`			AS `amount`,
-				MD5(`transaction`.`amount`)	    AS `upper`,
+				IF(MOD(`transaction`.`index`,2)=0,MD5(`transaction`.`amount`),SHA1(`transaction`.`amount`))	    AS `upper`,
 				`transaction`.`status`			AS `status`,
 				`transaction`.`checkme`		    AS `checkme`,
 				`transaction`.`datum`			AS `datum`,

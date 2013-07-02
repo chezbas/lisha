@@ -1347,7 +1347,8 @@
 							}
 
                             // Disable checkbox if you are currently updating set of rows
-                            if($p_edit)
+                            // Disable checkbox if cell update disable
+                            if($p_edit || $this->c_cells_edit || $this->c_readonly)
                             {
                                 $content .= ' DISABLED>';
                             }
@@ -1386,7 +1387,7 @@
 						{
 							// OK for cell edition
 							$watermark = '';
-							if($this->c_readonly == __RW__ && !$p_edit)
+							if($this->c_readonly == __RW__ && !$p_edit && !$this->c_cells_edit)
 							{
 								$edit_cell = 'onclick=lisha_StopEventHandler(event);edit_cell(event,\''.$line.'\',\''.$key_col.'\',\''.$this->c_id.'\',\''.$this->c_columns[$key_col]["data_type"].'\');';
 							}

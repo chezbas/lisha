@@ -1489,7 +1489,7 @@
 			// Execute query
             // SRX optimization ( Do more with less Yaoooo !!! )
 			//==================================================================
-			$prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter_fast.') deriv WHERE 1 = 1 '.$add_where.' '.$sql_filter.' '.$order.' '.$my_limit;
+			$prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter_fast.$add_where.') deriv WHERE 1 = 1 '.$sql_filter.' '.$order.' '.$my_limit;
             //$prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter_fast.') deriv WHERE 1 = 1 '.$add_where.' '.$sql_filter.' '.$order;
 
 			//error_log($prepared_query);
