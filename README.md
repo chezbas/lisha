@@ -1,146 +1,150 @@
--==--=----==-=---==--=----==-=---==--=----==-=--
-Welcome to quick install manual
--==--=----==-=---==--=----==-=---==--=----==-=--
+# Lisha Project
 
--==--=----==-=---==--=----==-=---==--=----==-=--
-Install application files
--==--=----==-=---==--=----==-=---==--=----==-=--
+## Welcome to quick install manual
+
+### Install application files
+
 Copy 3 following directories in your root web site directory
 
-	- includes ( if includes directory already exists in your root web site, just add contents package to your own )
-	- demo ( if exists )
-	- $package_directory_name$
--==--=----==-=---==--=----==-=---==--=----==-=--
+- includes ( if includes directory already exists in your root web site, just add contents package to your own )
+- demo ( if exists )
+- $package_directory_name$
 
+### Unix rights
 
--==--=----==-=---==--=----==-=---==--=----==-=--
-Unix rights
--==--=----==-=---==--=----==-=---==--=----==-=--
 Setup rights to have read/write acces to your web directories
--==--=----==-=---==--=----==-=---==--=----==-=--
 
+### Import Database
 
--==--=----==-=---==--=----==-=---==--=----==-=--
-Import Database
--==--=----==-=---==--=----==-=---==--=----==-=--
-Create your custom schema ( e.g. : lisha )
+- Create your custom schema ( e.g. : lisha )
+- Import file MySQL_lisha.sql into this schema
 
-import file MySQL_lisha.sql into this schema
--==--=----==-=---==--=----==-=---==--=----==-=--
+### Global lisha access setup
 
+**Go to web file directory :** includes/lishaSetup/main_configuration.php and do the following
 
--==--=----==-=---==--=----==-=---==--=----==-=--
-Global lisha access setup
--==--=----==-=---==--=----==-=---==--=----==-=--
-
-Go to web file directory : includes/lishaSetup/main_configuration.php and do the following
-
-Find line contains
+1. Find line contains
+```php
 define("__LISHA_DATABASE_SCHEMA__","lisha");	// Schema
-then
-replace lisha by your own schema name
+```
+then replace **lisha** by your **own schema name**
 
-Find line contains
+2. Find line contains
+```php
 define("__LISHA_DATABASE_USER__","adminl");		// user
-then
-replace adminl by your own database user name
+```
+then replace **adminl** by your **own database user name**
 
-Find line contains
+3. Find line contains
+```php
 define("__LISHA_DATABASE_PASSWORD__","demo");	// password
-then
-replace demo by your own database user password
--==--=----==-=---==--=----==-=---==--=----==-=--
+```
+then replace **demo** by your **own database user password**
 
+---
 
--==--=----==-=---==--=----==-=---==--=----==-=--
-Demo access setup ( if demo only )
--==--=----==-=---==--=----==-=---==--=----==-=--
+### Demo access setup ( if demo only )
 
-Go to web file directory : demo/includes/lishaSetup/main_configuration.php and do the following
+**Go to web file directory :** demo/includes/lishaSetup/main_configuration.php and do the following
 
-Find line contains
+1. Find line contains
+```php
 define("__LISHA_DATABASE_SCHEMA__","lisha");	// Schema
-then
-replace lisha by your own schema name
+```
+then replace **lisha** by your **own schema name**
 
-Find line contains
+2. Find line contains
+```php
 define("__LISHA_DATABASE_USER__","adminl");		// user
-then
-replace adminl by your own database user name
+```
+then replace **adminl** by your **own database user name**
 
-Find line contains
+3. Find line contains
+```php
 define("__LISHA_DATABASE_PASSWORD__","demo");	// password
-then
-replace demo by your own database user password
+```
+then replace **demo** by your **own database user password**
 
-To run demo
+**To run demo :**
 http://localhost/demo/
--==--=----==-=---==--=----==-=---==--=----==-=--
+
+---
+
+### Setup technical documentation
+
+> Only if you have downloaded full package
 
 
-
-Only if you have downloaded full package
-
--==--=----==-=---==--=----==-=---==--=----==-=--
-Setup technical documentation
--==--=----==-=---==--=----==-=---==--=----==-=--
-
-Go to web file directory : $package_directory_name$/includes/MTSetup/setup.php and do the following
+**Go to web file directory : $package_directory_name$/includes/MTSetup/setup.php and do the following**
 
 Find line contains
+```php
 define("__MAGICTREE_DATABASE_SCHEMA__","lisha");	// Schema
+```
 then
-replace lisha by your own schema name
+replace **lisha** by your **own schema name**
 		
 Find line contains
+```php
 define("__MAGICTREE_DATABASE_USER__","adminl");		// user
+```
 then
-replace adminl by your own database user name
+replace **adminl** by your **own database user name**
 
 Find line contains
+```php
 define("__MAGICTREE_DATABASE_PASSWORD__","demo");	// password
+```
 then
-replace demo by your own database user password
-//==================================================================
+replace **demo** by your **own database user password**
 
 
 
-In your lisha custom file setup ( eg: demo/includes/LishaDefine/demo.php )
+**In your lisha custom file setup ( eg: demo/includes/LishaDefine/demo.php )**
 
-1/ Replace line
+1. Replace line
+```php
 $obj_lisha_tran->define_attribute('__active_user_doc', false);		// user documentation button
+```
 by
+```php
 $obj_lisha_tran->define_attribute('__active_user_doc', true);		// user documentation button
+```
 
-
-2/ Replace line
+2. Replace line
+```php
 $obj_lisha_tran->define_attribute('__active_tech_doc', false);		// technical documentation button
+```
 by
+```php
 $obj_lisha_tran->define_attribute('__active_tech_doc', true);		// technical documentation button
+```
 
-
-3/ Replace line
+3. Replace line
+```php
 $obj_lisha_tran->define_attribute('__active_ticket', false);		// Tickets link
+```
 by
+```php
 $obj_lisha_tran->define_attribute('__active_ticket', true);		// Tickets link
+```
 
-// Access
-Url access to technical documentation
-http://localhost/$package_directory_name$/indextech.php
+4. Access
 
-Url access to user documentation
-http://localhost/$package_directory_name$/
+**Url access to technical documentation**
+- http://localhost/$package_directory_name$/indextech.php
 
-Url access to tickets
-http://localhost/$package_directory_name$/bugs
--==--=----==-=---==--=----==-=---==--=----==-=--
+**Url access to user documentation**
+- http://localhost/$package_directory_name$/
 
+**Url access to tickets**
+- http://localhost/$package_directory_name$/bugs
 
+---
 
--==--=----==-=---==--=----==-=---==--=----==-=--
-Relative directory access to lisha
-in demo/includes/LishaDefine/demo.php
--==--=----==-=---==--=----==-=---==--=----==-=--
+### Relative directory access to lisha 
+
+**in demo/includes/LishaDefine/demo.php**
 
 Relative acces to your lisha is flag by 'xxxxxxxxxx'
 
@@ -159,6 +163,7 @@ So to go from source to destination, i have to build relative path '../$package_
 
 To acces to lisha framework, replace following 'xxxxxxxxxx' by '../$package_directory_name$'
 
+```php
 $_SESSION[$ssid]['lisha'][$lisha1_id] = new lisha(
 													$lisha1_id,
 													$ssid,
@@ -169,6 +174,8 @@ $_SESSION[$ssid]['lisha'][$lisha1_id] = new lisha(
 													false,
 													__LISHA_APPLICATION_RELEASE__
 												);
--==--=----==-=---==--=----==-=---==--=----==-=--
+```
+
+---
 
 Any question ? Go to https://sourceforge.net/projects/lisha/
