@@ -140,7 +140,7 @@ $obj_lisha_tran->define_attribute('__active_ticket', true);		// Tickets link
 **Url access to tickets**
 - http://localhost/$package_directory_name$/bugs
 
-
+---
 
 ### Relative directory access to lisha 
 
