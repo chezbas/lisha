@@ -201,11 +201,18 @@ fi
 
 
 # Readme
-cp readme.txt $pack_name
-
+rm README.md
+cp zmodele/README.md .
+chown gwuser README.md
+chmod 770 README.md
 
 # Replace generic directory name by true value
-sed -i 's/\$package_directory_name\$/'$release_version'/' $pack_name/readme.txt
+sed -i 's/\$package_directory_name\$/'$release_version'/' README.md
+sed -i 's/\$package_directory_name\$/'$release_version'/' $pack_name/README.md
+
+# Copy readme into pack
+cp readme.txt $pack_name
+
 
 # Main includes setup
 mkdir $pack_name/includes
@@ -218,6 +225,7 @@ cp includes/lishaSetup/main_configuration.php $pack_name/includes/lishaSetup/mai
 mysqldump --databases lisha --tables $table_conf $table_demo $table_doc $table_tickets lisha_text lisha_internal --add-drop-table --quick -u root --password=demo > $pack_name/MySQL_lisha.sql
 ###################################################
 
+cp $pack_name/MySQL_lisha.sql zinstallation/database/
 
 ###################################################
 # Compress package

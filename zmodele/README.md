@@ -8,7 +8,7 @@ Copy 3 following directories in your root web site directory
 
 - includes ( if includes directory already exists in your root web site, just add contents package to your own )
 - demo ( if exists )
-- lisha1.00
+- $package_directory_name$
 
 ### Unix rights
 
@@ -75,7 +75,7 @@ http://localhost/demo/
 > Only if you have downloaded full package
 
 
-**Go to web file directory : lisha1.00/includes/MTSetup/setup.php and do the following**
+**Go to web file directory : $package_directory_name$/includes/MTSetup/setup.php and do the following**
 
 Find line contains
 ```php
@@ -132,13 +132,13 @@ $obj_lisha_tran->define_attribute('__active_ticket', true);		// Tickets link
 4. Access
 
 **Url access to technical documentation**
-- http://localhost/lisha1.00/indextech.php
+- http://localhost/$package_directory_name$/indextech.php
 
 **Url access to user documentation**
-- http://localhost/lisha1.00/
+- http://localhost/$package_directory_name$/
 
 **Url access to tickets**
-- http://localhost/lisha1.00/bugs
+- http://localhost/$package_directory_name$/bugs
 
 ---
 
@@ -156,10 +156,10 @@ demo
 	includes
 	...
 	index.php <-- file that run my lisha ( source )
-lisha1.00 <-- lisha framework ( destination )
+$package_directory_name$ <-- lisha framework ( destination )
 ...
 
-So to go from source to destination, i have to build relative path '../lisha1.00' or using constant '../'.__LISHA_APPLICATION_RELEASE__
+So to go from source to destination, i have to build relative path '../$package_directory_name$' or using constant '../'.__LISHA_APPLICATION_RELEASE__
 
 ```php
 $_SESSION[$ssid]['lisha'][$lisha1_id] = new lisha(
@@ -167,7 +167,7 @@ $_SESSION[$ssid]['lisha'][$lisha1_id] = new lisha(
 													$ssid,
 													__MYSQL__,
 													array('user' => __LISHA_DATABASE_USER__,'password' => __LISHA_DATABASE_PASSWORD__,'host' => __LISHA_DATABASE_HOST__,'schema' => __LISHA_DATABASE_SCHEMA__),
-													'../lisha1.00',
+													'../$package_directory_name$',
 													null,
 													false,
 													__LISHA_APPLICATION_RELEASE__
