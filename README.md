@@ -17,29 +17,26 @@ Setup rights to have read/write acces to your web directories
 ### Import Database
 
 - Create your custom schema ( e.g. : lisha )
-- Import file MySQL_lisha.sql into this schema
+- Import file ./zinstallation/database/MySQL_lisha.sql into this schema
 
 ### Global lisha access setup
 
 **Go to web file directory :** includes/lishaSetup/main_configuration.php and do the following
 
-1. Find line contains
+1. Find the line that contains the code below and replace **lisha** by your **own schema name**
 ```php
 define("__LISHA_DATABASE_SCHEMA__","lisha");	// Schema
 ```
-then replace **lisha** by your **own schema name**
 
-2. Find line contains
+2. Find the line that contains the code below and replace **adminl** by your **own database user name**
 ```php
 define("__LISHA_DATABASE_USER__","adminl");		// user
 ```
-then replace **adminl** by your **own database user name**
 
-3. Find line contains
+3. Find the line that contains the code below and replace **demo** by your **own database user password**
 ```php
 define("__LISHA_DATABASE_PASSWORD__","demo");	// password
 ```
-then replace **demo** by your **own database user password**
 
 ---
 
@@ -47,23 +44,20 @@ then replace **demo** by your **own database user password**
 
 **Go to web file directory :** demo/includes/lishaSetup/main_configuration.php and do the following
 
-1. Find line contains
+1. Find the line that contains the code below and replace **lisha** by your **own schema name**
 ```php
 define("__LISHA_DATABASE_SCHEMA__","lisha");	// Schema
 ```
-then replace **lisha** by your **own schema name**
 
-2. Find line contains
+2. Find the line that contains the code below and replace **adminl** by your **own database user name**
 ```php
 define("__LISHA_DATABASE_USER__","adminl");		// user
 ```
-then replace **adminl** by your **own database user name**
 
-3. Find line contains
+3. Find the line that contains the code below and **demo** by your **own database user password**
 ```php
 define("__LISHA_DATABASE_PASSWORD__","demo");	// password
 ```
-then replace **demo** by your **own database user password**
 
 **To run demo :**
 http://localhost/demo/
@@ -77,28 +71,20 @@ http://localhost/demo/
 
 **Go to web file directory : lisha1.00/includes/MTSetup/setup.php and do the following**
 
-Find line contains
+1. Find the line that contains the code below and replace **lisha** by your **own schema name**
 ```php
 define("__MAGICTREE_DATABASE_SCHEMA__","lisha");	// Schema
 ```
-then
-replace **lisha** by your **own schema name**
-		
-Find line contains
+	
+2. Find the line that contains the code below and replace **adminl** by your **own database user name**
 ```php
 define("__MAGICTREE_DATABASE_USER__","adminl");		// user
 ```
-then
-replace **adminl** by your **own database user name**
 
-Find line contains
+3. Find the line that contains the code below and replace **demo** by your **own database user password**
 ```php
 define("__MAGICTREE_DATABASE_PASSWORD__","demo");	// password
 ```
-then
-replace **demo** by your **own database user password**
-
-
 
 **In your lisha custom file setup ( eg: demo/includes/LishaDefine/demo.php )**
 
