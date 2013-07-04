@@ -385,6 +385,12 @@ function lisha_cancel_edit(lisha_id,ajax_return)
 /**==================================================================*/
 
 
+/**==================================================================
+ * Call when user delete selected lines
+ * @lisha_id	: internal lisha identifier
+ * @confirm     : true means yes
+ * @ajax_return : return ajax if any
+ ====================================================================*/
 function delete_lines(lisha_id,confirm,ajax_return)
 {
 	if(typeof(ajax_return) == 'undefined')
@@ -408,10 +414,10 @@ function delete_lines(lisha_id,confirm,ajax_return)
 				
 				// Display the wait div
 				lisha_display_wait(lisha_id);
-				
-				/**==================================================================
-				 * Ajax init
-				 ====================================================================*/	
+
+                //==================================================================
+                // Setup Ajax configuration
+                //==================================================================
 				var conf = new Array();	
 	
 				conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
@@ -423,7 +429,7 @@ function delete_lines(lisha_id,confirm,ajax_return)
 				conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"',true";
 		
 				ajax_call(conf);
-				/**==================================================================*/
+                //==================================================================
 			}
 		}
 		else
@@ -465,12 +471,14 @@ function delete_lines(lisha_id,confirm,ajax_return)
 		}
 	}
 }
+/**==================================================================*/
+
 
 /**==================================================================
- * Add line action
- * @param		: lisha_id Id of the lisha
- * @ajax_return	: use with ajax return
-====================================================================*/
+ * Call when user add a new line
+ * @lisha_id	: internal lisha identifier
+ * @ajax_return : return ajax if any
+ ====================================================================*/
 function add_line(lisha_id,ajax_return)
 {
 	if(typeof(ajax_return) == 'undefined')
@@ -496,8 +504,7 @@ function add_line(lisha_id,ajax_return)
 			}
 		}
 		//==================================================================
-		//alert(JSON.stringify(val));
-		
+
 		//==================================================================
 		// Setup Ajax configuration
 		//==================================================================
@@ -579,11 +586,11 @@ function add_line(lisha_id,ajax_return)
 
 
 /**==================================================================
- * Add line action
- * evt			: event of web browser
- * lisha_id		: lisha_id Id of the lisha
- * up_mode         : update or add
- * ajax_return	: use with ajax return
+ * Called when user save update on selected lines
+ * @evt			: event of web browser
+ * @lisha_id	: lisha_id Id of the lisha
+ * @up_mode     : update or add
+ * @ajax_return : use with ajax return
 ====================================================================*/
 function save_lines(evt,lisha_id,up_mode,ajax_return)
 {
