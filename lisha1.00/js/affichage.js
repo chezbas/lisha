@@ -980,12 +980,11 @@ function lisha_StopEventHandler(evt)
     }
 }
 
-/**
+/**==================================================================
  * Get the position of an element in reference to the body.
- * 
- * @param id Id of the element
- * @returns {Array} 0 => left, 1 => top
- */
+ * @id  : Dom id of element
+ * return array position (left,top)
+ ====================================================================*/
 function lisha_getPosition(id)
 {
 	var left = 0;
@@ -1017,14 +1016,14 @@ function lisha_getPosition(id)
 	
 	return tab;
 }
+/**==================================================================*/
 
 
-/**
- * Toggle the column menu
- * 
- * @param id Id of the lisha
- * @param column  Column of the menu
- */
+/**==================================================================
+ * Toggle column menu
+ * @id      : Internal lisha id
+ * @column  : Column to display menu
+ ====================================================================*/
 function lisha_toggle_header_menu(id,column)
 {
 	eval('lisha.'+id+'.stop_click_event = true;');
@@ -1245,6 +1244,7 @@ function lisha_toggle_header_menu(id,column)
 		div_menu.style.display = 'none';
 	}
 }
+/**==================================================================*/
 
 function lisha_generate_calendar(lisha_id,column,ajax_return)
 {

@@ -22,36 +22,36 @@
 	// Define main query
 	//==================================================================
 	$query = "	SELECT
-					`bugsreports`.`ID` AS 'id',
-					TEXD.`text` AS 'business',
-					`bugsreports`.`Type` AS 'type',
-					TEXC.`text` AS 'classe',
-					`bugsreports`.`Version` AS 'version',
-					`bugsreports`.`DateCrea` AS 'DateCrea',
+					`".__LISHA_TABLE_EXTRA_TICK__."`.`ID` AS 'id',
+					`TEXD`.`text` AS 'business',
+					`".__LISHA_TABLE_EXTRA_TICK__."`.`Type` AS 'type',
+					`TEXC`.`text` AS 'classe',
+					`".__LISHA_TABLE_EXTRA_TICK__."`.`Version` AS 'version',
+					`".__LISHA_TABLE_EXTRA_TICK__."`.`DateCrea` AS 'DateCrea',
 					(
 						SELECT
 							CASE TEX.`id`
 								WHEN 4
-								THEN CONCAT('[S]',`bugsreports`.`Description`,'[/S]')
+								THEN CONCAT('[S]',`".__LISHA_TABLE_EXTRA_TICK__."`.`Description`,'[/S]')
 								ELSE
-									`bugsreports`.`Description`
+									`".__LISHA_TABLE_EXTRA_TICK__."`.`Description`
 								END	
 					) AS 'Description',
 					CONCAT('[img]',CLAS.`symbol`,'[/img]') AS 'flag',
 					CONCAT(
 								(
 									SELECT
-							 			CASE IFNULL( LENGTH( `bugsreports`.`details` ) , 0 ) + IFNULL( LENGTH( `bugsreports`.`solution` ) , 0 ) 
+							 			CASE IFNULL( LENGTH( `".__LISHA_TABLE_EXTRA_TICK__."`.`details` ) , 0 ) + IFNULL( LENGTH( `".__LISHA_TABLE_EXTRA_TICK__."`.`solution` ) , 0 )
 											WHEN 0
-											THEN CONCAT('[URL=./editbug.php?ssid=".$ssid."&MTLNG=".$_GET['lng']."&ID=',`bugsreports`.`ID`,']".$_SESSION[$ssid]['lisha']['page_text'][15]['TX']."[/URL]')
-											ELSE CONCAT('<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\"[URL=./viewbug.php?ssid=".$ssid."&MTLNG=".$_GET['lng']."&ID=',`bugsreports`.`ID`,']".$_SESSION[$ssid]['lisha']['page_text'][13]['TX']."[/URL]</a>',' / ','<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\"[URL=./editbug.php?ssid=".$ssid."&MTLNG=".$_GET['lng']."&ID=',`bugsreports`.`ID`,']".$_SESSION[$ssid]['lisha']['page_text'][14]['TX']."[/URL]</a>')
+											THEN CONCAT('[URL=./editbug.php?ssid=".$ssid."&MTLNG=".$_GET['lng']."&ID=',`".__LISHA_TABLE_EXTRA_TICK__."`.`ID`,']".$_SESSION[$ssid]['lisha']['page_text'][15]['TX']."[/URL]')
+											ELSE CONCAT('<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\"[URL=./viewbug.php?ssid=".$ssid."&MTLNG=".$_GET['lng']."&ID=',`".__LISHA_TABLE_EXTRA_TICK__."`.`ID`,']".$_SESSION[$ssid]['lisha']['page_text'][13]['TX']."[/URL]</a>',' / ','<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\"[URL=./editbug.php?ssid=".$ssid."&MTLNG=".$_GET['lng']."&ID=',`".__LISHA_TABLE_EXTRA_TICK__."`.`ID`,']".$_SESSION[$ssid]['lisha']['page_text'][14]['TX']."[/URL]</a>')
 										END
 								)
 						  ) AS 'details',
-					`bugsreports`.`Qui` AS 'qui',
+					`".__LISHA_TABLE_EXTRA_TICK__."`.`Qui` AS 'qui',
 					TEX.`text` AS 'status',
-					`bugsreports`.`reference` AS 'reference',
-					`bugsreports`.`Last_mod` AS 'last_mod'
+					`".__LISHA_TABLE_EXTRA_TICK__."`.`reference` AS 'reference',
+					`".__LISHA_TABLE_EXTRA_TICK__."`.`Last_mod` AS 'last_mod'
 				FROM
 					`".__LISHA_TABLE_EXTRA_TICK__."`, -- No alias on update table !!
 					`".__LISHA_TABLE_EXTRA_TICK_TEXT__."` TEX,
@@ -63,15 +63,15 @@
 				WHERE 1 = 1
 					AND CLAS.`id` = TEX.`id`
 					AND CLAS.`class` = 'status'
-					AND CLASC.`id` = `bugsreports`.`Classe`
+					AND CLASC.`id` = `".__LISHA_TABLE_EXTRA_TICK__."`.`Classe`
 					AND CLASC.`class` = 'class'
-					AND CLASD.`id` = `bugsreports`.`Business`
+					AND CLASD.`id` = `".__LISHA_TABLE_EXTRA_TICK__."`.`Business`
 					AND CLASD.`class` = 'business'
-					AND `bugsreports`.`Classe` = TEXC.`id`
-					AND `bugsreports`.`Business` = TEXD.`id` 
+					AND `".__LISHA_TABLE_EXTRA_TICK__."`.`Classe` = TEXC.`id`
+					AND `".__LISHA_TABLE_EXTRA_TICK__."`.`Business` = TEXD.`id`
 					AND TEX.`id_lang` = TEXC.`id_lang`
 					AND TEX.`id_lang` = TEXD.`id_lang`
-					AND `bugsreports`.`status` = TEX.`id`
+					AND `".__LISHA_TABLE_EXTRA_TICK__."`.`status` = TEX.`id`
 					AND TEX.`id_lang` = '".$_GET['lng']."'
 				";
 
@@ -297,7 +297,20 @@
 	//==================================================================
 	$obj_lisha_bug->define_key(Array('id'));
 	//==================================================================
-	
+
+    //==================================================================
+    // Native field name in main table
+    // Optional declaration but can provide fast response time
+    // Don't add anything here if your have a doubt
+    // null in table_name_space means use main table name ( update table name )
+    // Do not add primary key already define by define_key function
+    // Do not add any field with transformation ( eg: CONCATE('--','id','---') AS 'custom' )
+    //==================================================================
+    $obj_lisha_bug->define_fast_field(  Array('TEXD','business'),
+                                        Array('TEXC','classe')
+                                        );
+    //==================================================================
+
 	//==================================================================
 	// Column order : Define in ascending priority means first line defined will be first priority column to order by and so on...
 	//==================================================================

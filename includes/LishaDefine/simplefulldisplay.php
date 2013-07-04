@@ -26,7 +26,7 @@
 				`transaction`.`daterec` 		AS `daterec`,
 				`transaction`.`description`	    AS `description`,
 				`transaction`.`amount`			AS `amount`,
-				MD5(`transaction`.`amount`)	AS `upper`,
+				IF(MOD(`transaction`.`index`,2)=0,MD5(`transaction`.`amount`),SHA1(`transaction`.`amount`))	    AS `upper`,
 				`transaction`.`status`			AS `status`,
 				`transaction`.`checkme`		    AS `checkme`,
 				`transaction`.`datum`			AS `datum`,
@@ -98,7 +98,7 @@
 		//==================================================================
 		// define column : Description
 		//==================================================================
-		$obj_lisha_tran->define_column('description','descriptionddd',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column('description','descriptionddd',__BBCODE__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'description');
 		//==================================================================
 
@@ -138,7 +138,7 @@
 										FROM
 												`transaction2` TRANS2
 										WHERE 1 = 1
-												AND TRANS2.`mode` = '||TAGLOV_module**mode||'",
+												AND TRANS2.`mode` = '||TAGLOV_mode**mode||'",
 									  	'Title of description',
 									  	'text'
 									);
@@ -216,8 +216,21 @@
     //==================================================================
     // Native field name in main table
     // Optional declaration but can provide fast response time
+    // Don't add anything here if your have a doubt
+    // null means use main table name
+    // Don't add filed already defined by function define_key() just above
     //==================================================================
-    $obj_lisha_tran->define_fast_field(Array('description','daterec','amount','status','checkme','datum','mode','text'));
+    $obj_lisha_tran->define_fast_field(Array(
+                                                Array(null,'description'),
+                                                Array(null,'daterec'),
+                                                Array(null,'amount'),
+                                                Array(null,'status'),
+                                                Array(null,'checkme'),
+                                                Array(null,'datum'),
+                                                Array(null,'mode'),
+                                                Array('TRAN2','text')
+                                            )
+                                        );
     //==================================================================
 
 	//==================================================================
@@ -229,7 +242,7 @@
 	//==================================================================
 	// Column order : Define in ascending priority means first line defined will be first priority column to order by and so on...
 	//==================================================================
-	//$obj_lisha_tran->define_order_column('index',__DESC__);
+	$obj_lisha_tran->define_order_column('index',__DESC__);
 	//$obj_lisha_tran->define_order_column('amount',__ASC__);
     //$obj_lisha_tran->define_order_column('description',__DESC__);
 	//==================================================================

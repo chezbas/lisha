@@ -854,7 +854,7 @@
 		{
 			// Set the selected lines to edit
 			$this->define_selected_line($post['selected_lines']);
-			
+
 			//==================================================================
 			// Browse the updated filter
 			//==================================================================
@@ -951,18 +951,18 @@
 			//==================================================================
 			// Execute the query and display the elements
 			//==================================================================
-			//$this->prepare_query();       // SRX optimization
+			$this->prepare_query();       // SRX optimization
 
-            error_log('xxx');
-			//$json = $this->generate_lisha_json_param();
-			//$json_line = $this->generate_json_line();
+            //error_log(print_r($this->c_columns,true));
+			$json = $this->generate_lisha_json_param();
+			$json_line = $this->generate_json_line();
 			
 			// XML return	
 			header("Content-type: text/xml");
 			$xml = "<?xml version='1.0' encoding='UTF8'?>";
 			$xml .= "<lisha>";
-			//$xml .= "<json_line>".$this->protect_xml($json_line)."</json_line>";
-			//$xml .= "<json>".$this->protect_xml($json)."</json>";
+			$xml .= "<json_line>".$this->protect_xml($json_line)."</json_line>";
+			$xml .= "<json>".$this->protect_xml($json)."</json>";
 			$xml .= "</lisha>";
 			echo $xml;
 			//==================================================================
@@ -1265,8 +1265,38 @@
 			}
 		}
 		/**===================================================================*/
-		
-		
+
+
+        /**==================================================================
+         * in_array_lisha
+         * Search value into Array(Array(table0,field0),Array(table1,field1)...)
+         * @valeur      :   Name of filed to find
+         * @tab         :   Multi dimensional array
+         * return table or alias name or false if field name not found
+        ====================================================================*/
+        private function in_array_lisha($valeur,&$tab)
+        {
+            foreach ($tab as $val)
+            {
+                if($val[1]==$valeur)
+                {
+                    if($val[0] == null)
+                    {
+                        $retour = 'null';
+                    }
+                    else
+                    {
+                        $retour = $val[0];
+                    }
+
+                    return $retour;
+                }
+            }
+            return false;
+        }
+        /**===================================================================*/
+
+
 		/**==================================================================
 		 * prepare_query
 		 * build and run query with all WHERE condition
@@ -1290,10 +1320,18 @@
                         // Defined as fast field ??
                         if(isset($this->c_db_fast_field))
                         {
-                            if(in_array($column_value['sql_as'],$this->c_db_fast_field))
+                            if($tab_alias_name = $this->in_array_lisha($column_value['sql_as'],$this->c_db_fast_field))
                             {
                                 // Add fast field closer in core in query
-                                $sql_filter_fast .= ' AND '.$this->get_quote_col($this->c_update_table).'.'.$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).$column_value['search_mode']);
+                                if($tab_alias_name == 'null')
+                                {
+                                    $alias_table_name = $this->c_update_table;
+                                }
+                                else
+                                {
+                                    $alias_table_name = $tab_alias_name;
+                                }
+                                $sql_filter_fast .= ' AND '.$this->get_quote_col($alias_table_name).'.'.$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).$column_value['search_mode']);
                             }
                             else
                             {
@@ -1451,7 +1489,7 @@
 			// Execute query
             // SRX optimization ( Do more with less Yaoooo !!! )
 			//==================================================================
-			$prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter_fast.') deriv WHERE 1 = 1 '.$add_where.' '.$sql_filter.' '.$order.' '.$my_limit;
+			$prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter_fast.$add_where.') deriv WHERE 1 = 1 '.$sql_filter.' '.$order.' '.$my_limit;
             //$prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter_fast.') deriv WHERE 1 = 1 '.$add_where.' '.$sql_filter.' '.$order;
 
 			//error_log($prepared_query);
@@ -3089,7 +3127,7 @@
 						
 			// Transform input area line to php array
 			$tab_val_col = json_decode($val_col,true);
-			//error_log(print_r($tab_val_col,true));
+
 			//==================================================================
 			// Data control
 			//==================================================================
@@ -3624,6 +3662,7 @@
 			$sql_filter = '';
             $sql_filter_fast = '';
 
+            // Scan custom filter defined on each column
             foreach($this->c_columns as $column_key => $column_value)
 			{
 				if(isset($column_value['filter']) && $column_key != $column)
@@ -3633,10 +3672,18 @@
                         // Defined as fast field ??
                         if(isset($this->c_db_fast_field))
                         {
-                            if(in_array($column_value['filter'],$this->c_db_fast_field))
+                            if($tab_alias_name = $this->in_array_lisha($column_value['filter'],$this->c_db_fast_field))
                             {
                                 // Add fast field closer in core in query
-                                $sql_filter_fast .= ' AND '.$this->get_quote_col($this->c_update_table).$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($filter_value['filter'],$this->link).$column_value['search_mode']);
+                                if($tab_alias_name == 'null')
+                                {
+                                    $alias_table_name = $this->c_update_table;
+                                }
+                                else
+                                {
+                                    $alias_table_name = $tab_alias_name;
+                                }
+                                $sql_filter_fast .= ' AND '.$this->get_quote_col($alias_table_name).$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($filter_value['filter'],$this->link).$column_value['search_mode']);
                             }
                             else
                             {
@@ -3661,13 +3708,12 @@
 				}
 			}
 			//==================================================================
-            //error_log($sql_filter);
+
 			//==================================================================
 			// Browse the updated filter
 			//==================================================================
 			$post['filter'] = $txt;
 
-            //error_log('zzzzzzzz'.$txt); // SRX
 			if($post['filter'] == '')
 			{
 				// No filter defined, clear the filter clause
@@ -3676,34 +3722,41 @@
 			}
 			else
 			{
+                // Something input in input box, so continue
+
+                //==================================================================
+                // Convert date in native form if any
+                //==================================================================
 				if($this->c_columns[$column]['data_type'] == 'date')
-				{					
+				{
 					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter'],__MYSQL__); // Database engine hard coded TODO
-					
+
 					$this->c_columns[$column]['filter']['input'] = array('filter' => $tmp_result,
 																		'filter_display' => rawurldecode($post['filter'])
 																		);
 				}
 				else
-				{				
+				{
 					$this->c_columns[$column]['filter']['input'] = array('filter' => rawurldecode($post['filter']),
 																		'filter_display' => rawurldecode($post['filter'])
 																		);
 				}
-				
-				if(isset($this->c_columns[$column]['lov']))
+                //==================================================================
+
+                if(isset($this->c_columns[$column]['lov']))
 				{
+                    // PERCENT
 					$sql = 'SELECT * FROM ('.$this->c_columns[$column]['lov']['sql'].') AS `ret` WHERE '.$this->c_columns[$column]['lov']['col_return'].' LIKE "%'.$this->protect_sql(rawurldecode($post['filter']),$this->link).'%"';
-					
+
 					$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 
-					if($this->c_columns[$column]['quick_help'])
-					{
-						// Quick help : true
+					//if($this->c_columns[$column]['quick_help'])
+					//{
+						// Quick help : Strict
 						if($this->rds_num_rows($this->resultat) == 1)
 						{
 							$this->c_columns[$column]['taglov_possible'] = true;
-							
+
 							while($row = $this->rds_fetch_array($this->resultat))
 							{
 								$this->c_columns[$column]['filter']['input']['taglov'] = $row;
@@ -3713,19 +3766,22 @@
 						{
 							unset($this->c_columns[$column]['taglov_possible']);
 						}
-					}
-					else
+					//}
+					/*else
 					{
-						// Quick help : false
-						
+					    // Wont work in tinyint field on strict value no numeric
+						// Quick help : STRICT
+
 						// Search if the exact value exist
 						$sql = 'SELECT * FROM ('.$this->c_columns[$column]['lov']['sql'].') AS `ret` WHERE '.$this->c_columns[$column]['lov']['col_return'].' = "'.$this->protect_sql(rawurldecode($post['filter']),$this->link).'"';
-						$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
-						
-						if($this->rds_result($this->resultat,0, 'ret') > 0)
+                        error_log("hhhhhhhhh".$sql);
+                        $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
+                        // SRX fix it please !!
+                        // Error due to field in tinyint(3)
+                        //if($this->rds_result($this->resultat,0, 'ret') > 0)
+						if($this->rds_num_rows($this->resultat) > 0)
 						{
 							$this->c_columns[$column]['taglov_possible'] = true;
-							
 							while($row = $this->rds_fetch_array($this->resultat))
 							{
 								$this->c_columns[$column]['filter']['input']['taglov'] = $row;
@@ -3735,13 +3791,13 @@
 						{
 							unset($this->c_columns[$column]['taglov_possible']);
 						}
-					}
+					}*/
 				}
 			}
 			//==================================================================
-			
-			$this->check_column_lovable();
-			
+
+            $this->check_column_lovable();
+
 			if(isset($this->c_columns[$column]['filter']) && count($this->c_columns[$column]['filter']) == 0)
 			{
 				unset($this->c_columns[$column]['filter']);
@@ -4948,40 +5004,6 @@
 			}
 			return $priority;
 		}
-		
-		/*private function convertBBCodetoHTML($txt)
-		{
-			$remplacement=true;
-			while($remplacement)
-			{
-				$remplacement=false;
-				$oldtxt=$txt;
-				$txt = preg_replace('`\[EMAIL\]([^\[]*)\[/EMAIL\]`i','<a href="mailto:\\1">\\1</a>',$txt);
-				$txt = preg_replace('`\[b\]([^\[]*)\[/b\]`i','<b>\\1</b>',$txt);
-				$txt = preg_replace('`\[i\]([^\[]*)\[/i\]`i','<i>\\1</i>',$txt);
-				$txt = preg_replace('`\[u\]([^\[]*)\[/u\]`i','<u>\\1</u>',$txt);
-				$txt = preg_replace('`\[s\]([^\[]*)\[/s\]`i','<s>\\1</s>',$txt);
-				$txt = preg_replace('`\[br\]`','<br>',$txt);
-				$txt = preg_replace('`\[center\]([^\[]*)\[/center\]`','<div style="text-align: center;">\\1</div>',$txt);
-				$txt = preg_replace('`\[left\]([^\[]*)\[/left\]`i','<div style="text-align: left;">\\1</div>',$txt);
-				$txt = preg_replace('`\[right\]([^\[]*)\[/right\]`i','<div style="text-align: right;">\\1</div>',$txt);
-				$txt = preg_replace('`\[img\]([^\[]*)\[/img\]`i','<img src="\\1" />',$txt);
-				$txt = preg_replace('`\[color=([^[]*)\]([^[]*)\[/color\]`i','<font color="\\1">\\2</font>',$txt);
-				$txt = preg_replace('`\[bg=([^[]*)\]([^[]*)\[/bg\]`i','<font style="background-color: \\1;">\\2</font>',$txt);
-				$txt = preg_replace('`\[size=([^[]*)\]([^[]*)\[/size\]`i','<font size="\\1">\\2</font>',$txt);
-				$txt = preg_replace('`\[font=([^[]*)\]([^[]*)\[/font\]`i','<font face="\\1">\\2</font>',$txt);
-				$txt = preg_replace('`\[url\]([^\[]*)\[/url\]`i','<a target="_blank" href="\\1">\\1</a>',$txt);
-				$txt = preg_replace('`\[url=([^[]*)\]([^[]*)\[/url\]`i','<a target="_blank" href="\\1">\\2</a>',$txt);
-				
-				if ($oldtxt<>$txt)
-				{
-					$remplacement=true;
-				}
-			}
-			return $txt;
-			
-		}
-		*/
 		
 		private function clearBBCode($txt)
 		{

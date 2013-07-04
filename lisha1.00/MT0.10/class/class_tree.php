@@ -146,7 +146,7 @@
 			$result = $this->link_mt->query($query);
 			$row = $result->fetch_array(MYSQLI_ASSOC);
 			$this->root_language = $row['valeur'];
-			
+
 			//==================================================================
 			// DEFAULT FACTORY SETTINGS
 			// Load default factory features values
@@ -183,8 +183,7 @@
 			$this->event_functionCall_on_click_item = null;						
 			$this->event_functionCall_on_new_item = null;						
 			$this->event_functionCall_on_delete_item = null;						
-			
-			
+
 			$this->clear_variable();												// reset all working data
 			//==================================================================			
 		}
@@ -1261,7 +1260,7 @@
 			//==================================================================
 			
 			$this->scan_level(0,$this->get_any_child(1));
-			
+
 			$this->html_result .= '<ul class="'.$this->style.'_ul">';
 		}
 		/*===================================================================*/	
@@ -1631,6 +1630,11 @@
 
 					//=========================
 					$final_title = htmlentities($title,ENT_QUOTES,'UTF-8');
+                    if($title == 'horizontal [br] line')
+                    {
+                        //error_log('xxx'.$final_title);
+                        error_log($this->convertBBCodetoHTML($final_title));
+                    }
 					// Only space in string
 					if(trim($title) == '')
 					{
@@ -1641,8 +1645,8 @@
 						$final_title = $this->convertBBCodetoHTML($final_title);
 					}
 					//=========================
-					
-					if ($this->get_any_child($row['id'])) 
+
+					if ($this->get_any_child($row['id']))
 					{	
 						// A child exist for this id
 						// Build Open structure for next level
@@ -1836,7 +1840,6 @@
 					//==================================================================
 
 					//=========================
-					
 					$final_title = htmlentities($title,ENT_QUOTES,'UTF-8');
 					// Only space in string
 					if(trim($title) == '')
@@ -1954,34 +1957,88 @@
 		 ====================================================================*/	
 		public function convertBBCodetoHTML($p_text)
 		{
-			$w_replace = true;
-			
-			while($w_replace)
-			{
-				$w_replace = false;
-				$w_oldtxt = $p_text;
-				$p_text = preg_replace('`\[EMAIL\]([^\[]*)\[/EMAIL\]`i','<a href="mailto:\\1">\\1</a>',$p_text);
-				$p_text = preg_replace('`\[b\]([^\[]*)\[/b\]`i','<b>\\1</b>',$p_text);
-				$p_text = preg_replace('`\[i\]([^\[]*)\[/i\]`i','<i>\\1</i>',$p_text);
-				$p_text = preg_replace('`\[u\]([^\[]*)\[/u\]`i','<u>\\1</u>',$p_text);
-				$p_text = preg_replace('`\[s\]([^\[]*)\[/s\]`i','<s>\\1</s>',$p_text);
-				$p_text = preg_replace('`\[br\]`','<br>',$p_text);
-				$p_text = preg_replace('`\[center\]([^\[]*)\[/center\]`','<p style="text-align: center;">\\1</p>',$p_text);
-				$p_text = preg_replace('`\[left\]([^\[]*)\[/left\]`i','<p style="text-align: left;">\\1</p>',$p_text);
-				$p_text = preg_replace('`\[right\]([^\[]*)\[/right\]`i','<p style="text-align: right;">\\1</p>',$p_text);
-				$p_text = preg_replace('`\[img\]([^\[]*)\[/img\]`i','<img src="\\1" />',$p_text);
-				$p_text = preg_replace('`\[color=([^[]*)\]([^[]*)\[/color\]`i','<font color="\\1">\\2</font>',$p_text);
-				$p_text = preg_replace('`\[bg=([^[]*)\]([^[]*)\[/bg\]`i','<font style="background-color: \\1;">\\2</font>',$p_text);
-				$p_text = preg_replace('`\[size=([^[]*)\]([^[]*)\[/size\]`i','<font size="\\1">\\2</font>',$p_text);
-				$p_text = preg_replace('`\[font=([^[]*)\]([^[]*)\[/font\]`i','<font face="\\1">\\2</font>',$p_text);
-				
-				if ($w_oldtxt != $p_text)
-				{
-					$w_replace=true;
-				}
-			}
-			return $p_text;
+            //$p_text = preg_replace('`\[EMAIL\]([^\[]*)\[/EMAIL\]`i','<a href="mailto:\\1">\\1</a>',$p_text);
+            //$p_text = preg_replace('`\[EMAIL\](.*?)\[/EMAIL\]`i','<a href="mailto:\\1">\\1</a>',$p_text);
+            // Information : Double [/email][/email] to avoid end of email area
+            $p_text = preg_replace('`\[email\](.*?(\[/email\]\[/email\].*?)*)\[/email\](?!(\[/email\]))`ie','"<a href=\"mailto:".str_replace("[/email][/email]","[/email]","\\1")."\">".str_replace("[/email][/email]","[/email]","\\1")."</a>"',$p_text);
+
+            //$p_text = preg_replace('`\[b\]([^\[]*)\[/b\]`i','<b>\\1</b>',$p_text);    // Generation 1 : First [ or ] encounter stop translation
+            //$p_text = preg_replace('`\[b\](.*?)\[/b\]`i','<b>\\1</b>',$p_text);       // Generation 2 : Can't bold string [/b]
+            // Generation 3 : Information : Double [/b][/b] to avoid end of bold area
+            $p_text = preg_replace('`\[b\](.*?(\[/b\]\[/b\].*?)*)\[/b\](?!(\[/b\]))`ie','"<b>".str_replace("[/b][/b]","[/b]","\\1")."</b>"',$p_text);
+
+            //$p_text = preg_replace('`\[i\]([^\[]*)\[/i\]`i','<i>\\1</i>',$p_text);
+            //$p_text = preg_replace('`\[i\](.*?)\[/i\]`i','<i>\\1</i>',$p_text);
+            // Information : Double [/i][/i] to avoid end of italic area
+            $p_text = preg_replace('`\[i\](.*?(\[/i\]\[/i\].*?)*)\[/i\](?!(\[/i\]))`ie','"<i>".str_replace("[/i][/i]","[/i]","\\1")."</i>"',$p_text);
+
+            //$p_text = preg_replace('`\[u\]([^\[]*)\[/u\]`i','<u>\\1</u>',$p_text);
+            //$p_text = preg_replace('`\[u\](.*?)\[/u\]`i','<u>\\1</u>',$p_text);
+            // Information : Double [/u][/u] to avoid end of underline area
+            $p_text = preg_replace('`\[u\](.*?(\[/u\]\[/u\].*?)*)\[/u\](?!(\[/u\]))`ie','"<u>".str_replace("[/u][/u]","[/u]","\\1")."</u>"',$p_text);
+
+            //$p_text = preg_replace('`\[s\]([^\[]*)\[/s\]`i','<s>\\1</s>',$p_text);
+            //$p_text = preg_replace('`\[s\](.*?)\[/s\]`i','<s>\\1</s>',$p_text);
+            // Information : Double [/s][/s] to avoid end of stroke line area
+            $p_text = preg_replace('`\[s\](.*?(\[/s\]\[/s\].*?)*)\[/s\](?!(\[/s\]))`ie','"<s>".str_replace("[/s][/s]","[/s]","\\1")."</s>"',$p_text);
+
+            //$p_text = preg_replace('`\[center\]([^\[]*)\[/center\]`','<p style="text-align: center;">\\1</p>',$p_text);
+            //$p_text = preg_replace('`\[center\](.*?)\[/center\]`','<p style="text-align: center;">\\1</p>',$p_text);
+            // Information : Double [/center][/center] to avoid end of center line area
+            $p_text = preg_replace('`\[center\](.*?(\[/center\]\[/center\].*?)*)\[/center\](?!(\[/center\]))`ie','"<p style=\"text-align: center;\">".str_replace("[/center][/center]","[/center]","\\1")."</p>"',$p_text);
+
+            //$p_text = preg_replace('`\[left\]([^\[]*)\[/left\]`i','<p style="text-align: left;">\\1</p>',$p_text);
+            //$p_text = preg_replace('`\[left\](.*?)\[/left\]`i','<p style="text-align: left;">\\1</p>',$p_text);
+            // Information : Double [/left][/left] to avoid end of left line area
+            $p_text = preg_replace('`\[left\](.*?(\[/left\]\[/left\].*?)*)\[/left\](?!(\[/left\]))`ie','"<p style=\"text-align: left;\">".str_replace("[/left][/left]","[/left]","\\1")."</p>"',$p_text);
+
+            //$p_text = preg_replace('`\[right\]([^\[]*)\[/right\]`i','<p style="text-align: right;">\\1</p>',$p_text);
+            //$p_text = preg_replace('`\[right\](.*?)\[/right\]`i','<p style="text-align: right;">\\1</p>',$p_text);
+            // Information : Double [/right][/right] to avoid end of right line area
+            $p_text = preg_replace('`\[right\](.*?(\[/right\]\[/right\].*?)*)\[/right\](?!(\[/right\]))`ie','"<p style=\"text-align: right;\">".str_replace("[/right][/right]","[/right]","\\1")."</p>"',$p_text);
+
+            //$p_text = preg_replace('`\[img\]([^\[]*)\[/img\]`i','<img src="\\1" />',$p_text);
+            //$p_text = preg_replace('`\[img\](.*?)\[/img\]`i','<img src="\\1" />',$p_text);
+            // Information : Double [/img][/img] to avoid end of picture area
+            $p_text = preg_replace('`\[img\](.*?(\[/img\]\[/img\].*?)*)\[/img\](?!(\[/img\]))`ie','"<img src=\"".str_replace("[/img][/img]","[/img]","\\1")."\" />"',$p_text);
+
+            //$p_text = preg_replace('`\[color=([^[]*)\]([^[]*)\[/color\]`i','<font color="\\1">\\2</font>',$p_text);
+            //$p_text = preg_replace('`\[color=(.*?)\](.*?)\[/color\]`i','<font color="\\1">\\2</font>',$p_text);
+            // Information : Double [/color][/color] to avoid end of color area
+            $p_text = preg_replace('`\[color=(.*?)\](.*?(\[/color\]\[/color\].*?)*)\[/color\](?!(\[/color\]))`ie','"<font color=\"\\1\">".str_replace("[/color][/color]","[/color]","\\2")."</font>"',$p_text);
+
+            //$p_text = preg_replace('`\[bg=([^[]*)\]([^[]*)\[/bg\]`i','<font style="background-color: \\1;">\\2</font>',$p_text);
+            //$p_text = preg_replace('`\[bg=(.*?)\](.*?)\[/bg\]`i','<font style="background-color: \\1;">\\2</font>',$p_text);
+            // Information : Double [/bg][/bg] to avoid end of background color area
+            $p_text = preg_replace('`\[bg=(.*?)\](.*?(\[/bg\]\[/bg\].*?)*)\[/bg\](?!(\[/bg\]))`ie','"<font style=\"background-color:\\1;\">".str_replace("[/bg][/bg]","[/bg]","\\2")."</font>"',$p_text);
+
+            //$p_text = preg_replace('`\[size=([^[]*)\]([^[]*)\[/size\]`i','<font size="\\1">\\2</font>',$p_text);
+            //$p_text = preg_replace('`\[size=(.*?)\](.*?)\[/size\]`i','<font size="\\1">\\2</font>',$p_text);
+            // Information : Double [/size][/size] to avoid end of font size area
+            $p_text = preg_replace('`\[size=(.*?)\](.*?(\[/size\]\[/size\].*?)*)\[/size\](?!(\[/size\]))`ie','"<font size=\"\\1\">".str_replace("[/size][/size]","[/size]","\\2")."</font>"',$p_text);
+
+            //$p_text = preg_replace('`\[font=([^[]*)\]([^[]*)\[/font\]`i','<font face="\\1">\\2</font>',$p_text);
+            //$p_text = preg_replace('`\[font=(.*?)\](.*?)\[/font\]`i','<font face="\\1">\\2</font>',$p_text);
+            // Information : Double [/font][/font] to avoid end of font area
+            $p_text = preg_replace('`\[font=(.*?)\](.*?(\[/font\]\[/font\].*?)*)\[/font\](?!(\[/font\]))`ie','"<font face=\"\\1\">".str_replace("[/font][/font]","[/font]","\\2")."</font>"',$p_text);
+
+            // Information : Double [/url][/url] to avoid end of URL area
+            $p_text = preg_replace('`\[url\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" href=\"".str_replace("[/url][/url]","[/url]","\\1")."\">".str_replace("[/url][/url]","[/url]","\\1")."</a>"',$p_text);
+            $p_text = preg_replace('`\[url=(.*?)\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" href=\"\\1\">".str_replace("[/url][/url]","[/url]","\\2")."</a>"',$p_text);
+
+            // Found a randomized string do not exists in string to convert
+            $temp_str = '7634253332';while(stristr($p_text,$temp_str)){$temp_str = mt_rand();}
+            $p_text = str_replace('[br][br]',$temp_str,$p_text);
+            $p_text = preg_replace('`(?<!\[br\])\[br\](?!(\[br\]))`ie','str_replace("[br]","<br>","\\0")',$p_text);
+            $p_text = str_replace($temp_str,'[br]',$p_text);
+
+            // Found a randomized string do not exists in string to convert
+            $temp_str = '7634253332';while(stristr($p_text,$temp_str)){$temp_str = mt_rand();}
+            $p_text = str_replace('[hr][hr]',$temp_str,$p_text);
+            $p_text = preg_replace('`(?<!\[hr\])\[hr\](?!(\[hr\]))`ie','str_replace("[hr]","<hr>","\\0")',$p_text);
+            $p_text = str_replace($temp_str,'[hr]',$p_text);
+
+            return $p_text;
 		}
 		/*===================================================================*/	
 	}
-?>

@@ -157,9 +157,6 @@ function input_key_manager(evt,lisha_id,line,column)
 
 	if(charCode == 13) // Enter
 	{
-		//alert('return');
-		
-		//encodeURIComponent()
 		var input_updating = document.getElementById(div_root_updating+'_input').value;
 
 		// Check Compel
@@ -183,7 +180,10 @@ function input_key_manager(evt,lisha_id,line,column)
 			else
 			{
 				// Compel passed... go on
-				
+
+                // Remove focus from input box to avoid extra input
+                document.getElementById(div_root_updating+'_input').blur();
+
 				// Hide error message div
 				document.getElementById(div_root_updating+'_input_message').style.display = 'none';
 	
@@ -204,7 +204,7 @@ function input_key_manager(evt,lisha_id,line,column)
 				
 				ajax_call(conf);
 				//==================================================================
-			}
+            }
 		//}	
 	}
 }
@@ -266,7 +266,7 @@ function edit_lines(evt,line,lisha_id,ajax_return)
 				}
 			}
 			
-			// Display the wait div
+			// Display background wait window
 			lisha_display_wait(lisha_id);
 
 			/**==================================================================
@@ -329,6 +329,11 @@ function edit_lines(evt,line,lisha_id,ajax_return)
 /**==================================================================*/
 
 
+/**==================================================================
+ * Call when user cancel current edit mode
+ * @lisha_id	: internal lisha identifier
+ * @ajax_return : return ajax if any
+ ====================================================================*/
 function lisha_cancel_edit(lisha_id,ajax_return)
 {
 	if(typeof(ajax_return) == 'undefined')
@@ -377,6 +382,9 @@ function lisha_cancel_edit(lisha_id,ajax_return)
 		}
 	}
 }
+/**==================================================================*/
+
+
 function delete_lines(lisha_id,confirm,ajax_return)
 {
 	if(typeof(ajax_return) == 'undefined')

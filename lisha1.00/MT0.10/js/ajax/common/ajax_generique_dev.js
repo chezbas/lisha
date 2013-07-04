@@ -298,7 +298,7 @@ function ajax_call(configuration,reserve_interne)
 					
 		}		
 		
-		alert(get_lib(191));
+		alert(get_lib('191'));
 		return false;
 		
 	}
