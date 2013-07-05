@@ -483,23 +483,42 @@
 			$style .= '}';																																		
 									
 			//==================================================================
-			// Title of the columns
+			// Build dynamic css background style
 			//==================================================================
 			$style .= '.__'.$this->c_theme.'_lisha_content_'.$this->c_id;
 			$style .= '{';
 			$style .= 'width: 100%;';
 			$style .= 'overflow-x: auto;';
 			$style .= 'overflow-y: auto;';
-									
+
+            switch($this->c_theme)
+            {
+                case 'red';
+                    $bg_color = "#fff2f2";
+                    break;
+                case 'grey';
+                    $bg_color = "#EEEEEE";
+                    break;
+                case 'green';
+                    $bg_color = "#ebfadc";
+                    break;
+                case 'blue';
+                    $bg_color = "#CEDDEF";
+                    break;
+                default:
+                    $bg_color = "#E8E8E8";
+            }
+
+
 			if($this->c_background_logo == '')
 			{
-				$style .= 'background-color: #E8E8E8;';
+				$style .= 'background-color: '.$bg_color.';';
 			}
 			else
 			{
-				$style .= 'background: #E8E8E8 url('.$this->c_background_logo.') '.$this->c_background_repeat.' center center;';
+				$style .= 'background: '.$bg_color.' url('.$this->c_background_logo.') '.$this->c_background_repeat.' center center;';
 			}
-			
+
 			if($this->c_h_unity == '%')
 			{
 				$style .= 'position: absolute;';
@@ -521,8 +540,12 @@
 				$style .= 'height: '.$height_size.$this->c_h_unity.';';
 			}
 			
-			$style .= '}';	
-			
+			$style .= '}';
+            //==================================================================
+
+            //==================================================================
+            // Build dynamic css ...
+            //==================================================================
 			$style .= '.__'.$this->c_theme.'_table_mask_'.$this->c_id;
 			$style .= '{';
 			$style .= 'width: 100%;';
@@ -552,8 +575,12 @@
 				$style .= 'height: '.$height_size.$this->c_h_unity.';';
 			}
 			
-			$style .= '}';	
-			
+			$style .= '}';
+            //=================================================================
+
+            //==================================================================
+            // Build dynamic css Background style for children
+            //==================================================================
 			$style .= '.__'.$this->c_theme.'_lisha_content_'.$this->c_id.'_child';
 			$style .= '{';
 			$style .= 'width: 100%;';
@@ -562,11 +589,11 @@
 			
 			if($this->c_background_logo == '')
 			{
-				$style .= 'background-color: #E8E8E8;';
+				$style .= 'background-color: '.$bg_color.';';
 			}
 			else
 			{
-				$style .= 'background: #E8E8E8 url('.$this->c_background_logo.') '.$this->c_background_repeat.' center center;';
+				$style .= 'background: '.$bg_color.' url('.$this->c_background_logo.') '.$this->c_background_repeat.' center center;';
 			}
 			
 			if($this->c_h_unity == '%')
@@ -613,7 +640,7 @@
 		/**==================================================================
 		 * generate_page_selection
 		 * @p_resultat		:	query result
-		 * @p_type			:	__HEADER __FOOTER__
+		 * @p_type			:	__HEADER__ or __FOOTER__
 		 ====================================================================*/
 		private function generate_page_selection($p_resultat,$p_type)
 		{

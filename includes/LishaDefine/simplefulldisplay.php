@@ -7,12 +7,12 @@
 	// Use framework connexion information from framework
     /** @var $ssid string come from your main php page */
     $_SESSION[$ssid]['lisha'][$lisha1_id] = new lisha(
-                                                            $lisha1_id,
-                                                            $ssid,
-                                                            __MYSQL__,
-                                                            array('user' => __LISHA_DATABASE_USER__,'password' => __LISHA_DATABASE_PASSWORD__,'host' => __LISHA_DATABASE_HOST__,'schema' => __LISHA_DATABASE_SCHEMA__)
-                                                            ,__LISHA_APPLICATION_RELEASE__
-                                                        );
+                                                        $lisha1_id,
+                                                        $ssid,
+                                                        __MYSQL__,
+                                                        array('user' => __LISHA_DATABASE_USER__,'password' => __LISHA_DATABASE_PASSWORD__,'host' => __LISHA_DATABASE_HOST__,'schema' => __LISHA_DATABASE_SCHEMA__),
+                                                        __LISHA_APPLICATION_RELEASE__
+                                                      );
 
 	// Create a reference to the session
 	$obj_lisha_tran = &$_SESSION[$ssid]['lisha'][$lisha1_id];
@@ -26,7 +26,7 @@
 				`transaction`.`daterec` 		AS `daterec`,
 				`transaction`.`description`	    AS `description`,
 				`transaction`.`amount`			AS `amount`,
-				IF(MOD(`transaction`.`index`,2)=0,MD5(`transaction`.`amount`),SHA1(`transaction`.`amount`))	    AS `upper`,
+				IF(MOD(`transaction`.`index`,2)=0,MD5(`transaction`.`amount`),SHA1(`transaction`.`amount`))	    AS `encrypt`,
 				`transaction`.`status`			AS `status`,
 				`transaction`.`checkme`		    AS `checkme`,
 				`transaction`.`datum`			AS `datum`,
@@ -157,8 +157,8 @@
 		//==================================================================
 		// define column : compute
 		//==================================================================
-		$obj_lisha_tran->define_column('upper','Maj xxxxx',__TEXT__,__WRAP__,__LEFT__);
-		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'upper');
+		$obj_lisha_tran->define_column('encrypt','Maj xxxxx',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'encrypt');
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'amount');						
 		//==================================================================
 
@@ -218,7 +218,7 @@
     // Optional declaration but can provide fast response time
     // Don't add anything here if your have a doubt
     // null means use main table name
-    // Don't add filed already defined by function define_key() just above
+    // Don't add fiedd already defined by function define_key() just above
     //==================================================================
     $obj_lisha_tran->define_fast_field(Array(
                                                 Array(null,'description'),

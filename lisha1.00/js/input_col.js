@@ -156,10 +156,9 @@ function toggle_wait_input(lisha_id,column)
 {
 	if(document.getElementById('wait_input_'+lisha_id).style.display != 'block')
 	{
-		// Display
-		/**==================================================================
-		 * Get the position of the lisha and the input
-		 ====================================================================*/	
+        //==================================================================
+        // Get lisha position and the input
+        //==================================================================
 		try
         {
 			var pos_input = lisha_getPosition('th_input_'+column+'__'+lisha_id);
@@ -169,8 +168,8 @@ function toggle_wait_input(lisha_id,column)
 			//alert('zzzzzzzth_input_'+column+'__'+lisha_id);
 		}
 		
-		var pos_lisha = lisha_getPosition('lis__'+eval('lisha.'+lisha_id+'.theme')+'__lisha_table_'+lisha_id+'__'); 
-		/**==================================================================*/	
+		var pos_lisha = lisha_getPosition('lis__'+eval('lisha.'+lisha_id+'.theme')+'__lisha_table_'+lisha_id+'__');
+        //==================================================================
 		
 		// Set the size of the wait picture
 		document.getElementById('wait_input_'+lisha_id).style.width = document.getElementById('th_input_'+column+'__'+lisha_id).offsetWidth-4+'px';
@@ -237,9 +236,9 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
         var txt = encodeURIComponent(document.getElementById('th_input_'+column+'__'+lisha_id).value);
         txt = txt.replace(/\'/g,"\\\\\\\\\\\\\\'");
 
-        /**==================================================================
-		 * Ajax init
-		 ====================================================================*/	
+        //==================================================================
+        // Setup Ajax configuration
+        //==================================================================
 		var conf = [];
 
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
@@ -251,7 +250,7 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
 		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"','"+column+"','"+quick_search+"'";
 
         ajax_call(conf);
-		/**==================================================================*/
+        //==================================================================
 
         // Active red marble animation
 		wait_column_bullet(lisha_id);
@@ -264,10 +263,10 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
 
 			if(eval('lisha.'+lisha_id+'.time_input_search;') != eval('false'))
 			{
-				/**==================================================================
-				 * Display the query result
-				 ====================================================================*/	
-				
+                //==================================================================
+                // Display query result
+                //==================================================================
+
 				// Get the ajax return in json format
 				var json = get_json(ajax_return);
 
@@ -318,7 +317,7 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
 				}
 				// Re-Activate the lisha horizontal scroll
 				document.getElementById('liste_'+lisha_id).onscroll = function(){lisha_horizontal_scroll(lisha_id);};
-				/**==================================================================*/
+                //==================================================================
 			}
 		} 
 		catch(e) 
@@ -330,6 +329,12 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
 /**==================================================================*/
 
 
+/**==================================================================
+ * Manage red marble on column header
+ * Red marble appears when query condition is solvable
+ *
+ * @lisha_id 	    : lisha internal identifier
+ ====================================================================*/
 function update_column_bullet(lisha_id)
 {
 	try 
@@ -341,7 +346,7 @@ function update_column_bullet(lisha_id)
 				var is_lovable = eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.is_lovable');
 				var lov_perso = eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.lov_perso');
 				
-				if(lov_perso != undefined && is_lovable != undefined && is_lovable == true)
+				if(lov_perso != 'undefined' && is_lovable != 'undefined' && is_lovable == true)
 				{
 					document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header_lovable __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
 				}
@@ -365,7 +370,14 @@ function update_column_bullet(lisha_id)
 		lisha_display_error(lisha_id,e,'input_col_3  '+'th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id'));
 	}
 }
+/**==================================================================*/
 
+
+/**==================================================================
+ * Manage wait gif of red marbles on column header
+ *
+ * @lisha_id 	    : lisha internal identifier
+ ====================================================================*/
 function wait_column_bullet(lisha_id)
 {
 	for(var iterable_element in eval('lisha.'+lisha_id+'.columns'))
@@ -379,7 +391,7 @@ function wait_column_bullet(lisha_id)
 		}
 		else
 		{
-			if(lov_perso != undefined)
+			if(lov_perso != undefined )
 			{
 				//alert(eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id'));
 				document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header_check_is_lovable __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
@@ -387,6 +399,7 @@ function wait_column_bullet(lisha_id)
 		}
 	}	
 }
+/**==================================================================*/
 
 
 /**==================================================================
@@ -428,17 +441,18 @@ function lisha_define_filter(lisha_id,txt,column,display,ajax_return)
 		// Get the ajax return in json format
 		//var json = get_json(ajax_return);
 
+        var quick_search = true;
 		// Update the json object
 		try
 		{
 			if(eval('lisha.'+lisha_id+'.menu_quick_search'))
 			{
-				var quick_search = true;
+				quick_search = true;
 				var quick_search_column = eval('lisha.'+lisha_id+'.menu_quick_search_col');
 			}
 			else
 			{
-				var quick_search = false;
+				quick_search = false;
 			}
 
 			if(display)
@@ -496,10 +510,12 @@ function lisha_input_result_click(lisha_id,column,line,txt)
 /**==================================================================*/
 
 
-/**
+/**==================================================================
+ * To analyse....
  * Close the column input result
- * @param lisha_id ID of the lisha
- */
+ *
+ * @lisha_id		: internal lisha identifier
+ ====================================================================*/
 function close_input_result(lisha_id)
 {
 	// Unset the data of the menu
@@ -515,44 +531,41 @@ function close_input_result(lisha_id)
 	eval('lisha.'+lisha_id+'.menu_quick_search = false;');
 	eval('lisha.'+lisha_id+'.menu_quick_search_col = false;');
 }
+/**==================================================================*/
 
 
-/**
- * Place the input result correctly on the lisha
- * @param id ID of the lisha
- * @param column Column of the menu
- */
-function position_input_result(id,column)
+/**==================================================================
+ * To analyse....
+ *
+ * @lisha_id		: internal lisha identifier
+ * @column          : Column id in lisha
+ ====================================================================*/
+function position_input_result(lisha_id,column)
 {
-	/**==================================================================
-	 * Vertical placement
-	 ====================================================================*/	
-	var top_container = document.getElementById('conteneur_menu_'+id).offsetTop;
-	document.getElementById('lis_column_header_menu_'+id).style.top = top_container+'px';
-	/**==================================================================*/	
-	
-	/**==================================================================
-	 * Horizontal placement
-	 ====================================================================*/	
-	var pos_th = document.getElementById('th_2_c'+column+'_'+id).offsetLeft - document.getElementById('liste_'+id).scrollLeft;
-	document.getElementById('lis_column_header_menu_'+id).style.left = pos_th+'px';
-	/**==================================================================*/
+    // Vertical position
+	var top_container = document.getElementById('conteneur_menu_'+lisha_id).offsetTop;
+	document.getElementById('lis_column_header_menu_'+lisha_id).style.top = top_container+'px';
 
-	/**==================================================================
-	 * Test the position of the menu
-	 ====================================================================*/	
+    // Horizontal position
+	var pos_th = document.getElementById('th_2_c'+column+'_'+lisha_id).offsetLeft - document.getElementById('liste_'+lisha_id).scrollLeft;
+	document.getElementById('lis_column_header_menu_'+lisha_id).style.left = pos_th+'px';
+
+    //==================================================================
+    // Get menu position
+    //==================================================================
 	// Get the position of the menu
-	var pos_menu = lisha_getPosition('lis_column_header_menu_'+id); 
+	var pos_menu = lisha_getPosition('lis_column_header_menu_'+lisha_id);
 	
 	// Get the position of the lisha
-	var pos_lisha = lisha_getPosition('lis__'+eval('lisha.'+id+'.theme')+'__lisha_table_'+id+'__'); 
+	var pos_lisha = lisha_getPosition('lis__'+eval('lisha.'+lisha_id+'.theme')+'__lisha_table_'+lisha_id+'__');
 
 	// Test if the menu is not out of the left corner of the lisha
 	if(pos_lisha[0] > pos_menu[0])
 	{
-		document.getElementById('lis_column_header_menu_'+id).style.left = 0+'px';
-	}	
-	/**==================================================================*/
+		document.getElementById('lis_column_header_menu_'+lisha_id).style.left = 0+'px';
+	}
+    //==================================================================
 	
-	eval('lisha.'+id+'.menu_left = '+document.getElementById('lis_column_header_menu_'+id).offsetLeft+';');
+	eval('lisha.'+lisha_id+'.menu_left = '+document.getElementById('lis_column_header_menu_'+lisha_id).offsetLeft+';');
 }
+/**==================================================================*/

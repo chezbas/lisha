@@ -79,12 +79,12 @@ function export_list(lisha_id,ajax_return)
 				// Display the wait div
 				lisha_display_wait(lisha_id);
 	
-				//==================================================================
-				// Setup Ajax configuration
-				// Load estimation
-				//==================================================================
-				var conf = new Array();	
-	
+                //==================================================================
+                // Setup Ajax configuration
+                // Load estimation
+                //==================================================================
+                var conf = [];
+
 				conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 				conf['delai_tentative'] = 15000;
 				conf['max_tentative'] = 4;
@@ -167,7 +167,8 @@ function launch_export(lisha_id, total)
 
 
 /**==================================================================
- * initial_export_box	: Setup export message box 
+ * Setup export message box
+ *
  * @lisha_id	: internal lisha identifier
  * @total 		: Total rows to export
  ====================================================================*/
@@ -203,7 +204,7 @@ function check_export_downloading(lisha_id)
 	//==================================================================
 	// Setup Ajax configuration
 	//==================================================================
-	var conf = new Array();	
+	var conf = [];
 
 	conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_export_progress.php';
 	conf['delai_tentative'] = 15000;
@@ -1717,29 +1718,39 @@ function lisha_hide_wait(lisha_id)
 /**==================================================================*/
 
 
+/**==================================================================
+ * Standard message error
+ * @lisha_id 	: lisha internal identifier
+ * @e           : error message
+ * @more        : further details ??
+ ====================================================================*/
 function lisha_display_error(id_lisha,e,more)
 {
 	var title = e.message;
+    var file;
+    var line;
+
 	if(typeof(more) == undefined)
 	{
 		more = '';
 	}
+
 	if(e.sourceURL)
 	{
-		var file = e.sourceURL;
+		file = e.sourceURL;
 	}
 	else
 	{
-		var file = e.fileName;
+		file = e.fileName;
 	}
 	
 	if(e.line)
 	{
-		var line = e.line;
+		line = e.line;
 	}
 	else
 	{
-		var line = e.lineNumber;
+		line = e.lineNumber;
 	}
 
 	if(document.getElementById('lis__'+eval('lisha.'+id_lisha+'.theme')+'__hide_container_'+id_lisha+'__').style.display == '' || document.getElementById('lis__'+eval('lisha.'+id_lisha+'.theme')+'__hide_container_'+id_lisha+'__').style.display == 'none')
@@ -1749,10 +1760,20 @@ function lisha_display_error(id_lisha,e,more)
 	var prompt_btn = new Array([lis_lib[31]],["lisha_cover_with_filter('"+id_lisha+"');"]);
 	
 	document.getElementById('lis_msgbox_conteneur_'+id_lisha).style.display = '';
-	lisha_generer_msgbox(id_lisha,lis_lib[74],lis_lib[75]+' <b>'+line+'</b> - <b>'+file+'</b><br />'+title+'<br />'+more,'erreur','msg',prompt_btn);
-	document.getElementById('lis__'+eval('lisha.'+id_lisha+'.theme')+'__wait_'+id_lisha+'__').style.display = 'none';
-}
 
+	lisha_generer_msgbox(id_lisha,lis_lib[74],lis_lib[75]+' <b>'+line+'</b> - <b>'+file+'</b><br />'+title+'<br />'+more,'erreur','msg',prompt_btn);
+
+    document.getElementById('lis__'+eval('lisha.'+id_lisha+'.theme')+'__wait_'+id_lisha+'__').style.display = 'none';
+}
+/**==================================================================*/
+
+
+/**==================================================================
+ * Standard message box
+ * @lisha_id    : lisha internal identifier
+ * @title       : Title
+ * @text        : message body
+ ====================================================================*/
 function msgbox(id_lisha,title,text)
 {
 	lisha_cover_with_filter(id_lisha);
@@ -1761,3 +1782,4 @@ function msgbox(id_lisha,title,text)
 	document.getElementById('lis_msgbox_conteneur_'+id_lisha).style.display = '';
 	lisha_generer_msgbox(id_lisha,title,text,'info','msg',prompt_btn);
 }
+/**==================================================================*/
