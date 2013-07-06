@@ -1,7 +1,8 @@
-/**
- * Get the user event type
- * @param p_event
- */
+/**==================================================================
+ * Get user event type
+ *
+ * @p_event     : Browser catched event
+ ====================================================================*/
 function lisha_user_event_get_type(p_event)
 {
 	//noinspection JSUnresolvedVariable
@@ -16,9 +17,12 @@ function lisha_user_event_get_type(p_event)
         return __lisha_EXTERNAL__;
 	}
 }
+/**==================================================================*/
+
 
 /**==================================================================
- * lisha_user_action 	: Lisha internal action
+ * Lisha user internal action
+ *
  * @p_action			: Constant action defined ( __LMOD_OPEN__ )
  * @lisha_id			: internal lisha identifier
  ====================================================================*/
@@ -72,8 +76,9 @@ function lisha_execute_event(p_event,p_moment,lisha_id)
 
 
 /**==================================================================
- * event_lisha_column_list 	: event for colmun list sub lisha
- * @lisha_id				: internal lisha identifier
+ * event rise on column list sub lisha
+ *
+ * @lisha_id			: internal lisha identifier
  * @ajax_return			: response of ajax call
  ====================================================================*/
 function event_lisha_column_list(lisha_id,ajax_return)
@@ -88,7 +93,7 @@ function event_lisha_column_list(lisha_id,ajax_return)
 		//==================================================================
 		// Setup Ajax configuration
 		//==================================================================
-		var conf = new Array();	
+		var conf = [];
 		
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;

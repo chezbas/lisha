@@ -1,3 +1,10 @@
+/**==================================================================
+ * ??? To analyse
+ *
+ * @lisha_id	    : lisha_id Id of the lisha
+ * @p_line	        : ???
+ * @ajax_return     : use with ajax return
+ ====================================================================*/
 function lisha_lmod_click(lisha_id,p_line,ajax_return)
 {
 	//alert('lisha_lmod_'+lisha_id);
@@ -10,11 +17,10 @@ function lisha_lmod_click(lisha_id,p_line,ajax_return)
 		
 		if(document.getElementById('lisha_lmod_'+lisha_id).style.display == 'none' || document.getElementById('lisha_lmod_'+lisha_id).style.display == '')
 		{
-			// Load the lisha
-			/**==================================================================
-			 * Ajax init
-			 ====================================================================*/	
-			var conf = new Array();	
+            //==================================================================
+            // Setup Ajax configuration
+            //==================================================================
+            var conf = [];
 
 			conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_lmod.php';
 			conf['delai_tentative'] = 15000;
@@ -24,7 +30,7 @@ function lisha_lmod_click(lisha_id,p_line,ajax_return)
 			conf['fonction_a_executer_reponse'] = 'lisha_lmod_click';
 			conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"',"+p_line;
 			ajax_call(conf);
-			/**==================================================================*/
+            //==================================================================
 		}
 		else
 		{
@@ -73,6 +79,8 @@ function lisha_lmod_click(lisha_id,p_line,ajax_return)
 		}
 	}
 }
+/**==================================================================*/
+
 
 function lisha_lmod_place(lisha_id)
 {
@@ -83,22 +91,23 @@ function lisha_lmod_place(lisha_id)
 		// __RELATIVE__
 		document.getElementById('lisha_lmod_'+lisha_id).style.top = pos[1] + document.getElementById('lst_'+lisha_id).offsetHeight + 'px';
 		document.getElementById('lisha_lmod_'+lisha_id).style.left = pos[0]-7+'px';
-		
-		/**================================================================== 
-		 * Test the position of the lisha
-		 * ====================================================================*/
-		// Get the position of the lisha
-		var pos_lisha = lisha_getPosition('lisha_lmod_'+lisha_id); 
-		// Get the width of the screen
-		var body_width = document.body.offsetWidth;
-		// Test if the lisha is not out of the left corner of the screen
-		if(pos_lisha[0]+document.getElementById('lisha_lmod_'+lisha_id).offsetWidth > body_width)
-		{
-			document.getElementById('lisha_lmod_'+lisha_id).style.left = '';
-			document.getElementById('lisha_lmod_'+lisha_id).style.right = 0+'px';
-			//alert('trop grand\nlisha : '+(pos_lisha[0]+document.getElementById('lisha_lmod_'+lisha_id).offsetWidth)+'\nbody : '+body_width);
-		}
-		/** ================================================================== */
+
+        //==================================================================
+        // Test lisha position
+        //==================================================================
+
+            // Get the position of the lisha
+            var pos_lisha = lisha_getPosition('lisha_lmod_'+lisha_id);
+            // Get the width of the screen
+            var body_width = document.body.offsetWidth;
+            // Test if the lisha is not out of the left corner of the screen
+            if(pos_lisha[0]+document.getElementById('lisha_lmod_'+lisha_id).offsetWidth > body_width)
+            {
+                document.getElementById('lisha_lmod_'+lisha_id).style.left = '';
+                document.getElementById('lisha_lmod_'+lisha_id).style.right = 0+'px';
+                //alert('trop grand\nlisha : '+(pos_lisha[0]+document.getElementById('lisha_lmod_'+lisha_id).offsetWidth)+'\nbody : '+body_width);
+            }
+        //==================================================================
 	}
 	else
 	{

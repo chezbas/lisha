@@ -28,7 +28,7 @@ function edit_cell(evt,line,column,lisha_id, column_format, ajax_return)
 			//==================================================================
 			// Setup Ajax configuration
 			//==================================================================
-			var conf = new Array();	
+			var conf = [];
 	
 			conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 			conf['delai_tentative'] = 15000;
@@ -72,18 +72,19 @@ function edit_cell(evt,line,column,lisha_id, column_format, ajax_return)
 				{
 					html = '';
 				}
-				
+
+                var input_size = 8;
 				//==================================================================
 				// Compute input box size
-				// minimu size length = 8
+				// minimum size length = 8
 				//==================================================================
 				if(html.length < 8)
 				{
-					var input_size = 8;
+					input_size = 8;
 				}
 				else
 				{
-					var input_size = html.length;
+					input_size = html.length;
 				}
 				//==================================================================
 	
@@ -269,10 +270,10 @@ function edit_lines(evt,line,lisha_id,ajax_return)
 			// Display background wait window
 			lisha_display_wait(lisha_id);
 
-			/**==================================================================
-			 * Ajax init
-			 ====================================================================*/
-			var conf = new Array();	
+            //==================================================================
+            // Setup Ajax configuration
+            //==================================================================
+			var conf = [];
 
 			conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 			conf['delai_tentative'] = 15000;
@@ -283,7 +284,7 @@ function edit_lines(evt,line,lisha_id,ajax_return)
 			conf['param_fonction_a_executer_reponse'] = "'"+evt+"',"+line+",'"+lisha_id+"'";
 			
 			ajax_call(conf);
-			/**==================================================================*/
+            //==================================================================
 		}
 		else
 		{
@@ -341,10 +342,10 @@ function lisha_cancel_edit(lisha_id,ajax_return)
 		// Display the wait div
 		lisha_display_wait(lisha_id);
 		
-		/**==================================================================
-		 * Ajax init
-		 ====================================================================*/	
-		var conf = new Array();	
+        //==================================================================
+        // Setup Ajax configuration
+        //==================================================================
+		var conf = [];
 		
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 3000;
@@ -355,7 +356,7 @@ function lisha_cancel_edit(lisha_id,ajax_return)
 		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"'";
 
 		ajax_call(conf);
-		/**==================================================================*/
+        //==================================================================
 	}
 	else
 	{
@@ -418,7 +419,7 @@ function delete_lines(lisha_id,confirm,ajax_return)
                 //==================================================================
                 // Setup Ajax configuration
                 //==================================================================
-				var conf = new Array();	
+				var conf = [];
 	
 				conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 				conf['delai_tentative'] = 15000;
@@ -508,7 +509,7 @@ function add_line(lisha_id,ajax_return)
 		//==================================================================
 		// Setup Ajax configuration
 		//==================================================================
-		var conf = new Array();	
+		var conf = [];
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
 		conf['max_tentative'] = 4;

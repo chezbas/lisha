@@ -1,7 +1,11 @@
 /**==================================================================
- * Change order of columns
- * @param lisha_id :  Internal lisha id key
- * @param ajax_return : response of ajax call
+ * Change sort order of a column
+ *
+ * @lisha_id	: lisha_id Id of the lisha
+ * @type_order  : ASC or DESC
+ * @column      : column number identifier
+ * @mode        : always NEW ???
+ * @ajax_return : use with ajax return
  ====================================================================*/
 function lisha_column_order(lisha_id,type_order,column,mode,ajax_return)
 {
@@ -10,10 +14,10 @@ function lisha_column_order(lisha_id,type_order,column,mode,ajax_return)
 		eval('lisha.'+lisha_id+'.stop_click_event = true;');
 
 		lisha_display_wait(lisha_id);
-		/**==================================================================
-		 * Ajax init
-		 ====================================================================*/	
-		var conf = new Array();	
+        //==================================================================
+        // Setup Ajax configuration
+        //==================================================================
+		var conf = [];
 		
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
@@ -24,7 +28,7 @@ function lisha_column_order(lisha_id,type_order,column,mode,ajax_return)
 		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"','"+type_order+"',"+column+",'"+mode+"'";
 		
 		ajax_call(conf);
-		/**==================================================================*/
+        //==================================================================
 	}
 	else
 	{
@@ -49,25 +53,32 @@ function lisha_column_order(lisha_id,type_order,column,mode,ajax_return)
 		}
 	}
 }
+/**==================================================================*/
 
 
-/**
- * Change the search mode of the column
- * @param lisha_id id of the lisha
- * @param ajax_return response of ajax call
- */
+/**==================================================================
+ * Change kind of search in a column
+ *
+ * @lisha_id	: lisha_id Id of the lisha
+ * @type_search : empty for strict search, % for partial search
+ * @column      : column number identifier
+ * @ajax_return : use with ajax return
+ ====================================================================*/
 function lisha_change_search_mode(lisha_id,type_search,column,ajax_return)
 {
+    alert(type_search);
 	if(typeof(ajax_return) == 'undefined')
 	{
 		eval('lisha.'+lisha_id+'.stop_click_event = true;');
 
+        // Show div for waiting
 		lisha_display_wait(lisha_id);
-		/**==================================================================
-		 * Ajax init
-		 ====================================================================*/	
-		var conf = new Array();	
-		
+
+        //==================================================================
+        // Setup Ajax configuration
+        //==================================================================
+		var conf = [];
+
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
 		conf['max_tentative'] = 4;
@@ -75,38 +86,43 @@ function lisha_change_search_mode(lisha_id,type_search,column,ajax_return)
 		conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=8&column='+column+'&type_search='+type_search+'&selected_lines='+encodeURIComponent(get_selected_lines(lisha_id));
 		conf['fonction_a_executer_reponse'] = 'lisha_change_search_mode';
 		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"','"+type_search+"',"+column;
-		
+
 		ajax_call(conf);
-		/**==================================================================*/
+        //==================================================================
 	}
 	else
 	{
-		try 
-		{	
+		try
+		{
 			// Get the ajax return in json format
 			var json = get_json(ajax_return);
-			
+
 			// Update the json object
 			eval(decodeURIComponent(json.lisha.json));
-			
+
 			// Set the content of the lisha
 			lisha_set_content(lisha_id,decodeURIComponent(json.lisha.content));
-			
-			// Hide the wait div
+
+			// Hide div for waiting
 			lisha_display_wait(lisha_id);
-		} 
-		catch(e) 
+		}
+		catch(e)
 		{
 			lisha_display_error(lisha_id,e);
 		}
 	}
 }
+/**==================================================================*/
 
-/**
- * Change the alignment mode of the column
- * @param lisha_id id of the lisha
- * @param ajax_return response of ajax call
- */
+
+/**==================================================================
+ * Change kind of column alignment
+ *
+ * @lisha_id	    : lisha_id Id of the lisha
+ * @type_alignment  : center, left or right
+ * @column          : column number identifier
+ * @ajax_return     : use with ajax return
+ ====================================================================*/
 function lisha_change_col_alignment(lisha_id,type_alignment,column,ajax_return)
 {
 	if(typeof(ajax_return) == 'undefined')
@@ -114,10 +130,11 @@ function lisha_change_col_alignment(lisha_id,type_alignment,column,ajax_return)
 		eval('lisha.'+lisha_id+'.stop_click_event = true;');
 
 		lisha_display_wait(lisha_id);
-		/**==================================================================
-		 * Ajax init
-		 ====================================================================*/	
-		var conf = new Array();	
+
+        //==================================================================
+        // Setup Ajax configuration
+        //==================================================================
+		var conf = [];
 		
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
@@ -128,7 +145,7 @@ function lisha_change_col_alignment(lisha_id,type_alignment,column,ajax_return)
 		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"','"+type_alignment+"',"+column;
 		
 		ajax_call(conf);
-		/**==================================================================*/
+        //==================================================================
 	}
 	else
 	{
@@ -152,13 +169,16 @@ function lisha_change_col_alignment(lisha_id,type_alignment,column,ajax_return)
 		}
 	}
 }
+/**==================================================================*/
 
-/**
+
+/**==================================================================
  * Hide or display a column
- * @param lisha_id id of the lisha
- * @param column id of the column
- * @param ajax_return response of ajax call
- */
+ *
+ * @lisha_id	    : lisha_id Id of the lisha
+ * @column          : column number identifier
+ * @ajax_return     : use with ajax return
+ ====================================================================*/
 function lisha_toggle_column(lisha_id,column,ajax_return)
 {
 	if(typeof(ajax_return) == 'undefined')
@@ -166,10 +186,10 @@ function lisha_toggle_column(lisha_id,column,ajax_return)
 		eval('lisha.'+lisha_id+'.stop_click_event = true;');
 
 		lisha_display_wait(lisha_id);
-		/**==================================================================
-		 * Ajax init
-		 ====================================================================*/	
-		var conf = new Array();	
+        //==================================================================
+        // Setup Ajax configuration
+        //==================================================================
+        var conf = [];
 		
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
@@ -180,7 +200,7 @@ function lisha_toggle_column(lisha_id,column,ajax_return)
 		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"',"+column;
 		
 		ajax_call(conf);
-		/**==================================================================*/
+        //==================================================================
 	}
 	else
 	{
@@ -204,12 +224,15 @@ function lisha_toggle_column(lisha_id,column,ajax_return)
 		}
 	}
 }
+/**==================================================================*/
 
-/**
+
+/**==================================================================
  * Go to the previous or next page
- * @param lisha_id id of the lisha
- * @param ajax_return response of ajax call
- */
+ *
+ * @lisha_id	    : lisha_id Id of the lisha
+ * @ajax_return     : use with ajax return
+ ====================================================================*/
 function move_column_ajax(lisha_id,ajax_return)
 {
 	if(eval('lisha.'+lisha_id+'.destination_column;') != eval('undefined'))
@@ -217,12 +240,12 @@ function move_column_ajax(lisha_id,ajax_return)
 		if(typeof(ajax_return) == 'undefined')
 		{
 			lisha_display_wait(lisha_id);
-			
-			/**==================================================================
-			 * Ajax init
-			 ====================================================================*/	
-			var conf = new Array();	
-			
+
+            //==================================================================
+            // Setup Ajax configuration
+            //==================================================================
+            var conf = [];
+
 			conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 			conf['delai_tentative'] = 15000;
 			conf['max_tentative'] = 4;
@@ -232,7 +255,7 @@ function move_column_ajax(lisha_id,ajax_return)
 			conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"'";
 			
 			ajax_call(conf);
-			/**==================================================================*/
+            //==================================================================
 		}
 		else
 		{
@@ -260,43 +283,39 @@ function move_column_ajax(lisha_id,ajax_return)
 		}
 	}
 }
+/**==================================================================*/
 
-/**
- * Move the clicked column, called when the user move the cursor.
- * @param evt event
- */
+
+/**==================================================================
+ * Move the clicked column, called when the user move the cursor
+ *
+ * @evt	    : Web browser event
+ ====================================================================*/
 function lisha_move_column(evt)
 {
 	var evt = (evt)?evt : event;
 	
-	/**==================================================================
-	 * Display the float content
-	 ====================================================================*/	
+    // Display the float content
 	document.getElementById('lisha_column_move_div_float_'+lisha_id_move).style.display = 'block';
-	/**==================================================================*/
-	
-	/**==================================================================
-	 * Display the arrow
-	 ====================================================================*/	
+
+    // Display up and down arrows to mark destination column
 	document.getElementById('arrow_move_column_top_'+lisha_id_move).style.display = 'block';
 	document.getElementById('arrow_move_column_bottom_'+lisha_id_move).style.display = 'block';
-	/**==================================================================*/
-	
-	/**==================================================================
-	 * Place the float content
-	 ====================================================================*/	
-	// Get the position of the lisha
-	var pos_el = getElementCoords(document.getElementById('lis__'+eval('lisha.'+lisha_id_move+'.theme')+'__lisha_table_'+lisha_id_move+'__'));
-	/**==================================================================
-	 * Get the position of the cursor	
-	 ====================================================================*/	
-	var cur_x = evt.clientX - pos_el.left + document.getElementById('liste_'+lisha_id_move).scrollLeft;
-	/**==================================================================*/
-	
-	// Set the position of the float menu
-	document.getElementById('lisha_column_move_div_float_'+lisha_id_move).style.top = evt.clientY - pos_el.top+5+'px';
-	document.getElementById('lisha_column_move_div_float_'+lisha_id_move).style.left = cur_x-document.getElementById('liste_'+lisha_id_move).scrollLeft+8+'px';
-	/**==================================================================*/
+
+    //==================================================================
+    // Place the float content
+    //==================================================================
+
+        // Get lisha position
+        var pos_el = getElementCoords(document.getElementById('lis__'+eval('lisha.'+lisha_id_move+'.theme')+'__lisha_table_'+lisha_id_move+'__'));
+
+        // Get cursor position
+        var cur_x = evt.clientX - pos_el.left + document.getElementById('liste_'+lisha_id_move).scrollLeft;
+
+        // Set the position of the float menu
+        document.getElementById('lisha_column_move_div_float_'+lisha_id_move).style.top = evt.clientY - pos_el.top+5+'px';
+        document.getElementById('lisha_column_move_div_float_'+lisha_id_move).style.left = cur_x-document.getElementById('liste_'+lisha_id_move).scrollLeft+8+'px';
+    //==================================================================
 	
 	var i = 1;
 	for(var iterable_element in eval('lisha.'+lisha_id_move+'.columns')) 
@@ -304,11 +323,10 @@ function lisha_move_column(evt)
 		if(cur_x >= eval('lisha.'+lisha_id_move+'.columns.'+iterable_element+'.min') && cur_x <= eval('lisha.'+lisha_id_move+'.columns.'+iterable_element+'.max'))
 		{
 			document.getElementById('arrow_move_column_top_'+lisha_id_move).style.left = eval('lisha.'+lisha_id_move+'.columns.'+iterable_element+'.arrow')-5-document.getElementById('liste_'+lisha_id_move).scrollLeft+'px';
-			//document.getElementById('arrow_move_column_top_'+lisha_id_move).style.left = document.getElementById('right_mark_'+lisha_column_move+'_'+lisha_id_move)+'px';
-			
-			
+
 			document.getElementById('arrow_move_column_bottom_'+lisha_id_move).style.left = eval('lisha.'+lisha_id_move+'.columns.'+iterable_element+'.arrow')-5-document.getElementById('liste_'+lisha_id_move).scrollLeft+'px';
 			eval('lisha.'+lisha_id_move+'.destination_column = '+iterable_element.replace(/c/g,"")+';');
+
 			// Don't move near the column
 			if(i == lisha_column_move || i == lisha_column_move + 1)
 			{
@@ -323,6 +341,8 @@ function lisha_move_column(evt)
 		i++;
 	}	
 }
+/**==================================================================*/
+
 
 /**
  * Move a column, call when stop the move
