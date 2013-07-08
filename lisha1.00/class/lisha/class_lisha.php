@@ -1331,6 +1331,7 @@
                                 {
                                     $alias_table_name = $tab_alias_name;
                                 }
+
                                 $sql_filter_fast .= ' AND '.$this->get_quote_col($alias_table_name).'.'.$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).$column_value['search_mode']);
                             }
                             else
@@ -2586,11 +2587,11 @@
 				{
 					if($j == 0)
 					{
-						$only_selected_lines .= '`'.$key.'` = "'.$value_key.'"';
+                        $only_selected_lines .= $this->get_quote_col($this->c_update_table).'.`'.$key.'` = "'.$value_key.'"';
 					}
 					else 
 					{
-						$only_selected_lines .= ' AND `'.$key.'` = "'.$value_key.'"';
+                        $only_selected_lines .= ' AND '.$this->get_quote_col($this->c_update_table).'.`'.$key.'` = "'.$value_key.'"';
 					}
 					
 					$j = $j + 1;
@@ -2659,11 +2660,11 @@
 					{
 						if($j == 0)
 						{
-							$only_selected_lines .= '`'.$key.'` = "'.$value_key.'"';
+                            $only_selected_lines .= $this->get_quote_col($this->c_update_table).'.`'.$key.'` = "'.$value_key.'"';
 						}
 						else 
 						{
-							$only_selected_lines .= ' AND `'.$key.'` = "'.$value_key.'"';
+                            $only_selected_lines .= ' AND '.$this->get_quote_col($this->c_update_table).'.`'.$key.'` = "'.$value_key.'"';
 						}
 						
 						$j = $j + 1;
