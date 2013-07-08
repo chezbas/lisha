@@ -162,4 +162,30 @@ $_SESSION[$ssid]['lisha'][$lisha1_id] = new lisha(
 
 ---
 
+## Extra Config
+
+php.ini contents 
+```conf
+default_charset = "utf-8"
+```
+
+my.cnf contents 
+```conf
+[client] 
+default-character-set=utf8
+
+[mysqld] 
+character-set-server=utf8 
+default-character-set=utf8 
+default-collation=utf8_unicode_ci 
+character-set-client = utf8
+```
+
+httpd.conf contents 
+```conf
+AddDefaultCharset UTF-8
+```
+
+---
+
 Any question ? Go to https://sourceforge.net/projects/lisha/
