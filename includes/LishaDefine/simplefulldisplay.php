@@ -27,7 +27,7 @@
 				`transaction`.`description`	    AS `description`,
 				`transaction`.`amount`			AS `amount`,
 				IF(MOD(`transaction`.`index`,2)=0,MD5(`transaction`.`amount`),SHA1(`transaction`.`amount`))	    AS `encrypt`,
-				`transaction`.`status`			AS `status`,
+				CONCAT('[b]',`transaction`.`status`,'[/b]')			AS `status`,
 				`transaction`.`checkme`		    AS `checkme`,
 				`transaction`.`datum`			AS `datum`,
 				`transaction`.`mode`			AS `mode`,
@@ -180,7 +180,7 @@
 		//==================================================================
 		// define column : status
 		//==================================================================
-		$obj_lisha_tran->define_column('status','Libstatus',__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column('status','MyColorStatus',__BBCODE__,__WRAP__,__CENTER__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'status');
 		//$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'status');
 		//==================================================================

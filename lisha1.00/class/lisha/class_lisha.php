@@ -4473,13 +4473,14 @@
 			// Lisha display setup
 			//==================================================================
 			$main_query = '	SELECT
-									`id`,
-									`name`,
-									`display`,
-									`low`,
-									`low1`,
-									`ordre`
-							FROM `'.__LISHA_TABLE_INTERNAL__.'` 
+						        `id`,
+								`name`,
+								`display`,
+								`low`,
+								`low1`,
+								`ordre`
+							FROM
+							    `'.__LISHA_TABLE_INTERNAL__.'`
 							WHERE `id` = "'.$this->c_ssid.$this->c_id.'"
 						  ';
 
@@ -4569,13 +4570,15 @@
 			//==================================================================
 
 			// All columns hidden ??
-			$query = 'SELECT
-							`name` AS \'name\',
-							`low` AS \'low\'
-						FROM `'.__LISHA_TABLE_INTERNAL__.'`
-						WHERE 		`id` = \''.$this->c_ssid.$this->c_id.'\'
-								AND	`low`= 1
-					 ';
+			$query = "  SELECT
+							`name`  AS  'name',
+							`low`   AS  'low'
+						FROM
+						    `".__LISHA_TABLE_INTERNAL__."`
+						WHERE 1 = 1
+						    AND `id` = '".$this->c_ssid.$this->c_id."'
+							AND	`low`= 1
+					 ";
 			$resultat = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 			
 			if($resultat->num_rows == 0)
@@ -4626,13 +4629,15 @@
 			//==================================================================
 			// All columns hidden ??
 			//==================================================================
-			$query = 'SELECT
-							`name` AS \'name\',
-							`low` AS \'low\'
-						FROM `'.__LISHA_TABLE_INTERNAL__.'`
-						WHERE 		`id` = \''.$this->c_ssid.$this->c_id.'\'
-								AND	`low`= 1
-					 ';
+			$query = "  SELECT
+							`name`  AS   'name',
+							`low`   AS    'low'
+						FROM
+						    `".__LISHA_TABLE_INTERNAL__."`
+						WHERE 1 = 1
+						    AND `id` = '".$this->c_ssid.$this->c_id."'
+							AND	`low`= 1
+					 ";
 			$resultat = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 			
 			if($resultat->num_rows == 0)
@@ -4645,14 +4650,16 @@
 			//==================================================================
 			// Focus column hidden ??
 			//==================================================================
-			$query = 'SELECT
-							`name` AS \'name\',
-							`low` AS \'low\'
-						FROM `'.__LISHA_TABLE_INTERNAL__.'`
-						WHERE 		`id` = \''.$this->c_ssid.$this->c_id.'\'
-								AND	`low`= 1
-								AND `name` = \''.$this->c_default_input_focus.'\'
-					 ';
+			$query = "  SELECT
+							`name`  AS   'name',
+							`low`   AS   'low'
+						FROM
+						    `".__LISHA_TABLE_INTERNAL__."`
+						WHERE 1 = 1
+						    AND `id` = '".$this->c_ssid.$this->c_id."'
+							AND	`low` = 1
+							AND `name` = '".$this->c_default_input_focus."'
+					 ";
 			$resultat = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 			
 			if($resultat->num_rows == 0)
@@ -4678,7 +4685,7 @@
 
         /**==================================================================
 		 * Hide/Show column
-		 * Method called when valide column list management
+		 * Method called when valid column list management
 		 * @p_selected_lines	: Selected line in json format
 		 ====================================================================*/
 		public function show_column($p_selected_lines)
@@ -4690,29 +4697,33 @@
 			// Recover data from table
 			// Browse all columns
 			//==================================================================
-			// All columns hidden ??
-			$query = 'SELECT
-							`name` AS \'name\',
-							`low` AS \'low\'
-						FROM `'.__LISHA_TABLE_INTERNAL__.'`
-						WHERE 		`id` = \''.$this->c_ssid.$this->c_id.'\'
-								AND	`low`= 1
-					 ';
+			$query = "SELECT
+							`name`  AS  'name',
+							`low`   AS  'low'
+						FROM
+						    `".__LISHA_TABLE_INTERNAL__."`
+						WHERE   1 = 1
+						    AND `id` = '".$this->c_ssid.$this->c_id."'
+							AND	`low`= 1
+					 ";
 			$resultat = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 			
 			if($resultat->num_rows == 0 && $this->c_default_input_focus == null)
 			{
 				// All rows hidden
+                // Will never happens...
 			}
 			else
 			{
-				$query = 'SELECT
-								`name` AS \'name\',
-								`low` AS \'low\',
-								`low1` AS \'low1\'
-							FROM `'.__LISHA_TABLE_INTERNAL__.'`
-							WHERE `id` = \''.$this->c_ssid.$this->c_id.'\'
-						 ';
+				$query = "SELECT
+								`name`  AS  'name',
+								`low`   AS  'low',
+								`low1`  AS  'low1'
+							FROM
+							    `".__LISHA_TABLE_INTERNAL__."`
+							WHERE 1 = 1
+							    AND `id` = '".$this->c_ssid.$this->c_id."'
+						 ";
 				$resultat = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 				
 				while($row = $this->rds_fetch_array($resultat))
@@ -4741,10 +4752,11 @@
 			}
 			
 			// DELETE LINE AFTER USE
-			$query = 'DELETE 
-						FROM `'.__LISHA_TABLE_INTERNAL__.'`
-						WHERE `id` = \''.$this->c_ssid.$this->c_id.'\'
-					 ';
+			$query = "  DELETE
+					    FROM
+					        `".__LISHA_TABLE_INTERNAL__."`
+						WHERE `id` = '".$this->c_ssid.$this->c_id."'
+					 ";
 			$this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 			//==================================================================
 			
@@ -4872,58 +4884,11 @@
         /**===================================================================*/
 
 
-		/**
-		 * Generate the hide / display column menu
-		 * @param integer $column Id of the column 
-		 */
-		public function lisha_hide_display_col_lov()
-		{
-			$column = 1;
-			$id_child = $this->c_id.'_child';
-			// Create an instance of a lisha
-			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine, $this->c_ident,$this->c_dir_obj,$this->c_img_obj,__LOAD_FILTER__,$this->c_software_version);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(64));
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query','SELECT DISTINCT `name`, `date` FROM '.__LISHA_TABLE_FILTER__.' WHERE `id` = "'.$this->c_id.'"');
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('name',$this->lib(60),__TEXT__, __WRAP__, __LEFT__);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('date',$this->lib(61),__TEXT__, __WRAP__, __LEFT__);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_parent($this->c_id,$column);
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__display_mode',__CMOD__);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__return_mode',__SIMPLE__);
-
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_readonly_mode',__R__);
-			
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_size(100,'%',100,'%');
-			
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__id_theme',$this->c_theme);
-			
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__internal_color_mask',$this->c_color_mask);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_nb_line(17);
-						
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->new_graphic_lisha();
-			
-			/**==================================================================
-			 * Execute the query and display the elements
-			 ====================================================================*/		
-			// Prepare the query
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->prepare_query();
-			
-			$html = '<div style="float:right;"><table style="margin:0;padding:0;border-collapse:collapse;"><tr><td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$column.');" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td><td style="margin:0;padding:0;"></td></tr></table></div>';
-
-			$json = $_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha_json_param();
-			
-			// XML return	
-			header("Content-type: text/xml");
-			$xml = "<?xml version='1.0' encoding='UTF8'?>";
-			$xml .= "<lisha>";
-			$xml .= "<content>".$this->protect_xml($_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha().$html)."</content>";
-			$xml .= "<json>".$this->protect_xml($json)."</json>";
-			$xml .= "</lisha>";
-			
-			echo $xml;
-			/**===================================================================*/
-		}
-		
+        /**==================================================================
+         * Load user custom view
+         * @filter_name	: Filter name to load
+        ====================================================================*/
 		public function lisha_load_filter($filter_name)
 		{
 			$this->get_and_set_filter($filter_name);
@@ -4947,9 +4912,11 @@
 			echo $xml;
 			//==================================================================
 		}
-		
+        /**===================================================================*/
+
+
 		/**==================================================================
-		 * Internal methods
+		 * Build internal query to record user filter
 		 ====================================================================*/
 		private function prepare_query_insert_filter($p_name,$p_id_column,$p_type,$p_val1,$p_val2 = '',$p_val3 = '')
 		{
@@ -4966,7 +4933,8 @@
 			
 			return 'INSERT INTO '.__LISHA_TABLE_FILTER__.' (`name`, `id`, `id_column`, `type`, `val1`, `val2`, `val3`) VALUES ("'.$p_name.'","'.$this->c_id.'","'.$p_id_column.'","'.$p_type.'","'.$p_val1.'",'.$p_val2.','.$p_val3.')';
 		}
-		
+        /**===================================================================*/
+
 		/**
 		 * Generate an onmouseover & onmouseout event for help
 		 * @param integer $id_lib Id of the text
@@ -5005,41 +4973,101 @@
 			}
 			return $priority;
 		}
-		
-		private function clearBBCode($txt)
+
+        /**==================================================================
+         * Clear BBCode content of a string
+         * Useful if some BBCode are adding into your Query with CONCAT('[b]',....,'[/b]')
+         *
+         * @p_txt       :   String to remove BBCode
+        ====================================================================*/
+		private function clearBBCode($p_text)
 		{
-			$remplacement=true;
-			while($remplacement)
-			{
-				$remplacement=false;
-				$oldtxt=$txt;
-				$txt = preg_replace('`\[BBTITRE\]([^\[]*)\[/BBTITRE\]`i','\\1',$txt);
-				$txt = preg_replace('`\[EMAIL\]([^\[]*)\[/EMAIL\]`i','\\1',$txt);
-				$txt = preg_replace('`\[b\]([^\[]*)\[/b\]`i','\\1',$txt);
-				$txt = preg_replace('`\[i\]([^\[]*)\[/i\]`i','\\1',$txt);
-				$txt = preg_replace('`\[u\]([^\[]*)\[/u\]`i','\\1',$txt);
-				$txt = preg_replace('`\[s\]([^\[]*)\[/s\]`i','\\1',$txt);
-				$txt = preg_replace('`\[br\]`','',$txt);
-				$txt = preg_replace('`\[center\]([^\[]*)\[/center\]`','\\1',$txt);
-				$txt = preg_replace('`\[left\]([^\[]*)\[/left\]`i','\\1',$txt);
-				$txt = preg_replace('`\[right\]([^\[]*)\[/right\]`i','\\1',$txt);
-				$txt = preg_replace('`\[img\]([^\[]*)\[/img\]`i','\\1',$txt);
-				$txt = preg_replace('`\[color=([^[]*)\]([^[]*)\[/color\]`i','\\2',$txt);
-				$txt = preg_replace('`\[bg=([^[]*)\]([^[]*)\[/bg\]`i','\\2',$txt);
-				$txt = preg_replace('`\[size=([^[]*)\]([^[]*)\[/size\]`i','\\2',$txt);
-				$txt = preg_replace('`\[font=([^[]*)\]([^[]*)\[/font\]`i','\\2',$txt);
-				$txt = preg_replace('`\[url\]([^\[]*)\[/url\]`i','\\2',$txt);
-				$txt = preg_replace('`\[url=([^[]*)\]([^[]*)\[/url\]`i','\\2',$txt);
-				
-				if ($oldtxt<>$txt)
-				{
-					$remplacement=true;
-				}
-			}
-			return $txt;
-			
+            //$p_text = preg_replace('`\[EMAIL\]([^\[]*)\[/EMAIL\]`i','<a href="mailto:\\1">\\1</a>',$p_text);
+            //$p_text = preg_replace('`\[EMAIL\](.*?)\[/EMAIL\]`i','<a href="mailto:\\1">\\1</a>',$p_text);
+            // Information : Double [/email][/email] to avoid end of email area
+            $p_text = preg_replace('`\[email\](.*?(\[/email\]\[/email\].*?)*)\[/email\](?!(\[/email\]))`i','\\1',$p_text);
+
+            //$p_text = preg_replace('`\[b\]([^\[]*)\[/b\]`i','<b>\\1</b>',$p_text);    // Generation 1 : First [ or ] encounter stop translation
+            //$p_text = preg_replace('`\[b\](.*?)\[/b\]`i','<b>\\1</b>',$p_text);       // Generation 2 : Can't bold string [/b]
+            // Generation 3 : Information : Double [/b][/b] to avoid end of bold area
+            $p_text = preg_replace('`\[b\](.*?(\[/b\]\[/b\].*?)*)\[/b\](?!(\[/b\]))`i','\\1',$p_text);
+
+            //$p_text = preg_replace('`\[i\]([^\[]*)\[/i\]`i','<i>\\1</i>',$p_text);
+            //$p_text = preg_replace('`\[i\](.*?)\[/i\]`i','<i>\\1</i>',$p_text);
+            // Information : Double [/i][/i] to avoid end of italic area
+            $p_text = preg_replace('`\[i\](.*?(\[/i\]\[/i\].*?)*)\[/i\](?!(\[/i\]))`i','\\1',$p_text);
+
+            //$p_text = preg_replace('`\[u\]([^\[]*)\[/u\]`i','<u>\\1</u>',$p_text);
+            //$p_text = preg_replace('`\[u\](.*?)\[/u\]`i','<u>\\1</u>',$p_text);
+            // Information : Double [/u][/u] to avoid end of underline area
+            $p_text = preg_replace('`\[u\](.*?(\[/u\]\[/u\].*?)*)\[/u\](?!(\[/u\]))`i','\\1',$p_text);
+
+            //$p_text = preg_replace('`\[s\]([^\[]*)\[/s\]`i','<s>\\1</s>',$p_text);
+            //$p_text = preg_replace('`\[s\](.*?)\[/s\]`i','<s>\\1</s>',$p_text);
+            // Information : Double [/s][/s] to avoid end of stroke line area
+            $p_text = preg_replace('`\[s\](.*?(\[/s\]\[/s\].*?)*)\[/s\](?!(\[/s\]))`i','\\1',$p_text);
+
+            //$p_text = preg_replace('`\[center\]([^\[]*)\[/center\]`','<p style="text-align: center;">\\1</p>',$p_text);
+            //$p_text = preg_replace('`\[center\](.*?)\[/center\]`','<p style="text-align: center;">\\1</p>',$p_text);
+            // Information : Double [/center][/center] to avoid end of center line area
+            $p_text = preg_replace('`\[center\](.*?(\[/center\]\[/center\].*?)*)\[/center\](?!(\[/center\]))`i','\\1',$p_text);
+
+            //$p_text = preg_replace('`\[left\]([^\[]*)\[/left\]`i','<p style="text-align: left;">\\1</p>',$p_text);
+            //$p_text = preg_replace('`\[left\](.*?)\[/left\]`i','<p style="text-align: left;">\\1</p>',$p_text);
+            // Information : Double [/left][/left] to avoid end of left line area
+            $p_text = preg_replace('`\[left\](.*?(\[/left\]\[/left\].*?)*)\[/left\](?!(\[/left\]))`i','\\1',$p_text);
+
+            //$p_text = preg_replace('`\[right\]([^\[]*)\[/right\]`i','<p style="text-align: right;">\\1</p>',$p_text);
+            //$p_text = preg_replace('`\[right\](.*?)\[/right\]`i','<p style="text-align: right;">\\1</p>',$p_text);
+            // Information : Double [/right][/right] to avoid end of right line area
+            $p_text = preg_replace('`\[right\](.*?(\[/right\]\[/right\].*?)*)\[/right\](?!(\[/right\]))`i','\\1',$p_text);
+
+            //$p_text = preg_replace('`\[img\]([^\[]*)\[/img\]`i','<img src="\\1" />',$p_text);
+            //$p_text = preg_replace('`\[img\](.*?)\[/img\]`i','<img src="\\1" />',$p_text);
+            // Information : Double [/img][/img] to avoid end of picture area
+            $p_text = preg_replace('`\[img\](.*?(\[/img\]\[/img\].*?)*)\[/img\](?!(\[/img\]))`i','\\1',$p_text);
+
+            //$p_text = preg_replace('`\[color=([^[]*)\]([^[]*)\[/color\]`i','<font color="\\1">\\2</font>',$p_text);
+            //$p_text = preg_replace('`\[color=(.*?)\](.*?)\[/color\]`i','<font color="\\1">\\2</font>',$p_text);
+            // Information : Double [/color][/color] to avoid end of color area
+            $p_text = preg_replace('`\[color=(.*?)\](.*?(\[/color\]\[/color\].*?)*)\[/color\](?!(\[/color\]))`i','\\2',$p_text);
+
+            //$p_text = preg_replace('`\[bg=([^[]*)\]([^[]*)\[/bg\]`i','<font style="background-color: \\1;">\\2</font>',$p_text);
+            //$p_text = preg_replace('`\[bg=(.*?)\](.*?)\[/bg\]`i','<font style="background-color: \\1;">\\2</font>',$p_text);
+            // Information : Double [/bg][/bg] to avoid end of background color area
+            $p_text = preg_replace('`\[bg=(.*?)\](.*?(\[/bg\]\[/bg\].*?)*)\[/bg\](?!(\[/bg\]))`i','\\2',$p_text);
+
+            //$p_text = preg_replace('`\[size=([^[]*)\]([^[]*)\[/size\]`i','<font size="\\1">\\2</font>',$p_text);
+            //$p_text = preg_replace('`\[size=(.*?)\](.*?)\[/size\]`i','<font size="\\1">\\2</font>',$p_text);
+            // Information : Double [/size][/size] to avoid end of font size area
+            $p_text = preg_replace('`\[size=(.*?)\](.*?(\[/size\]\[/size\].*?)*)\[/size\](?!(\[/size\]))`i','\\2',$p_text);
+
+            //$p_text = preg_replace('`\[font=([^[]*)\]([^[]*)\[/font\]`i','<font face="\\1">\\2</font>',$p_text);
+            //$p_text = preg_replace('`\[font=(.*?)\](.*?)\[/font\]`i','<font face="\\1">\\2</font>',$p_text);
+            // Information : Double [/font][/font] to avoid end of font area
+            $p_text = preg_replace('`\[font=(.*?)\](.*?(\[/font\]\[/font\].*?)*)\[/font\](?!(\[/font\]))`i','\\2',$p_text);
+
+            // Information : Double [/url][/url] to avoid end of URL area
+            $p_text = preg_replace('`\[url\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`i','\\1',$p_text);
+            $p_text = preg_replace('`\[url=(.*?)\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`i','\\2',$p_text);
+
+            // Found a randomized string do not exists in string to convert
+            $temp_str = '7634253332';while(stristr($p_text,$temp_str)){$temp_str = mt_rand();}
+            $p_text = str_replace('[br][br]',$temp_str,$p_text);
+            $p_text = preg_replace('`(?<!\[br\])\[br\](?!(\[br\]))`i','\\',$p_text);
+            $p_text = str_replace($temp_str,'',$p_text);
+
+            // Found a randomized string do not exists in string to convert
+            $temp_str = '7634253332';while(stristr($p_text,$temp_str)){$temp_str = mt_rand();}
+            $p_text = str_replace('[hr][hr]',$temp_str,$p_text);
+            $p_text = preg_replace('`(?<!\[hr\])\[hr\](?!(\[hr\]))`i','\\',$p_text);
+            $p_text = str_replace($temp_str,'',$p_text);
+
+            return $p_text;
 		}
-		
+        /**===================================================================*/
+
+
 		private function clearHTML($txt)
 		{
 			$remplacement=true;

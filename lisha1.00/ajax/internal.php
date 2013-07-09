@@ -15,12 +15,8 @@
 		case __LOAD_FILTER__:
 			echo $_SESSION[$ssid]['lisha'][$lisha_id]->lisha_load_filter_lov();
 			break;
-		case __HIDE_DISPLAY_COLUMN__:
-			echo $_SESSION[$ssid]['lisha'][$lisha_id]->lisha_hide_display_col_lov($_POST['column']);
-			break;
 		case __COLUMN_LIST__:
 			// List of available columns
 			echo $_SESSION[$ssid]['lisha'][$lisha_id]->column_list();
 			break;
 	}
-?>
