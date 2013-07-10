@@ -1,7 +1,7 @@
 <?php
 	// Get the key name of language directive
 	$a_valeur_interdite = explode('|',$_SESSION[$ssid]['lisha']['configuration'][2]);
-    error_log(print_r($a_valeur_interdite,true));
+
 	if(!isset($_GET[$a_valeur_interdite[4]]))
 	{	
 		$_SESSION[$ssid]['lisha']['langue'] = $_SESSION[$ssid]['lisha']['configuration'][1];
@@ -16,7 +16,6 @@
 					`'.__LISHA_TABLE_LANGUAGE__.'`
 				WHERE 1 = 1
 					AND `id` = "'.$fi_lng.'"';
-        error_log($query);
 		$result = $link->query($query);
 		
 		if(mysqli_num_rows($result) == 1)
