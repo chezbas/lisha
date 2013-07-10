@@ -40,7 +40,7 @@ CREATE TABLE `lisha_config` (
 
 LOCK TABLES `lisha_config` WRITE;
 /*!40000 ALTER TABLE `lisha_config` DISABLE KEYS */;
-INSERT INTO `lisha_config` VALUES (1,'ENG','','string 3 digits','','','Default language'),(2,'ID|SSID|VERSION|tab-level|LNG','string','','','','Reserved keyword'),(3,'28800','seconds','','','','Page Timeout\r\nDo not exceed 86400 (24 hours) !!'),(4,'doc_user/picture/','string','','','','Path for user documentation pictures'),(5,'doc_user/video/','string','','','','Path for user documentation video'),(6,'doc_tech/picture/','string','','','','Path for technical documentation pictures'),(7,'doc_tech/video/','string','','','','Path for technical documentation video'),(8,'f2','string','','','','Url key name to load recorder custom view'),(9,'GroupTheme','string','','','','Customer specific column name for theme group');
+INSERT INTO `lisha_config` VALUES (1,'ENG','','string 3 digits','','','Root language'),(2,'ID|SSID|VERSION|tab-level|LNG','string','','','','Reserved keyword'),(3,'28800','seconds','','','','Page Timeout\r\nDo not exceed 86400 (24 hours) !!'),(4,'doc_user/picture/','string','','','','Path for user documentation pictures'),(5,'doc_user/video/','string','','','','Path for user documentation video'),(6,'doc_tech/picture/','string','','','','Path for technical documentation pictures'),(7,'doc_tech/video/','string','','','','Path for technical documentation video'),(8,'f2','string','','','','Url key name to load recorder custom view'),(9,'GroupTheme','string','','','','Customer specific column name for theme group');
 /*!40000 ALTER TABLE `lisha_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,4 +178,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-07-10 15:45:05
+-- Dump completed on 2013-07-10 16:27:50

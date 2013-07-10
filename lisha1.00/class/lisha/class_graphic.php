@@ -799,7 +799,7 @@
 				$html .= '<div id="thf0_'.$this->c_id.'" class="__'.$this->c_theme.'__lisha_version" ';
 				if($this->c_tickets_link)
 				{
-					$html .= ' style="cursor: pointer;" '.$this->hover_out_lib(79,79).' onclick="window.open(\''.$this->c_software_version.'/bugs\');"';
+					$html .= ' style="cursor: pointer;" '.$this->hover_out_lib(79,79).' onclick="window.open(\''.$this->c_dir_obj.'/bugs\');"';
 				}
 				$html .= '>'.$this->c_software_version.'</div>';
 			}
