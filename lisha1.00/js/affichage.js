@@ -441,7 +441,7 @@ function list_columns(lisha_id, lisha_type, ajax_return)
 		//==================================================================
 		// Setup Ajax configuration
 		//==================================================================
-		var conf = new Array();	
+		var conf = [];
 		
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/internal.php';
 		conf['delai_tentative'] = 5000;

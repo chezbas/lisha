@@ -58,18 +58,19 @@
 		
 		public $export_status;						// Export status null: no export in progress, 1 in progress, 2 done
 		public $export_total;						// Total of rows to export
-		
+		public $filter_name;                        // Custom user filter to display
+
 		private $matchcode;				// Matchcode between internal external call and function name
 		/**===================================================================*/
 		
 		/**==================================================================
 		 * Constructor of lisha class
-		 * @param string $p_id
-		 * @param string $p_ssid
-		 * @param string $p_bdd_server
-		 * @param string $p_bdd_user
-		 * @param string $p_bdd_password
-		 * @param string $p_bdd_schema
+		 * @p_id            :   ...Todo...
+		 * @p_ssid          :
+		 * @p_bdd_server    :
+		 * @p_bdd_user      :
+		 * @p_bdd_password  :
+		 * @p_bdd_schema    :
 		 ====================================================================*/	
 		public function __construct($p_id,$p_ssid,$p_db_engine,$p_ident,$p_dir_obj,$p_img_obj = null,$p_type_internal_lisha = false,$p_lisha_active_version = null)
 		{			
@@ -97,7 +98,6 @@
 
 			if($p_lisha_active_version == null)
 			{
-				//require($p_dir_obj.'/lisha_active_version.php');
 				$lisha_active_version = $p_dir_obj;
 				$this->c_software_version = $lisha_active_version;
 			}
@@ -213,7 +213,8 @@
             $this->order_priority_lov = 1;
 			$this->order_priority_lov_column_id = null;
 			$this->c_default_input_focus = null;										// No default focus column
-			
+
+
 			$this->c_time_timer_refresh = null;
 			$this->c_lmod_specified_width = null;
 			$this->c_edit_mode = __DISPLAY_MODE__;
@@ -1070,7 +1071,7 @@
 		{
 			// Get the filter option
 			$this->get_and_set_filter();
-			
+
 			// Prepare the query
 			$this->prepare_query();
 
@@ -1093,6 +1094,7 @@
 				if(is_null($filter_name))
 				{
 					$filter_name = $_GET[$this->c_param_adv_filter];
+                    $this->filter_name = $filter_name;
 				}
 
 				//==================================================================
@@ -1100,7 +1102,7 @@
 				//==================================================================
 				$sql = 'SELECT '.$this->get_quote_col('id_column').','.$this->get_quote_col('type').','.$this->get_quote_col('val1').','.$this->get_quote_col('val2').','.$this->get_quote_col('val3').'
 						FROM '.__LISHA_TABLE_FILTER__.' 
-						WHERE '.$this->get_quote_col('name').' = '.$this->get_quote_string($this->protect_sql($filter_name,$this->link)).' 
+						WHERE '.$this->get_quote_col('name').' = '.$this->get_quote_string($this->protect_sql($filter_name,$this->link)).'
 						AND '.$this->get_quote_col('id').' = '.$this->get_quote_string($this->protect_sql($this->c_id,$this->link));
 				
 				$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
@@ -1139,7 +1141,7 @@
 					//==================================================================
 										
 					//==================================================================
-					// Restore order attribut : ORD
+					// Restore order attribute : ORD
 					//==================================================================
 					if(isset($result_array['ORD']))
 					{
@@ -2999,7 +3001,7 @@
 		
 		
 		/**==================================================================
-		 * add_line
+		 * Record a new line
 		 * @json				: content of js input area in json format
 		 ====================================================================*/
 		public function add_line($json)
@@ -3019,7 +3021,11 @@
 				// No error
 				// Prepare insert query
 				//==================================================================
-			
+
+                // Always return to first page
+                $this->define_attribute('__current_page',1);
+                $this->define_limit_min(0);
+
 				// Control line OK, add the line
 				$sql_insert = 'INSERT INTO '.$this->c_update_table.'(';
 				$sql_insert_values = '';
@@ -3050,7 +3056,7 @@
 							$value['value'] = $this->convert_localized_date_to_database_format($value['id'], $value['value']);
 						}
 						
-					// Values
+					    // Values
 						if(isset($this->c_columns[$value['id']]['rw_function']))
 						{
 							// Special update function defined on the column
@@ -3086,15 +3092,16 @@
 				
 				// Insert the line
 				$this->exec_sql($sql_insert,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
-				$this->prepare_query();
+
+                $this->prepare_query();
 				$this->c_selected_lines = false;
 				$json = $this->generate_lisha_json_param();
-				
-				// XML return	
+
+				// XML return
 				header("Content-type: text/xml");
 				$xml = "<?xml version='1.0' encoding='UTF8'?>";
 				$xml .= "<lisha>";
-				$xml .= "<content>".$this->protect_xml($this->c_obj_graphic->draw_lisha($this->resultat,true,true))."</content>";
+				$xml .= "<content>".$this->protect_xml($this->c_obj_graphic->draw_lisha($this->resultat,false,true))."</content>";
 				$xml .= '<toolbar>'.$this->protect_xml($this->c_obj_graphic->generate_toolbar(false,$this->resultat)).'</toolbar>';
 				$xml .= "<json>".$this->protect_xml($json)."</json>";
 				$xml .= "<error>".$check[0]."</error>";
@@ -4040,7 +4047,12 @@
 			// Define active page to 1
 			$this->define_attribute('__current_page',1);
 			$this->define_limit_min(0);
-						
+
+            // Reload configuration from URL directive if any
+            if($this->filter_name != null)
+            {
+                $this->get_and_set_filter($this->filter_name);
+            }
 
 			//==================================================================
 			// Run query and build xml content
@@ -4316,10 +4328,10 @@
 				if($this->c_columns[$column]['data_type'] == __CHECKBOX__)
 				{
 					$my_query = "SELECT
-										'0' AS '".$this->get_quote_col($this->c_columns[$column]['sql_as'])."''
+										'0' AS ".$this->get_quote_col($this->c_columns[$column]['sql_as'])."
 								UNION ALL
 								SELECT
-										'1' AS '".$this->get_quote_col($this->c_columns[$column]['sql_as'])."'
+										'1' AS ".$this->get_quote_col($this->c_columns[$column]['sql_as'])."
 								";
 				}
 				else

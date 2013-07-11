@@ -46,7 +46,7 @@
 	$obj_lisha_tran->define_attribute('__id_theme','green');							// Define style
 
 	$obj_lisha_tran->define_attribute('__active_title', true);						// Title bar	
-	$obj_lisha_tran->define_attribute('__title', 'MyLishaDev');							// Title
+	$obj_lisha_tran->define_attribute('__title', 'Green Lisha');							// Title
 
 	$obj_lisha_tran->define_attribute('__max_lines_by_page', 80);					// Limit rows by page	
 	
@@ -58,7 +58,7 @@
 
 	$obj_lisha_tran->define_attribute('__active_user_doc', false);					// user documentation button
 	$obj_lisha_tran->define_attribute('__active_tech_doc', false);					// technical documentation button
-	$obj_lisha_tran->define_attribute('__active_ticket', false);						// Tickets link
+	$obj_lisha_tran->define_attribute('__active_ticket', true);						// Tickets link
 
 	
 	$obj_lisha_tran->define_attribute('__display_mode', __NMOD__);					// Display mode
@@ -158,7 +158,7 @@
 	// Line theme mask
 	//==================================================================
 	// Default group
-	$obj_lisha_tran->define_line_theme("EEEEEE","0.7em","CCCCCC","0.7em","AAAAAA","0.7em","BBBBBB","0.7em","000","000");
+	$obj_lisha_tran->define_line_theme("caeedc","0.7em","d8f3da","0.7em","AAAAAA","0.7em","BBBBBB","0.7em","000","000");
 	$obj_lisha_tran->define_line_theme("ebfadc","0.7em","dae9cb","0.7em","EECCCC","0.7em","DDC8C8","0.7em","000","000");
 
 	// Group 2

@@ -58,7 +58,7 @@
 	$obj_lisha_tran->define_attribute('__id_theme','grey');							// Define style
 
 	$obj_lisha_tran->define_attribute('__active_title', true);						// Title bar	
-	$obj_lisha_tran->define_attribute('__title', $_SESSION[$ssid]['message'][2]);	// Title	
+	$obj_lisha_tran->define_attribute('__title', 'Main test Lisha');	// Title
 
 	$obj_lisha_tran->define_attribute('__max_lines_by_page', 80);					// Limit rows by page	
 	

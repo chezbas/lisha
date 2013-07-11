@@ -12,7 +12,7 @@ function lisha_page_change_ajax(lisha_id,type,ajax_return)
 		//==================================================================
 		// Setup Ajax configuration
 		//==================================================================
-		var conf = new Array();
+		var conf = [];
 		
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
@@ -85,7 +85,7 @@ function lisha_input_line_per_page_change_ajax(lisha_id,qtt,ajax_return)
 		//==================================================================
 		// Setup Ajax configuration
 		//==================================================================
-		var conf = new Array();	
+		var conf = [];
 		
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
@@ -140,7 +140,7 @@ function lisha_refresh_page_ajax(lisha_id,ajax_return)
 		//==================================================================
 		// Setup Ajax configuration
 		//==================================================================
-		var conf = new Array();	
+		var conf = [];
 		
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
@@ -184,6 +184,7 @@ function lisha_refresh_page_ajax(lisha_id,ajax_return)
 }
 /**==================================================================*/
 
+
 function toolbar_excel_button(lisha_id)
 {
 	var td_id = 'lisha_td_toolbar_excel_'+lisha_id;
@@ -205,20 +206,22 @@ function toolbar_excel_button(lisha_id)
 	}
 }
 
-/**
- * Reset the filter on all column
- * @param lisha_id id of the lisha
- * @param ajax_return response of ajax call
- */
+
+/**==================================================================
+ * Clear all customer change on columns features ( filter, position, display, order and so on...) and go back to first page
+ * @lisha_id	: internal lisha identifier
+ * @ajax_return : return ajax if any
+ ====================================================================*/
 function lisha_reset(lisha_id,ajax_return)
 {
 	if(typeof(ajax_return) == 'undefined')
 	{
 		lisha_display_wait(lisha_id);
-		/**==================================================================
-		 * Ajax init
-		 ====================================================================*/	
-		var conf = new Array();	
+
+        //==================================================================
+        // Setup Ajax configuration
+        //==================================================================
+		var conf = [];
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
 		conf['max_tentative'] = 4;
@@ -228,7 +231,7 @@ function lisha_reset(lisha_id,ajax_return)
 		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"'";
 		
 		ajax_call(conf);
-		/**==================================================================*/
+        //==================================================================
 	}
 	else
 	{
@@ -265,6 +268,8 @@ function lisha_reset(lisha_id,ajax_return)
 		}
 	}
 }
+/**==================================================================*/
+
 
 function lisha_input_page_change(evt,lisha_id,element)
 {
