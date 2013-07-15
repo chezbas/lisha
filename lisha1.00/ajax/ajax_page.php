@@ -93,7 +93,7 @@
 			echo $_SESSION[$ssid]['lisha'][$lisha_id]->recover_cell($_POST['arraykey'],$_POST['column']);
 			break;
 		case 23:
-			// Recover cell content
+			// Record cell update
 			echo $_SESSION[$ssid]['lisha'][$lisha_id]->edit_cell($_POST['arraykey'],$_POST['column'],$_POST['val']);
 			break;
 		case 24:

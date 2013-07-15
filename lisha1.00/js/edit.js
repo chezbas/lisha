@@ -160,7 +160,10 @@ function input_key_manager(evt,lisha_id,line,column)
 	{
 		var input_updating = document.getElementById(div_root_updating+'_input').value;
 
-		// Check Compel
+        // Force UTF8 protection using json
+        eval('val = new Object();');
+        eval('val.value = \''+protect_json(document.getElementById(div_root_updating+'_input').value)+'\';');
+        // Check Compel
 		/*if(eval('varlisha_'+lisha_id+'.CurrentCellCompel') == __LISTED__)
 		{
 			// Recover if current value is included in defined LOV
@@ -193,13 +196,13 @@ function input_key_manager(evt,lisha_id,line,column)
 				//==================================================================
 				// Setup Ajax configuration
 				//==================================================================
-				var conf = new Array();	
+				var conf = [];
 		
 				conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 				conf['delai_tentative'] = 15000;
 				conf['max_tentative'] = 4;
 				conf['type_retour'] = false;		// ReponseText
-				conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=23&arraykey='+array_primary_key+'&column='+column+'&val='+encodeURIComponent(input_updating);
+				conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=23&arraykey='+array_primary_key+'&column='+column+'&val='+encodeURIComponent(JSON.stringify(val.value));
 				conf['fonction_a_executer_reponse'] = 'ok_edit_cell';
 				conf['param_fonction_a_executer_reponse'] = "'"+evt+"',"+line+",'"+lisha_id+"'";
 				
@@ -213,7 +216,7 @@ function input_key_manager(evt,lisha_id,line,column)
 
 
 /**==================================================================
- * ok_edit_cell : Cell update done successfully
+ * Cell update done successfully
  * @evt				: catch browser event
  * @line			: Number of line clicked on screen
  * @lisha_id		: internal lisha identifier

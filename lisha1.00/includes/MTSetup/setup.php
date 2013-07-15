@@ -26,4 +26,3 @@
 	//==================================================================
 	
 	$path_root_magictree =  __MAGICTREE_APPLICATION_RELEASE__;					// Internal use for tickets screen. Don't remove please
-?>

@@ -88,14 +88,14 @@
 		//==================================================================
 		// define column : Description
 		//==================================================================
-		$obj_lisha_tran->define_column('description','Caption',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column('description','Caption',__BBCODE__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'description');
 		//==================================================================
 
 		//==================================================================
 		// define column : amount
 		//==================================================================
-		$obj_lisha_tran->define_column('amount','normal',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column('amount','normal',__BBCODE__,__WRAP__,__LEFT__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'amount');						
 		//==================================================================
 				

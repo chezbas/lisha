@@ -2443,6 +2443,10 @@
 		{
 			$array_key = json_decode($array_key);
 
+            // Force Json UTF8 protection for unknown server issue
+            // Have to do investigation on this point
+            $p_value = json_decode($p_value);
+
 			$string_where = '';
 			
 			foreach($array_key as $clef => $value)
@@ -2469,8 +2473,10 @@
 					break;
 				}
 			}
-			$p_value = $this->link->real_escape_string(htmlentities($p_value));
-			
+			// Issue of htmlentities between &hearts; and ♥ and <html></html>
+            //$p_value = $this->link->real_escape_string(htmlentities($p_value));
+            $p_value = $this->protect_sql($this->my_htmlentities($p_value),$this->link);
+
 			if($p_value == "")
 			{
 				$set_string = '`'.$column_name.'` = NULL ';
@@ -2481,7 +2487,7 @@
 			}
 			
 			$prepared_query = 'UPDATE '.$this->c_update_table.' SET '.$set_string.' WHERE '.$string_where;
-			
+
 			$this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 
 			echo $prepared_query;
@@ -5097,7 +5103,23 @@
 			}
 			return $txt;
 		}
-		
+
+        /**==================================================================
+         * Try to solved htmlentities issue
+         *
+         * @p_str       :   String to convert
+        ====================================================================*/
+        private function my_htmlentities($p_str)
+        {
+            $p_str = str_replace("&","&amp;",$p_str);
+            $p_str = str_replace("<","&lt;",$p_str);
+            $p_str = str_replace(">","&gt;",$p_str);
+
+            return $p_str;
+        }
+        /**===================================================================*/
+
+
 		private function lib($id)
 		{
 			return $_SESSION[$this->c_ssid]['lisha']['lib'][$id];
