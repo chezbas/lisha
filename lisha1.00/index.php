@@ -94,7 +94,7 @@
 
 			var libelle_common = Array();
 
-			// Uptime session javascript variable
+			// Up time session javascript variable
 			<?php 
 				$gc_lifetime = ini_get('session.gc_maxlifetime'); 
 				$end_visu_date  = time() + $gc_lifetime;

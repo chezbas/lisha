@@ -50,7 +50,7 @@
 	}
 	$language= $_POST["language"];
 	//==================================================================	
-	
+
 	//==================================================================
 	// Try local language if exists first
 	//==================================================================
@@ -90,8 +90,38 @@
 		$row["DETAILS"] = '<div style="background-color: #fff; opacity:0.3;">'.$row["DETAILS"].'</div>';
 	}
 	//==================================================================
-	
-	//==================================================================
+
+    //==================================================================
+    // Get localization of lisha table
+    // Search special pattern <ilocal:xx/>
+    // xx values
+    // text         : To get current language in text
+    // date_format  : To get date format pattern
+    //==================================================================
+    $motif = '#&lt;ilocal:([^/]+)[ ]*/&gt;#i';
+
+    preg_match_all($motif,$row["DETAILS"],$out);
+
+    foreach($out[1] as $key => $value)
+    {
+        $query = "
+                        SELECT
+                            `MTL`.`".$value."` AS 'sortie'
+                        FROM
+                            `".__LISHA_TABLE_LANGUAGE__."` `MTL`
+                        WHERE 1 = 1
+                            AND `MTL`.`id`		= '".$language."'
+                    ";
+
+        $result = $link->query($query);
+        $rowl = $result->fetch_array(MYSQLI_ASSOC);
+
+        $replace = $rowl['sortie'];
+        $row["DETAILS"] = str_replace($out[0][$key],$replace,$row["DETAILS"]);
+    }
+    //==================================================================
+
+    //==================================================================
 	// Search special pattern <isym:lisha/>
 	//==================================================================
 	$motif = '#&lt;isym:([^/]+)[ ]*/&gt;#i';

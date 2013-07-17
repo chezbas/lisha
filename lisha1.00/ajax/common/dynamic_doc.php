@@ -1,18 +1,5 @@
 <?php
 	//==================================================================
-	// Current language used
-	// Search special pattern <icurlang/>
-	//==================================================================
-	$motif = '#&lt;icurlang/&gt;#i';
-	
-	preg_match_all($motif,$row["DETAILS"],$out);
-
-	foreach($out[0] as $key => $value)
-	{
-		$replace = $_SESSION[$ssid]['lisha']['langue'];
-		$row["DETAILS"] = str_replace($out[0][$key],$replace,$row["DETAILS"]);
-	}
-	//==================================================================	
 
 	//==================================================================
 	// Display system information
@@ -73,7 +60,7 @@
 			break;
 			case 'language_url':
 				$reserved_word = explode('|',$_SESSION[$ssid]['lisha']['configuration'][2]);
-				$_local_sys = $reserved_word[1]."=".$language;
+				$_local_sys = $reserved_word[4]."=".$language;
 			break;
 			case 'keyword_ssid':
 				$reserved_word = explode('|',$_SESSION[$ssid]['lisha']['configuration']['configuration'][2]);
@@ -163,5 +150,4 @@
 		$row["DETAILS"] = str_replace($out[0][$key],$_local_sys,$row["DETAILS"]);
 			
 	}	
-	//==================================================================	
-?>
+	//==================================================================

@@ -12,7 +12,7 @@
 
 		private $tree_conf;				// Define table name of configuration
 		private $tree_text;				// Define table name of common tree text
-		private $tree_language;			// Define table name of language available
+		public  $tree_language;			// Define table name of language available
 
 		private $total_node;			// Number of nodes in current language
 		
@@ -160,8 +160,8 @@
 			$this->enable_ticket_link = false;										// Tickets list acces deny
 			$this->display_version = true;											// Display label of magictree version
 			$this->tab_index_offset = 100;											// Technical parameters: 100 by default
-			$this->language = $this->root_language;									// Get language from configuration table
-			$this->style = 'TreeView_default';										// CSS style
+            $this->language = $this->root_language;									// Get language from configuration table
+            $this->style = 'TreeView_default';										// CSS style
 			$this->search_name = '';												// No caption for input search
 			$this->displaycheckbox = false;											// No checkbox displayed
 			$this->listcheckbox = Array();											// None active checkbox
@@ -1219,7 +1219,7 @@
 			   				AND MTN.`parent` = ".$id." 
 			   				ORDER BY MTN.`order` ASC
 			   		";
-			
+
 			$result = $this->link_mt->query($query);
 			//==================================================================
 

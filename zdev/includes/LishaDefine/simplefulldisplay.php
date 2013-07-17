@@ -91,7 +91,7 @@
 		//==================================================================
 		// define column : Date modification
 		//==================================================================
-		$obj_lisha_tran->define_column('daterec','datum',__DATE__,__WRAP__,__CENTER__,__PERCENT__,__DISPLAY__);
+		$obj_lisha_tran->define_column('daterec','datum ⛵',__DATE__,__WRAP__,__CENTER__,__PERCENT__,__DISPLAY__);
 		$obj_lisha_tran->define_attribute('__column_date_format','%d/%m/%Y','daterec');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'daterec');
 		$obj_lisha_tran->define_input_focus('daterec', true);					// Focused
@@ -100,7 +100,7 @@
 		//==================================================================
 		// define column : Description
 		//==================================================================
-		$obj_lisha_tran->define_column('description','descriptionddd',__BBCODE__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column('description','⏩ ♌',__BBCODE__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'description');
 		//==================================================================
 

@@ -1,0 +1,60 @@
+html,body
+{
+	margin:0;
+	padding:0;
+	background-color: #DDD;
+}
+
+#test
+{
+	position: absolute;  
+    top: 0;  
+	left:0;
+    height: 100%;  
+    width: 100%;  
+	line-height: 22px;
+	font-size: 1em;
+	text-align:left;
+	background-color: #9AC8FC;
+	z-index: 10;
+}
+
+.home
+{
+    height:20px;
+    width:20px;
+    float:left; 
+    background-image: url(../images/icons.png);
+    background-repeat: no-repeat;
+	background-position:-220px 0;
+}
+
+.home:hover
+{
+    height:20px;
+    width:20px;
+    float:left; 
+    background-image: url(../images/icons.png);
+    background-repeat: no-repeat;
+	background-position:-220px -20px;
+}
+
+.new
+{
+    height:20px;
+    width:20px;
+    float:left; 
+    background-image: url(../images/icons.png);
+    background-repeat: no-repeat;
+	background-position:-680px 0;
+}
+
+.new:hover
+{
+    height:20px;
+    width:20px;
+    float:left; 
+    background-image: url(../images/icons.png);
+    background-repeat: no-repeat;
+	background-position:-680px -20px;
+}
