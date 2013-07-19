@@ -53,7 +53,7 @@
 	$obj_lisha_tran->define_attribute('__active_column_separation',false);
 	$obj_lisha_tran->define_attribute('__active_row_separation',false);
 	
-	$obj_lisha_tran->define_attribute('__active_top_bar_page',false);
+	$obj_lisha_tran->define_attribute('__active_top_bar_page',true);
 	$obj_lisha_tran->define_attribute('__active_bottom_bar_page',true);
 
 	$obj_lisha_tran->define_attribute('__active_user_doc', false);					// user documentation button

@@ -151,3 +151,44 @@
 			
 	}	
 	//==================================================================
+
+    //==================================================================
+    // Search special pattern <ilocalization/>
+    //==================================================================
+    $motif = '#&lt;ilocalization/&gt;#i';
+    preg_match_all($motif,$row["DETAILS"],$out);
+
+    foreach($out[0] as $key => $value)
+    {
+        $replace = '
+                <table class="main_table">
+                <tr class="head_table">
+                <td>ID</td>
+                <td>&lt;ilisha:127/&gt;</td>
+                </tr>';
+
+        $query = "
+                            SELECT
+                                `MTS`.`ID`      AS 'iden',
+                                `MTS`.`text`    AS 'local'
+                            FROM
+                                `".__LISHA_TABLE_LANGUAGE__."` `MTS`
+                            WHERE 1 = 1
+                         ";
+
+        $result = $link->query($query);
+
+        while($rowl = $result->fetch_array(MYSQLI_ASSOC))
+        {
+            $replace .= '<tr class="row_table">
+                    <td>'.$rowl['iden'].'</td>
+                     <td>'.$rowl['local'].'</td>
+                     </tr>
+                    ';
+        };
+
+
+        $replace .= '</table>';
+        $row["DETAILS"] = str_replace($out[0][$key],$replace,$row["DETAILS"]);
+    }
+    //==================================================================

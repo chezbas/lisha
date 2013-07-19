@@ -92,9 +92,9 @@
 	//==================================================================
 
     //==================================================================
-    // Get localization of lisha table
+    // Get localization feature using field name
     // Search special pattern <ilocal:xx/>
-    // xx values
+    // xx values come from your lisha configuration table : __LISHA_TABLE_LANGUAGE__
     // text         : To get current language in text
     // date_format  : To get date format pattern
     //==================================================================
@@ -182,7 +182,7 @@
 			
 	}	
 	//==================================================================	
-	
+
 	//==================================================================
 	// Replace by node title
 	// Search special pattern <ipage:page_number label/>
@@ -240,7 +240,34 @@
 			
 	}	
 	//==================================================================	
-			
+
+    //==================================================================
+    // Text from lisha_text table
+    // Pattern : <ilisha:xx/>
+    //==================================================================
+    $motif = '#&lt;ilisha:([0-9]+)([^/]*)/&gt;#i';
+    preg_match_all($motif,$row["DETAILS"],$out);
+
+    foreach($out[1] as $key => $value)
+    {
+        $query = "
+                            SELECT
+                                `MTT`.`corps`      AS 'corps'
+                            FROM
+                                `".__LISHA_TABLE_TEXT__."` `MTT`
+                            WHERE 1 = 1
+                                AND `id` = '".$out[1][0]."'
+                                AND `MTT`.`id_lang` = '".$language."'
+                         ";
+        $result = $link->query($query);
+
+        $rowl = $result->fetch_array(MYSQLI_ASSOC);
+        $replace = $rowl['corps'];
+
+        $row["DETAILS"] = str_replace($out[0][$key],$replace,$row["DETAILS"]);
+    }
+    //==================================================================
+
 	//==================================================================
 	// Build path string
 	//==================================================================
