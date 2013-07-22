@@ -66,7 +66,6 @@ function lisha_column_order(lisha_id,type_order,column,mode,ajax_return)
  ====================================================================*/
 function lisha_change_search_mode(lisha_id,type_search,column,ajax_return)
 {
-    alert(type_search);
 	if(typeof(ajax_return) == 'undefined')
 	{
 		eval('lisha.'+lisha_id+'.stop_click_event = true;');
