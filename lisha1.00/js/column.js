@@ -389,6 +389,12 @@ function lisha_move_column_stop()
 	}
 }
 
+/**==================================================================
+ * User change or add new column sort order ( Control key with right click )
+ *
+ * @lisha_id	    : lisha internal identifier
+ * @column          : Internal column numner 1..2.. and so on
+ ====================================================================*/
 function click_column_order(lisha_id,column)
 {
 	/**==================================================================
@@ -440,20 +446,24 @@ function click_column_order(lisha_id,column)
 	
 	lisha_column_order(lisha_id,eval('lisha.'+lisha_id+'.columns.c'+column+'.order'),column,mode);
 }
+/**==================================================================*/
 
-/**
- * Move a column, call when begin the move
- * @param column id of the column in move
- * @param id Id of the lisha
- */
+
+/**==================================================================
+ * Starting to move a column, call at the begining
+ *
+ * @evt	    : Web browser event
+ * @column  : column id
+ * @id      : lisha internal id
+ ====================================================================*/
 function lisha_move_column_start(evt,column,id)
 {
 	var evt = (evt)?evt : event;
 	/**==================================================================
 	 * Initiating global variable
 	 ====================================================================*/	
-	lisha_column_move = column;				// The moving column
-	lisha_id_move = id;						// The lisha
+	lisha_column_move = column;				    // The moving column
+	lisha_id_move = id;						    // The lisha
 	lisha_column_in_move = true;				// Flag column move event in progress
 	lisha_body_style = document.body.className;
 	/**==================================================================*/
@@ -496,6 +506,7 @@ function lisha_move_column_start(evt,column,id)
 		eval('lisha.'+lisha_id_move+'.selected_column.ctrl = false;');
 	}
 }
+/**==================================================================*/
 
 
 function getCSSProperty(mixed, sProperty) 

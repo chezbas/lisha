@@ -100,6 +100,9 @@ function lisha_input_keydown(evt,el,lisha_id,column, quick_search_mode, edit_mod
                             }
 							else
 							{
+                                // Hide any ajax search wait
+                                document.getElementById('wait_input_'+lisha_id).style.display = 'none';
+
                                 document.getElementById('th_input_'+column+'__'+lisha_id).blur();
 								if(eval('lisha.'+lisha_id+'.input_search_selected_line') > 0)
 								{

@@ -75,7 +75,7 @@
 		<script type="text/javascript" src="js/common/cookie.js"></script>
 		<script type="text/javascript" src="js/common/informations.js"></script>	
 		<script type="text/javascript" src="js/common/time.js"></script>	
-		<script  type="text/javascript" src="js/home/index.js"></script> <!-- Specific javascript of current page -->
+		<script type="text/javascript" src="js/home/index.js"></script> <!-- Specific javascript of current page -->
 		<script type="text/javascript">
 
 			var MainTimer = new Class_timer();

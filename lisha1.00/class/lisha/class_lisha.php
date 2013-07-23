@@ -768,8 +768,9 @@
 		 * @column_name		: Name of column definition
 		 * @order			: __ASC__ or __DESC__
 		 * @id_column		: id of column ( optional )
+         * @p_keep_in_init  : Keep this in reference array ( true means yes )
 		 ====================================================================*/
-		public function define_order_column($column_name,$order,$id_column = null)
+		public function define_order_column($column_name,$order,$id_column = null, $p_keep_in_init = true)
 		{
 			// Get the id column if not define by $id_column
 			if(!is_numeric($id_column))
@@ -781,9 +782,12 @@
 			$this->c_columns[$id_column]['order_by'] = $order;
 
 			// Keep last column value in memory
-			$this->c_columns_init[$id_column]['order_priority'] = $this->order_priority;
-			$this->c_columns_init[$id_column]['order_by'] = $order;
-			
+            if($p_keep_in_init)
+            {
+                $this->c_columns_init[$id_column]['order_priority'] = $this->order_priority;
+                $this->c_columns_init[$id_column]['order_by'] = $order;
+            }
+
 			$this->order_priority = $this->order_priority + 1;
 		}
 		/**==================================================================*/
@@ -2280,7 +2284,6 @@
 		
 		
 		/**==================================================================
-		 * clear_all_order
 		 * remove all columns order by
 		 ====================================================================*/
 		private function clear_all_order()
@@ -3599,7 +3602,7 @@
 			}
 			//==================================================================
 			
-			$this->define_order_column(null,$p_order,$p_column);		
+			$this->define_order_column(null,$p_order,$p_column,false);
 			
 			//==================================================================
 			// Build query and generate xml content
@@ -4044,7 +4047,9 @@
 						
 			// Reset all columns features
 			$this->c_columns = $this->c_columns_init;
-			
+
+            //error_log(print_r($this->c_columns_init,true));
+
 			// Reset selected lines
 			$this->c_selected_lines = false;
 			
@@ -4060,7 +4065,11 @@
                 $this->get_and_set_filter($this->filter_name);
             }
 
-			//==================================================================
+            // Reset columns sort order
+            $this->order_priority = 1;
+
+
+            //==================================================================
 			// Run query and build xml content
 			//==================================================================
 			$this->prepare_query();

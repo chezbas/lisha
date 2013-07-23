@@ -1,3 +1,8 @@
+/**==================================================================
+ * Return clicked value to parrent
+ * @id      : Internal lisha id
+ * @column  : Column to display menu
+ ====================================================================*/
 function lisha_child_insert_into_parent(el,parent,parent_column)
 {
 	eval('lisha.'+parent+'.lisha_child_opened = false;');
@@ -57,12 +62,16 @@ function lisha_child_insert_into_parent(el,parent,parent_column)
 	{
 		document.getElementById('chk_edit_c'+parent_column+'_'+parent).checked = true;
 	}
-	// Search
-	//lisha_define_filter(parent,encodeURIComponent(document.getElementById('th_input_'+parent_column+'__'+parent).value),parent_column,false);
+
+	// Keep search filter options in column input header
+	lisha_define_filter(parent,encodeURIComponent(document.getElementById('th_input_'+parent_column+'__'+parent).value),parent_column,false);
 
 	// Hide the cover
 	lisha_cover_with_filter(parent);
+    //lisha_display_wait(lisha_id);
 }
+/**==================================================================*/
+
 
 /**==================================================================
  * lisha_child_list_column_ok : event when item is selected

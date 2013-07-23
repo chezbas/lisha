@@ -261,6 +261,9 @@ function lisha_reset(lisha_id,ajax_return)
 			
 			// Hide the wait div
 			lisha_display_wait(lisha_id);
+
+            // Hide any ajax search wait
+            document.getElementById('wait_input_'+lisha_id).style.display = 'none';
 		} 
 		catch(e) 
 		{
