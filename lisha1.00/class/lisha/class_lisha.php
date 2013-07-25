@@ -4526,8 +4526,9 @@
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__internal_color_mask',$this->c_color_mask);
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_top_bar_page', false);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_bottom_bar_page', true);
+            // Depend on Build dynamic css Background style for children in class_graphic.php
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_top_bar_page', $this->c_page_selection_display_header);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_bottom_bar_page', $this->c_page_selection_display_footer);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_nb_line(50);
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_tech_doc', false);

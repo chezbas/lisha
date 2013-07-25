@@ -1,15 +1,15 @@
-/**
- * Load the calendar with the date
- * @param $ Year to load
- * @param p_month Month to load
- * @param p_day Day to load
- */
+/**==================================================================
+ * Insert date on head input column field
+ * @lisha_id    : Lisha identifier
+ * @column      : Column identifier
+ * @p_year      : Recover or input year
+ * @p_month     : Recover or input month
+ * @p_day       : Recover or input day
+ ====================================================================*/
 function lisha_load_date(lisha_id,column,p_year,p_month,p_day,ajax_return)
 {
 	if(typeof(ajax_return) == 'undefined')
 	{
-		//eval('lisha.'+lisha_id+'.menu_opened_col = '+column+';');
-		
 		// Display load gif
 		document.getElementById('calendar_load_'+lisha_id).style.display = 'block';
 		
@@ -33,7 +33,7 @@ function lisha_load_date(lisha_id,column,p_year,p_month,p_day,ajax_return)
 		//==================================================================
 		// Setup Ajax configuration
 		//==================================================================
-		var conf = new Array();	
+		var conf = [];
 		
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 10000;
@@ -62,6 +62,7 @@ function lisha_load_date(lisha_id,column,p_year,p_month,p_day,ajax_return)
 		}
 	}
 }
+/**==================================================================*/
 
 
 /**==================================================================
@@ -124,15 +125,16 @@ function lisha_insert_date(lisha_id,column,p_day,ajax_return)
 	}
 	else
 	{
-		/*format = eval('lisha.'+lisha_id+'.columns.c'+column+'.date_format');
-		date_formated = format.replace('YYYY',p_year);
-		date_formated = date_formated.replace('MM',p_month);
-		date_formated = date_formated.replace('DD',p_day);
-		*/
-		date_formated = ajax_return;
+		var date_formated = ajax_return;
 		// Close the calendar
 		lisha_close_calendar(lisha_id);
-		
+
+        // Checkbox forced only if checkbox exists ( means update mode )
+        if(document.getElementById('chk_edit_c'+column+'_'+lisha_id) != null)
+        {
+            document.getElementById('chk_edit_c'+column+'_'+lisha_id).checked=true;
+        }
+
 		// Set the value into the search input
 		document.getElementById('th_input_'+column+'__'+lisha_id).value = date_formated;
 		
@@ -144,7 +146,6 @@ function lisha_insert_date(lisha_id,column,p_day,ajax_return)
 	}
 }
 /**==================================================================*/
-
 
 
 /**==================================================================

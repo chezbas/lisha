@@ -56,8 +56,8 @@
 	$obj_lisha_tran->define_attribute('__active_top_bar_page',true);
 	$obj_lisha_tran->define_attribute('__active_bottom_bar_page',true);
 
-	$obj_lisha_tran->define_attribute('__active_user_doc', false);					// user documentation button
-	$obj_lisha_tran->define_attribute('__active_tech_doc', false);					// technical documentation button
+	$obj_lisha_tran->define_attribute('__active_user_doc', true);					// user documentation button
+	$obj_lisha_tran->define_attribute('__active_tech_doc', true);					// technical documentation button
 	$obj_lisha_tran->define_attribute('__active_ticket', true);						// Tickets link
 
 	
