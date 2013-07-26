@@ -9,7 +9,7 @@
 		private $c_ssid;							// Session Id
 		private $c_lng;								// Lisha language
 		private $c_query;							// Main query to draw
-		private $c_dir_obj;							// Directory of lisha object
+		public $c_dir_obj;							// Directory of lisha object
 		private $c_img_obj;							// Directory of the img
 		private $c_ident;							// DB Identification
 		private $c_columns;							// Columns (array())
@@ -247,11 +247,52 @@
 		static function generate_common_html_header($p_ssid)
 		{
 			echo '<script type="text/javascript">';
-			echo "var ssid = '".$p_ssid."'";
+			echo "var ssid = '".$p_ssid."';";
+            echo "var g_help_page = '';";        // Global javascript variable for help page
 			echo '</script>';
 		}
 		/**===================================================================*/
-		
+
+
+        /**==================================================================
+         * Generate common HTML bottom part
+         * Build javascript part for help ( CTRL + F11 )
+        ====================================================================*/
+        static function generate_common_html_bottom($p_dir_obj)
+        {
+            echo '
+            <script type="text/javascript">
+            var isCtrl = false;
+
+            document.onkeydown = function(e)
+            {
+                e = e || event;
+
+                //Detection du CTRL
+                if(e.keyCode == 17)
+                {
+                    isCtrl=true;
+                }
+
+                // Help - CTRL+F11
+                if(e.keyCode == 122 && isCtrl == true)
+                {
+                    if((g_help_page) && (g_help_page!=""))
+                    {
+                        window.open("'.$p_dir_obj.'/index.php?id="+g_help_page);
+                    }
+                    else
+                    {
+                        // Default help page
+                        window.open("'.$p_dir_obj.'/index.php?id=1");
+                    }
+                }
+            };	// End onkeydown
+            </script>
+            ';
+        }
+        /**===================================================================*/
+
 		
 		/**==================================================================
 		 * define_nb_line
@@ -4962,16 +5003,6 @@
 		}
         /**===================================================================*/
 
-		/**
-		 * Generate an onmouseover & onmouseout event for help
-		 * @param integer $id_lib Id of the text
-		 * @param integer $id_help Id of the help
-		 */
-		private function hover_out_lib($id_lib,$id_help,$child = '')
-		{
-			return 'onmouseout="lisha_lib_out(\''.$this->c_id.$child.'\');" onmouseover="lisha_lib_hover('.$id_lib.','.$id_help.',\''.$this->c_id.$child.'\');"';
-		}
-		
 		
         /**==================================================================
          * protect_xml

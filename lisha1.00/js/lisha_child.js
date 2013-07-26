@@ -90,7 +90,7 @@ function lisha_child_list_column_ok(lisha_id,ajax_return)
 		//==================================================================
 		// Setup Ajax configuration
 		//==================================================================
-		var conf = new Array();	
+		var conf = [];
 		
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
@@ -164,7 +164,7 @@ function lisha_display_internal_lis(lisha_id,lisha_type,column,ajax_return)
 			/**==================================================================
 			 * Ajax init
 			 ====================================================================*/	
-			var conf = new Array();	
+			var conf = [];
 			
 			conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/internal.php';
 			conf['delai_tentative'] = 6000;

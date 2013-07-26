@@ -769,20 +769,31 @@ function lisha_load_filter(lisha_id,filter_name,ajax_return)
 /**==================================================================*/
 
 
-/**
- * Display the detail of an element
- * 
- * @param id_lib Id of the libelle
- * @param id_help Id of the help page
- * @param lisha_id  Id of the lisha
- */
-function lisha_lib_hover(id_lib,id_help,lisha_id)
+/**==================================================================
+ * Display kick help when mouse hover an area
+ * Setup help index if user press CTRL + F11
+ *
+ * @id_lib      : index of text to display
+ * @id_help     : index of help page node to display if CTRL + F11 pressed
+ * @lisha_id    : lisha internal id
+ * @mode        : Active user documentation ( CTRL +F11 ) or not ( true means user actived )
+ ====================================================================*/
+function lisha_lib_hover(id_lib,id_help,lisha_id,mode)
 {
 	if(!lisha_column_in_resize)
 	{
 		lisha_set_innerHTML('lis__lisha_help_hover_'+lisha_id+'__',lis_lib[id_lib]);
 	}
+
+    // Only if user documentation is turn on
+    // copy help page node index to global javascript varaible for document event
+    if(mode)
+    {
+        g_help_page = id_help;
+    }
 }
+/**==================================================================*/
+
 
 /**
  * Hide the detail of an element

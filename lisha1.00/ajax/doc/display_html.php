@@ -256,7 +256,7 @@
                             FROM
                                 `".__LISHA_TABLE_TEXT__."` `MTT`
                             WHERE 1 = 1
-                                AND `id` = '".$out[1][0]."'
+                                AND `id` = '".$value."'
                                 AND `MTT`.`id_lang` = '".$language."'
                          ";
         $result = $link->query($query);

@@ -1561,7 +1561,7 @@
 			{
 				if($this->c_toolbar_add_btn == true && $this->c_type_internal_lisha != __LOAD_FILTER__ && $this->c_type_internal_lisha != __COLUMN_LIST__)
 				{
-					$html .= '<td class="toolbar_separator_left btn_toolbar"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_add_line" onclick="add_line(\''.$this->c_id.'\');" '.$this->hover_out_lib(6,6).'></div></td>';
+					$html .= '<td class="toolbar_separator_left btn_toolbar"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_add_line" onclick="add_line(\''.$this->c_id.'\');" '.$this->hover_out_lib(6,42).'></div></td>';
 				}
 				
 				if($p_edit != false)
@@ -1631,12 +1631,13 @@
         /**==================================================================
          * hover_out_lib
          * Generate an onmouseover & onmouseout event for help
-         * @id_lib integer Id of the text
-         * @id_help integer Id of the help
+         *
+         * @id_lib      : Id of text to display in quick extension test area
+         * @id_help     : Index of node help page
         ====================================================================*/
 		private function hover_out_lib($id_lib,$id_help)
 		{
-			return 'onmouseout="lisha_lib_out(\''.$this->c_id.'\');" onmouseover="lisha_lib_hover('.$id_lib.','.$id_help.',\''.$this->c_id.'\');"';
+			return 'onmouseout="lisha_lib_out(\''.$this->c_id.'\');" onmouseover="lisha_lib_hover('.$id_lib.','.$id_help.',\''.$this->c_id.'\',\''.$this->c_help_button.'\');"';
 		}
         /**===================================================================*/
 

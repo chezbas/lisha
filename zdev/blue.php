@@ -101,8 +101,13 @@
 	<body onmousemove="lisha_move_cur(event);" onmouseup="lisha_mouseup();">
 		<div class="mydiv"><?php echo $obj_lisha_tran->generate_lisha(); ?></div>
 		<?php $obj_lisha_tran->lisha_generate_js_body();?>
-	<script type="text/javascript">
-	</script>
 
+        <?php
+        //==================================================================
+        // Lisha HTML bottom generation
+        //==================================================================
+        lisha::generate_common_html_bottom($obj_lisha_tran->c_dir_obj);	// Once
+        //==================================================================
+        ?>
 	</body>
 </html>
