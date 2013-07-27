@@ -5003,6 +5003,20 @@
 		}
         /**===================================================================*/
 
+
+        /**==================================================================
+         * hover_out_lib
+         * Generate an onmouseover & onmouseout event for help
+         *
+         * @id_lib      : Id of text to display in quick extension test area
+         * @id_help     : Index of node help page
+        ====================================================================*/
+        private function hover_out_lib($id_lib,$id_help)
+        {
+            return 'onmouseout="lisha_lib_out(\''.$this->c_id.'\');" onmouseover="lisha_lib_hover('.$id_lib.','.$id_help.',\''.$this->c_id.'\',\''.$this->c_help_button.'\');"';
+        }
+        /**===================================================================*/
+
 		
         /**==================================================================
          * protect_xml

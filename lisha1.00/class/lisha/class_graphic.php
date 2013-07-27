@@ -1536,7 +1536,7 @@
 				if($p_edit == false)
 				{
 					//$html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_column_display" onclick="/*lisha_hide_display_col_lov(\''.$this->c_id.'\',__HIDE_DISPLAY_COLUMN__);*/" '.$this->hover_out_lib(1,1).'></div></td>';
-					$html .= '<td class="toolbar_separator_right btn_toolbar"><div id="'.$this->c_id.'_button_columns_list" onclick="list_columns(\''.$this->c_id.'\',__COLUMN_LIST__);" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_col_feat" '.$this->hover_out_lib(1,1).'></div></td>';
+					$html .= '<td class="toolbar_separator_right btn_toolbar"><div id="'.$this->c_id.'_button_columns_list" onclick="list_columns(\''.$this->c_id.'\',__COLUMN_LIST__);" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_col_feat" '.$this->hover_out_lib(1,26).'></div></td>';
 					
 					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_save" '.$this->hover_out_lib(3,3).' onclick="lisha_display_prompt_create_filter(\''.$this->c_id.'\');"></div></td>';
 					$html .= '<td class="btn_toolbar toolbar_separator_right"><div id="'.$this->c_id.'_button_load_filter" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_load" '.$this->hover_out_lib(4,4).' onclick="lisha_load_filter_lov(\''.$this->c_id.'\',__LOAD_FILTER__);"></div></td>';
