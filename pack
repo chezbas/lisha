@@ -162,7 +162,10 @@ else
 	rm $base_tmp/indextech.php	# user doc home page
 	
 	# no tables doc
-	table_doc=""	
+	table_doc=""
+	
+	# Javascript Compressor/Obfuscator
+	php -f zpack/run.php	
 fi
 
 
