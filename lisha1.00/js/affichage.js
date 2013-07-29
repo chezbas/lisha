@@ -131,6 +131,7 @@ function export_list(lisha_id,ajax_return)
 
 /**==================================================================
  * cancel_export	: Cancel export on first step
+ *
  * @lisha_id	: internal lisha identifier
  ====================================================================*/
 function cancel_export(lisha_id)
@@ -809,18 +810,20 @@ function lisha_lib_out(lisha_id)
 }
 
 
-/**
- * Resize a column, call when begin the resize
- * 
- * @param column id of the column in resize
- * @param id Id of the lisha
- */
+/**==================================================================
+ * Resize column width : Call when started to resize
+ *
+ * @column  :   Column identifier
+ * @id      :   Lisha internal identifier
+ ====================================================================*/
 function lisha_resize_column_start(column,id)
 {
 	document.getElementById('header_'+id).className += ' __body_no_select';
 	if(document.getElementById('lisha_header_page_selection_'+id))
-	document.getElementById('lisha_header_page_selection_'+id).className += ' __body_no_select';
-	
+    {
+        document.getElementById('lisha_header_page_selection_'+id).className += ' __body_no_select';
+    }
+
 	lisha_column_resize = column;
 	lisha_id_resize = id;
 
@@ -837,18 +840,22 @@ function lisha_resize_column_start(column,id)
 		document.body.onselectstart = function(){return false;};
 	}
 }
+/**==================================================================*/
 
-/**
- * Resize a column, call when stop the resize
- */
+
+/**==================================================================
+ * Resize column width : Call when mouse button release
+ *
+ ====================================================================*/
 function lisha_resize_column_stop()
 {
 	lisha_set_innerHTML('lis__lisha_help_hover_'+lisha_id_resize+'__','');
 	document.getElementById('header_'+lisha_id_resize).className = '__'+eval('lisha.'+lisha_id_resize+'.theme')+'__lisha_header__';
 	if(document.getElementById('lisha_header_page_selection_'+lisha_id_resize))
-	document.getElementById('lisha_header_page_selection_'+lisha_id_resize).className = '__'+eval('lisha.'+lisha_id_resize+'.theme')+'_lisha_header_page_selection';
-	
-	cursor_start = 0;
+    {
+        document.getElementById('lisha_header_page_selection_'+lisha_id_resize).className = '__'+eval('lisha.'+lisha_id_resize+'.theme')+'_lisha_header_page_selection';
+    }
+
 	// Resize the column
 	size_table(lisha_id_resize);
 	lisha_column_in_resize = false;
@@ -860,6 +867,7 @@ function lisha_resize_column_stop()
 		document.body.onselectstart = null;
 	}
 }
+/**==================================================================*/
 
 
 function lisha_hide_container_click(lisha_id)
@@ -872,6 +880,7 @@ function lisha_hide_container_click(lisha_id)
 
 /**==================================================================
  * lisha_set_content : draw lisha html content
+ *
  * @lisha_id : internal lisha identifier
  * @content : HTML lisha result to draw
  ====================================================================*/

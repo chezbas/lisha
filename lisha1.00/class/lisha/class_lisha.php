@@ -55,7 +55,8 @@
 		private $order_priority;                    // Order priority index for main query
         private $order_priority_lov;                // Order priority index for current column lov
 		private $order_priority_lov_column_id;		// Last column id identifier for order priority
-		
+        private $c_help_button;                     // Help button
+
 		public $export_status;						// Export status null: no export in progress, 1 in progress, 2 done
 		public $export_total;						// Total of rows to export
 		public $filter_name;                        // Custom user filter to display
@@ -2277,7 +2278,6 @@
 					<script type="text/javascript" src="'.$dir.'/js/lisha_child.js"></script>
 					<script type="text/javascript" src="'.$dir.'/js/object/lisha_menu.js"></script>
 					<script type="text/javascript" src="'.$dir.'/js/object/lisha_calendar.js"></script>
-					<script type="text/javascript" src="'.$dir.'/js/object/ajax.js"></script>
 					<script type="text/javascript" src="'.$dir.'/js/object/lisha_msgbox.js"></script>
 					<script type="text/javascript" src="'.$dir.'/js/edit.js"></script>';
 		}

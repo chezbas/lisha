@@ -42,7 +42,7 @@
 	//==================================================================
 	$obj_lisha_tran->define_nb_line(20);											// Row by page								
 	$obj_lisha_tran->define_size(100,'%',100,'%');									// Size of object
-	$obj_lisha_tran->define_attribute('__active_readonly_mode', __RW__);			// Read & Write	
+	$obj_lisha_tran->define_attribute('__active_readonly_mode', __RW__);			// Read & Write
 	$obj_lisha_tran->define_attribute('__id_theme','red');							// Define style
 
 	$obj_lisha_tran->define_attribute('__active_title', true);						// Title bar	
