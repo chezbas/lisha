@@ -263,7 +263,17 @@
 			//==================================================================
 			// Data
 			//==================================================================
-			$lisha .= '<div id="lisha_table_mask_'.$this->c_id.'" class="__'.$this->c_theme.'_table_mask_'.$this->c_id.'"></div><div class="__'.$this->c_theme.'_lisha_content_'.$this->c_id.'" id="liste_'.$this->c_id.'">';
+			$lisha .= '<div id="lisha_table_mask_'.$this->c_id.'" class="__'.$this->c_theme.'_table_mask_'.$this->c_id.'"></div>';
+            // Updating row in progress ?
+            if(!$p_edit)
+            {
+                $lisha .= '<div class="__'.$this->c_theme.'_lisha_content_'.$this->c_id.'" id="liste_'.$this->c_id.'">';
+            }
+            else
+            {
+                // Updating in progress... So, never page bar displayed so use independent css style from page tool bar
+                $lisha .= '<div class="__'.$this->c_theme.'_lisha_content_updating_'.$this->c_id.'" id="liste_'.$this->c_id.'">';
+            }
 			$lisha .= '<table style="border-collapse:collapse;" cellpadding="0" cellspacing="0" id="table_liste_'.$this->c_id.'">';
             $lisha .= $this->generate_data_content($p_resultat,$p_edit);
 			$lisha .= '</table>';
@@ -483,7 +493,7 @@
 			$style .= '}';																																		
 									
 			//==================================================================
-			// Build dynamic css background style
+			// Build dynamic css background style for body data
 			//==================================================================
 			$style .= '.__'.$this->c_theme.'_lisha_content_'.$this->c_id;
 			$style .= '{';
@@ -541,6 +551,67 @@
 			}
 			
 			$style .= '}';
+            //==================================================================
+
+            //==================================================================
+            // Build dynamic css background style for body data updating mode
+            //==================================================================
+            $style .= '.__'.$this->c_theme.'_lisha_content_updating_'.$this->c_id;
+            $style .= '{';
+            $style .= 'width: 100%;';
+            $style .= 'overflow-x: auto;';
+            $style .= 'overflow-y: auto;';
+
+            switch($this->c_theme)
+            {
+                case 'red';
+                    $bg_color = "#fff2f2";
+                    break;
+                case 'grey';
+                    $bg_color = "#EEEEEE";
+                    break;
+                case 'green';
+                    $bg_color = "#ebfadc";
+                    break;
+                case 'blue';
+                    $bg_color = "#CEDDEF";
+                    break;
+                default:
+                    $bg_color = "#E8E8E8";
+            }
+
+
+            if($this->c_background_logo == '')
+            {
+                $style .= 'background-color: '.$bg_color.';';
+            }
+            else
+            {
+                $style .= 'background: '.$bg_color.' url('.$this->c_background_logo.') '.$this->c_background_repeat.' center center;';
+            }
+
+            if($this->c_h_unity == '%')
+            {
+                $style .= 'position: absolute;';
+                $top_height = 71;
+                $bottom_size = 0;
+                if($this->c_title_display) $top_height += 22;
+                //if($this->c_page_selection_display_header) $top_height += 25;
+                $style .= 'top:'.$top_height.'px;';
+                //if($this->c_page_selection_display_footer) $bottom_size += 25;
+                $style .= 'bottom:'.$bottom_size.'px;';
+            }
+            else
+            {
+                $style .= 'position: relative;';
+                $height_size = $this->c_height - 142;
+                if(!$this->c_page_selection_display_header) $height_size += 25;
+                if(!$this->c_page_selection_display_footer) $height_size += 25;
+                if(!$this->c_title_display) $height_size += 22;
+                $style .= 'height: '.$height_size.$this->c_h_unity.';';
+            }
+
+            $style .= '}';
             //==================================================================
 
             //==================================================================
@@ -1570,12 +1641,12 @@
 				}
 				else
 				{
-					$html .= '<td class="btn_toolbar grey_el" id="lisha_td_toolbar_edit_'.$this->c_id.'"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_page_edit " onclick="if(count_selected_lines(\''.$this->c_id.'\') > 0)edit_lines(event,null,\''.$this->c_id.'\');" '.$this->hover_out_lib(7,7).'></div></td>';
+					$html .= '<td class="btn_toolbar grey_el" id="lisha_td_toolbar_edit_'.$this->c_id.'"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_page_edit " onclick="if(count_selected_lines(\''.$this->c_id.'\') > 0)edit_lines(event,null,\''.$this->c_id.'\');" '.$this->hover_out_lib(7,49).'></div></td>';
 				}
 				
 				if($this->c_toolbar_delete_btn == true && $this->c_type_internal_lisha != __COLUMN_LIST__)
 				{
-					$html .= '<td class="btn_toolbar toolbar_separator_right grey_el" id="lisha_td_toolbar_delete_'.$this->c_id.'"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_delete" onclick="if(count_selected_lines(\''.$this->c_id.'\') > 0)delete_lines(\''.$this->c_id.'\',false);" '.$this->hover_out_lib(8,8).'></div></td>';
+					$html .= '<td class="btn_toolbar toolbar_separator_right grey_el" id="lisha_td_toolbar_delete_'.$this->c_id.'"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_delete" onclick="if(count_selected_lines(\''.$this->c_id.'\') > 0)delete_lines(\''.$this->c_id.'\',false);" '.$this->hover_out_lib(8,48).'></div></td>';
 				}
 				else
 				{

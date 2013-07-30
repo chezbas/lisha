@@ -51,6 +51,17 @@
 	$language= $_POST["language"];
 	//==================================================================	
 
+    //==================================================================
+    // Source path of calling script
+    //==================================================================
+    if(!isset($_POST["pathname"]))
+    {
+        error_log_details('fatal','you need an script pathname');
+        die();
+    }
+    $pathname = $_POST["pathname"];
+    //==================================================================
+
 	//==================================================================
 	// Try local language if exists first
 	//==================================================================
@@ -230,11 +241,11 @@
 		
 		if($out[2][$key] == '')
 		{
-			$replace = '<span class="jump" onclick="read_details(\'ikdoc\',\''.$value.'\',\'D\',\'D\')">'.$rowl['value'].'</span>';
+            $replace = '<span class="jump" onclick="jump_screen(\''.$value.'\',\''.$pathname.'?id='.'\')">'.$rowl['value'].'</span>';
 		}
 		else
 		{
-			$replace = '<span class="jump" onclick="read_details(\'ikdoc\',\''.$value.'\',\'D\',\'D\')">'.$out[2][$key].'</span>';
+            $replace = '<span class="jump" onclick="jump_screen(\''.$value.'\',\''.$pathname.'?id='.'\')">'.$out[2][$key].'</span>';
 		}
 		$row["DETAILS"] = str_replace($out[0][$key],$replace,$row["DETAILS"]);
 			
@@ -283,8 +294,9 @@
 
 	$preference = '<div id="boutton_preference" class="boutton_preference" onClick="active_expand_tools_bar()" onmouseout="lib_hover(\'\')" onmouseover="lib_hover(\''.js_protect($_SESSION[$ssid]['lisha']['page_text'][7]['TX']).'\')"></div>';
 
-	$path_to_root = $preference.'<div class="home_path" onclick="read_details(\'ikdoc\',\'1\',\'D\',\'D\')" onmouseout="lib_hover(\'\')" onmouseover="lib_hover(\''.js_protect("homepath").'\')"></div> : ';
-	$separator = '';
+    // Home path
+	$path_to_root = $preference.'<div class="home_path" onclick="jump_screen(\'1\',\''.$pathname.'?id='.'\')" onmouseout="lib_hover(\'\')" onmouseover="lib_hover(\''.js_protect("homepath").'\')"></div> : ';
+    $separator = '';
 	while(list($parent,$value) = each($tab_to_root))
 	{
 		//==================================================================
@@ -297,7 +309,7 @@
 			$value[2] = $_SESSION[$ssid]['MT']['ikdoc']->convertBBCodetoHTML($value[2]);
 		}
 		//==================================================================
-		$path_to_root = $path_to_root . '<span class="mouse" onclick="read_details(\''.$tree_id.'\',\''.$value[0].'\',\''.$mode.'\',\'D\')">'.$value[2].'</span>' . $separator;
+		$path_to_root = $path_to_root . '<span class="mouse" onclick="jump_screen(\''.$value[0].'\',\''.$pathname.'?id='.'\')">'.$value[2].'</span>' . $separator;
 	}
 	
 	if($separator <> '')

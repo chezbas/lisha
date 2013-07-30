@@ -30,7 +30,7 @@ function blink()
 //Bounce tools bar
 //==================================================================
 var pos_sinus = 0;
-var bonce_sinus_move = new Array();
+var bonce_sinus_move = [];
 var bonce_sinus_move = {
 		"0" : 0,
 		"1" : 0.156,
@@ -177,14 +177,13 @@ function read_details(internal_id, row_id, mode, refresh)
 	//==================================================================
 	// Setup Ajax configuration
 	//==================================================================
-	var configuration = new Array();	
-	
+	var configuration = [];
 	configuration['page'] = 'ajax/doc/display_html.php';
 
 	configuration['delai_tentative'] = 10000; // 10 seconds max
 	configuration['max_tentative'] = 2;
 	configuration['type_retour'] = false;		// ReponseText
-	configuration['param'] = 'ssid='+ssid+'&language='+language+'&mode='+mode+'&internal_id='+internal_id+'&IDitem='+row_id;
+	configuration['param'] = 'ssid='+ssid+'&language='+language+'&mode='+mode+'&internal_id='+internal_id+'&IDitem='+row_id+'&pathname='+window.location.pathname;
 	configuration['fonction_a_executer_reponse'] = 'read_done';
 	configuration['param_fonction_a_executer_reponse'] = "'"+internal_id+"','"+row_id+"','"+refresh+"'";
 	
@@ -255,15 +254,25 @@ window.onresize = function() {
 //==================================================================
 // Call setup screen
 //==================================================================
-function jump_screen(page)
+/**==================================================================
+ * Jump to screen with ssid identifier
+ *
+ * @page        :   internal lisha identifier
+ * @extend_url  :   Add an extension to your root path
+ ====================================================================*/
+function jump_screen(page,extend_url)
 {
+    if(extend_url == undefined)
+    {
+        extend_url = '?';
+    }
 	var my_root_path = window.location.origin;
 	if (my_root_path == undefined)
 		{
 			// Opera exception
 			my_root_path = '';
 		}
-	var href = my_root_path+'/'+page+'?IKLNG='+language+'&ssid='+ssid;
+	var href = my_root_path+extend_url+page+'&IKLNG='+language+'&ssid='+ssid;
 	window.location = href;
 }
 //==================================================================
@@ -273,7 +282,7 @@ function user_tree_mode(id_page)
 	//==================================================================
 	// Setup Ajax configuration
 	//==================================================================
-	var configuration = new Array();	
+	var configuration = [];
 	
 	configuration['page'] = 'ajax/doc/tree_mode.php';
 	
@@ -303,7 +312,7 @@ function html_detail_display(internal_id)
 	//==================================================================
 	// Setup Ajax configuration
 	//==================================================================
-	var configuration = new Array();	
+	var configuration = [];
 	
 	configuration['page'] = 'ajax/doc/get_current_page.php';
 
@@ -332,7 +341,7 @@ function show_tiny(language)
 	//==================================================================
 	// Setup Ajax configuration
 	//==================================================================
-	var configuration = new Array();	
+	var configuration = [];
 	
 	configuration['page'] = 'ajax/doc/recover_page_for_update.php';
 
@@ -366,7 +375,7 @@ function sauvegarder(ssid, language)
 	//==================================================================
 	// Setup Ajax configuration
 	//==================================================================
-	var configuration = new Array();	
+	var configuration = [];
 	
 	configuration['page'] = 'ajax/doc/record.php';
 	//configuration['div_wait'] = 'ajax_load_etape'+id_etape;

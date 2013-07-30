@@ -485,6 +485,47 @@ html,body
     cursor: pointer;
 }
 
+.update_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -500px 0;
+}
+
+.update_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -500px -20px;
+    cursor: pointer;
+}
+
+.delete_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -260px 0;
+}
+
+.delete_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -260px -20px;
+    cursor: pointer;
+}
 .setup_path
 {
     height:20px;
