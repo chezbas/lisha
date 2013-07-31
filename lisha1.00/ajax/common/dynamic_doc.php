@@ -33,7 +33,7 @@
 	$motif = '#&lt;isys:([^/]+)[ ]*/&gt;#i';
 	
 	preg_match_all($motif,$row["DETAILS"],$out);
-	
+
 	foreach($out[1] as $key => $value)
 	{
 		$_local_sys = '';
@@ -63,12 +63,12 @@
 				$_local_sys = $reserved_word[4]."=".$language;
 			break;
 			case 'keyword_ssid':
-				$reserved_word = explode('|',$_SESSION[$ssid]['lisha']['configuration']['configuration'][2]);
-				$_local_sys = $reserved_word[0];
+				$reserved_word = explode('|',$_SESSION[$ssid]['lisha']['configuration'][2]);
+				$_local_sys = $reserved_word[1];
 			break;
 			case 'keyword_language':
-				$reserved_word = explode('|',$_SESSION[$ssid]['lisha']['configuration']['configuration'][2]);
-				$_local_sys = $reserved_word[1];
+				$reserved_word = explode('|',$_SESSION[$ssid]['lisha']['configuration'][2]);
+				$_local_sys = $reserved_word[4];
 			break;
 			case 'table_config':
 				$_local_sys = __LISHA_TABLE_SETUP__;

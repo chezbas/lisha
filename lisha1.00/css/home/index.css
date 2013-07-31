@@ -526,6 +526,49 @@ html,body
     background-position: -260px -20px;
     cursor: pointer;
 }
+
+.cancel_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -200px 0;
+}
+
+.cancel_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -200px -20px;
+    cursor: pointer;
+}
+
+.record_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -560px 0;
+}
+
+.record_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -560px -20px;
+    cursor: pointer;
+}
+
 .setup_path
 {
     height:20px;
