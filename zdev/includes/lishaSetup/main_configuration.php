@@ -39,4 +39,4 @@
 	define("__MT_TABLE_TECH_DOCU_CAPTION__","lisha_mt_doc_tech_caption");	// Technical tree documentation caption			
 	//==================================================================
 
-	$path_root_lisha =  '../'.__LISHA_APPLICATION_RELEASE__;						// Internal use for tickets screen. Don't remove please
+	$path_root_lisha =  '../'.__LISHA_APPLICATION_RELEASE__;				// Internal use for tickets screen. Don't remove please

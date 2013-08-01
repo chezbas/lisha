@@ -12,6 +12,17 @@
 	margin-top: 1em;
 	margin-bottom: 0.5em;
 }
+
+.auto_field
+{
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.auto_text
+{
+    color: #973300;
+}
 .subtitle
 {
 	color: #2b3b5b;

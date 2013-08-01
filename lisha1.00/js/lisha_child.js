@@ -1,7 +1,8 @@
 /**==================================================================
- * Return clicked value to parrent
- * @id      : Internal lisha id
- * @column  : Column to display menu
+ * Return clicked value to parent
+ * @el              : Clicked row
+ * @parent		    : id of lisha parent
+ * @parent_column   : parent column identifier
  ====================================================================*/
 function lisha_child_insert_into_parent(el,parent,parent_column)
 {
@@ -126,7 +127,7 @@ function lisha_child_list_column_ok(lisha_id,ajax_return)
 
 
 /**==================================================================
- * lisha_child_cancel : event when item is selected
+ * event call when item is selected
  * @parent			: id of lisha parent
  * @parent_column	: column id ( if no column, jsut force 1 )
  ====================================================================*/
@@ -148,10 +149,13 @@ function lisha_child_cancel(parent,parent_column)
 /**==================================================================*/
 
 
-/**
- * @param id_lisha
- * @param lisha_type
- */
+/**==================================================================
+ * Internal lisha call for sub function
+ * @lisha_id		: Internal lisha identifier
+ * @lisha_type		: Kind of lisha object
+ * @column          : Column identifier
+ * @ajax_return     : Ajax call return
+ ====================================================================*/
 function lisha_display_internal_lis(lisha_id,lisha_type,column,ajax_return)
 {
 	var is_lovable = eval('lisha.'+lisha_id+'.columns.c'+column+'.is_lovable');
@@ -161,9 +165,10 @@ function lisha_display_internal_lis(lisha_id,lisha_type,column,ajax_return)
 		if(typeof(ajax_return) == 'undefined')
 		{
 			lisha_cover_with_filter(lisha_id);
-			/**==================================================================
-			 * Ajax init
-			 ====================================================================*/	
+            //==================================================================
+            // Setup Ajax configuration
+            // Load estimation
+            //==================================================================
 			var conf = [];
 			
 			conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/internal.php';
@@ -175,7 +180,7 @@ function lisha_display_internal_lis(lisha_id,lisha_type,column,ajax_return)
 			conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"','"+lisha_type+"',"+column;
 			
 			ajax_call(conf);
-			/**==================================================================*/
+            //==================================================================
 		}
 		else
 		{
@@ -222,10 +227,10 @@ function lisha_display_internal_lis(lisha_id,lisha_type,column,ajax_return)
 					var myfocus = 'th_input_'+my_default_focus_column+'__'+lisha_id+'_child';
 					document.getElementById(myfocus).focus();
 				}
-				
-				/**================================================================== 
-				 * Test child lisha position
-				 * ====================================================================*/
+
+                //==================================================================
+                // Test child lisha position
+                //==================================================================
 				// Get the position of the child lisha
 				var pos_child_lisha = lisha_getPosition('internal_lisha_'+lisha_id); 
 				
@@ -238,8 +243,8 @@ function lisha_display_internal_lis(lisha_id,lisha_type,column,ajax_return)
 					document.getElementById('internal_lisha_'+lisha_id).style.left = '';
 					document.getElementById('internal_lisha_'+lisha_id).style.right = 0+'px';
 				}
-				/** ================================================================== */
-				
+                //==================================================================
+
 				var pos_item = FindXY(document.getElementById('th_1_c'+column+'_'+lisha_id),lisha_id);
 				document.getElementById('internal_lisha_'+lisha_id).style.top =  pos_item.y+24+'px';	
 				
@@ -256,3 +261,4 @@ function lisha_display_internal_lis(lisha_id,lisha_type,column,ajax_return)
 		}
 	}
 }
+/**==================================================================*/

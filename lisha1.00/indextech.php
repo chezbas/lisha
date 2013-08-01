@@ -83,7 +83,8 @@ if(!isset($_SESSION[$ssid]['lisha']['doc']['tree']['user']))
 			
 			MainTimer.init(30,"T1");
 
-			<?php 
+            MainTimer.add_event(50,"blink()");
+			<?php
 			/*if(!$_SESSION[$ssid]['MT']['tree']['id']['ikdoc']["edit_mode"])
 			{
 				//echo 'MainTimer.add_event(2,"bounce_tool_bar(20)");';

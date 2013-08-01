@@ -146,9 +146,9 @@ $obj_lisha_tran->define_attribute('__active_ticket', true);		// Tickets link
 
 **in demo/includes/LishaDefine/demo.php**
 
-Relative acces to your lisha is flag by 'xxxxxxxxxx'
+Relative access to your lisha is flag by 'xxxxxxxxxx'
 
-here a part of my root weeb site
+here a part of my root wesb site
 ...
 demo
 	ajax
@@ -159,6 +159,8 @@ demo
 $package_directory_name$ <-- lisha framework ( destination )
 ...
 
+Use $path_root_lisha defined into your main_configuration.php file
+
 So to go from source to destination, i have to build relative path '../$package_directory_name$' or using constant '../'.__LISHA_APPLICATION_RELEASE__
 
 ```php
@@ -167,7 +169,7 @@ $_SESSION[$ssid]['lisha'][$lisha1_id] = new lisha(
 													$ssid,
 													__MYSQL__,
 													array('user' => __LISHA_DATABASE_USER__,'password' => __LISHA_DATABASE_PASSWORD__,'host' => __LISHA_DATABASE_HOST__,'schema' => __LISHA_DATABASE_SCHEMA__),
-													'../$package_directory_name$',
+													$path_root_lisha,
 													null,
 													false,
 													__LISHA_APPLICATION_RELEASE__

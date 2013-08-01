@@ -128,7 +128,7 @@
         $rowl = $result->fetch_array(MYSQLI_ASSOC);
 
         $replace = $rowl['sortie'];
-        $row["DETAILS"] = str_replace($out[0][$key],$replace,$row["DETAILS"]);
+        $row["DETAILS"] = str_replace($out[0][$key],'<span class="auto_field">'.$replace.'</span>',$row["DETAILS"]);
     }
     //==================================================================
 
@@ -141,7 +141,7 @@
 
 	foreach($out[1] as $key => $value)
 	{
-		$replace = '<span style="font-weight: bold;">'.ucfirst($value).'</span>';
+		$replace = '<span class="auto_field">'.ucfirst($value).'</span>';
 		$row["DETAILS"] = str_replace($out[0][$key],$replace,$row["DETAILS"]);
 			
 	}	
@@ -158,7 +158,7 @@
 	foreach($out[1] as $key => $value)
 	{
 		$replace = $_SESSION[$ssid]['MT']['configuration'][$value];
-		$row["DETAILS"] = str_replace($out[0][$key],$replace,$row["DETAILS"]);
+		$row["DETAILS"] = str_replace($out[0][$key],'<span class="auto_field">'.$replace.'</span>',$row["DETAILS"]);
 			
 	}	
 	//==================================================================	
@@ -174,7 +174,7 @@
 	foreach($out[1] as $key => $value)
 	{
 		$replace = $_SESSION[$ssid]['lisha']['configuration'][$value];
-		$row["DETAILS"] = str_replace($out[0][$key],$replace,$row["DETAILS"]);
+		$row["DETAILS"] = str_replace($out[0][$key],'<span class="auto_field">'.$replace.'</span>',$row["DETAILS"]);
 			
 	}	
 	//==================================================================	
@@ -189,7 +189,7 @@
 	foreach($out[1] as $key => $value)
 	{
 		$replace = $_SESSION[$ssid]['lisha'][$value];
-		$row["DETAILS"] = str_replace($out[0][$key],$replace,$row["DETAILS"]);
+		$row["DETAILS"] = str_replace($out[0][$key],'<span class="auto_field">'.$replace.'</span>',$row["DETAILS"]);
 			
 	}	
 	//==================================================================	
@@ -275,7 +275,7 @@
         $rowl = $result->fetch_array(MYSQLI_ASSOC);
         $replace = $rowl['corps'];
 
-        $row["DETAILS"] = str_replace($out[0][$key],$replace,$row["DETAILS"]);
+        $row["DETAILS"] = str_replace($out[0][$key],'<span class="auto_text">'.$replace.'</span>',$row["DETAILS"]);
     }
     //==================================================================
 

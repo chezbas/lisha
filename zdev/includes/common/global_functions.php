@@ -29,8 +29,8 @@
 				break;
 		}
 	}
-	/*===================================================================*/	
-	
+    /**===================================================================*/
+
 
 	/**==================================================================
 	 * convert to heure minute second
@@ -44,15 +44,15 @@
 
 		return str_pad($heures, 2, "0", STR_PAD_LEFT).':'.str_pad($minutes, 2, "0", STR_PAD_LEFT).':'.str_pad($secondes, 2, "0", STR_PAD_LEFT);
 	}
-	/*===================================================================*/	
+    /**===================================================================*/
 
 	
 	/**==================================================================
 	 * Recover all URL parameters except key items in @param_exclure
-	 * @geturl : Common value means $_GET
-	 * @param_exclure : array : Set of parameters to ignore
+	 * geturl : Common value means $_GET
+	 * param_exclure : array : Set of parameters to ignore
 	 * 					eg : $aram_exclure = array(ssid); 
-	 * @return : string that you can put on end url called to keep context 
+	 * return : string that you can put on end url called to keep context
 	 ====================================================================*/	
 	function url_get_exclusion($geturl,$param_exclure = array()) 
 	{
@@ -68,30 +68,29 @@
 		}
 		return $url_param;
 	}
-	/*===================================================================*/	
+    /**===================================================================*/
 
 	
 	/**==================================================================
 	 * Protect special MySQL digit
-	 * @txt : Text content to protect
-	 * @return : $txt
+	 * txt : Text content to protect
+	 * return : $txt
 	 ====================================================================*/	
 	function mysql_protect($txt) 
 	{
 		$txt = str_replace("'","\'",$txt);
 		return $txt;
 	}
-	/*===================================================================*/	
+    /**===================================================================*/
 
 	/**==================================================================
 	 * Protect javascript  simple quot call function
-	 * @txt : Text content to protect
-	 * @return : $txt
+	 * txt : Text content to protect
+	 * return : $txt
 	 ====================================================================*/	
 	function js_protect($txt) 
 	{
 		$txt = str_replace("'","\'",$txt);
 		return $txt;
 	}
-	/*===================================================================*/	
-?>
+    /**===================================================================*/

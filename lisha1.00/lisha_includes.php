@@ -5,4 +5,3 @@
 	require $path_root_lisha.'/class/common/class_bdd.php';
 	require $path_root_lisha.'/class/lisha/class_lisha.php';
 	require $path_root_lisha.'/class/lisha/class_graphic.php';
-?>
