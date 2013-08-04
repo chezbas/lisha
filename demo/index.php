@@ -34,16 +34,16 @@
 	require('./includes/lishaSetup/main_configuration.php');
 
 	// Lisha load main customized database configuration
-	require('./../'.__LISHA_APPLICATION_RELEASE__.'/includes/LishaSetup/custom_configuration.php');
+	require($path_root_lisha.'/includes/LishaSetup/custom_configuration.php');
 
 	// Lisha using language
-	require('./../'.__LISHA_APPLICATION_RELEASE__.'/includes/common/language.php');
+	require($path_root_lisha.'/includes/common/language.php');
 
 	// Lisha read localization features
-	require('./../'.__LISHA_APPLICATION_RELEASE__.'/includes/LishaSetup/lisha_localization.php');
+	require($path_root_lisha.'/includes/LishaSetup/lisha_localization.php');
 
 	// Lisha framework includes
-	require('./../'.__LISHA_APPLICATION_RELEASE__.'/lisha_includes.php');
+	require($path_root_lisha.'/lisha_includes.php');
 	/*===================================================================*/		
 
 	
@@ -92,10 +92,7 @@
 			/*===================================================================*/
 			
 		?>
-
-		<script type="text/javascript" src="ajax/common/ajax_generique.js"></script>
-		<script type="text/javascript" src="js/common/json.js"></script>
-		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="js/index.js"></script> <!-- Custom javascript -->
 
 		<title><?php echo $_SESSION[$ssid]['message'][1]?></title>
 	</head>

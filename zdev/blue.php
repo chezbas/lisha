@@ -92,7 +92,6 @@
 			include ('./includes/LishaDefine/blue.php');
            /**===================================================================*/
 		?>
-		<script type="text/javascript" src="ajax/common/ajax_generique.js"></script>
 		<script type="text/javascript" src="js/common/json.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 

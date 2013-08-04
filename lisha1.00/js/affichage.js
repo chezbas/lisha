@@ -967,7 +967,10 @@ function lisha_move_cur(e)
  * 
  * @param e event
  */
-function lisha_mouseup(e)
+/**==================================================================
+ * Catch event on mouseup
+ ====================================================================*/
+function lisha_mouseup()
 {
 	if(lisha_column_in_resize)
 	{
@@ -981,6 +984,8 @@ function lisha_mouseup(e)
 		}
 	}
 }
+/**==================================================================*/
+
 
 /**
  * Stop the event handler

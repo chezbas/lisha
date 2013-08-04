@@ -63,17 +63,20 @@
 
 		private $matchcode;				// Matchcode between internal external call and function name
 		/**===================================================================*/
-		
+
+
 		/**==================================================================
 		 * Constructor of lisha class
-		 * @p_id            :   ...Todo...
-		 * @p_ssid          :
-		 * @p_bdd_server    :
-		 * @p_bdd_user      :
-		 * @p_bdd_password  :
-		 * @p_bdd_schema    :
-		 ====================================================================*/	
-		public function __construct($p_id,$p_ssid,$p_db_engine,$p_ident,$p_dir_obj,$p_img_obj = null,$p_type_internal_lisha = false,$p_lisha_active_version = null)
+		 * @p_id                    : Internal lisha identifier
+		 * @p_ssid                  : Token string
+         * @p_db_engine             : Database engine to use
+         * @p_ident                 : Array of database connexion ( array('user' => 'my_database_user,'password' => 'my_database_password','host' => 'localhost','schema' => 'lisha') )
+		 * @p_dir_obj               : Relative path to lisha directory
+		 * @p_img_obj               : No more in use....?? null by default
+		 * @p_type_internal_lisha   : Kind of lisha ( __LOAD_FILTER__, __COLUMN_MODE__ ... )
+         * @p_lisha_active_version  : No more in use....?? Lisha package directory name ( by default : __LISHA_APPLICATION_RELEASE__ )
+		 ====================================================================*/
+		public function __construct($p_id,$p_ssid,$p_db_engine,$p_ident,$p_dir_obj,$p_img_obj = null,$p_type_internal_lisha = false,$p_lisha_active_version = __LISHA_APPLICATION_RELEASE__)
 		{			
 			if(!isset($_GET['lng']))
 			{
@@ -88,6 +91,8 @@
 			}
 
 			$this->c_dir_obj = $p_dir_obj;
+
+            /*
 			if($p_img_obj == null) 
 			{
 				$this->c_img_obj = $p_dir_obj;
@@ -95,8 +100,14 @@
 			else
 			{
 				$this->c_img_obj = $p_img_obj;
-			} 
+			}
+            */
+            // do never user $p_img_obj
+            $this->c_img_obj = $p_dir_obj;
 
+
+
+            /*
 			if($p_lisha_active_version == null)
 			{
 				$lisha_active_version = $p_dir_obj;
@@ -106,6 +117,8 @@
 			{
 				$this->c_software_version = $p_lisha_active_version;
 			}
+            */
+            $this->c_software_version = __LISHA_APPLICATION_RELEASE__;
 
 			$this->c_id = $p_id;
 			$this->c_ssid = $p_ssid;
@@ -2279,7 +2292,8 @@
 					<script type="text/javascript" src="'.$dir.'/js/object/lisha_menu.js"></script>
 					<script type="text/javascript" src="'.$dir.'/js/object/lisha_calendar.js"></script>
 					<script type="text/javascript" src="'.$dir.'/js/object/lisha_msgbox.js"></script>
-					<script type="text/javascript" src="'.$dir.'/js/edit.js"></script>';
+					<script type="text/javascript" src="'.$dir.'/js/edit.js"></script>
+                    <script type="text/javascript" src="'.$dir.'/ajax/common/ajax_generique.js"></script>';
 		}
 		
 		public function generate_lmod_header($p_display = true)
