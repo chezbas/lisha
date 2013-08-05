@@ -8,8 +8,7 @@
 		private $c_ssid;				// Session id
 		private $c_lng;					// Language of the lisha
 		private $c_dir_obj;				// Directory of the lisha object
-		private $c_img_obj;				// Directory of the img
-		
+
 		private $c_readonly;			// lisha mode -> true : readonly, false read/write
 		private $c_theme;				// lisha css style
 		private $c_height;				// lisha height
@@ -31,7 +30,7 @@
 		private $c_limit_min;			// Min value of the limit
 		private $c_limit_max;			// Max value of the limit
 		
-		private $c_recordset_line;		// Total line of the recordset
+		private $c_recordset_line;		// Total line recorded
 		private $c_obj_bdd;
 		private $c_background_logo;		// Background logo of the lisha
 		private $c_background_repeat;	// Background repeat of the logo
@@ -58,7 +57,7 @@
 		//==================================================================
 
 		//==================================================================
-		// Define public attributs
+		// Define public attributes
 		//==================================================================
 		public $c_columns;						// Columns (array())
 		public $c_help_button;					// Enable or disable user help button
@@ -73,16 +72,14 @@
 		 * @p_ssid			 				: session token reference
 		 * @p_obj_bdd						: database connexion 
 		 * @p_dir_obj						: relative path of lisha
-		 * @p_img_obj						: relative path of pictures and css
-		 * @p_columns						: ???
+		 * @p_columns						: features of columns
 		 * @p_selected_line					: Lines selected
-		 * @p_type_internal_lisha			: lisha mode ???
-		 * @p_lng							: language ???
+		 * @p_type_internal_lisha			: lisha mode ( __LOAD_FILTER__, __COLUMN_MODE__ ... )
+		 * @p_lng							: language in use
 		 ====================================================================*/
-		public function __construct(&$p_software_version,&$p_id,&$p_ssid,$p_obj_bdd,$p_dir_obj,$p_img_obj,&$p_columns,&$p_selected_line,&$p_type_internal_lisha,$p_lng)
+		public function __construct($p_software_version,&$p_id,&$p_ssid,$p_obj_bdd,$p_dir_obj,&$p_columns,&$p_selected_line,&$p_type_internal_lisha,$p_lng)
 		{
 			$this->c_dir_obj = &$p_dir_obj;
-			$this->c_img_obj = &$p_img_obj;
 			$this->c_software_version = &$p_software_version;
 			$this->c_id = &$p_id;
 			$this->c_ssid = &$p_ssid;
@@ -141,10 +138,10 @@
 		
 		/**==================================================================
 		 * Generate the lisha visual content
-		 * @p_resultat				: ???
-		 * @p_resultat_header		: ???
-		 * @p_ajax_call		 		: ???
-		 * @p_edit					: ???
+		 * @p_resultat				: Query results
+		 * @p_resultat_header		: lisha header
+		 * @p_ajax_call		 		: boolean of ajax call or not
+		 * @p_edit					: Edit mode in progress ( true means yes )
 		 ====================================================================*/
 		public function draw_lisha($p_resultat,$p_result_header = false,$p_ajax_call = null,$p_edit = false)
 		{
@@ -326,16 +323,15 @@
 				</script>
 				';
 			}
-			
-			// Return lisha
+			// Return content
 			return $lisha;
 		}
 		/**===================================================================*/
 		
 
 		/**==================================================================
-		 * generate_style
-		 * Main CSS theme header definition
+		 * Build dynamic CSS needed for lisha
+		 *
 		 * @p_bal_style		:	true means add css style
 		 ====================================================================*/
 		public function generate_style($p_bal_style = true)
@@ -361,8 +357,8 @@
 		
 		
 		/**==================================================================
-		 * generate_color_line_style
-		 * Build CSS theme of each Set Of Color line
+		 * Build CSS theme for each Set Of Color line ( call by generate_style )
+         *
 		 ====================================================================*/
 		private function generate_color_line_style()
 		{
@@ -459,8 +455,8 @@
 		
 		
 		/**==================================================================
-		 * generate_lisha_global_style
-		 * Build CSS theme of lisha
+         * Build main CSS theme of lisha ( red, green, blue, grey... )  ( call by generate_style )
+		 *
 		 ====================================================================*/
 		private function generate_lisha_global_style()
 		{
@@ -709,8 +705,9 @@
 		
 			
 		/**==================================================================
-		 * generate_page_selection
-		 * @p_resultat		:	query result
+		 * Build navigation page bar
+         *
+		 * @p_resultat		:   query result
 		 * @p_type			:	__HEADER__ or __FOOTER__
 		 ====================================================================*/
 		private function generate_page_selection($p_resultat,$p_type)
@@ -2211,17 +2208,20 @@
 		/**===================================================================*/
 		
 		
-		/**
-		 * Define a background logo
-		 * @param string $logo
-		 * @param string $repeat no-repeat,repeat-x,repeat-y
-		 */
-		public function define_background_logo($logo,$repeat)
+        /**==================================================================
+         * Setup background image
+         *
+         * @p_logo      : Path and file name to display
+         * @p_repeat    : no-repeat,repeat-x,repeat-y
+        ====================================================================*/
+		public function define_background_logo($p_logo,$p_repeat)
 		{
-			$this->c_background_logo = $logo;
-			$this->c_background_repeat = $repeat;
+			$this->c_background_logo = $p_logo;
+			$this->c_background_repeat = $p_repeat;
 		}
-		
+        /**===================================================================*/
+
+
 		public function define_limit_min($page)
 		{
 			$this->c_limit_min = $page;
@@ -2238,19 +2238,25 @@
 		}		
 		
 		/**===================================================================*/
-		
-		
+
+
 		/**==================================================================
-		 * Internal methods
-		 ====================================================================*/	
-		private function lib($id)
+		 * Return lisha caption
+         *
+         * @p_id    :   id of text to return
+		 ====================================================================*/
+		private function lib($p_id)
 		{
-			return $_SESSION[$this->c_ssid]['lisha']['lib'][$id];
+			return $_SESSION[$this->c_ssid]['lisha']['lib'][$p_id];
 		}
-		
-		/**
-		 * Return the number of order clause of the lisha
-		 */
+        /**===================================================================*/
+
+
+        /**==================================================================
+         * Count number of order by defined
+         *
+         * return      : integer
+        ====================================================================*/
 		private function get_nbr_order()
 		{
 			$qtt = 0;
@@ -2263,6 +2269,8 @@
 			}
 			return $qtt;
 		}
+        /**===================================================================*/
+
 
 		private function convertBBCodetoHTML($p_text)
 		{
@@ -2281,9 +2289,6 @@
             $p_text = preg_replace('`\[font=(.*?)\](.*?(\[/font\]\[/font\].*?)*)\[/font\](?!(\[/font\]))`ie','"<font face=\"\\1\">".str_replace("[/font][/font]","[/font]","\\2")."</font>"',$p_text);
             $p_text = preg_replace('`\[url\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" href=\"".str_replace("[/url][/url]","[/url]","\\1")."\">".str_replace("[/url][/url]","[/url]","\\1")."</a>"',$p_text);
             $p_text = preg_replace('`\[url=(.*?)\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" href=\"\\1\">".str_replace("[/url][/url]","[/url]","\\2")."</a>"',$p_text);
-
-            //$p_text = preg_replace('`\[br\]`','<br>',$p_text);
-            //$p_text = preg_replace('`\[hr\]`','<hr>',$p_text);
 
             // Found a randomized string do not exists in string to convert
             $temp_str = '7634253332';while(stristr($p_text,$temp_str)){$temp_str = mt_rand();}

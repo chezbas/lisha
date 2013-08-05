@@ -226,3 +226,9 @@ $c_columns_init dans general leader
 Remove 1 parameter
 $obj_lisha_bug->define_column_lov_order('ord',0,__ASC__); ==> $obj_lisha_bug->define_column_lov_order('ord',__ASC__);
 define_column_lov_order ==> define_lov_order_column
+
+
+remove new lisha parameters
+$this->c_software_version
+replace by constant __LISHA_APPLICATION_RELEASE__
+$this->c_img_obj = $p_dir_obj;

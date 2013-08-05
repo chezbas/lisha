@@ -9,8 +9,6 @@
 		private $c_ssid;							// Session Id
 		private $c_lng;								// Lisha language
 		private $c_query;							// Main query to draw
-		public $c_dir_obj;							// Directory of lisha object
-		private $c_img_obj;							// Directory of the img
 		private $c_ident;							// DB Identification
 		private $c_columns;							// Columns (array())
 		private $c_columns_init;					// Original columns values
@@ -25,7 +23,6 @@
 		private $c_color_mask;						// Color mask (array())
 		private $c_group_of_color_column_name;		// Group of color column name
 		private $c_obj_graphic;						// Graphic instance of Lisha
-		private $c_software_version;				// Lisha version
 		private $c_mode;							// Display mode LMOD ( list ) or NMOD ( normal )
 		private $c_return_mode;						// Mode of lisha return (in LMOD mode)
 		private $c_col_return;						// Column to return (in LMOD mode)
@@ -56,12 +53,18 @@
         private $order_priority_lov;                // Order priority index for current column lov
 		private $order_priority_lov_column_id;		// Last column id identifier for order priority
         private $c_help_button;                     // Help button
+        private $matchcode;				            // Matchcode between internal external call and function name
+        //==================================================================
 
+        //==================================================================
+        // Define public attributes
+        //==================================================================
 		public $export_status;						// Export status null: no export in progress, 1 in progress, 2 done
 		public $export_total;						// Total of rows to export
 		public $filter_name;                        // Custom user filter to display
+        public $c_dir_obj;							// Directory of lisha object
+        //==================================================================
 
-		private $matchcode;				// Matchcode between internal external call and function name
 		/**===================================================================*/
 
 
@@ -72,11 +75,9 @@
          * @p_db_engine             : Database engine to use
          * @p_ident                 : Array of database connexion ( array('user' => 'my_database_user,'password' => 'my_database_password','host' => 'localhost','schema' => 'lisha') )
 		 * @p_dir_obj               : Relative path to lisha directory
-		 * @p_img_obj               : No more in use....?? null by default
 		 * @p_type_internal_lisha   : Kind of lisha ( __LOAD_FILTER__, __COLUMN_MODE__ ... )
-         * @p_lisha_active_version  : No more in use....?? Lisha package directory name ( by default : __LISHA_APPLICATION_RELEASE__ )
 		 ====================================================================*/
-		public function __construct($p_id,$p_ssid,$p_db_engine,$p_ident,$p_dir_obj,$p_img_obj = null,$p_type_internal_lisha = false,$p_lisha_active_version = __LISHA_APPLICATION_RELEASE__)
+		public function __construct($p_id,$p_ssid,$p_db_engine,$p_ident,$p_dir_obj,$p_type_internal_lisha = false)
 		{			
 			if(!isset($_GET['lng']))
 			{
@@ -90,35 +91,9 @@
 				$this->c_lng = $_GET['lng'];
 			}
 
+            // Recover relative path to lisha
 			$this->c_dir_obj = $p_dir_obj;
 
-            /*
-			if($p_img_obj == null) 
-			{
-				$this->c_img_obj = $p_dir_obj;
-			}
-			else
-			{
-				$this->c_img_obj = $p_img_obj;
-			}
-            */
-            // do never user $p_img_obj
-            $this->c_img_obj = $p_dir_obj;
-
-
-
-            /*
-			if($p_lisha_active_version == null)
-			{
-				$lisha_active_version = $p_dir_obj;
-				$this->c_software_version = $lisha_active_version;
-			}
-			else
-			{
-				$this->c_software_version = $p_lisha_active_version;
-			}
-            */
-            $this->c_software_version = __LISHA_APPLICATION_RELEASE__;
 
 			$this->c_id = $p_id;
 			$this->c_ssid = $p_ssid;
@@ -176,7 +151,7 @@
 			//==================================================================
 			// Build graphic part
 			//==================================================================
-			$this->c_obj_graphic = new graphic_lisha($this->c_software_version,$this->c_id,$this->c_ssid,$this,$p_dir_obj,$p_img_obj,$this->c_columns,$this->c_selected_lines,$this->c_type_internal_lisha,$this->c_lng);
+			$this->c_obj_graphic = new graphic_lisha(__LISHA_APPLICATION_RELEASE__,$this->c_id,$this->c_ssid,$this,$p_dir_obj,$this->c_columns,$this->c_selected_lines,$this->c_type_internal_lisha,$this->c_lng);
 			//==================================================================
 			
 			//==================================================================
@@ -1747,8 +1722,8 @@
 			$json = '';
 			
 			if($p_generate_column && $p_generate_line) $json  = $json_base.' = new Object();';
-			$json .= $json_base.'.software_version = \''.$this->c_software_version.'\';';
-			$json .= $json_base.'.dir_obj = \''.$this->c_img_obj.'\';';
+			$json .= $json_base.'.software_version = \''.__LISHA_APPLICATION_RELEASE__.'\';';
+			$json .= $json_base.'.dir_obj = \''.$this->c_dir_obj.'\';';
 			$json .= $json_base.'.ssid = \''.$this->c_ssid.'\';';
 			$json .= $json_base.'.qtt_column = '.$this->get_qtt_column().';';
 			$json .= $json_base.'.total_page = '.ceil($this->c_recordset_line / $this->c_nb_line).';';
@@ -2214,7 +2189,7 @@
 					FROM '.__LISHA_TABLE_TEXT__.' 
 					WHERE 1 = 1
 						AND `id_lang` = "'.$this->c_lng.'" 
-						AND `version_active` = "'.$this->c_software_version.'"
+						AND `version_active` = "'.__LISHA_APPLICATION_RELEASE__.'"
 					';
 			
 			$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
@@ -4303,7 +4278,7 @@
 		{
 			$id_child = $this->c_id.'_child';
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_parent($this->c_id);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine,$this->c_ident,$this->c_dir_obj,$this->c_software_version.'/');
+			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine,$this->c_ident,$this->c_dir_obj.'/');
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__display_mode',__CMOD__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_readonly_mode',__R__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(41));
@@ -4348,7 +4323,7 @@
 			$id_child = $this->c_id.'_child';
 
 			// Create a lisha instance
-			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child,$this->c_ssid,$this->c_db_engine,$this->c_ident,$this->c_dir_obj,$this->c_img_obj,__POSSIBLE_VALUES__,$this->c_software_version);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child,$this->c_ssid,$this->c_db_engine,$this->c_ident,$this->c_dir_obj,__POSSIBLE_VALUES__);
 			
 			if(isset($this->c_columns[$column]['lov']) && $this->c_columns[$column]['lov'])
 			{
@@ -4548,7 +4523,7 @@
 			//==================================================================
 			
 			// Create an instance of a lisha
-			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine, $this->c_ident,$this->c_dir_obj,$this->c_img_obj,__COLUMN_LIST__,$this->c_software_version);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine, $this->c_ident,$this->c_dir_obj,__COLUMN_LIST__);
 
 			//==================================================================
 			// Lisha display setup
@@ -4873,7 +4848,7 @@
 			$column = 1;
 			$id_child = $this->c_id.'_child';
 			// Create an instance of a lisha
-			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine, $this->c_ident,$this->c_dir_obj,$this->c_img_obj,__LOAD_FILTER__,$this->c_software_version);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine, $this->c_ident,$this->c_dir_obj,__LOAD_FILTER__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(4).' ('.$this->c_param_adv_filter.')');
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query','SELECT DISTINCT `name`,`date`,`id` FROM '.__LISHA_TABLE_FILTER__.' WHERE `id` = "'.$this->c_id.'"');
 
