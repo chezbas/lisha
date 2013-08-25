@@ -15,20 +15,20 @@
 
 	// Create a reference to the session
 	$obj_lisha_tran = &$_SESSION[$ssid]['lisha'][$lisha1_id];
-	
+
 	//==================================================================
 	// Define main query
 	//==================================================================
 	$query = "
 			SELECT
-				`index`			AS `index`,
-				`daterec` 		AS `daterec`,
-				`description`	AS `description`,
-				`amount`			AS `amount`,
-				UPPER(`amount`)	AS `upper`,
-				`status`			AS `status`,
-				`status`			AS `MyGroupTheme`
-			FROM 
+				`demo_table`.`index`			AS `index`,
+				`demo_table`.`daterec` 		AS `daterec`,
+				`demo_table`.`description`	AS `description`,
+				`demo_table`.`amount`			AS `amount`,
+				UPPER(`demo_table`.`amount`)	AS `upper`,
+				`demo_table`.`status`			AS `status`,
+				`demo_table`.`status`			AS `MyGroupTheme`
+			".$_SESSION[$ssid]['lisha']['configuration'][10]."
 				`demo_table`
 				WHERE 1 = 1
 				";
@@ -75,7 +75,7 @@
 		//==================================================================
 		// define column : Date modification
 		//==================================================================
-		$obj_lisha_tran->define_column('daterec','date',__DATE__,__WRAP__,__CENTER__,__PERCENT__,__DISPLAY__);
+		$obj_lisha_tran->define_column('`demo_table`.`daterec`','daterec','date',__DATE__,__WRAP__,__CENTER__,__PERCENT__,__DISPLAY__);
 		$obj_lisha_tran->define_attribute('__column_date_format','%d/%m/%Y','daterec');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'daterec');
 		$obj_lisha_tran->define_input_focus('daterec', true);					// Focused
@@ -85,21 +85,21 @@
 		//==================================================================
 		// define column : Description
 		//==================================================================
-		$obj_lisha_tran->define_column('description','Caption',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column('`demo_table`.`description`','description','Caption',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'description');
 		//==================================================================
 
 		//==================================================================
 		// define column : amount
 		//==================================================================
-		$obj_lisha_tran->define_column('amount','normal',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column('`demo_table`.`amount`','amount','normal',__TEXT__,__WRAP__,__LEFT__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'amount');						
 		//==================================================================
 				
 		//==================================================================
 		// define column : compute
 		//==================================================================
-		$obj_lisha_tran->define_column('upper','Upper',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column('UPPER(`demo_table`.`amount`)','upper','Upper',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'upper');
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'amount');						
 		//==================================================================
@@ -107,7 +107,7 @@
 		//==================================================================
 		// define column : identifier
 		//==================================================================
-		$obj_lisha_tran->define_column('index','id',__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column('`demo_table`.`index`','index','id',__TEXT__,__WRAP__,__CENTER__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',true,'index');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'index');
 		//==================================================================
@@ -115,7 +115,7 @@
 		//==================================================================
 		// define column : status
 		//==================================================================
-		$obj_lisha_tran->define_column('status','status',__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column('`demo_table`.`status`','status','status',__TEXT__,__WRAP__,__CENTER__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'status');
 		//$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'status');
 		//==================================================================
@@ -123,7 +123,7 @@
 		//==================================================================
 		// define column : SetOfColor
 		//==================================================================
-		$obj_lisha_tran->define_column('MyGroupTheme','MyGroupTheme',__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column('`demo_table`.`status`','MyGroupTheme','MyGroupTheme',__TEXT__,__WRAP__,__CENTER__);
 		$obj_lisha_tran->define_attribute('__column_display_mode',false,'MyGroupTheme');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'MyGroupTheme');
 		//==================================================================
@@ -167,9 +167,6 @@
 	$obj_lisha_tran->define_line_theme("EEEEFF","0.7em","D0DCE0","0.7em","AEE068","0.7em","AEE068","0.7em","006","000",2);
 	//==================================================================			
 
-	
-	
-	
 	//==================================================================
 	// Do not remove this bloc
 	// Keep this bloc at the end

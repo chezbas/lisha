@@ -11,9 +11,8 @@
 														__MYSQL__,
 														array('user' => __LISHA_DATABASE_USER__,'password' => __LISHA_DATABASE_PASSWORD__,'host' => __LISHA_DATABASE_HOST__,'schema' => __LISHA_DATABASE_SCHEMA__),
 														'../',
-														null,
-														false,
-														__LISHA_APPLICATION_RELEASE__);
+														false
+                                            );
 
 	// Create a reference to the session
 	$obj_lisha_bug = &$_SESSION[$ssid]['lisha'][$lisha_bug];
@@ -52,7 +51,7 @@
 					TEX.`text` AS 'status',
 					`".__LISHA_TABLE_EXTRA_TICK__."`.`reference` AS 'reference',
 					`".__LISHA_TABLE_EXTRA_TICK__."`.`Last_mod` AS 'last_mod'
-				FROM
+				".$_SESSION[$ssid]['lisha']['configuration'][10]."
 					`".__LISHA_TABLE_EXTRA_TICK__."`, -- No alias on update table !!
 					`".__LISHA_TABLE_EXTRA_TICK_TEXT__."` TEX,
 					`".__LISHA_TABLE_EXTRA_TICK_CLAS__."` CLAS,
@@ -108,14 +107,14 @@
 		//==================================================================
 		// define column : ID
 		//==================================================================
-		$obj_lisha_bug->define_column('id',$_SESSION[$ssid]['lisha']['page_text'][2]['TX'],__TEXT__,__WRAP__,__CENTER__,__EXACT__);
+		$obj_lisha_bug->define_column('`'.__LISHA_TABLE_EXTRA_TICK__.'`.`ID`','id',$_SESSION[$ssid]['lisha']['page_text'][2]['TX'],__TEXT__,__WRAP__,__CENTER__,__EXACT__);
 		$obj_lisha_bug->define_attribute('__column_input_check_update', __FORBIDDEN__,'id');
 		//==================================================================
 		
 		//==================================================================
 		// define column : Business domain
 		//==================================================================
-		$obj_lisha_bug->define_column('business',$_SESSION[$ssid]['lisha']['page_text'][16]['TX'],__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_bug->define_column('`TEXD`.`text`','business',$_SESSION[$ssid]['lisha']['page_text'][16]['TX'],__TEXT__,__WRAP__,__CENTER__);
 		
 		$obj_lisha_bug->define_lov("	SELECT
 											`CLAS`.`id` AS 'ID',
@@ -128,18 +127,19 @@
 											AND `TEX`.`id_lang` = '".$_GET['lng']."'
 											AND `CLAS`.`class` = 'business'",
 									$_SESSION[$ssid]['lisha']['page_text'][17]['TX'],
+                                    '`CLAS`.`id`',
 									'ID'
 								   );
-		$obj_lisha_bug->define_column_lov('Libelle',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__TEXT__,__WRAP__,__LEFT__);
-		$obj_lisha_bug->define_column_lov('ord',$_SESSION[$ssid]['lisha']['page_text'][18]['TX'],__TEXT__,__WRAP__,__LEFT__,__PERCENT__,__DISPLAY__,true);
-		$obj_lisha_bug->define_column_lov('ID',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_column_lov('`TEX`.`text`','Libelle',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_column_lov('`CLAS`.`order`','ord',$_SESSION[$ssid]['lisha']['page_text'][18]['TX'],__TEXT__,__WRAP__,__LEFT__,__PERCENT__,__DISPLAY__,true);
+		$obj_lisha_bug->define_column_lov('`CLAS`.`id`','ID',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_bug->define_column_lov_order('ord',__ASC__);
 		//==================================================================
 
 		//==================================================================
 		// define column : Theme
 		//==================================================================
-		$obj_lisha_bug->define_column('type',$_SESSION[$ssid]['lisha']['page_text'][3]['TX'],__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_column('`'.__LISHA_TABLE_EXTRA_TICK__.'`.`Type`','type',$_SESSION[$ssid]['lisha']['page_text'][3]['TX'],__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_bug->define_attribute('__column_input_check_update', __REQUIRED__,'type');
 		
 		$obj_lisha_bug->define_lov("	SELECT
@@ -150,22 +150,23 @@
 											`".__LISHA_TABLE_EXTRA_TICK__."` `BUG`
 										GROUP BY Type",
 									$_SESSION[$ssid]['lisha']['page_text'][19]['TX'],
+                                    '`BUG`.`Type`',
 									'Type'
 								   );
-		$obj_lisha_bug->define_column_lov('Type',$_SESSION[$ssid]['lisha']['page_text'][3]['TX'],__TEXT__,__WRAP__,__LEFT__,__PERCENT__,__DISPLAY__,true);
-		$obj_lisha_bug->define_column_lov('Lastmod',$_SESSION[$ssid]['lisha']['page_text'][12]['TX'],__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_column_lov('`BUG`.`Type`','Type',$_SESSION[$ssid]['lisha']['page_text'][3]['TX'],__TEXT__,__WRAP__,__LEFT__,__PERCENT__,__DISPLAY__,true);
+		$obj_lisha_bug->define_column_lov('MAX(`BUG`.`Last_mod`)','Lastmod',$_SESSION[$ssid]['lisha']['page_text'][12]['TX'],__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_bug->define_column_lov_order('Lastmod',__DESC__);
 		//==================================================================
 					
 		//==================================================================
 		// define column : Bug class
 		//==================================================================
-		$obj_lisha_bug->define_column('classe',$_SESSION[$ssid]['lisha']['page_text'][4]['TX'],__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_bug->define_column('`TEXC`.`text`','classe',$_SESSION[$ssid]['lisha']['page_text'][4]['TX'],__TEXT__,__WRAP__,__CENTER__);
 
 		$obj_lisha_bug->define_lov("	SELECT
-											CLAS.`id` AS 'ID',
-											TEX.`text` AS 'Libelle',
-											CLAS.`order` AS 'ord'
+											CLAS.`id` AS `ID`,
+											TEX.`text` AS `Libelle`,
+											CLAS.`order` AS `ord`
 										FROM
 											`".__LISHA_TABLE_EXTRA_TICK_CLAS__."` CLAS, `bugstexts` TEX
 										WHERE 1 = 1
@@ -173,11 +174,12 @@
 											AND TEX.`id_lang` = '".$_GET['lng']."'
 											AND CLAS.`class` = 'class'",
 									$_SESSION[$ssid]['lisha']['page_text'][17]['TX'],
+                                    'CLAS.`id`',
 									'ID'
 								   );
-		$obj_lisha_bug->define_column_lov('Libelle',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__TEXT__,__WRAP__,__LEFT__,__PERCENT__,__DISPLAY__,true);
-		$obj_lisha_bug->define_column_lov('ord',$_SESSION[$ssid]['lisha']['page_text'][18]['TX'],__TEXT__,__WRAP__,__LEFT__);
-		$obj_lisha_bug->define_column_lov('ID','Iden',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_column_lov('TEX.`text`','Libelle',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__TEXT__,__WRAP__,__LEFT__,__PERCENT__,__DISPLAY__,true);
+		$obj_lisha_bug->define_column_lov('CLAS.`order`','ord',$_SESSION[$ssid]['lisha']['page_text'][18]['TX'],__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_column_lov('CLAS.`id`','ID','Iden',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_bug->define_column_lov_order('ord',__ASC__);
 		//$obj_lisha_bug->define_input_focus_lov('ID');
 		//==================================================================
@@ -185,27 +187,35 @@
 		//==================================================================
 		// define column : Application version involved
 		//==================================================================
-		$obj_lisha_bug->define_column('version',$_SESSION[$ssid]['lisha']['page_text'][5]['TX'],__TEXT__,__WRAP__,__CENTER__,__EXACT__);
+		$obj_lisha_bug->define_column('`'.__LISHA_TABLE_EXTRA_TICK__.'`.`Version`','version',$_SESSION[$ssid]['lisha']['page_text'][5]['TX'],__TEXT__,__WRAP__,__CENTER__,__EXACT__);
 		//==================================================================
 				
 		//==================================================================
 		// define column : Create date
 		//==================================================================
-		$obj_lisha_bug->define_column('DateCrea',$_SESSION[$ssid]['lisha']['page_text'][6]['TX'],__DATE__,__WRAP__,__CENTER__);
+		$obj_lisha_bug->define_column('`'.__LISHA_TABLE_EXTRA_TICK__.'`.`DateCrea`','DateCrea',$_SESSION[$ssid]['lisha']['page_text'][6]['TX'],__DATE__,__WRAP__,__CENTER__);
 		$obj_lisha_bug->define_attribute('__column_date_format','%d/%m/%Y','DateCrea');
 		//==================================================================
 		
 		//==================================================================
 		// define column : Bug title
 		//==================================================================
-		$obj_lisha_bug->define_column('Description',$_SESSION[$ssid]['lisha']['page_text'][7]['TX'],__BBCODE__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_column('(
+						SELECT
+							CASE TEX.`id`
+								WHEN 4
+								THEN CONCAT(\'[S]\',`'.__LISHA_TABLE_EXTRA_TICK__.'`.`Description`,\'[/S]\')
+								ELSE
+									`'.__LISHA_TABLE_EXTRA_TICK__.'`.`Description`
+								END
+					)','Description',$_SESSION[$ssid]['lisha']['page_text'][7]['TX'],__BBCODE__,__WRAP__,__LEFT__);
 		$obj_lisha_bug->define_input_focus('Description', true);					// Focused
 		//==================================================================
 				
 		//==================================================================
 		// define column : Status
 		//==================================================================
-		$obj_lisha_bug->define_column('status',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_bug->define_column('TEX.`text`','status',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__TEXT__,__WRAP__,__CENTER__);
 
 		$obj_lisha_bug->define_lov("	SELECT
 											CLAS.`id` AS 'ID',
@@ -219,39 +229,49 @@
 											AND TEX.`id_lang` = '".$_GET['lng']."'
 											AND CLAS.`class` = 'status'",
 									$_SESSION[$ssid]['lisha']['page_text'][17]['TX'],
+                                    'CLAS.`id`',
 									'ID'
 								   );
-		$obj_lisha_bug->define_column_lov('Libelle',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__TEXT__,__WRAP__,__LEFT__,__PERCENT__,__DISPLAY__,true);
-		$obj_lisha_bug->define_column_lov('symbol',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__BBCODE__,__WRAP__,__LEFT__);
-		$obj_lisha_bug->define_column_lov('ord',$_SESSION[$ssid]['lisha']['page_text'][18]['TX'],__TEXT__,__WRAP__,__LEFT__);
-		$obj_lisha_bug->define_column_lov('ID','Iden',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_column_lov('TEX.`text`','Libelle',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__TEXT__,__WRAP__,__LEFT__,__PERCENT__,__DISPLAY__,true);
+		$obj_lisha_bug->define_column_lov("CONCAT('[img]',CLAS.`symbol`,'[/img]')",'symbol',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__BBCODE__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_column_lov('CLAS.`order`','ord',$_SESSION[$ssid]['lisha']['page_text'][18]['TX'],__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_column_lov('CLAS.`id`','ID','Iden',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_bug->define_column_lov_order('ord',__ASC__);
 		//==================================================================
 				
 		//==================================================================
 		// define column : Status symbol
 		//==================================================================
-		$obj_lisha_bug->define_column('flag',$_SESSION[$ssid]['lisha']['page_text'][11]['TX'],__BBCODE__,__WRAP__,__CENTER__);
+		$obj_lisha_bug->define_column("CONCAT('[img]',CLAS.`symbol`,'[/img]')",'flag',$_SESSION[$ssid]['lisha']['page_text'][11]['TX'],__BBCODE__,__WRAP__,__CENTER__);
 		$obj_lisha_bug->define_attribute('__column_input_check_update', __FORBIDDEN__,'flag');
 		//==================================================================
 				
 		//==================================================================
 		// define column : Action on further details
 		//==================================================================
-		$obj_lisha_bug->define_column('details',$_SESSION[$ssid]['lisha']['page_text'][9]['TX'],__BBCODE__,__WRAP__,__CENTER__);
+		$obj_lisha_bug->define_column("CONCAT(
+								(
+									SELECT
+							 			CASE IFNULL( LENGTH( `".__LISHA_TABLE_EXTRA_TICK__."`.`details` ) , 0 ) + IFNULL( LENGTH( `".__LISHA_TABLE_EXTRA_TICK__."`.`solution` ) , 0 )
+											WHEN 0
+											THEN CONCAT('[URL=./editbug.php?ssid=".$ssid."&MTLNG=".$_GET['lng']."&ID=',`".__LISHA_TABLE_EXTRA_TICK__."`.`ID`,']".$_SESSION[$ssid]['lisha']['page_text'][15]['TX']."[/URL]')
+											ELSE CONCAT('<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\"[URL=./viewbug.php?ssid=".$ssid."&MTLNG=".$_GET['lng']."&ID=',`".__LISHA_TABLE_EXTRA_TICK__."`.`ID`,']".$_SESSION[$ssid]['lisha']['page_text'][13]['TX']."[/URL]</a>',' / ','<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\"[URL=./editbug.php?ssid=".$ssid."&MTLNG=".$_GET['lng']."&ID=',`".__LISHA_TABLE_EXTRA_TICK__."`.`ID`,']".$_SESSION[$ssid]['lisha']['page_text'][14]['TX']."[/URL]</a>')
+										END
+								)
+						  )",'details',$_SESSION[$ssid]['lisha']['page_text'][9]['TX'],__BBCODE__,__WRAP__,__CENTER__);
 		$obj_lisha_bug->define_attribute('__column_input_check_update', __FORBIDDEN__,'details');
 		//==================================================================
 				
 		//==================================================================
 		// define column : Who
 		//==================================================================
-		$obj_lisha_bug->define_column('qui',$_SESSION[$ssid]['lisha']['page_text'][10]['TX'],__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_bug->define_column("`".__LISHA_TABLE_EXTRA_TICK__."`.`Qui`",'qui',$_SESSION[$ssid]['lisha']['page_text'][10]['TX'],__TEXT__,__WRAP__,__CENTER__);
 		//==================================================================
 
 		//==================================================================
 		// define column : Dev reference
 		//==================================================================
-		$obj_lisha_bug->define_column('reference',$_SESSION[$ssid]['lisha']['page_text'][19]['TX'],__BBCODE__,__WRAP__,__CENTER__);
+		$obj_lisha_bug->define_column("`".__LISHA_TABLE_EXTRA_TICK__."`.`reference`",'reference',$_SESSION[$ssid]['lisha']['page_text'][19]['TX'],__BBCODE__,__WRAP__,__CENTER__);
 
 		$obj_lisha_bug->define_lov("	SELECT
 											DISTINCT
@@ -262,17 +282,18 @@
 										WHERE BUG.`reference` IS NOT NULL
 										GROUP BY reference",
 									$_SESSION[$ssid]['lisha']['page_text'][20]['TX'],
+                                    'BUG.`reference`',
 									'reference'
 								   );
-		$obj_lisha_bug->define_column_lov('reference',$_SESSION[$ssid]['lisha']['page_text'][3]['TX'],__TEXT__,__WRAP__,__LEFT__);
-		$obj_lisha_bug->define_column_lov('Lastmod',$_SESSION[$ssid]['lisha']['page_text'][12]['TX'],__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_column_lov('`BUG.`reference`','reference',$_SESSION[$ssid]['lisha']['page_text'][3]['TX'],__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_column_lov('MAX(BUG.`Last_mod`)','Lastmod',$_SESSION[$ssid]['lisha']['page_text'][12]['TX'],__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_bug->define_column_lov_order('Lastmod',__DESC__);
 		//==================================================================
 		
 		//==================================================================
 		// define column : Last update
 		//==================================================================
-		$obj_lisha_bug->define_column('last_mod',$_SESSION[$ssid]['lisha']['page_text'][12]['TX'],__DATE__,__WRAP__,__CENTER__);
+		$obj_lisha_bug->define_column("`".__LISHA_TABLE_EXTRA_TICK__."`.`Last_mod`",'last_mod',$_SESSION[$ssid]['lisha']['page_text'][12]['TX'],__DATE__,__WRAP__,__CENTER__);
 		$obj_lisha_bug->define_attribute('__column_date_format','%d-%m-%Y %H:%i:%s','last_mod');
 		$obj_lisha_bug->define_attribute('__column_input_check_update', __FORBIDDEN__,'last_mod');
 		//==================================================================
@@ -280,7 +301,7 @@
 		//error_log(print_r($obj_lisha_bug->c_columns,true));die();
 	//==================================================================
 				
-	// Columns attribut for update
+	// Columns attribute for update
 	
 	$obj_lisha_bug->define_attribute('__column_input_check_update', __REQUIRED__,'business');
 	$obj_lisha_bug->define_attribute('__column_input_check_update', __REQUIRED__,'classe');
@@ -297,19 +318,6 @@
 	//==================================================================
 	$obj_lisha_bug->define_key(Array('id'));
 	//==================================================================
-
-    //==================================================================
-    // Native field name in main table
-    // Optional declaration but can provide fast response time
-    // Don't add anything here if your have a doubt
-    // null in table_name_space means use main table name ( update table name )
-    // Do not add primary key already define by define_key function
-    // Do not add any field with transformation ( eg: CONCATE('--','id','---') AS 'custom' )
-    //==================================================================
-    $obj_lisha_bug->define_fast_field(  Array('TEXD','business'),
-                                        Array('TEXC','classe')
-                                        );
-    //==================================================================
 
 	//==================================================================
 	// Column order : Define in ascending priority means first line defined will be first priority column to order by and so on...

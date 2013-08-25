@@ -37,7 +37,6 @@
 		private $c_id_parent_column;	
 		private $c_update_table;
 		private $c_db_keys;							// list of Primary key ( Array )
-        private $c_db_fast_field;					// list of field that keep original name ( Array )
 		private $c_selected_lines;
 		private $c_prepared_query;
 		private $c_edit_mode;
@@ -207,8 +206,6 @@
 			$this->c_time_timer_refresh = null;
 			$this->c_lmod_specified_width = null;
 			$this->c_edit_mode = __DISPLAY_MODE__;
-
-            $this->c_db_fast_field = Array();
 
 			$this->c_obj_graphic->c_help_button = true;
 			$this->c_obj_graphic->c_tech_help_button = false;
@@ -383,7 +380,7 @@
 				else
 				{
 					// The column does not exist
-					$this->define_column($value,$value,__TEXT__,__WRAP__,__CENTER__,__PERCENT__,__HIDE__);
+					$this->define_column('NA',$value,$value,__TEXT__,__WRAP__,__CENTER__,__PERCENT__,__HIDE__);
 					$col_name = $this->get_id_column($value);
 					$this->c_columns[$col_name]['is_key_part'] = $value;
 					$this->c_columns[$col_name]['auto_create_column'] = true;
@@ -394,17 +391,6 @@
 		/**===================================================================*/
 
 
-        /**==================================================================
-         * Manage field that keep same name in your main table
-         * Please do not add primary field here
-        ====================================================================*/
-        public function define_fast_field($p_array_keys)
-        {
-            $this->c_db_fast_field = $p_array_keys;
-        }
-        /**===================================================================*/
-
-		
 		/**==================================================================
 		 * define_input_focus
 		 * Convert name to id for graphic part
@@ -549,17 +535,19 @@
 				
 		/**==================================================================
 		 * define_column
-		 * @p_column_id		: Columnn alias name `table`.`field` AS `shortcut`
+         * @p_before_as     : Define part before as of column
+		 * @p_column_id		: Name column output by query : Key name used for all others column features
 		 * @p_name			: Column title name
 		 * @p_data_type		: Column data type
 		 * @p_nowrap 		: true nowrap enabled, false nowrap disabled
 		 * @p_alignment		: text alignment
 		 * @p_display		: display or hide column
 		 ====================================================================*/
-		public function define_column($p_column_id,$p_name,$p_data_type = __BBCODE__,$p_nowrap = __NOWRAP__,$p_alignment = __CENTER__,$p_search_mode = __PERCENT__,$p_display = __DISPLAY__)
+		public function define_column($p_before_as,$p_column_id,$p_name,$p_data_type = __BBCODE__,$p_nowrap = __NOWRAP__,$p_alignment = __CENTER__,$p_search_mode = __PERCENT__,$p_display = __DISPLAY__)
 		{
 			$column_id = count($this->c_columns)+1;
-			$this->c_columns[$column_id] = array(	"sql_as" => $p_column_id,
+			$this->c_columns[$column_id] = array(	"before_as" => $p_before_as,
+                                                    "sql_as" => $p_column_id,
 													"order_by" => false,
 													"order_priority" => false,
 													"quick_help" => false,
@@ -609,19 +597,22 @@
 		 * Define List Of Value
 		 * @p_sql			: Query to build list
 		 * @p_title			: Title of query window
-		 * @p_col_return	: name of column to return value
+         * @p_before_as	    : string before as of field
+		 * @p_col_return	: name of column return by query
 		 ====================================================================*/
-		public function define_lov($p_sql,$p_title,$p_col_return)
+		public function define_lov($p_sql,$p_title,$p_before_as,$p_col_return)
 		{
 			$column_id = count($this->c_columns);
 			$this->c_columns[$column_id]['lov']['sql'] = $p_sql;
 			$this->c_columns[$column_id]['lov']['title'] = $p_title;
+            $this->c_columns[$column_id]['lov']['before_as'] = $p_before_as;
 			$this->c_columns[$column_id]['lov']['col_return'] = $p_col_return;
 			
 			// Keep initial value in memory
 			$this->c_columns_init[$column_id]['lov']['sql'] = $p_sql;
 			$this->c_columns_init[$column_id]['lov']['title'] = $p_title;
-			$this->c_columns_init[$column_id]['lov']['col_return'] = $p_col_return;
+			$this->c_columns_init[$column_id]['lov']['before_as'] = $p_before_as;
+            $this->c_columns_init[$column_id]['lov']['col_return'] = $p_col_return;
 
 			//==================================================================
 			// Populated taglov of column
@@ -649,18 +640,20 @@
 		
 		/**==================================================================
 		 * define_column_lov ( initial lov column definition )
-		 * @p_column_id				: Column identifier
-		 * @p_name					: Window title
-		 * @p_data_type		 		: column data type
-		 * @p_nowrap				: Kind of values : __NOWRAP__ or __WRAP__
-		 * @p_alignment				: Content alignment __CENTER__, __LEFT__ or __RIGHT__
-		 * @p_search_mode			: Search mode __PERCENT__ or __EXACT__
-		 * @p_display				: Show or hide column __DISPLAY__ or __HIDE__
-		 * @p_focus					: identifier column to setup focus
+         * @p_before_as     : Define part before as of column
+		 * @p_column_id		: Field name output by query ( KeyName )
+		 * @p_name			: Window title
+		 * @p_data_type		: column data type
+		 * @p_nowrap		: Kind of values : __NOWRAP__ or __WRAP__
+		 * @p_alignment		: Content alignment __CENTER__, __LEFT__ or __RIGHT__
+		 * @p_search_mode	: Search mode __PERCENT__ or __EXACT__
+		 * @p_display		: Show or hide column __DISPLAY__ or __HIDE__
+		 * @p_focus			: identifier column to setup focus
 		 ====================================================================*/
-		public function define_column_lov($p_column_id, $p_name,$p_data_type = __TEXT__,$p_nowrap = __WRAP__,$p_alignment = __CENTER__,$p_search_mode = __PERCENT__,$p_display = __DISPLAY__, $p_focus = null)
+		public function define_column_lov($p_before_as, $p_column_id, $p_name,$p_data_type = __TEXT__,$p_nowrap = __WRAP__,$p_alignment = __CENTER__,$p_search_mode = __PERCENT__,$p_display = __DISPLAY__, $p_focus = null)
 		{
 			$column_id = count($this->c_columns);
+            $this->c_columns[$column_id]['lov']['columns'][$p_column_id]['before_as'] = $p_before_as;
 			$this->c_columns[$column_id]['lov']['columns'][$p_column_id]['sql_as'] = $p_column_id;
 			$this->c_columns[$column_id]['lov']['columns'][$p_column_id]['name'] = $p_name;
 			$this->c_columns[$column_id]['lov']['columns'][$p_column_id]['data_type'] = $p_data_type;
@@ -671,6 +664,7 @@
 			$this->c_columns[$column_id]['lov']['columns'][$p_column_id]['focus'] = $p_focus;
 
 			// Keep in memory
+            $this->c_columns_init[$column_id]['lov']['columns'][$p_column_id]['before_as'] = $p_before_as;
 			$this->c_columns_init[$column_id]['lov']['columns'][$p_column_id]['sql_as'] = $p_column_id;
 			$this->c_columns_init[$column_id]['lov']['columns'][$p_column_id]['name'] = $p_name;
 			$this->c_columns_init[$column_id]['lov']['columns'][$p_column_id]['data_type'] = $p_data_type;
@@ -1353,42 +1347,7 @@
 				{
 					foreach ($column_value['filter'] AS $filter_value)
 					{
-                        // Defined as fast field ??
-                        if(isset($this->c_db_fast_field))
-                        {
-                            if($tab_alias_name = $this->in_array_lisha($column_value['sql_as'],$this->c_db_fast_field))
-                            {
-                                // Add fast field closer in core in query
-                                if($tab_alias_name == 'null')
-                                {
-                                    $alias_table_name = $this->c_update_table;
-                                }
-                                else
-                                {
-                                    $alias_table_name = $tab_alias_name;
-                                }
-
-                                $sql_filter_fast .= ' AND '.$this->get_quote_col($alias_table_name).'.'.$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).$column_value['search_mode']);
-                            }
-                            else
-                            {
-                                $sql_filter .= ' AND '.$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).$column_value['search_mode']);
-                            }
-                        }
-
-                        // filled is a primary key table ??
-                        if(isset($this->c_db_keys))
-                        {
-                            if(in_array($column_value['sql_as'],$this->c_db_keys))
-                            {
-                                // Add key field closer in core in query
-                                $sql_filter_fast .= ' AND '.$this->get_quote_col($this->c_update_table).'.'.$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).$column_value['search_mode']);
-                            }
-                            else
-                            {
-                                $sql_filter .= ' AND '.$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).$column_value['search_mode']);
-                            }
-                        }
+                        $sql_filter .= ' AND '.$column_value['before_as'].' '.$this->get_like($column_value['search_mode'].$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).$column_value['search_mode']);
 					}
 				}
 			}
@@ -1400,7 +1359,8 @@
 
             if($this->c_page_selection_display_header || $this->c_page_selection_display_footer)
             {
-                $this->exec_sql('SELECT null FROM ('.$this->c_query.$sql_filter_fast.') deriv WHERE 1 = 1 '.$sql_filter,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
+                //$this->exec_sql('SELECT null FROM ('.$this->c_query.$sql_filter_fast.') deriv WHERE 1 = 1 '.$sql_filter,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
+                $this->exec_sql($this->c_query.$sql_filter,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 
                 $this->c_recordset_line = $this->rds_num_rows($this->resultat);
                 $this->resultat->free();
@@ -1435,25 +1395,29 @@
 			$i = 0;
 			foreach($array_order AS $value)
 			{
-				$str_before = '';
-				$str_after = '';
+				//$str_before = '';
+				//$str_after = '';
 
                 //==================================================================
                 // Right order by with localized date format
                 //==================================================================
+                /*
                 if($this->c_columns[$value['column']]['data_type'] == 'date')
 				{
 					$str_before = "deriv.";
 				}
+                */
                 //==================================================================
 
 				if($i == 0)
 				{
-					$order .= ' ORDER BY '.$str_before.$this->get_quote_col($this->c_columns[$value['column']]['sql_as']).$str_after.' '.$value['order_by'];
+					//$order .= ' ORDER BY '.$str_before.$this->get_quote_col($this->c_columns[$value['column']]['sql_as']).$str_after.' '.$value['order_by'];
+                    $order .= ' ORDER BY '.$this->c_columns[$value['column']]['before_as'].' '.$value['order_by'];
 				}
 				else 
 				{
-					$order .= ','.$str_before.$this->get_quote_col($this->c_columns[$value['column']]['sql_as']).$str_after.' '.$value['order_by'];
+					//$order .= ','.$str_before.$this->get_quote_col($this->c_columns[$value['column']]['sql_as']).$str_after.' '.$value['order_by'];
+                    $order .= ','.$this->c_columns[$value['column']]['before_as'].' '.$value['order_by'];
 				}
 				$i = $i + 1;
 			}
@@ -1524,12 +1488,13 @@
 			
 			//==================================================================
 			// Execute query
-            // SRX optimization ( Do more with less Yaoooo !!! )
+            // SRX optimization
 			//==================================================================
-			$prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter_fast.$add_where.') deriv WHERE 1 = 1 '.$sql_filter.' '.$order.' '.$my_limit;
-            //$prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter_fast.') deriv WHERE 1 = 1 '.$add_where.' '.$sql_filter.' '.$order;
+			//$prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter_fast.$add_where.') deriv WHERE 1 = 1 '.$sql_filter.' '.$order.' '.$my_limit;
 
-			//error_log($prepared_query);
+            $prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter.' '.$add_where.' '.$order.' '.$my_limit.') deriv WHERE 1 = 1 ';
+
+            //error_log($prepared_query);
 			$this->c_prepared_query = $prepared_query;
 			
 			$this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
@@ -2430,6 +2395,7 @@
 			}
 			
             $prepared_query = 'SELECT DISTINCT '.$temp_columns.$this->rebuild_fast_query($this->c_query).$string_where;
+
             //$prepared_query = 'SELECT '.$temp_columns.' FROM ('.$this->c_query.') deriv WHERE 1 = 1 '.$string_where;
 			$p_result_header = $this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 
@@ -3716,41 +3682,7 @@
 				{
 					foreach ($column_value['filter'] as $filter_value)
 					{
-                        // Defined as fast field ??
-                        if(isset($this->c_db_fast_field))
-                        {
-                            if($tab_alias_name = $this->in_array_lisha($column_value['filter'],$this->c_db_fast_field))
-                            {
-                                // Add fast field closer in core in query
-                                if($tab_alias_name == 'null')
-                                {
-                                    $alias_table_name = $this->c_update_table;
-                                }
-                                else
-                                {
-                                    $alias_table_name = $tab_alias_name;
-                                }
-                                $sql_filter_fast .= ' AND '.$this->get_quote_col($alias_table_name).$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($filter_value['filter'],$this->link).$column_value['search_mode']);
-                            }
-                            else
-                            {
-                                $sql_filter .= ' AND '.$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($filter_value['filter'],$this->link).$column_value['search_mode']);
-                            }
-                        }
-
-                        // filled is a primary key table ??
-                        if(isset($this->c_db_keys))
-                        {
-                            if(in_array($column_value['filter'],$this->c_db_keys))
-                            {
-                                // Add key field closer in core in query
-                                $sql_filter_fast .= ' AND '.$this->get_quote_col($this->c_update_table).$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($filter_value['filter'],$this->link).$column_value['search_mode']);
-                            }
-                            else
-                            {
-                                $sql_filter .= ' AND '.$this->get_quote_col($column_value['sql_as']).' '.$this->get_like($column_value['search_mode'].$this->protect_sql($filter_value['filter'],$this->link).$column_value['search_mode']);
-                            }
-                        }
+                        $sql_filter .= ' AND '.$column_value['before_as'].' '.$this->get_like($column_value['search_mode'].$this->protect_sql($filter_value['filter'],$this->link).$column_value['search_mode']);
 					}
 				}
 			}
@@ -3857,41 +3789,67 @@
 				//==================================================================
 				if(!isset($this->c_columns[$column]['lov']))
 				{
-					// Count result
-                    $sql = 'SELECT
-                                COUNT(
-                                        DISTINCT '.$this->get_quote_col($this->c_columns[$column]['sql_as']).') as total
-                                        FROM ('.$this->c_query.$sql_filter_fast.' ) as deriv WHERE '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
-					$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
-					$count = $this->rds_result($this->resultat,0, 'total');
+                    //==================================================================
+                    // Count matching rows when user type something in input box
+                    //==================================================================
+                    $query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+                    $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($this->c_query,$query_final_pos).' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
 
-					// Query result
-                    $sql = 'SELECT DISTINCT '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' FROM ('.$this->c_query.$sql_filter_fast.' ) as deriv WHERE '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter.'ORDER BY 1 ASC LIMIT 6';
+                    $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
+					$count = $this->rds_result($this->resultat,0, 'total');
+                    //==================================================================
+
+                    //==================================================================
+                    // Few first rows found
+                    //==================================================================
+                    $sql =  'SELECT DISTINCT ('.$this->c_columns[$column]['before_as'].' ) AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->c_query,$query_final_pos).' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter.'ORDER BY 1 ASC LIMIT 6';
+                    //==================================================================
+
                     $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 				}
 				else
 				{
 					if(isset($this->c_columns[$column]['lov']['taglov_possible']) || !isset($this->c_columns[$column]['lov']['taglov']))
 					{
-						// Count result
-						$sql = 'SELECT COUNT(DISTINCT '.$this->c_columns[$column]['lov']['col_return'].') as total FROM ('.$this->c_columns[$column]['lov']['sql'].') AS `deriv` WHERE '.$this->get_quote_col($this->c_columns[$column]['lov']['col_return']).' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
-						$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
-						$count = $this->rds_result($this->resultat,0, 'total');
+                        //==================================================================
+                        // Count matching rows when user type something in input box ( Custom lov )
+                        //==================================================================
+                        $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
 
-						// Query result
-						$sql = 'SELECT DISTINCT '.$this->c_columns[$column]['lov']['col_return'].' as '.$this->c_columns[$column]['sql_as'].' FROM ('.$this->c_columns[$column]['lov']['sql'].') AS `deriv` WHERE 1 = 1 AND '.$this->get_quote_col($this->c_columns[$column]['lov']['col_return']).' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' ORDER BY 1 ASC LIMIT 6';
-						$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
+                        $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
+						$count = $this->rds_result($this->resultat,0, 'total');
+                        //==================================================================
+
+                        //==================================================================
+                        // Few first rows found
+                        //==================================================================
+                        $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter.' ORDER BY 1 ASC LIMIT 6';
+
+                        $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
+                        //==================================================================
 					}
 					else 
 					{
-						// Count result
-						$sql = 'SELECT COUNT(DISTINCT '.$this->get_quote_col($this->c_columns[$column]['sql_as']).') as total FROM ('.$this->c_query.$sql_filter_fast.' ) AS `deriv` WHERE '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
-						$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
-						$count = $this->rds_result($this->resultat,0, 'total');
+                        //==================================================================
+                        // Count matching rows when user type something in input box ( Custom lov )
+                        //==================================================================
+                        $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
 
-						// Query result
-						$sql = 'SELECT DISTINCT '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' FROM ('.$this->c_query.$sql_filter_fast.' ) AS `deriv` WHERE '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter.'ORDER BY 1 ASC LIMIT 6';
-						$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
+                        $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
+						$count = $this->rds_result($this->resultat,0, 'total');
+                        //==================================================================
+
+                        //==================================================================
+                        // Few first rows found
+                        //==================================================================
+                        $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
+
+                        $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
+                        //==================================================================
 					}
 				}
 				//==================================================================
@@ -4277,14 +4235,39 @@
 		public function lisha_internal_adv_filter()
 		{
 			$id_child = $this->c_id.'_child';
+            $query_adv = "SELECT
+                            `main`.`A` AS `id`,
+                            `main`.`B` AS `version`
+                            FROM (
+                                SELECT
+                                1 AS `A`,
+                                2 AS `B`
+                                UNION
+                                SELECT
+                                2,
+                                3
+                                UNION
+                                SELECT
+                                4,
+                                5
+                                UNION
+                                SELECT
+                                6,
+                                7
+                                UNION
+                                SELECT 8,9 UNION SELECT 10,11
+                                UNION
+                                SELECT 12,13
+                                ) `main`
+                            ";
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_parent($this->c_id);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine,$this->c_ident,$this->c_dir_obj.'/');
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__display_mode',__CMOD__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_readonly_mode',__R__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(41));
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query','SELECT 1 AS `id`,2 AS `version` UNION SELECT 2,3 UNION SELECT 4,5 UNION SELECT 6,7 UNION SELECT 8,9 UNION SELECT 10,11 UNION SELECT 12,13');
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column(1, 'id',__TEXT__, __WRAP__, __CENTER__);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column(2, 'version',__TEXT__, __WRAP__, __CENTER__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$query_adv);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`main`.`A`','id', 'id',__TEXT__, __WRAP__, __CENTER__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column(`main`.`B`,'version', 'version',__TEXT__, __WRAP__, __CENTER__);
 			
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__id_theme',$this->c_theme);
 			
@@ -4355,7 +4338,7 @@
 						$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_input_focus($lov_col['sql_as']);
 					}
 					
-					$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column($key,$lov_col['name'],$lov_col['data_type'],$lov_col['nowrap'], $lov_col['alignment']);
+					$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column($lov_col['before_as'],$key,$lov_col['name'],$lov_col['data_type'],$lov_col['nowrap'], $lov_col['alignment']);
 					
 					if(isset($lov_col['order']))
 					{
@@ -4372,21 +4355,44 @@
 				// Force specified distinct list on checkbox field
 				if($this->c_columns[$column]['data_type'] == __CHECKBOX__)
 				{
+                    /*
 					$my_query = "SELECT
 										'0' AS ".$this->get_quote_col($this->c_columns[$column]['sql_as'])."
 								UNION ALL
 								SELECT
 										'1' AS ".$this->get_quote_col($this->c_columns[$column]['sql_as'])."
 								";
-				}
+                    */
+                    $my_query = " 	SELECT
+									`main`.`A` AS ".$this->get_quote_col($this->c_columns[$column]['sql_as'])."
+									FROM (
+										SELECT
+											'0' AS `A`
+										UNION ALL
+										SELECT
+											'1' AS `A`
+										) `main`
+								";
+                }
 				else
 				{
-                    //$my_query = 'SELECT DISTINCT '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' FROM ('.$this->rebuild_fast_query($this->c_query);
-                    $my_query = 'SELECT DISTINCT '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' from('.$this->c_query.') der';
+                    //$my_query = 'SELECT DISTINCT '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' from ('.$this->c_query.') der';
+
+                    $query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+                    $my_query =  'SELECT DISTINCT '.$this->c_columns[$column]['before_as'].' AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->c_query,$query_final_pos);
+                    //$my_query = 'SELECT DISTINCT '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' from ('.$this->c_query.') der';
                 }
 				$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$my_query);
-				
-				$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column($this->c_columns[$column]['sql_as'], $this->c_columns[$column]['name'],$this->c_columns[$column]['data_type'], __WRAP__, __LEFT__);
+
+                // To continue....
+                if($this->c_columns[$column]['data_type'] == __CHECKBOX__)
+                {
+			    	$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column($this->c_columns[$column]['sql_as'],$this->c_columns[$column]['sql_as'], $this->c_columns[$column]['name'],$this->c_columns[$column]['data_type'], __WRAP__, __LEFT__);
+                }
+                else
+                {
+                    $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column($this->c_columns[$column]['before_as'],$this->c_columns[$column]['sql_as'], $this->c_columns[$column]['name'],$this->c_columns[$column]['data_type'], __WRAP__, __LEFT__);
+                }
 
 				$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_input_focus($this->c_columns[$column]['sql_as']);
 
@@ -4529,15 +4535,15 @@
 			// Lisha display setup
 			//==================================================================
 			$main_query = '	SELECT
-						        `id`,
-								`name`,
-								`display`,
-								`low`,
-								`low1`,
-								`ordre`
-							FROM
+						        `'.__LISHA_TABLE_INTERNAL__.'`.`id` AS `id`,
+								`'.__LISHA_TABLE_INTERNAL__.'`.`name` AS `name`,
+								`'.__LISHA_TABLE_INTERNAL__.'`.`display` AS `display`,
+								`'.__LISHA_TABLE_INTERNAL__.'`.`low` AS `low`,
+								`'.__LISHA_TABLE_INTERNAL__.'`.`low1` AS `low1`,
+								`'.__LISHA_TABLE_INTERNAL__.'`.`ordre` AS `ordre`
+							'.$_SESSION[$this->c_ssid]['lisha']['configuration'][10].'
 							    `'.__LISHA_TABLE_INTERNAL__.'`
-							WHERE `id` = "'.$this->c_ssid.$this->c_id.'"
+							WHERE `'.__LISHA_TABLE_INTERNAL__.'`.`id` = "'.$this->c_ssid.$this->c_id.'"
 						  ';
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$main_query);
@@ -4576,25 +4582,25 @@
 			//==================================================================
 			// Define columns
 			//==================================================================			
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('display',$this->lib(119),__TEXT__, __WRAP__, __LEFT__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`display`','display',$this->lib(119),__TEXT__, __WRAP__, __LEFT__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'display');
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('low',$this->lib(120),__CHECKBOX__, __WRAP__, __CENTER__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`low`','low',$this->lib(120),__CHECKBOX__, __WRAP__, __CENTER__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __REQUIRED__, 'low');
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_input_focus('low');					// Focused
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('low1',$this->lib(125),__CHECKBOX__, __WRAP__, __CENTER__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`low1`','low1',$this->lib(125),__CHECKBOX__, __WRAP__, __CENTER__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __REQUIRED__, 'low1');//__LISTED__
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('ordre','sorted',__TEXT__, __WRAP__, __CENTER__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`ordre`','ordre','sorted',__TEXT__, __WRAP__, __CENTER__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'ordre');
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'ordre');
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('id','myid',__TEXT__, __WRAP__, __LEFT__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`id`','id','myid',__TEXT__, __WRAP__, __LEFT__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'id');
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'id');
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('name','myname',__TEXT__, __WRAP__, __LEFT__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`name`','name','myname',__TEXT__, __WRAP__, __LEFT__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'name');
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'name');
 
@@ -4850,11 +4856,18 @@
 			// Create an instance of a lisha
 			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine, $this->c_ident,$this->c_dir_obj,__LOAD_FILTER__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(4).' ('.$this->c_param_adv_filter.')');
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query','SELECT DISTINCT `name`,`date`,`id` FROM '.__LISHA_TABLE_FILTER__.' WHERE `id` = "'.$this->c_id.'"');
+            $query_lov = '  SELECT
+                            DISTINCT
+                                `main`.`name` AS `name`,
+                                `main`.`date` AS `date`,
+                                `main`.`id` AS `id`
+                            FROM `'.__LISHA_TABLE_FILTER__.'` `main`
+                            WHERE `main`.`id` = "'.$this->c_id.'"';
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$query_lov);
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('name',$this->lib(60),__TEXT__, __WRAP__, __LEFT__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`main`.`name`','name',$this->lib(60),__TEXT__, __WRAP__, __LEFT__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_input_focus('name');					// Focused
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('date',$this->lib(61),__TEXT__, __WRAP__, __LEFT__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`main`.`date`','date',$this->lib(61),__TEXT__, __WRAP__, __LEFT__);
 
 			
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_parent($this->c_id,$column);
@@ -4930,7 +4943,7 @@
         ====================================================================*/
         public function rebuild_fast_query($query)
         {
-            $indice = strripos($query, "frOm");
+            $indice = strripos($query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
             if(!$indice)
             {
                 return false;

@@ -33,7 +33,7 @@
 				`transaction`.`mode`			AS `mode`,
 				`TRAN2`.`text`			        AS `text`,
 				`transaction`.`status`			AS `MyGroupTheme`
-			FROM
+			".$_SESSION[$ssid]['lisha']['configuration'][10]."
 				`transaction`, -- No alias on update table !!
 				`transaction2` `TRAN2`
 				WHERE 1 = 1
@@ -64,7 +64,7 @@
 	$obj_lisha_tran->define_attribute('__active_row_separation',false);
 	
 	$obj_lisha_tran->define_attribute('__active_top_bar_page',false);
-	$obj_lisha_tran->define_attribute('__active_bottom_bar_page',true);
+	$obj_lisha_tran->define_attribute('__active_bottom_bar_page',false);
 
 	$obj_lisha_tran->define_attribute('__active_user_doc', true);					// user documentation button
 	$obj_lisha_tran->define_attribute('__active_tech_doc', true);					// technical documentation button
@@ -89,7 +89,7 @@
 		//==================================================================
 		// define column : Date modification
 		//==================================================================
-		$obj_lisha_tran->define_column('daterec','datum ⛵',__DATE__,__WRAP__,__CENTER__,__PERCENT__,__DISPLAY__);
+		$obj_lisha_tran->define_column("`transaction`.`daterec`",'daterec','datum ⛵',__DATE__,__WRAP__,__CENTER__,__PERCENT__,__DISPLAY__);
 		$obj_lisha_tran->define_attribute('__column_date_format','%d/%m/%Y','daterec');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'daterec');
 		$obj_lisha_tran->define_input_focus('daterec', true);					// Focused
@@ -98,14 +98,14 @@
 		//==================================================================
 		// define column : Description
 		//==================================================================
-		$obj_lisha_tran->define_column('description','⏩ ♌',__BBCODE__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column("`transaction`.`description`",'description','⏩ ♌',__BBCODE__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'description');
 		//==================================================================
 
 		//==================================================================
 		// define column : module
 		//==================================================================
-		$obj_lisha_tran->define_column('mode','Mymodule',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column("`transaction`.`mode`",'mode','Mymodule',__TEXT__,__WRAP__,__LEFT__);
 		//$obj_lisha_tran->define_attribute('__column_input_check_update', __LISTED__,'mode');
 		
 		// Match code
@@ -119,45 +119,47 @@
 											AND TRANS.`mode` =	TRANS2.`mode`
 									",
 									'Title of mode',
+                                    'TRANS.`mode`',
 									'mode'
 								   );
-		$obj_lisha_tran->define_column_lov('mode','myMode',__TEXT__,__WRAP__,__LEFT__);
-		$obj_lisha_tran->define_column_lov('text','myText',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column_lov("TRANS.`mode`",'mode','myMode',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column_lov("TRANS2.`text`",'text','myText',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_column_lov_order('mode',__ASC__);
 		//==================================================================
 		
 		//==================================================================
 		// define column : ModuleLib
 		//==================================================================
-		$obj_lisha_tran->define_column('text','ModuleLibHere',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column("`TRAN2`.`text`",'text','ModuleLibHere',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'text');
 		// Match code
 		$obj_lisha_tran->define_lov("	SELECT
-												TRANS2.`mode`,
-												TRANS2.`text`
+												TRANS2.`mode` AS `mode`,
+												TRANS2.`text` AS `text`
 										FROM
 												`transaction2` TRANS2
 										WHERE 1 = 1
 												AND TRANS2.`mode` = '||TAGLOV_mode**mode||'",
 									  	'Title of description',
+                                        'TRANS2.`text`',
 									  	'text'
 									);
-		$obj_lisha_tran->define_column_lov('mode','Mymode',__TEXT__,__WRAP__,__LEFT__);
-		$obj_lisha_tran->define_column_lov('text','Mytext',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column_lov("TRANS2.`mode`",'mode','Mymode',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column_lov("TRANS2.`text`",'text','Mytext',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_column_lov_order('mode',__ASC__);
 		//==================================================================
 		
 		//==================================================================
 		// define column : amount
 		//==================================================================
-		$obj_lisha_tran->define_column('amount','',__BBCODE__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column("`transaction`.`amount`",'amount','',__BBCODE__,__WRAP__,__LEFT__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'amount');						
 		//==================================================================
 				
 		//==================================================================
 		// define column : compute
 		//==================================================================
-		$obj_lisha_tran->define_column('encrypt','Maj xxxxx',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column("IF(MOD(`transaction`.`index`,2)=0,MD5(`transaction`.`amount`),SHA1(`transaction`.`amount`))",'encrypt','Maj xxxxx',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'encrypt');
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'amount');						
 		//==================================================================
@@ -165,7 +167,7 @@
 		//==================================================================
 		// define column : identifier
 		//==================================================================
-		$obj_lisha_tran->define_column('index','Libid',__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column("`transaction`.`index`",'index','Libid',__TEXT__,__WRAP__,__CENTER__);
 		$obj_lisha_tran->define_attribute('__column_display_mode',true,'index');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'index');
 		//==================================================================
@@ -173,14 +175,14 @@
 		//==================================================================
 		// define column : checkbox
 		//==================================================================
-		$obj_lisha_tran->define_column('checkme','Libcheckbox',__CHECKBOX__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column("`transaction`.`checkme`",'checkme','Libcheckbox',__CHECKBOX__,__WRAP__,__CENTER__);
 		$obj_lisha_tran->define_attribute('__column_display_mode',true,'checkme');
 		//==================================================================
 
 		//==================================================================
 		// define column : status
 		//==================================================================
-		$obj_lisha_tran->define_column('status','MyColorStatus',__BBCODE__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column("`transaction`.`status`",'status','MyColorStatus',__BBCODE__,__WRAP__,__CENTER__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'status');
 		//$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'status');
 		//==================================================================
@@ -188,7 +190,7 @@
 		//==================================================================
 		// define column : datum
 		//==================================================================
-		$obj_lisha_tran->define_column('datum','other date',__DATE__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column("`transaction`.`datum`",'datum','other date',__DATE__,__WRAP__,__CENTER__);
         $obj_lisha_tran->define_attribute('__column_date_format','%d/%m/%Y','datum');
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'status');
 		//$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'status');
@@ -197,7 +199,7 @@
 		//==================================================================
 		// define column : SetOfColor
 		//==================================================================
-		$obj_lisha_tran->define_column('MyGroupTheme','MyGroupTheme',__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column("`transaction`.`status`",'MyGroupTheme','MyGroupTheme',__TEXT__,__WRAP__,__CENTER__);
 		$obj_lisha_tran->define_attribute('__column_display_mode',false,'MyGroupTheme');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'MyGroupTheme');
 		//==================================================================
@@ -212,26 +214,6 @@
 	//==================================================================
 	$obj_lisha_tran->define_key(Array('index'));
 	//==================================================================
-
-    //==================================================================
-    // Native field name in main table
-    // Optional declaration but can provide fast response time
-    // Don't add anything here if your have a doubt
-    // null means use main table name
-    // Don't add fiedd already defined by function define_key() just above
-    //==================================================================
-    $obj_lisha_tran->define_fast_field(Array(
-                                                Array(null,'description'),
-                                                Array(null,'daterec'),
-                                                Array(null,'amount'),
-                                                Array(null,'status'),
-                                                Array(null,'checkme'),
-                                                Array(null,'datum'),
-                                                Array(null,'mode'),
-                                                Array('TRAN2','text')
-                                            )
-                                        );
-    //==================================================================
 
 	//==================================================================
 	// Define extra events actions 

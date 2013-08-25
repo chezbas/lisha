@@ -21,14 +21,14 @@
 	//==================================================================
 	$query = "
 			SELECT
-				`index`			AS `index`,
-				`daterec` 		AS `daterec`,
-				`description`	AS `description`,
-				`amount`			AS `amount`,
-				UPPER(`amount`)	AS `upper`,
-				`status`			AS `status`,
-				`status`			AS `MyGroupTheme`
-			FROM 
+				`zdev_table`.`index`			AS `index`,
+				`zdev_table`.`daterec` 		AS `daterec`,
+				`zdev_table`.`description`	AS `description`,
+				`zdev_table`.`amount`			AS `amount`,
+				UPPER(`zdev_table`.`amount`)	AS `upper`,
+				`zdev_table`.`status`			AS `status`,
+				`zdev_table`.`status`			AS `MyGroupTheme`
+			".$_SESSION[$ssid]['lisha']['configuration'][10]."
 				`zdev_table`
 				WHERE 1 = 1
 				";
@@ -75,7 +75,7 @@
 		//==================================================================
 		// define column : Date modification
 		//==================================================================
-		$obj_lisha_tran->define_column('daterec','date',__DATE__,__WRAP__,__CENTER__,__PERCENT__,__DISPLAY__);
+		$obj_lisha_tran->define_column('`zdev_table`.`daterec`','daterec','date',__DATE__,__WRAP__,__CENTER__,__PERCENT__,__DISPLAY__);
 		//$obj_lisha_tran->define_attribute('__column_date_format','%d/%m/%Y','daterec');
         $obj_lisha_tran->define_attribute('__column_date_format','%Y-%m-%d','daterec');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'daterec');
@@ -86,21 +86,21 @@
 		//==================================================================
 		// define column : Description
 		//==================================================================
-		$obj_lisha_tran->define_column('description','Caption',__BBCODE__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column('`zdev_table`.`description`','description','Caption',__BBCODE__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'description');
 		//==================================================================
 
 		//==================================================================
 		// define column : amount
 		//==================================================================
-		$obj_lisha_tran->define_column('amount','normal',__BBCODE__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column('`zdev_table`.`amount`','amount','normal',__BBCODE__,__WRAP__,__LEFT__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'amount');						
 		//==================================================================
 				
 		//==================================================================
 		// define column : compute
 		//==================================================================
-		$obj_lisha_tran->define_column('upper','Upper',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column('UPPER(`zdev_table`.`amount`)','upper','Upper',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'upper');
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'amount');						
 		//==================================================================
@@ -108,7 +108,7 @@
 		//==================================================================
 		// define column : identifier
 		//==================================================================
-		$obj_lisha_tran->define_column('index','id',__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column('`zdev_table`.`index`','index','id',__TEXT__,__WRAP__,__CENTER__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',true,'index');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'index');
 		//==================================================================
@@ -116,7 +116,7 @@
 		//==================================================================
 		// define column : status
 		//==================================================================
-		$obj_lisha_tran->define_column('status','status',__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column('`zdev_table`.`status`','status','status',__TEXT__,__WRAP__,__CENTER__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'status');
 		//$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'status');
 		//==================================================================
@@ -124,7 +124,7 @@
 		//==================================================================
 		// define column : SetOfColor
 		//==================================================================
-		$obj_lisha_tran->define_column('MyGroupTheme','MyGroupTheme',__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column('`zdev_table`.`status`','MyGroupTheme','MyGroupTheme',__TEXT__,__WRAP__,__CENTER__);
 		$obj_lisha_tran->define_attribute('__column_display_mode',false,'MyGroupTheme');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'MyGroupTheme');
 		//==================================================================

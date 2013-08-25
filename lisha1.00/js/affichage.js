@@ -1587,12 +1587,13 @@ function lisha_cover_with_filter(lisha_id)
 		if (document.getElementById('lisha_footer_page_selection_'+lisha_id) != undefined)	// SRX_FOOTER_PAGE_JS_ERROR
 		{
 			footer_height = document.getElementById('lisha_footer_page_selection_'+lisha_id).offsetTop;
-			document.getElementById('lis__'+theme+'__hide_container_'+lisha_id+'__').style.height = footer_height-document.getElementById('lisha_ajax_return_'+lisha_id).offsetTop+50+'px';
 		}
 		else
 		{
-			footer_height = 0;
+            footer_height = document.getElementById('lis__'+theme+'__lisha_table_'+lisha_id+'__').offsetHeight;
 		}
+        document.getElementById('lis__'+theme+'__hide_container_'+lisha_id+'__').style.height = footer_height-document.getElementById('lisha_ajax_return_'+lisha_id).offsetTop+50+'px';
+
 		document.getElementById('lis__'+theme+'__hide_container_'+lisha_id+'__').style.display = 'block';
 	}
 	else

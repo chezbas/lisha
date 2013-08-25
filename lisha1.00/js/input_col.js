@@ -1,4 +1,42 @@
 /**==================================================================
+ * onkeydown event to catch special key that not provide visible digit like delete, suppr function key f1...f12, escape and so on...
+ * @evt				    : catch browser event
+ * @lisha_id		    : internal lisha identifier
+ * @column      	    : Column of the lisha
+ * @quick_search_mode 	: true or false ( true means quick search on )
+ * @edit_mode           : true means row(s) under updating
+ ====================================================================*/
+function lisha_input_keydown_pressed(evt,lisha_id,column, quick_search_mode, edit_mode)
+{
+    //alert(evt.keyCode);
+    if( evt.keyCode == 8 || evt.keyCode == 46 ) // Del or suppr
+    {
+        //==================================================================
+        // Deletion of digit, please update
+        //====================================================================
+        if(quick_search_mode == true && !edit_mode)
+        {
+            // Clear the last timeout
+            eval('clearTimeout(lisha.'+lisha_id+'.time_input_search);');
+
+            // Set a timeout before send the query
+            eval('lisha.'+lisha_id+'.time_input_search = setTimeout(\'lisha_input_search(\\\''+lisha_id+'\\\','+column+')\', 750)');
+        }
+        //==================================================================
+        document.getElementById('liste_'+lisha_id).scrollLeft = document.getElementById('header_'+lisha_id).scrollLeft;
+    }
+
+    if(evt.keyCode == 27 ) // Escape
+    {
+        // Clear the last timeout
+        eval('clearTimeout(lisha.'+lisha_id+'.time_input_search);');
+
+        // Hide ajax wait
+        document.getElementById('wait_input_'+lisha_id).style.display = 'none';
+    }
+}
+
+ /**==================================================================
  * lisha_input_keydown  : Key pressed on column header input area
  * @evt				    : catch browser event
  * @el			        : element ???
