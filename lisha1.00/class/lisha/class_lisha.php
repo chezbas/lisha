@@ -1388,7 +1388,7 @@
 			// Order by priority
 			ksort($array_order);
 			//==================================================================
-			
+
 			//==================================================================
 			// Build ORDER BY string for database engine
 			//==================================================================
@@ -1422,7 +1422,7 @@
 				$i = $i + 1;
 			}
 			//==================================================================
-			
+
 			//==================================================================
 			// Build query primary key string by simple concatenation
 			//==================================================================
@@ -4355,39 +4355,30 @@
 				// Force specified distinct list on checkbox field
 				if($this->c_columns[$column]['data_type'] == __CHECKBOX__)
 				{
-                    /*
-					$my_query = "SELECT
-										'0' AS ".$this->get_quote_col($this->c_columns[$column]['sql_as'])."
-								UNION ALL
-								SELECT
-										'1' AS ".$this->get_quote_col($this->c_columns[$column]['sql_as'])."
-								";
-                    */
                     $my_query = " 	SELECT
 									`main`.`A` AS ".$this->get_quote_col($this->c_columns[$column]['sql_as'])."
-									FROM (
+									".$_SESSION[$this->c_ssid]['lisha']['configuration'][10]."
+									    (
 										SELECT
 											'0' AS `A`
 										UNION ALL
 										SELECT
 											'1' AS `A`
 										) `main`
+										WHERE 1 = 1
 								";
                 }
 				else
 				{
-                    //$my_query = 'SELECT DISTINCT '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' from ('.$this->c_query.') der';
-
                     $query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
                     $my_query =  'SELECT DISTINCT '.$this->c_columns[$column]['before_as'].' AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->c_query,$query_final_pos);
-                    //$my_query = 'SELECT DISTINCT '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' from ('.$this->c_query.') der';
                 }
 				$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$my_query);
 
                 // To continue....
                 if($this->c_columns[$column]['data_type'] == __CHECKBOX__)
                 {
-			    	$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column($this->c_columns[$column]['sql_as'],$this->c_columns[$column]['sql_as'], $this->c_columns[$column]['name'],$this->c_columns[$column]['data_type'], __WRAP__, __LEFT__);
+			    	$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`main`.`A`',$this->c_columns[$column]['sql_as'], $this->c_columns[$column]['name'],$this->c_columns[$column]['data_type'], __WRAP__, __LEFT__);
                 }
                 else
                 {
@@ -4410,8 +4401,10 @@
                     }
 					$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_date_format',$mydate,$this->c_columns[$column]['sql_as']);
 				}
+
+                // Define order column id
 				$this->order_priority = 1;
-				$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_order_column($this->c_columns[$column]['sql_as'],__ASC__);
+                $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_order_column($this->c_columns[$column]['sql_as'],__ASC__);
 			}
 			
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_parent($this->c_id,$column);
@@ -4432,8 +4425,8 @@
 			
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_user_doc', false);	
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_tech_doc', false);	
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_ticket', false);										
-			
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_ticket', false);
+
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->new_graphic_lisha();
 			
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_column_separation',$this->c_cols_sep_display);

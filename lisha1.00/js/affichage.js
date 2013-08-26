@@ -86,13 +86,16 @@ function export_list(lisha_id,ajax_return)
                 var conf = [];
 
 				conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
-				conf['delai_tentative'] = 15000;
-				conf['max_tentative'] = 4;
+				conf['delai_tentative'] = 20000;
+				conf['max_tentative'] = 2;
 				conf['type_retour'] = false;		// ReponseText
 				conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=24&lines='+encodeURIComponent(get_selected_lines(lisha_id));
 				conf['fonction_a_executer_reponse'] = 'export_list';
 				conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"'";
-				
+
+                conf['fonction_a_executer_cas_non_reponse '] = 'timeout_export_list';
+                conf['param_fonction_a_executer_cas_non_reponse'] = "'"+lisha_id+"'";
+
 				ajax_call(conf);
 				//==================================================================
 			}
@@ -125,6 +128,19 @@ function export_list(lisha_id,ajax_return)
 	{
 		alert('Export already running...');
 	}
+}
+/**==================================================================*/
+
+
+/**==================================================================
+ * Too many rows to export.... Cancel with Timeout error message
+ *  TODO Not yet tested...
+ * @lisha_id	: internal lisha identifier
+ ====================================================================*/
+function timeout_export_list(lisha_id)
+{
+    var prompt_btn = new Array([lis_lib[31]],["cancel_export('"+lisha_id+"');"]);
+    lisha_generer_msgbox(lisha_id,'xxxxxx',lis_lib[116],'info','msg',prompt_btn,false,false);
 }
 /**==================================================================*/
 
@@ -208,8 +224,8 @@ function check_export_downloading(lisha_id)
 	var conf = [];
 
 	conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_export_progress.php';
-	conf['delai_tentative'] = 15000;
-	conf['max_tentative'] = 4;
+	conf['delai_tentative'] = 20000;
+	conf['max_tentative'] = 2;
 	conf['type_retour'] = false;		// ReponseText
 	conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid');
 	conf['fonction_a_executer_reponse'] = 'check_export_list_progress';

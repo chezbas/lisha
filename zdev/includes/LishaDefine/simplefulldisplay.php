@@ -42,8 +42,6 @@
 	$obj_lisha_tran->define_attribute('__main_query', $query);
 	//==================================================================
 
-    //error_log($obj_lisha_tran->rebuild_fast_query($query));
-
 	//==================================================================
 	// Lisha display setup
 	//==================================================================
@@ -112,7 +110,7 @@
 		$obj_lisha_tran->define_lov("	SELECT DISTINCT
 											TRANS.`mode` AS `mode`,
 											TRANS2.`text` AS `text`
-										FROM
+										".$_SESSION[$ssid]['lisha']['configuration'][10]."
 											`transaction` TRANS,
 											`transaction2` TRANS2
 										WHERE 1 = 1
@@ -136,7 +134,7 @@
 		$obj_lisha_tran->define_lov("	SELECT
 												TRANS2.`mode` AS `mode`,
 												TRANS2.`text` AS `text`
-										FROM
+										".$_SESSION[$ssid]['lisha']['configuration'][10]."
 												`transaction2` TRANS2
 										WHERE 1 = 1
 												AND TRANS2.`mode` = '||TAGLOV_mode**mode||'",
@@ -224,7 +222,7 @@
 	//==================================================================
 	// Column order : Define in ascending priority means first line defined will be first priority column to order by and so on...
 	//==================================================================
-	$obj_lisha_tran->define_order_column('index',__DESC__);
+	//$obj_lisha_tran->define_order_column('index',__DESC__);
 	//$obj_lisha_tran->define_order_column('amount',__ASC__);
     //$obj_lisha_tran->define_order_column('description',__DESC__);
 	//==================================================================
