@@ -95,7 +95,7 @@
 			$_SESSION[$ssid]['lisha'][$lisha_bug]->generate_header();
 			//==================================================================
 		?>
-		<script type="text/javascript" src="ajax/common/ajax_generique.js"></script>
+		<script type="text/javascript" src="ajax/common/ajax_generique_dev.js"></script>
 		<script type="text/javascript" src="js/common/json.js"></script>
 		<script type="text/javascript" src="js/index.js"></script>
 

@@ -44,7 +44,7 @@
 		<link rel="stylesheet" href="../../../../../../css/ifiche/tiny.css" type="text/css">
 		<link rel="stylesheet" href="password.css" type="text/css">
 		<script type="text/javascript" src="function.js"></script>
-		<script type="text/javascript" src="../../../../../../ajax/common/ajax_generique.js"></script>
+		<script type="text/javascript" src="../../../../../../ajax/common/ajax_generique_dev.js"></script>
 		<script type="text/javascript" src="../../../tiny_mce_popup.js"></script>
 		<script type="text/javascript" src="../js/iknow.js"></script>		
 		<script type="text/javascript">

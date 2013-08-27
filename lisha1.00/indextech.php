@@ -66,7 +66,7 @@ if(!isset($_SESSION[$ssid]['lisha']['doc']['tree']['user']))
 		<link rel="stylesheet" href="css/home/index.css" type="text/css"> <!-- * load custom page style * -->
 		<link rel="stylesheet" href="css/home/tiny_details.css" type="text/css"> <!-- * load custom tiny page style * -->
 
-		<script type="text/javascript" src="ajax/common/ajax_generique.js"></script>
+		<script type="text/javascript" src="ajax/common/ajax_generique_dev.js"></script>
 		<script type="text/javascript" src="js/common/session_management.js"></script>
 		<script type="text/javascript" src="js/home/tiny/tiny_mce.js"></script> <!-- TinyMCE for documentation -->
 

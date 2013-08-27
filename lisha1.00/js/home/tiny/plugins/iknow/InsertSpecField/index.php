@@ -15,7 +15,7 @@
 		<script type="text/javascript" src="function.js"></script>
 		<script type="text/javascript" src="../../../tiny_mce_popup.js"></script>
 		<script type="text/javascript" src="../js/iknow.js"></script>
-		<script type="text/javascript" src="../../../../../../ajax/common/ajax_generique.js"></script>
+		<script type="text/javascript" src="../../../../../../ajax/common/ajax_generique_dev.js"></script>
 		<script type="text/javascript">
 			del_css('dialog.css') ;
 			var ssid = '<?php echo $_GET['ssid']; ?>';

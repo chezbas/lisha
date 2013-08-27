@@ -86,7 +86,7 @@ function export_list(lisha_id,ajax_return)
                 var conf = [];
 
 				conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
-				conf['delai_tentative'] = 20000;
+				conf['delai_tentative'] = 50000;
 				conf['max_tentative'] = 2;
 				conf['type_retour'] = false;		// ReponseText
 				conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=24&lines='+encodeURIComponent(get_selected_lines(lisha_id));
@@ -224,7 +224,7 @@ function check_export_downloading(lisha_id)
 	var conf = [];
 
 	conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_export_progress.php';
-	conf['delai_tentative'] = 20000;
+	conf['delai_tentative'] = 50000;
 	conf['max_tentative'] = 2;
 	conf['type_retour'] = false;		// ReponseText
 	conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid');

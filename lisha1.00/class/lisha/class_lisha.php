@@ -1339,7 +1339,6 @@
 			// Get Column filter
 			//==================================================================
 			$sql_filter = '';
-            $sql_filter_fast = '';
 
 			foreach($this->c_columns AS $column_value)
 			{
@@ -1385,6 +1384,7 @@
 					$array_order[$value['order_priority']] = array("column" => $key,"order_by" => $value['order_by']);
 				}
 			}
+
 			// Order by priority
 			ksort($array_order);
 			//==================================================================
@@ -1395,20 +1395,6 @@
 			$i = 0;
 			foreach($array_order AS $value)
 			{
-				//$str_before = '';
-				//$str_after = '';
-
-                //==================================================================
-                // Right order by with localized date format
-                //==================================================================
-                /*
-                if($this->c_columns[$value['column']]['data_type'] == 'date')
-				{
-					$str_before = "deriv.";
-				}
-                */
-                //==================================================================
-
 				if($i == 0)
 				{
 					//$order .= ' ORDER BY '.$str_before.$this->get_quote_col($this->c_columns[$value['column']]['sql_as']).$str_after.' '.$value['order_by'];
@@ -1488,20 +1474,12 @@
 			
 			//==================================================================
 			// Execute query
-            // SRX optimization
 			//==================================================================
-			//$prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter_fast.$add_where.') deriv WHERE 1 = 1 '.$sql_filter.' '.$order.' '.$my_limit;
-
             $prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter.' '.$add_where.' '.$order.' '.$my_limit.') deriv WHERE 1 = 1 ';
 
-            //error_log($prepared_query);
 			$this->c_prepared_query = $prepared_query;
 			
 			$this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
-
-            // $this->c_recordset_line = $this->rds_num_rows($this->resultat);
-
-            //$this->c_obj_graphic->set_recordser_line($this->c_recordset_line);
 
             $this->c_page_qtt_line = $this->rds_num_rows($this->resultat);
 
@@ -2233,7 +2211,7 @@
 					<script type="text/javascript" src="'.$dir.'/js/object/lisha_calendar.js"></script>
 					<script type="text/javascript" src="'.$dir.'/js/object/lisha_msgbox.js"></script>
 					<script type="text/javascript" src="'.$dir.'/js/edit.js"></script>
-                    <script type="text/javascript" src="'.$dir.'/ajax/common/ajax_generique.js"></script>';
+                    <script type="text/javascript" src="'.$dir.'/ajax/common/ajax_generique_dev.js"></script>';
 		}
 		
 		public function generate_lmod_header($p_display = true)
@@ -2747,7 +2725,7 @@
 			// If only total of lines
 			if($p_only_count)
 			{
-				return $this->export_total;
+				return number_format($this->export_total,0,'', ' ');
 			}
 
 			// Write head columns

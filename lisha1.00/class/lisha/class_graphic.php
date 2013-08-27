@@ -776,6 +776,8 @@
 			{
 				$to = ($this->c_nb_line + $this->c_limit_min);
 			}
+
+            $to = number_format($to,0,'', ' ');
 			
 			$onkeyup_page = '';
 			$onkeyup_line = '';
@@ -830,7 +832,7 @@
 			
 			if($this->c_mode != __CMOD__ && $this->c_navbar_txt_activate)
 			{
-				$html .= '<td class="__'.$this->c_theme.'_infobar __'.$this->c_theme.'_infobar_separator_left">'.$this->lib(25).' : '.($this->c_limit_min + 1).' '.$this->lib(26).' '.$to.' '.$this->lib(27).' '.number_format($this->c_recordset_line,0,'', ' ').' '.$this->lib(28).' ';
+				$html .= '<td class="__'.$this->c_theme.'_infobar __'.$this->c_theme.'_infobar_separator_left">'.$this->lib(25).' : '.number_format(($this->c_limit_min + 1),0,'', ' ').' '.$this->lib(26).' '.$to.' '.$this->lib(27).' '.number_format($this->c_recordset_line,0,'', ' ').' '.$this->lib(28).' ';
 			
 				if($this->c_active_page == ceil($this->c_recordset_line / $this->c_nb_line) && ceil($this->c_recordset_line / $this->c_nb_line) > 1)
 					$html .= str_replace('$x',$nb_line,$this->lib(29));
