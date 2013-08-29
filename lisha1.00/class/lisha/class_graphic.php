@@ -777,7 +777,7 @@
 				$to = ($this->c_nb_line + $this->c_limit_min);
 			}
 
-            $to = number_format($to,0,'', ' ');
+            $to = number_format($to,0,'', htmlentities($_SESSION[$this->c_ssid]['lisha']['thousand_symbol']));
 			
 			$onkeyup_page = '';
 			$onkeyup_line = '';
@@ -809,8 +809,8 @@
 			//==================================================================
 			// Compute size of input page index
 			//==================================================================
-			$nb_page_max = ceil($this->c_recordset_line / $this->c_nb_line);
-			$str_length_page = strlen($nb_page_max);
+			$nb_page_max = number_format(ceil($this->c_recordset_line / $this->c_nb_line),0,'', htmlentities($_SESSION[$this->c_ssid]['lisha']['thousand_symbol']));
+            $str_length_page = strlen($nb_page_max);
 			
 			$html .= '<td class="__'.$this->c_theme.'_infobar __'.$this->c_theme.'_infobar_separator_right __'.$this->c_theme.'_infobar_separator_left"> '.$this->lib(22).' <input id="'.$this->c_id.'_page_selection_'.$p_type.'" class="__'.$this->c_theme.'_input_text __'.$this->c_theme.'__input_h" onkeyup="'.$onkeyup_page.'lisha_input_page_change(event,\''.$this->c_id.'\',this);" type="text" size='.$str_length_page.' value="'.$this->c_active_page.'"/> '.$this->lib(23).' '.$nb_page_max.'</td>';
 			//==================================================================
@@ -818,7 +818,7 @@
 			if($this->c_navbar_nav_button_activate)
 			{
 				$html .= '<td class="__'.$this->c_theme.'_infobar __'.$this->c_theme.'_infobar_separator_left"><div '.$style_ln.' '.$onclick_ln_next.' class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_next __'.$this->c_theme.'_table_page_selection '.$class_ln.'" '.$hover_ln_next.'></div></td>';
-				$html .= '<td class="__'.$this->c_theme.'_infobar __'.$this->c_theme.'_infobar_separator_right"><div '.$style_ln.' '.$onclick_ln_last.' class="__'.$this->c_theme.'_table_page_selection '.$class_ln.' __'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_last" '.$hover_ln_last.'></div></td>';			
+				$html .= '<td class="__'.$this->c_theme.'_infobar __'.$this->c_theme.'_infobar_separator_right"><div '.$style_ln.' '.$onclick_ln_last.' class="__'.$this->c_theme.'_table_page_selection '.$class_ln.' __'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_last" '.$hover_ln_last.'></div></td>';
 			}
 			$html .= '<td class="__'.$this->c_theme.'_infobar __'.$this->c_theme.'_infobar_separator_right __'.$this->c_theme.'_infobar_separator_left"><input id="'.$this->c_id.'_line_selection_'.$p_type.'" type="text" onkeyup="'.$onkeyup_line.'lisha_input_line_per_page_change(event,\''.$this->c_id.'\',this);" value="'.$this->c_nb_line.'" size="2" class="__'.$this->c_theme.'_input_text __'.$this->c_theme.'__input_h"/> ';
 			if($this->c_navbar_txt_line_per_page_activate)
@@ -832,7 +832,7 @@
 			
 			if($this->c_mode != __CMOD__ && $this->c_navbar_txt_activate)
 			{
-				$html .= '<td class="__'.$this->c_theme.'_infobar __'.$this->c_theme.'_infobar_separator_left">'.$this->lib(25).' : '.number_format(($this->c_limit_min + 1),0,'', ' ').' '.$this->lib(26).' '.$to.' '.$this->lib(27).' '.number_format($this->c_recordset_line,0,'', ' ').' '.$this->lib(28).' ';
+				$html .= '<td class="__'.$this->c_theme.'_infobar __'.$this->c_theme.'_infobar_separator_left">'.$this->lib(25).' : '.number_format(($this->c_limit_min + 1),0,'', htmlentities($_SESSION[$this->c_ssid]['lisha']['thousand_symbol'])).' '.$this->lib(26).' '.$to.' '.$this->lib(27).' '.number_format($this->c_recordset_line,0,'', htmlentities($_SESSION[$this->c_ssid]['lisha']['thousand_symbol'])).' '.$this->lib(28).' ';
 			
 				if($this->c_active_page == ceil($this->c_recordset_line / $this->c_nb_line) && ceil($this->c_recordset_line / $this->c_nb_line) > 1)
 					$html .= str_replace('$x',$nb_line,$this->lib(29));
@@ -942,14 +942,30 @@
 						$onmousedown = 'onmousedown="lisha_resize_column_start('.$key_col.',\''.$this->c_id.'\');"';
 						$ondblclick = 'ondblclick="lisha_mini_size_column('.$key_col.',\''.$this->c_id.'\');" ';
 						$lib_redim = $this->hover_out_lib(17,17);
-						$event = $this->hover_out_lib(40,40).' onmousedown="lisha_move_column_start(event,'.$key_col.',\''.$this->c_id.'\');"';
-					}
+
+                        if($p_edit)
+                        {
+                            $event = '';
+                        }
+                        else
+                        {
+						    $event = $this->hover_out_lib(40,40).' onmousedown="lisha_move_column_start(event,'.$key_col.',\''.$this->c_id.'\');"';
+                        }
+                    }
 					else
 					{
 						$onmousedown = '';
 						$ondblclick = '';
 						$lib_redim = '';
-						$event = $this->hover_out_lib(40,40).' onmousedown="click_column_order(\''.$this->c_id.'\','.$key_col.');"';
+
+                        if($p_edit)
+                        {
+                            $event = '';
+                        }
+                        else
+                        {
+                            $event = $this->hover_out_lib(40,40).' '.'onmousedown="click_column_order(\''.$this->c_id.'\','.$key_col.');"';
+                        }
 					}
 					//==================================================================
 
@@ -1156,8 +1172,15 @@
 					{
 						$html .= '<td id="th_1_c'.$key_col.'_'.$this->c_id.'" class="__lisha_unselectable" style="width:20px;"><div style="width:20px;margin:0;" '.$this->hover_out_lib(21,21).' oncontextmenu="'.$oncontextmenu.'" class="'.$class_btn_menu.'" onclick="lisha_toggle_header_menu(\''.$this->c_id.'\','.$key_col.');" id="th_menu_'.$key_col.'__'.$this->c_id.'"></div></td>';
 					}*/
-					$html .= '<td id="th_1_c'.$key_col.'_'.$this->c_id.'" class="__lisha_unselectable" style="width:20px;"><div style="width:20px;margin:0;" '.$this->hover_out_lib(21,21).' oncontextmenu="'.$oncontextmenu.'" class="'.$class_btn_menu.'" onclick="lisha_toggle_header_menu(\''.$this->c_id.'\','.$key_col.');" id="th_menu_'.$key_col.'__'.$this->c_id.'"></div></td>';
-					
+                    if($p_edit)
+                    {
+                        $html .= '<td id="th_1_c'.$key_col.'_'.$this->c_id.'" class="__lisha_unselectable" style="width:20px;"><div style="width:20px;margin:0;" '.$this->hover_out_lib(21,21).' oncontextmenu="'.$oncontextmenu.'" class="'.$class_btn_menu.'" id="th_menu_'.$key_col.'__'.$this->c_id.'"></div></td>';
+                    }
+                    else
+                    {
+                        $html .= '<td id="th_1_c'.$key_col.'_'.$this->c_id.'" class="__lisha_unselectable" style="width:20px;"><div style="width:20px;margin:0;" '.$this->hover_out_lib(21,21).' oncontextmenu="'.$oncontextmenu.'" class="'.$class_btn_menu.'" onclick="lisha_toggle_header_menu(\''.$this->c_id.'\','.$key_col.');" id="th_menu_'.$key_col.'__'.$this->c_id.'"></div></td>';
+                    }
+
 					
 					
 					
@@ -1185,7 +1208,7 @@
                         $onchange = '';
                     }
 
-					$html .= '<div style="margin:0 3px;"><input value="'.str_replace('"','&quot;',$filter_input_value).'" class="__'.$this->c_theme.'__input_h full_width" '.$state_filter_input.' id="th_input_'.$key_col.'__'.$this->c_id.'" '.$contextual_input.' type="text" style="margin: 2px 0;" size=1 onkeydown="lisha_input_keydown_pressed(event,\''.$this->c_id.'\','.$key_col.',\''.$this->c_quick_search.'\',\''.$p_edit.'\');" onkeypress="if(document.getElementById(\'chk_edit_c'.$key_col.'_'.$this->c_id.'\'))document.getElementById(\'chk_edit_c'.$key_col.'_'.$this->c_id.'\').checked=true;lisha_input_keydown(event,this,\''.$this->c_id.'\','.$key_col.',\''.$this->c_quick_search.'\',\''.$p_edit.'\');"'.$onchange.'/></div>';
+					$html .= '<div style="margin:0 3px;"><input value="'.str_replace('"','&quot;',$filter_input_value).'" class="__'.$this->c_theme.'__input_h full_width" '.$state_filter_input.' id="th_input_'.$key_col.'__'.$this->c_id.'" '.$contextual_input.' type="text" style="margin: 2px 0;" size=1 onkeydown="lisha_input_keydown_pressed(event,\''.$this->c_id.'\','.$key_col.',\''.$this->c_quick_search.'\',\''.$p_edit.'\');" onkeypress="if(document.getElementById(\'chk_edit_c'.$key_col.'_'.$this->c_id.'\') && event.keyCode != 13){document.getElementById(\'chk_edit_c'.$key_col.'_'.$this->c_id.'\').checked=true;};lisha_input_keydown(event,this,\''.$this->c_id.'\','.$key_col.',\''.$this->c_quick_search.'\',\''.$p_edit.'\');"'.$onchange.'/></div>';
 
 					
 					if($p_edit != false)

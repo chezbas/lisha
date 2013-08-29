@@ -53,11 +53,11 @@
 			echo $_SESSION[$ssid]['lisha'][$lisha_id]->change_alignment($_POST['column'],$_POST['type_alignment'],$_POST['selected_lines']);
 			break;
 		case 13:
-			// Edit lines
+			// Edit lines ( Update )
 			echo $_SESSION[$ssid]['lisha'][$lisha_id]->edit_lines($_POST['lines']);
 			break;
 		case 14:
-			// Save lines
+			// Save lines ( Add new )
 			echo $_SESSION[$ssid]['lisha'][$lisha_id]->save_lines($_POST['val_json']);
 			break;
 		case 15:

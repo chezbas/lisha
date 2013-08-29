@@ -125,8 +125,6 @@ function lisha_input_keydown(evt,el,lisha_id,column, quick_search_mode, edit_mod
 						eval('clearTimeout(lisha.'+lisha_id+'.time_input_search);');
 						if(evt.keyCode == 13)
 						{
-							//eval('clearTimeout(lisha.'+lisha_id+'.time_input_search);');
-							//toggle_wait_input(lisha_id,column);
 							//====================================================================
 							// Carriage return pressed
 						    //====================================================================

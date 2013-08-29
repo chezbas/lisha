@@ -120,7 +120,7 @@
 											`CLAS`.`id` AS 'ID',
 											`TEX`.`text` AS 'Libelle',
 											`CLAS`.`order` AS 'ord'
-										FROM
+										".$_SESSION[$ssid]['lisha']['configuration'][10]."
 											`".__LISHA_TABLE_EXTRA_TICK_CLAS__."` `CLAS`, `bugstexts` `TEX`
 										WHERE 1 = 1
 											AND `TEX`.`id` = `CLAS`.`id`
@@ -146,9 +146,9 @@
 											DISTINCT
 											`BUG`.`Type` AS 'Type',
 											MAX(`BUG`.`Last_mod`) AS 'Lastmod'
-										FROM
+										".$_SESSION[$ssid]['lisha']['configuration'][10]."
 											`".__LISHA_TABLE_EXTRA_TICK__."` `BUG`
-										GROUP BY Type",
+										GROUP BY `Type`",
 									$_SESSION[$ssid]['lisha']['page_text'][19]['TX'],
                                     '`BUG`.`Type`',
 									'Type'
@@ -167,7 +167,7 @@
 											CLAS.`id` AS `ID`,
 											TEX.`text` AS `Libelle`,
 											CLAS.`order` AS `ord`
-										FROM
+										".$_SESSION[$ssid]['lisha']['configuration'][10]."
 											`".__LISHA_TABLE_EXTRA_TICK_CLAS__."` CLAS, `bugstexts` TEX
 										WHERE 1 = 1
 											AND TEX.`id` = CLAS.`id`
@@ -222,7 +222,7 @@
 											TEX.`text` AS 'Libelle',
 											CLAS.`order` AS 'ord',
 											CONCAT('[img]',CLAS.`symbol`,'[/img]') AS 'symbol'
-										FROM
+										".$_SESSION[$ssid]['lisha']['configuration'][10]."
 											`".__LISHA_TABLE_EXTRA_TICK_CLAS__."` CLAS, `bugstexts` TEX
 										WHERE 1 = 1
 											AND TEX.`id` = CLAS.`id`
@@ -277,7 +277,7 @@
 											DISTINCT
 											BUG.`reference` AS 'reference',
 											MAX(BUG.`Last_mod`) AS 'Lastmod'
-										FROM
+										".$_SESSION[$ssid]['lisha']['configuration'][10]."
 											`".__LISHA_TABLE_EXTRA_TICK__."` BUG
 										WHERE BUG.`reference` IS NOT NULL
 										GROUP BY reference",

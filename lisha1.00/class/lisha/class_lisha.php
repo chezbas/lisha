@@ -53,6 +53,9 @@
 		private $order_priority_lov_column_id;		// Last column id identifier for order priority
         private $c_help_button;                     // Help button
         private $matchcode;				            // Matchcode between internal external call and function name
+
+        private $last_page_position;                // Keep page number position
+        private $last_limit_min;                    // Keep down limit
         //==================================================================
 
         //==================================================================
@@ -207,6 +210,10 @@
 			$this->c_lmod_specified_width = null;
 			$this->c_edit_mode = __DISPLAY_MODE__;
 
+            // Reset page position navigation
+            $this->last_page_position = null;
+            $this->last_limit_min = null;
+
 			$this->c_obj_graphic->c_help_button = true;
 			$this->c_obj_graphic->c_tech_help_button = false;
 			$this->c_obj_graphic->c_tickets_link = false ;			
@@ -348,7 +355,7 @@
 				case 'date':
 					// Setup customer filter
 					$tmp_final = $this->convert_database_date_to_localized_format($p_column,$p_value,$p_db_engine);
-					
+
 					$this->c_columns[$p_column]['filter']['input'] = array('filter' =>  $p_value,
 																		'filter_display' => $tmp_final
 																		);
@@ -1478,7 +1485,8 @@
             $prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter.' '.$add_where.' '.$order.' '.$my_limit.') deriv WHERE 1 = 1 ';
 
 			$this->c_prepared_query = $prepared_query;
-			
+			//error_log($this->c_prepared_query);
+
 			$this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 
             $this->c_page_qtt_line = $this->rds_num_rows($this->resultat);
@@ -1529,10 +1537,10 @@
 					$str_after = "','".$final_date_format."') AS `result`;";
 								
 					$query = "SELECT ".$str_before.rawurldecode($p_input).$str_after;
-					
+
 					$result = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 					$row = $this->rds_fetch_array($result);
-					if($row['result'] == '' || strpos($row['result'],'0000') !== false)
+					if($row['result'] == '' || strpos($row['result'],'0000') !== false || strlen($p_input) < 7 )
 					{
 						// No conversion possible.... return source
 						return $p_input;
@@ -1574,11 +1582,11 @@
 					$str_after = "','".$final_date_format."') AS `result`;";
 								
 					$query = "SELECT ".$str_before.rawurldecode($p_input).$str_after;
-					
+
 					$result = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 					$row = $this->rds_fetch_array($result);
 					
-					if($row['result'] == '' || strpos($row['result'],'0000') !== false)
+					if($row['result'] == '' || strpos($row['result'],'0000') !== false || strlen($p_input) < 7)
 					{
 						// No conversion possible.... return source
 						return $p_input;
@@ -2486,9 +2494,14 @@
 			// Set the selected lines to edit
 			$this->define_selected_line($json_lines);
 
+            // Record current page position
+            $this->last_page_position = $this->read_attribute('__current_page');
+            $this->last_limit_min =  $this->c_limit_min;
+
 			// Reset the filters
 			$this->reset_filters();
 
+            // Mandatory to stay on first page when updating data ( no more navigation tool bar )
 			// Force first page for edition // SRX_fix_edit_row_on_not_first_page
 			$this->define_attribute('__current_page',1);
 			$this->define_limit_min(0);
@@ -2725,7 +2738,7 @@
 			// If only total of lines
 			if($p_only_count)
 			{
-				return number_format($this->export_total,0,'', ' ');
+				return number_format($this->export_total,0,'', htmlentities($_SESSION[$this->c_ssid]['lisha']['thousand_symbol']));
 			}
 
 			// Write head columns
@@ -2797,7 +2810,9 @@
 			
 			// Clear selected line
 			$this->c_selected_lines = false;
-			
+
+            $this->restore_page_position();
+
 			$this->prepare_query();
 			$json = $this->generate_lisha_json_param();
 			
@@ -2991,7 +3006,10 @@
 		{
 			// Transform input area line to php array
 			$tab_val_col = json_decode($json,true);
-			
+
+            // Don't restore original navigation position because could be wrong, just stay on update page means 1
+            $this->clear_page_position_recorded();
+
 			//==================================================================
 			// Data control
 			//==================================================================
@@ -3109,7 +3127,7 @@
 		
 		/**==================================================================
 		 * save_lines
-		 * @val_col				: content of js input area in json format
+		 * @val_col			: content of js input area in json format
 		 ====================================================================*/
 		public function save_lines($val_col)
 		{
@@ -3118,6 +3136,8 @@
 						
 			// Transform input area line to php array
 			$tab_val_col = json_decode($val_col,true);
+
+            $this->restore_page_position();
 
 			//==================================================================
 			// Data control
@@ -3217,17 +3237,17 @@
 				//==================================================================
 				
 				// Unselect the lines	
-				$this->c_selected_lines = null;
+				$this->c_selected_lines = false;
 					
 				$this->prepare_query();
 				$json = $this->generate_lisha_json_param();
-				
+
 				// XML return	
 				header("Content-type: text/xml");
 				$xml = "<?xml version='1.0' encoding='UTF8'?>";
 				$xml .= "<lisha>";
 				$xml .= "<content>".$this->protect_xml($this->c_obj_graphic->draw_lisha($this->resultat,true,true))."</content>";
-				$xml .= '<toolbar>'.$this->protect_xml($this->c_obj_graphic->generate_toolbar()).'</toolbar>';
+				$xml .= '<toolbar>'.$this->protect_xml($this->c_obj_graphic->generate_toolbar(false,$this->resultat)).'</toolbar>';
 				$xml .= "<json>".$this->protect_xml($json)."</json>";
 				$xml .= "</lisha>";
 			}
@@ -3666,7 +3686,7 @@
 			}
 			//==================================================================
 
-			//==================================================================
+            //==================================================================
 			// Browse the updated filter
 			//==================================================================
 			$post['filter'] = $txt;
@@ -3793,7 +3813,7 @@
                         // Count matching rows when user type something in input box ( Custom lov )
                         //==================================================================
                         $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
+                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
 
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
 						$count = $this->rds_result($this->resultat,0, 'total');
@@ -3803,7 +3823,7 @@
                         // Few first rows found
                         //==================================================================
                         $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter.' ORDER BY 1 ASC LIMIT 6';
+                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' ORDER BY 1 ASC LIMIT 6';
 
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
                         //==================================================================
@@ -3814,7 +3834,7 @@
                         // Count matching rows when user type something in input box ( Custom lov )
                         //==================================================================
                         $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
+                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
 
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
 						$count = $this->rds_result($this->resultat,0, 'total');
@@ -3824,7 +3844,7 @@
                         // Few first rows found
                         //==================================================================
                         $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
+                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
 
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
                         //==================================================================
@@ -5131,6 +5151,35 @@
 			}
 			return $txt;
 		}
+        /**===================================================================*/
+
+
+        /**==================================================================
+         * Restore page navigation position
+        ====================================================================*/
+        private function restore_page_position()
+        {
+            if($this->last_page_position != null)
+            {
+                $this->define_attribute('__current_page',$this->last_page_position);
+                $this->define_limit_min($this->last_limit_min);
+            }
+
+            $this->clear_page_position_recorded();
+        }
+        /**===================================================================*/
+
+
+        /**==================================================================
+         * Clear page navigation position recorded
+        ====================================================================*/
+        private function clear_page_position_recorded()
+        {
+            $this->last_page_position = null;
+            $this->last_limit_min =  null;
+        }
+        /**===================================================================*/
+
 
         /**==================================================================
          * Try to solved htmlentities issue

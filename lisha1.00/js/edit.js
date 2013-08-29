@@ -644,7 +644,7 @@ function save_lines(evt,lisha_id,up_mode,ajax_return)
 	}
 	else
 	{
-		try 
+		try
 		{
 			// Hide the wait div
 			lisha_display_wait(lisha_id);

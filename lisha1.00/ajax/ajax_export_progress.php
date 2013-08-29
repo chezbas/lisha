@@ -45,5 +45,5 @@
 		$status = "C";
 	}
 	
-	$retour = array("STATUS" => $status,"CURRENT" => 0, "TOTAL" => number_format($_SESSION[$ssid]['lisha'][$lisha_id]->export_total,0,'', ' '));
+	$retour = array("STATUS" => $status,"CURRENT" => 0, "TOTAL" => number_format($_SESSION[$ssid]['lisha'][$lisha_id]->export_total,0,'', htmlentities($_SESSION[$ssid]['lisha']['thousand_symbol'])));
 	echo json_encode($retour);
