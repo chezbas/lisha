@@ -1,0 +1,221 @@
+#!/bin/sh
+###################################################
+# Functions section
+###################################################
+help_message() {
+	echo ""
+}
+###################################################
+
+nb_param=$#
+###################################################
+# Check if release directory exists Name of release directory
+###################################################
+release_version="d" while !(test -d $release_version -a -n 
+$release_version ) do
+	echo -n "Release directory name (lisha1.00): "
+	read release_version
+
+	if (test -z $release_version)
+	then
+		release_version="lisha1.00"
+	else
+		if !(test -d $release_version )
+		then
+			echo "ERROR : $release_version is not a 
+directory... try again"
+		fi
+	fi done
+###################################################
+
+pack_name="package"
+
+###################################################
+# Build mode
+###################################################
+build_mode="-" while !([ $build_mode = "f" ] || [ $build_mode = "t" ] || 
+[ $build_mode = "c" ] ) do
+	echo -n "Build mode (f)ull/(t)hin/(c)ustom (c): "
+	read build_mode
+
+	if (test -z $build_mode)
+	then
+		build_mode="c"
+	fi done
+
+#exit $?
+
+if test $build_mode = "c" then
+	echo "---- CUSTOM MODE ----"
+	
+	echo -n "include documentation (y)/n: "
+	read documentation
+	if !(test $documentation)
+	then
+		documentation="y"
+	fi
+	
+	echo -n "include tickets (y)/n: "
+	read tickets
+	if !(test $tickets)
+	then
+		tickets="y"
+	fi
+	
+	echo -n "include demo (y)/n: "
+	read demo
+	if !(test $demo)
+	then
+		demo="y"
+	fi
+	
+	echo -n "Keep configuration table (y)/n: "
+	read table_conf
+	if !(test $table_conf)
+	then
+		table_conf="y"
+	fi fi
+
+if test $build_mode = "t" then
+	echo "---- Thin Build ----"
+	
+	echo "include documentation : no"
+	documentation="n"
+
+	echo "include tickets : no"
+	tickets="n"
+	
+	echo "include demo : no"
+	echo "no demo"
+	demo="n"
+	
+	echo "include configuration table : yes"
+	table_conf="y" fi
+
+if test $build_mode = "f" then
+	echo "---- Full Build ----"
+	
+	echo "include documentation : yes"
+	documentation="y"
+
+	echo "include tickets : yes"
+	tickets="y"
+	
+	echo "include demo : yes"
+	demo="y"
+	
+	echo "include configuration table : yes"
+	table_conf="y" fi
+###################################################
+
+
+###################################################
+# Clean up and make working directory pack_name
+###################################################
+if (test -d $release_version.7z ) then
+	rm -R $release_version.7z fi if (test -d $pack_name ) then
+	rm -R $pack_name fi mkdir $pack_name
+###################################################
+
+# Copie all files to temporary directory
+cp -R $release_version $pack_name
+
+base_tmp=$pack_name/$release_version
+
+
+# Remove always sources
+rm -R $base_tmp/theme/all.psd
+
+
+if test $documentation = "y" then
+	echo "Keep documentation files"
+
+	# tables doc
+	table_doc="lisha_mt_doc_tech lisha_mt_doc_tech_caption 
+lisha_mt_doc_user lisha_mt_doc_user_caption mt_conf mt_lang mt_text 
+lisha_extra_screen_text" else
+	echo "Remove documentation files"
+	rm -R $base_tmp/doc_tech
+	rm -R $base_tmp/doc_user
+	rm -R $base_tmp/ajax/doc
+	rm -R $base_tmp/css/home
+	rm -R $base_tmp/js/home
+	rm -R $base_tmp/MT0.10
+	rm $base_tmp/indextech.php	# technical doc home page
+	rm $base_tmp/indextech.php	# user doc home page
+	
+	# no tables doc
+	table_doc=""
+	
+	# Javascript Compressor/Obfuscator
+	php -f zpack/run.php fi
+
+
+if test $tickets = "y" then
+	echo "Keep tickets files"
+	# tables tickets
+	table_tickets="bugsclass bugsreports bugstexts" else
+	echo "Remove tickets files"
+	rm -R $base_tmp/bugs
+	# tables tickets
+	table_tickets="" fi
+
+
+if test $demo = "y" then
+	echo "Keep demo files"
+	cp -R demo $pack_name
+	table_demo="demo_table demo_screen_texts" else
+	echo "Remove demo files"
+	table_demo="" fi
+
+
+if test $table_conf = "y" then
+	echo "Keep configuration table"
+	table_conf="lisha_config lisha_language lisha_filter" else
+	echo "Remove configuration table"
+	table_conf="" fi
+
+
+# Readme
+rm README.md cp zmodele/README.md . chown gwuser README.md chmod 770 
+README.md cp README.md $pack_name
+
+# Replace generic directory name by true value
+sed -i 's/\$package_directory_name\$/'$release_version'/' README.md sed 
+-i 's/\$package_directory_name\$/'$release_version'/' 
+$pack_name/README.md
+
+# Copy readme into pack
+cp readme.txt $pack_name
+
+
+# Main includes setup
+mkdir $pack_name/includes mkdir $pack_name/includes/lishaSetup cp 
+includes/lishaSetup/main_configuration.php 
+$pack_name/includes/lishaSetup/main_configuration.php
+
+###################################################
+# Database dump
+###################################################
+mysqldump --databases lisha --tables $table_conf $table_demo $table_doc 
+$table_tickets lisha_text lisha_internal --add-drop-table --quick -u 
+root --password=demo > $pack_name/MySQL_lisha.sql
+###################################################
+
+cp $pack_name/MySQL_lisha.sql zinstallation/database/
+
+###################################################
+# Compress package
+###################################################
+string_compression="$release_version.7z $pack_name" 7z a 
+$string_compression
+###################################################
+
+#Remove temporary directory
+rm -R $pack_name
+
+###################################################
+# Set Rights
+###################################################
+chown -R gwuser $release_version.7z chmod -R 777 $release_version.7z
+###################################################

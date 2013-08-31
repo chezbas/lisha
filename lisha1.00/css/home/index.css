@@ -548,6 +548,50 @@ html,body
     cursor: pointer;
 }
 
+.sort_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -600px 0;
+}
+
+.sort_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -600px -20px;
+    cursor: pointer;
+}
+
+
+.column_option_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -480px 0;
+}
+
+.column_option_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -480px -20px;
+    cursor: pointer;
+}
+
+
 .record_path
 {
     height:20px;
