@@ -3421,9 +3421,15 @@
 		/**==================================================================
 		 * refresh_page
 		 * @p_selected_lines	: selected lines
+         * @p_nb_line 			: Number of lines by page ( NA means no line by page changed )
 		 ====================================================================*/
-		public function refresh_page($p_selected_lines)
+		public function refresh_page($p_selected_lines,$p_nb_line = null)
 		{
+            if($p_nb_line != 'NA')
+            {
+                $this->change_nb_line($p_nb_line,$p_selected_lines);
+            }
+
 			// Define the selected lines
 			$this->define_selected_line($p_selected_lines);
 			

@@ -9,7 +9,8 @@
 			break;
 		case 2:
 			// Refresh page
-			echo $_SESSION[$ssid]['lisha'][$lisha_id]->refresh_page($_POST['selected_lines']);
+            // if $_POST['qtt'] != 'NA' then that means lines by page changed
+			echo $_SESSION[$ssid]['lisha'][$lisha_id]->refresh_page($_POST['selected_lines'],$_POST['qtt']);
 			break;
 		case 3:
 			// Move column
@@ -44,8 +45,9 @@
 			echo $_SESSION[$ssid]['lisha'][$lisha_id]->toggle_column($_POST['column'],$_POST['selected_lines']);																
 			break;
 		case 11:
-			// Change the number of line per page
-			$_SESSION[$ssid]['lisha'][$lisha_id]->change_nb_line($_POST['qtt'],$_POST['selected_lines']);
+			// Change the number of line per page ( no more in use )
+            // Regroup with action 2
+			//$_SESSION[$ssid]['lisha'][$lisha_id]->change_nb_line($_POST['qtt'],$_POST['selected_lines']);
 			break;
 		case 12:
 			// Change the alignment mode on a column

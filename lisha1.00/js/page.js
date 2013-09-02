@@ -1,8 +1,8 @@
 /**==================================================================
- * lisha_page_change_ajax : Refresh a specific page number
+ * Go to a specific page number
  * @lisha_id		: internal lisha identifier
  * @type			: Action __lisha_NEXT__,__lisha_PREVIOUS__,__lisha_FIRST__,__lisha_LAST__,number)
- * @param ajax_return response of ajax call
+ * @ajax_return     : Ajax response
  ====================================================================*/
 function lisha_page_change_ajax(lisha_id,type,ajax_return)
 {
@@ -91,7 +91,7 @@ function lisha_input_line_per_page_change_ajax(lisha_id,qtt,ajax_return)
 		conf['delai_tentative'] = 15000;
 		conf['max_tentative'] = 4;
 		conf['type_retour'] = false;		// ReponseText
-		conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&qtt='+qtt+'&action=11&selected_lines='+encodeURIComponent(get_selected_lines(lisha_id));
+		conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&qtt='+qtt+'&action=2&selected_lines='+encodeURIComponent(get_selected_lines(lisha_id));
 		conf['fonction_a_executer_reponse'] = 'lisha_input_line_per_page_change_ajax';
 		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"','"+qtt+"'";
 		ajax_call(conf);
@@ -100,7 +100,31 @@ function lisha_input_line_per_page_change_ajax(lisha_id,qtt,ajax_return)
 	else
 	{
         // Force a full list refresh
-        lisha_refresh_page_ajax(lisha_id);
+        try
+        {
+            // Get the ajax return in json format
+            var json = get_json(ajax_return);
+
+            // Update the json object
+            eval(decodeURIComponent(json.lisha.json));
+
+            // Set the content of the lisha
+            lisha_set_content(lisha_id,decodeURIComponent(json.lisha.content));
+
+            document.getElementById('liste_'+lisha_id).scrollLeft = document.getElementById('liste_'+lisha_id).scrollLeft - 1; // SRX_UGLY_FIXE DUE TO BROWSER BUG
+
+            // Setup Excel export button
+            toolbar_excel_button(lisha_id);
+
+            // Hide the wait div
+            lisha_hide_wait(lisha_id);
+
+            lisha_execute_event(__ON_REFRESH__,__AFTER__,lisha_id);
+        }
+        catch(e)
+        {
+            lisha_display_error(lisha_id,e);
+        }
 	}
 }
 /**==================================================================*/
@@ -128,7 +152,7 @@ function lisha_refresh_page_ajax(lisha_id,ajax_return)
 		conf['delai_tentative'] = 15000;
 		conf['max_tentative'] = 4;
 		conf['type_retour'] = false;		// ReponseText
-		conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=2&selected_lines='+encodeURIComponent(get_selected_lines(lisha_id));
+		conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&qtt=NA'+'&action=2&selected_lines='+encodeURIComponent(get_selected_lines(lisha_id));
 		conf['fonction_a_executer_reponse'] = 'lisha_refresh_page_ajax';
 		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"'";
 		
@@ -256,13 +280,24 @@ function lisha_reset(lisha_id,ajax_return)
 /**==================================================================*/
 
 
+/**==================================================================
+ * Change start page number
+ *
+ * @evt 		: catch event
+ * @lisha_id 	: internal lisha id
+ * @element 	: Input dom item
+ ====================================================================*/
 function lisha_input_page_change(evt,lisha_id,element)
 {
 	var evt = (evt)?evt : event;
 	
 	if(evt.which == 13)
 	{
-		if(element.value == '') element.value = 1;
+		if(element.value == '')
+        {
+            element.value = 1;
+        }
+        // Change start page number
 		lisha_page_change_ajax(lisha_id,element.value);
 	}
 	else
@@ -284,13 +319,14 @@ function lisha_input_page_change(evt,lisha_id,element)
 		{
 			element.value = 1;
 		}
-		
-			
 	}
 }
+/**==================================================================*/
+
 
 /**==================================================================
- * lisha_input_line_per_page_change
+ * Change number of lines per page
+ *
  * Call on onkeyup event
  * @evt 		: catch event
  * @lisha_id 	: internal lisha id
@@ -309,11 +345,8 @@ function lisha_input_line_per_page_change(evt,lisha_id,element)
 			element.value = 1;
 			document.getElementById(lisha_id+'_line_selection_footer').value = 1;
 		}
-
 		// Change the number of line per page
 		lisha_input_line_per_page_change_ajax(lisha_id,element.value);
-		
-		//lisha_refresh_page_ajax(lisha_id);
 	}
 	else
 	{
