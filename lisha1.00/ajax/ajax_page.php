@@ -9,7 +9,7 @@
 			break;
 		case 2:
 			// Refresh page
-			echo $_SESSION[$ssid]['lisha'][$lisha_id]->refresh_page($_POST['selected_lines']);											
+			echo $_SESSION[$ssid]['lisha'][$lisha_id]->refresh_page($_POST['selected_lines']);
 			break;
 		case 3:
 			// Move column
@@ -46,7 +46,6 @@
 		case 11:
 			// Change the number of line per page
 			$_SESSION[$ssid]['lisha'][$lisha_id]->change_nb_line($_POST['qtt'],$_POST['selected_lines']);
-			echo $_SESSION[$ssid]['lisha'][$lisha_id]->generate_page(true);
 			break;
 		case 12:
 			// Change the alignment mode on a column

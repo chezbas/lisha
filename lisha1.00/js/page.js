@@ -99,26 +99,8 @@ function lisha_input_line_per_page_change_ajax(lisha_id,qtt,ajax_return)
 	}
 	else
 	{
-		try 
-		{
-			var json = get_json(ajax_return);
-
-			eval('lisha.'+lisha_id+'.qtt_line = "'+json.lisha.qtt_line+'";'); // TAG_SRXFIX_CHANGE_LINE_PER_PAGE_ON_EMPTY_LIST
-
-			lisha_set_content(lisha_id,decodeURIComponent(json.lisha.content));
-
-			// Stop double call from input head column focus
-			lisha_StopEventHandler(evt);
-			
-			// Update the json object
-			// lisha.lisha_id.xxxx = yyyyy;
-			eval(decodeURIComponent(json.lisha.json));	
-		} 
-		catch(e) 
-		{
-			lisha_display_error(lisha_id,e);
-		}
-		lisha_display_wait(lisha_id);
+        // Force a full list refresh
+        lisha_refresh_page_ajax(lisha_id);
 	}
 }
 /**==================================================================*/
@@ -155,14 +137,14 @@ function lisha_refresh_page_ajax(lisha_id,ajax_return)
 	}
 	else
 	{
-		try 
+		try
 		{	
 			// Get the ajax return in json format
 			var json = get_json(ajax_return);
 			
 			// Update the json object
 			eval(decodeURIComponent(json.lisha.json));
-			
+
 			// Set the content of the lisha
 			lisha_set_content(lisha_id,decodeURIComponent(json.lisha.content));
 			
@@ -331,7 +313,7 @@ function lisha_input_line_per_page_change(evt,lisha_id,element)
 		// Change the number of line per page
 		lisha_input_line_per_page_change_ajax(lisha_id,element.value);
 		
-		lisha_refresh_page_ajax(lisha_id);
+		//lisha_refresh_page_ajax(lisha_id);
 	}
 	else
 	{

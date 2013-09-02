@@ -1647,7 +1647,7 @@
 			}
 			else
 			{
-				$html .= '<td class="toolbar_separator_left btn_toolbar"><div onclick="lisha_reset(\''.$this->c_id.'\');" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_display_table" '.$this->hover_out_lib(5,5).'></div></td>';
+				$html .= '<td class="toolbar_separator_left btn_toolbar"><div onclick="lisha_reset(\''.$this->c_id.'\');" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_display_table" '.$this->hover_out_lib(5,56).'></div></td>';
 			}
 			
 			if($this->c_readonly == __RW__)
@@ -1702,7 +1702,7 @@
 				$available_excel_export = 'grey_el';
 			}
 			
-			$html .= '<td id="lisha_td_toolbar_excel_'.$this->c_id.'" onclick="export_list(\''.$this->c_id.'\');" class="toolbar_separator btn_toolbar toolbar_separator_left '.$available_excel_export.'"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_excel" '.$this->hover_out_lib(9,9).'></div></td>';
+			$html .= '<td id="lisha_td_toolbar_excel_'.$this->c_id.'" onclick="export_list(\''.$this->c_id.'\');" class="toolbar_separator btn_toolbar toolbar_separator_left '.$available_excel_export.'"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_excel" '.$this->hover_out_lib(9,61).'></div></td>';
 
 			//==================================================================
 

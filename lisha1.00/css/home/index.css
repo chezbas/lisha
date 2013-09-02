@@ -569,6 +569,27 @@ html,body
     cursor: pointer;
 }
 
+.export_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -340px 0;
+}
+
+.export_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -340px -20px;
+    cursor: pointer;
+}
+
 
 .column_option_path
 {
