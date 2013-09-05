@@ -655,6 +655,27 @@ html,body
     cursor: pointer;
 }
 
+.load_filter_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -380px 0;
+}
+
+.load_filter_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -380px -20px;
+    cursor: pointer;
+}
+
 .search_path
 {
     height:20px;

@@ -1,4 +1,16 @@
 /**==================================================================
+ * Call when you delete rows into load custom filter
+ * @lisha_id		: id of lisha parent
+ ====================================================================*/
+function lisha_child_delete_load_entry(lisha_id)
+{
+    lisha_child_cancel(lisha_id,1);
+    lisha_refresh_page_ajax(lisha_id);
+}
+/**==================================================================*/
+
+
+/**==================================================================
  * Return clicked value to parent
  * @el              : Clicked row
  * @parent		    : id of lisha parent

@@ -72,6 +72,7 @@
 					AND TEX.`id_lang` = TEXD.`id_lang`
 					AND `".__LISHA_TABLE_EXTRA_TICK__."`.`status` = TEX.`id`
 					AND TEX.`id_lang` = '".$_GET['lng']."'
+					".$_SESSION[$ssid]['lisha']['configuration'][11]."
 				";
 
 	$obj_lisha_bug->define_attribute('__main_query', $query);

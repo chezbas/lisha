@@ -742,11 +742,6 @@ function lisha_load_filter(lisha_id,filter_name,ajax_return)
 	{
 		var filter_name = lisha_get_innerText(filter_name);
 		
-		lisha_display_wait(lisha_id);
-
-		// Hide load filter window
-		document.getElementById('internal_lisha_'+lisha_id).style.display = "none";
-		
 		//==================================================================
 		// Setup Ajax configuration
 		//==================================================================
@@ -765,7 +760,8 @@ function lisha_load_filter(lisha_id,filter_name,ajax_return)
 	}
 	else
 	{
-		try 
+        lisha_hide_wait(lisha_id);
+		try
 		{
 			// Get the ajax return in json format
 			var json = get_json(ajax_return);
@@ -1704,7 +1700,6 @@ function lisha_save_filter(lisha_id,ajax_return)
 				// An error occured
 				msgbox(lisha_id,decodeURIComponent(json.lisha.title),decodeURIComponent(json.lisha.message));
 			}
-		
 		}
 		catch(e) 
 		{

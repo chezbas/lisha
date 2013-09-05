@@ -54,6 +54,7 @@
         private $c_quick_search;                    // true means quick search on head column is enable
 
 		private $matchcode;				            // Matchcode between internal external call and function name
+        public $any_filter;                        // true if any filter recorder in your lisha
 		//==================================================================
 
 		//==================================================================
@@ -1632,12 +1633,22 @@
 					$html .= '<td class="toolbar_separator_right btn_toolbar"><div id="'.$this->c_id.'_button_columns_list" onclick="list_columns(\''.$this->c_id.'\',__COLUMN_LIST__);" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_col_feat" '.$this->hover_out_lib(1,26).'></div></td>';
 					
 					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_save" '.$this->hover_out_lib(3,3).' onclick="lisha_display_prompt_create_filter(\''.$this->c_id.'\');"></div></td>';
-					$html .= '<td class="btn_toolbar toolbar_separator_right"><div id="'.$this->c_id.'_button_load_filter" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_load" '.$this->hover_out_lib(4,4).' onclick="lisha_load_filter_lov(\''.$this->c_id.'\',__LOAD_FILTER__);"></div></td>';
+                    if($this->any_filter)
+                    {
+                        // Load custom lov available
+                        $load_lov_grey = '"'.$this->hover_out_lib(4,62).' onclick="lisha_load_filter_lov(\''.$this->c_id.'\',__LOAD_FILTER__);"';
+                    }
+                    else
+                    {
+                        // Load custom disable
+                        $load_lov_grey = 'grey_el"'.$this->hover_out_lib(129,62);
+                    }
+                    $html .= '<td class="btn_toolbar toolbar_separator_right"><div id="'.$this->c_id.'_button_load_filter" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_load '.$load_lov_grey.'></div></td>';
 				}
 				else
 				{
 					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_save grey_el" '.$this->hover_out_lib(3,3).'></div></td>';
-					$html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_load grey_el" '.$this->hover_out_lib(4,4).'></div></td>';	
+					$html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_load grey_el" '.$this->hover_out_lib(4,6).'></div></td>';
 				}
 			}
 			
