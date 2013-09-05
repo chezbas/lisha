@@ -52,7 +52,7 @@
 	define("__ON_UPDATE__","__ON_UPDATE__");						// Event when a line was updated on the lisha
 	define("__ON_ADD__","__ON_ADD__");								// Event when a line was added
 	define("__ON_DELETE__","__ON_DELETE__");						// Event when a line was deleted
-	define("__ON_REFRESH__","__ON_REFRESH__");						// Event when a lthe lisha was refreshed
+	define("__ON_REFRESH__","__ON_REFRESH__");						// Event when a line lisha was refreshed
 	
 	// Actions
 	define("__LMOD_OPEN__","__LMOD_OPEN__");						// Open a LMOD lisha

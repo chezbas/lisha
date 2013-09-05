@@ -205,8 +205,10 @@
 			$this->order_priority_lov_column_id = null;
 			$this->c_default_input_focus = null;										// No default focus column
 
+            // Check if any filter is already recorded
+            $this->c_obj_graphic->any_filter = $this->any_filter();
 
-			$this->c_time_timer_refresh = null;
+            $this->c_time_timer_refresh = null;
 			$this->c_lmod_specified_width = null;
 			$this->c_edit_mode = __DISPLAY_MODE__;
 
@@ -1298,11 +1300,43 @@
 					ksort($column_temp);
 
 					$this->c_columns = $column_temp;
-				}	
+				}
 			}
 		}
 		/**===================================================================*/
 
+        /**==================================================================
+         * Check if any custom view is already recorded
+         * Return true if any filter recorded
+        ====================================================================*/
+        private function any_filter()
+        {
+            //==================================================================
+            // Count custom filter recorded in your current lisha
+            //==================================================================
+            $sql = "
+                            SELECT
+                                1
+                            FROM
+                                ".__LISHA_TABLE_FILTER__."
+                            WHERE 1 = 1
+                                AND `id` = '".$this->protect_sql($this->c_id,$this->link)."'
+                                ";
+            $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
+            //==================================================================
+
+            if($this->rds_num_rows($this->resultat) > 0)
+            {
+                // Not grey
+                return true;
+            }
+            else
+            {
+                // Greyed
+                return false;
+            }
+        }
+        /**===================================================================*/
 
         /**==================================================================
          * in_array_lisha
@@ -1365,8 +1399,8 @@
 
             if($this->c_page_selection_display_header || $this->c_page_selection_display_footer)
             {
-                //$this->exec_sql('SELECT null FROM ('.$this->c_query.$sql_filter_fast.') deriv WHERE 1 = 1 '.$sql_filter,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
-                $this->exec_sql($this->c_query.$sql_filter,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
+                $my_query = str_replace($_SESSION[$this->c_ssid]['lisha']['configuration'][11],$sql_filter,$this->c_query);
+                $this->exec_sql($my_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 
                 $this->c_recordset_line = $this->rds_num_rows($this->resultat);
                 $this->resultat->free();
@@ -1482,7 +1516,8 @@
 			//==================================================================
 			// Execute query
 			//==================================================================
-            $prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter.' '.$add_where.' '.$order.' '.$my_limit.') deriv WHERE 1 = 1 ';
+            $my_query = str_replace($_SESSION[$this->c_ssid]['lisha']['configuration'][11],$sql_filter.' '.$add_where,$this->c_query);
+            $prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$my_query.' '.$order.' '.$my_limit.') deriv WHERE 1 = 1 ';
 
 			$this->c_prepared_query = $prepared_query;
 			//error_log($this->c_prepared_query);
@@ -1611,7 +1646,8 @@
 		{
 			// Draw the lisha
 			$this->check_column_lovable();
-			return $this->c_obj_graphic->draw_lisha($this->resultat,false,null,false);
+
+            return $this->c_obj_graphic->draw_lisha($this->resultat,false,null,false);
 		}
 		/**===================================================================*/
 		
@@ -2379,10 +2415,10 @@
 					break;
 				}
 			}
-			
-            $prepared_query = 'SELECT DISTINCT '.$temp_columns.$this->rebuild_fast_query($this->c_query).$string_where;
 
-            //$prepared_query = 'SELECT '.$temp_columns.' FROM ('.$this->c_query.') deriv WHERE 1 = 1 '.$string_where;
+            $my_query = str_replace($_SESSION[$this->c_ssid]['lisha']['configuration'][11],$string_where,$this->c_query);
+            $prepared_query = 'SELECT DISTINCT '.$temp_columns.$this->rebuild_fast_query($my_query);
+
 			$p_result_header = $this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 
 			$row = $this->rds_fetch_array($p_result_header);
@@ -2600,6 +2636,7 @@
             $only_selected_lines .= ')';
 
 			//==================================================================
+
 
 			//==================================================================
 			// Assembly, run and return xml final query
@@ -3430,12 +3467,15 @@
                 $this->change_nb_line($p_nb_line,$p_selected_lines);
             }
 
+            // Rebuild flag for load custom filter
+            $this->c_obj_graphic->any_filter = $this->any_filter();
+
 			// Define the selected lines
 			$this->define_selected_line($p_selected_lines);
 			
 			// Go to the first page   
-			$this->define_attribute('__current_page',1);
-			$this->define_limit_min(0);
+			//$this->define_attribute('__current_page',1);
+			//$this->define_limit_min(0);
 			
 			$this->define_limit_max($this->c_nb_line);
 			
@@ -3796,8 +3836,9 @@
                     //==================================================================
                     // Count matching rows when user type something in input box
                     //==================================================================
-                    $query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                    $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($this->c_query,$query_final_pos).' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
+                    $my_query = str_replace($_SESSION[$this->c_ssid]['lisha']['configuration'][11],' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter,$this->c_query);
+                    $query_final_pos = strripos($my_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+                    $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($my_query,$query_final_pos);
 
                     $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
 					$count = $this->rds_result($this->resultat,0, 'total');
@@ -3806,7 +3847,8 @@
                     //==================================================================
                     // Few first rows found
                     //==================================================================
-                    $sql =  'SELECT DISTINCT ('.$this->c_columns[$column]['before_as'].' ) AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->c_query,$query_final_pos).' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter.'ORDER BY 1 ASC LIMIT 6';
+                    $my_query = str_replace($_SESSION[$this->c_ssid]['lisha']['configuration'][11],' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter,$this->c_query);
+                    $sql =  'SELECT DISTINCT ('.$this->c_columns[$column]['before_as'].' ) AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($my_query,$query_final_pos).' ORDER BY 1 ASC LIMIT 6';
                     //==================================================================
 
                     $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
@@ -4217,6 +4259,9 @@
 				}
                 //==================================================================
 
+                // Available load custom recorded
+                $this->c_obj_graphic->any_filter = true;
+
 				// Build XML return
 				header("Content-type: text/xml");
 				$xml = "<?xml version='1.0' encoding='UTF8'?>";
@@ -4370,6 +4415,7 @@
 											'1' AS `A`
 										) `main`
 										WHERE 1 = 1
+										".$_SESSION[$this->c_ssid]['lisha']['configuration'][11]."
 								";
                 }
 				else
@@ -4853,13 +4899,17 @@
 			// Create an instance of a lisha
 			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine, $this->c_ident,$this->c_dir_obj,__LOAD_FILTER__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(4).' ('.$this->c_param_adv_filter.')');
-            $query_lov = '  SELECT
+            $query_lov = "  SELECT
                             DISTINCT
                                 `main`.`name` AS `name`,
                                 `main`.`date` AS `date`,
                                 `main`.`id` AS `id`
-                            FROM `'.__LISHA_TABLE_FILTER__.'` `main`
-                            WHERE `main`.`id` = "'.$this->c_id.'"';
+                            ".$_SESSION[$this->c_ssid]['lisha']['configuration'][10]."
+                                `".__LISHA_TABLE_FILTER__."` `main`
+                            WHERE 1 = 1
+                                AND `main`.`id` = '".$this->c_id."'
+                                ".$_SESSION[$this->c_ssid]['lisha']['configuration'][11]."
+                         ";
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$query_lov);
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`main`.`name`','name',$this->lib(60),__TEXT__, __WRAP__, __LEFT__);
@@ -4909,7 +4959,10 @@
 			// Table key
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_key(Array('name','id'));
 			//==================================================================
-				
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_lisha_action(__ON_DELETE__,__AFTER__,$id_child,Array('lisha_child_delete_load_entry(\''.$this->c_id.'\');'));
+
+
 			//==================================================================
 			// Execute query and build json content
 			//==================================================================

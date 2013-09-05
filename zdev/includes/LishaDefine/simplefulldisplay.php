@@ -38,6 +38,7 @@
 				`transaction2` `TRAN2`
 				WHERE 1 = 1
 					AND `transaction`.`mode` = `TRAN2`.`mode`
+			".$_SESSION[$ssid]['lisha']['configuration'][11]."
 				";
 	$obj_lisha_tran->define_attribute('__main_query', $query);
 	//==================================================================
@@ -115,6 +116,7 @@
 											`transaction2` TRANS2
 										WHERE 1 = 1
 											AND TRANS.`mode` =	TRANS2.`mode`
+											".$_SESSION[$ssid]['lisha']['configuration'][11]."
 									",
 									'Title of mode',
                                     'TRANS.`mode`',
@@ -137,7 +139,9 @@
 										".$_SESSION[$ssid]['lisha']['configuration'][10]."
 												`transaction2` TRANS2
 										WHERE 1 = 1
-												AND TRANS2.`mode` = '||TAGLOV_mode**mode||'",
+												AND TRANS2.`mode` = '||TAGLOV_mode**mode||'
+												".$_SESSION[$ssid]['lisha']['configuration'][11]."
+												",
 									  	'Title of description',
                                         'TRANS2.`text`',
 									  	'text'
