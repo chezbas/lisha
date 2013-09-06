@@ -3860,8 +3860,9 @@
                         //==================================================================
                         // Count matching rows when user type something in input box ( Custom lov )
                         //==================================================================
-                        $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
+                        $my_query = str_replace($_SESSION[$this->c_ssid]['lisha']['configuration'][11],' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter,$this->c_columns[$column]['lov']['sql']);
+                        $query_final_pos = strripos($my_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos);
 
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
 						$count = $this->rds_result($this->resultat,0, 'total');
@@ -3870,8 +3871,9 @@
                         //==================================================================
                         // Few first rows found
                         //==================================================================
-                        $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' ORDER BY 1 ASC LIMIT 6';
+                        $my_query = str_replace($_SESSION[$this->c_ssid]['lisha']['configuration'][11],' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter,$this->c_columns[$column]['lov']['sql']);
+                        $query_final_pos = strripos($my_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' ORDER BY 1 ASC LIMIT 6';
 
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
                         //==================================================================
@@ -3881,8 +3883,9 @@
                         //==================================================================
                         // Count matching rows when user type something in input box ( Custom lov )
                         //==================================================================
-                        $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
+                        $my_query = str_replace($_SESSION[$this->c_ssid]['lisha']['configuration'][11],' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter,$this->c_columns[$column]['lov']['sql']);
+                        $query_final_pos = strripos($my_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos);
 
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
 						$count = $this->rds_result($this->resultat,0, 'total');
@@ -3891,8 +3894,9 @@
                         //==================================================================
                         // Few first rows found
                         //==================================================================
-                        $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
+                        $my_query = str_replace($_SESSION[$this->c_ssid]['lisha']['configuration'][11],' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter,$this->c_columns[$column]['lov']['sql']);
+                        $query_final_pos = strripos($my_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos);
 
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
                         //==================================================================
@@ -4509,7 +4513,7 @@
 
 		/**==================================================================
 		 * column_list
-		 * List of available column
+		 * List of available column ( column features )
 		 ====================================================================*/	
 		public function column_list()
 		{
@@ -4577,17 +4581,19 @@
 			//==================================================================
 			// Lisha display setup
 			//==================================================================
-			$main_query = '	SELECT
-						        `'.__LISHA_TABLE_INTERNAL__.'`.`id` AS `id`,
-								`'.__LISHA_TABLE_INTERNAL__.'`.`name` AS `name`,
-								`'.__LISHA_TABLE_INTERNAL__.'`.`display` AS `display`,
-								`'.__LISHA_TABLE_INTERNAL__.'`.`low` AS `low`,
-								`'.__LISHA_TABLE_INTERNAL__.'`.`low1` AS `low1`,
-								`'.__LISHA_TABLE_INTERNAL__.'`.`ordre` AS `ordre`
-							'.$_SESSION[$this->c_ssid]['lisha']['configuration'][10].'
-							    `'.__LISHA_TABLE_INTERNAL__.'`
-							WHERE `'.__LISHA_TABLE_INTERNAL__.'`.`id` = "'.$this->c_ssid.$this->c_id.'"
-						  ';
+			$main_query = "	SELECT
+						        `".__LISHA_TABLE_INTERNAL__."`.`id` AS `id`,
+								`".__LISHA_TABLE_INTERNAL__."`.`name` AS `name`,
+								`".__LISHA_TABLE_INTERNAL__."`.`display` AS `display`,
+								`".__LISHA_TABLE_INTERNAL__."`.`low` AS `low`,
+								`".__LISHA_TABLE_INTERNAL__."`.`low1` AS `low1`,
+								`".__LISHA_TABLE_INTERNAL__."`.`ordre` AS `ordre`
+							".$_SESSION[$this->c_ssid]['lisha']['configuration'][10]."
+							    `".__LISHA_TABLE_INTERNAL__."`
+							WHERE 1 = 1
+							    AND `".__LISHA_TABLE_INTERNAL__."`.`id` = '".$this->c_ssid.$this->c_id."'
+							    ".$_SESSION[$this->c_ssid]['lisha']['configuration'][11]."
+						  ";
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$main_query);
 
