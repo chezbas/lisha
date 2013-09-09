@@ -31,8 +31,8 @@
 			".$_SESSION[$ssid]['lisha']['configuration'][10]."
 				`zdev_table`
 				WHERE 1 = 1
-				".$_SESSION[$ssid]['lisha']['configuration'][11]."
 				";
+
 	$obj_lisha_tran->define_attribute('__main_query', $query);
 	//==================================================================
 	

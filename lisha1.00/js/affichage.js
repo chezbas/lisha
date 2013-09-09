@@ -520,9 +520,10 @@ function list_columns(lisha_id, lisha_type, ajax_return)
 			var pos_x = pos_item.x - document.getElementById('liste_'+lisha_id).scrollLeft;
 
 			document.getElementById('internal_lisha_'+lisha_id).style.left =  pos_x+'px';
-			
-			document.getElementById('internal_lisha_'+lisha_id).style.top =  pos_item.y+22+'px';			
-			
+
+            // Compute sub lisha real top position
+            internal_sub_lisha_toolbar_top_position(lisha_id);
+
 			size_table(lisha_id+'_child');
 			
 			//==================================================================
@@ -616,9 +617,10 @@ function lisha_load_filter_lov(lisha_id,lisha_type,ajax_return)
 			var pos_x = pos_item.x - document.getElementById('liste_'+lisha_id).scrollLeft;
 
 			document.getElementById('internal_lisha_'+lisha_id).style.left =  pos_x+'px';
-			
-			document.getElementById('internal_lisha_'+lisha_id).style.top =  pos_item.y+22+'px';			
-			
+
+            // Compute sub lisha real top position
+            internal_sub_lisha_toolbar_top_position(lisha_id);
+
 			size_table(lisha_id+'_child');
 
 			// Browser bug, force refresh sub lisha
@@ -630,6 +632,19 @@ function lisha_load_filter_lov(lisha_id,lisha_type,ajax_return)
 		}
 	}
 }
+
+
+/**==================================================================
+ * Sub internal lisha position of window from toolbar menu
+ * @lisha_id	: Internal lisha identifier
+ ====================================================================*/
+function internal_sub_lisha_toolbar_top_position(lisha_id){
+    var myid = 'lisha_toolbar_'+lisha_id;
+    var my_title = 'lisha_title_'+lisha_id;
+    document.getElementById('internal_lisha_'+lisha_id).style.top = document.getElementById(myid).offsetHeight + document.getElementById(my_title).offsetHeight+'px';
+}
+/**==================================================================*/
+
 
 /**==================================================================
  * Return left and top position of a HTML item into a lisha
@@ -1340,47 +1355,49 @@ function lisha_generate_calendar(lisha_id,column,ajax_return)
 	}
 }
 
-/**
- * Place the column menu correctly on the lisha
- * 
- * @param id Id of the lisha
- * @param column Column of the menu
- */
-function lisha_position_menu(id,column)
-{
-	/**==================================================================
-	 * Vertical placement
-	 *====================================================================*/	
-	var top_container = document.getElementById('conteneur_menu_'+id).offsetTop;
-	document.getElementById('lis_column_header_menu_'+id).style.top = top_container+'px';
-	/** ================================================================== */	
-	
-	/**==================================================================
-	 * Horizontal placement
-	 *===================================================================*/	
-	var pos_th = document.getElementById('th_menu_'+column+'__'+id).offsetLeft - document.getElementById('liste_'+id).scrollLeft;
-	document.getElementById('lis_column_header_menu_'+id).style.left = pos_th-5+'px';
-	/** ================================================================== */
 
-	/**================================================================== 
-	 * Test the position of the menu
-	 *====================================================================*/	
+/**==================================================================
+ * Call when user display context column menu
+ * @lisha_id	: internal lisha identifier
+ * @column      : Column id involved
+ ====================================================================*/
+function lisha_position_menu(lisha_id,column)
+{
+    //==================================================================
+    // top position
+    //==================================================================
+	var top_container = document.getElementById('conteneur_menu_'+lisha_id).offsetTop;
+	document.getElementById('lis_column_header_menu_'+lisha_id).style.top = top_container+'px';
+    //==================================================================
+
+    //==================================================================
+    // Left position
+    //==================================================================
+	var pos_th = document.getElementById('th_menu_'+column+'__'+lisha_id).offsetLeft - document.getElementById('liste_'+lisha_id).scrollLeft;
+	document.getElementById('lis_column_header_menu_'+lisha_id).style.left = pos_th-5+'px';
+    //==================================================================
+
+    //==================================================================
+    // Test menu position
+    //==================================================================
 	// Get the position of the menu
-	var pos_menu = lisha_getPosition('lis_column_header_menu_'+id); 
+	var pos_menu = lisha_getPosition('lis_column_header_menu_'+lisha_id);
 	
 	// Get the position of the lisha
-	var pos_lisha = lisha_getPosition('lis__'+eval('lisha.'+id+'.theme')+'__lisha_table_'+id+'__'); 
+	var pos_lisha = lisha_getPosition('lis__'+eval('lisha.'+lisha_id+'.theme')+'__lisha_table_'+lisha_id+'__');
 
 	// Test if the menu is not out of the right corner of the lisha
-	if((pos_menu[0]+document.getElementById('menu_1_l1').offsetWidth) > (pos_lisha[0]+document.getElementById('lis__'+eval('lisha.'+id+'.theme')+'__lisha_table_'+id+'__').offsetWidth))
+	if((pos_menu[0]+document.getElementById('menu_1_l1').offsetWidth) > (pos_lisha[0]+document.getElementById('lis__'+eval('lisha.'+lisha_id+'.theme')+'__lisha_table_'+lisha_id+'__').offsetWidth))
 	{
-		document.getElementById('lis_column_header_menu_'+id).style.left = '';
-		document.getElementById('lis_column_header_menu_'+id).style.right = 0+'px';
-	}	
-	/**==================================================================*/
+		document.getElementById('lis_column_header_menu_'+lisha_id).style.left = '';
+		document.getElementById('lis_column_header_menu_'+lisha_id).style.right = 0+'px';
+	}
+    //==================================================================
 	
-	eval('lisha.'+id+'.menu_left = '+document.getElementById('lis_column_header_menu_'+id).offsetLeft+';');
+	eval('lisha.'+lisha_id+'.menu_left = '+document.getElementById('lis_column_header_menu_'+lisha_id).offsetLeft+';');
 }
+/**==================================================================*/
+
 
 /**
  * Test if the lisha has a vertical scrollbar

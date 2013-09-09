@@ -31,8 +31,6 @@
 			".$_SESSION[$ssid]['lisha']['configuration'][10]."
 				`demo_table`
 				WHERE 1 = 1
-				".$_SESSION[$ssid]['lisha']['configuration'][11]."
-				-- GROUP BY...
 				";
 	$obj_lisha_tran->define_attribute('__main_query', $query);
 	//==================================================================

@@ -258,8 +258,11 @@ function lisha_display_internal_lis(lisha_id,lisha_type,column,ajax_return)
                 //==================================================================
 
 				var pos_item = FindXY(document.getElementById('th_1_c'+column+'_'+lisha_id),lisha_id);
-				document.getElementById('internal_lisha_'+lisha_id).style.top =  pos_item.y+24+'px';	
-				
+
+                // Compute sub lisha real top position
+                var myid = 'th_menu_'+column+'__'+lisha_id;
+                document.getElementById('internal_lisha_'+lisha_id).style.top = document.getElementById(myid).style.top+'px';
+
 				eval('lisha.'+lisha_id+'.menu_left = '+document.getElementById('internal_lisha_'+lisha_id).offsetLeft+';');
 				size_table(lisha_id+'_child');
 

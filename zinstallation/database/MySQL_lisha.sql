@@ -40,7 +40,7 @@ CREATE TABLE `lisha_config` (
 
 LOCK TABLES `lisha_config` WRITE;
 /*!40000 ALTER TABLE `lisha_config` DISABLE KEYS */;
-INSERT INTO `lisha_config` VALUES (1,'ENG','','string 3 digits','','','Root language'),(2,'ID|ssid|VERSION|tab-level|LNG','string','','','','Reserved keyword'),(3,'28800','seconds','','','','Page Timeout\r\nDo not exceed 86400 (24 hours) !!'),(4,'doc_user/picture/','string','','','','Path for user documentation pictures'),(5,'doc_user/video/','string','','','','Path for user documentation video'),(6,'doc_tech/picture/','string','','','','Path for technical documentation pictures'),(7,'doc_tech/video/','string','','','','Path for technical documentation video'),(8,'f2','string','','','','Url key name to load recorder custom view'),(9,'GroupTheme','string','','','','Customer specific column name for theme group'),(10,'FROM -- #LISHA_MAIN_FROM_PARSING#','string','','','','String used to split query FROM outfield to tables and conditions'),(11,'-- #LISHA_MAIN_AND_PARSING#','string','','','','String to locate AND conditions');
+INSERT INTO `lisha_config` VALUES (1,'ENG','','string 3 digits','','','Root language'),(2,'ID|ssid|VERSION|tab-level|LNG','string','','','','Reserved keyword'),(3,'28800','seconds','','','','Page Timeout\r\nDo not exceed 86400 (24 hours) !!'),(4,'doc_user/picture/','string','','','','Path for user documentation pictures'),(5,'doc_user/video/','string','','','','Path for user documentation video'),(6,'doc_tech/picture/','string','','','','Path for technical documentation pictures'),(7,'doc_tech/video/','string','','','','Path for technical documentation video'),(8,'f2','string','','','','Url key name to load recorder custom view'),(9,'GroupTheme','string','','','','Customer specific column name for theme group'),(10,'FROM -- #LISHA_MAIN_FROM_PARSING#','string','','','','String used to split query FROM outfield to tables and conditions');
 /*!40000 ALTER TABLE `lisha_config` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,6 +165,7 @@ CREATE TABLE `lisha_internal` (
 
 LOCK TABLES `lisha_internal` WRITE;
 /*!40000 ALTER TABLE `lisha_internal` DISABLE KEYS */;
+INSERT INTO `lisha_internal` VALUES ('dddfc8ed46efc8d64a91f000849fe825890e2d13865832437lisha_transaction','daterec','datum ⛵',NULL,1,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-09-09 19:49:48'),('dddfc8ed46efc8d64a91f000849fe825890e2d13865832437lisha_transaction','description','⏩ ♌',NULL,2,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-09-09 19:49:48'),('dddfc8ed46efc8d64a91f000849fe825890e2d13865832437lisha_transaction','mode','Mymodule',NULL,3,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-09-09 19:49:48'),('dddfc8ed46efc8d64a91f000849fe825890e2d13865832437lisha_transaction','text','ModuleLibHere',NULL,4,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-09-09 19:49:48'),('dddfc8ed46efc8d64a91f000849fe825890e2d13865832437lisha_transaction','amount','',NULL,5,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-09-09 19:49:48'),('dddfc8ed46efc8d64a91f000849fe825890e2d13865832437lisha_transaction','encrypt','Maj xxxxx',NULL,6,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-09-09 19:49:48'),('dddfc8ed46efc8d64a91f000849fe825890e2d13865832437lisha_transaction','index','Libid',NULL,7,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-09-09 19:49:48'),('dddfc8ed46efc8d64a91f000849fe825890e2d13865832437lisha_transaction','checkme','Libcheckbox',NULL,8,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-09-09 19:49:48'),('dddfc8ed46efc8d64a91f000849fe825890e2d13865832437lisha_transaction','status','MyColorStatus',NULL,9,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-09-09 19:49:48'),('dddfc8ed46efc8d64a91f000849fe825890e2d13865832437lisha_transaction','datum','other date',NULL,10,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-09-09 19:49:48'),('dddfc8ed46efc8d64a91f000849fe825890e2d13865832437lisha_transaction','MyGroupTheme','MyGroupTheme',NULL,11,'0',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-09-09 19:49:48');
 /*!40000 ALTER TABLE `lisha_internal` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -177,4 +178,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-09-06  9:21:41
+-- Dump completed on 2013-09-09 23:02:45

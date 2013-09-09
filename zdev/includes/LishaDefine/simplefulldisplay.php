@@ -20,7 +20,7 @@
 	//==================================================================
 	// Define main query
 	//==================================================================
-	$query = "
+	/*$query = "
 			SELECT
 				`transaction`.`index`			AS `index`,
 				`transaction`.`daterec` 		AS `daterec`,
@@ -31,15 +31,34 @@
 				`transaction`.`checkme`		    AS `checkme`,
 				`transaction`.`datum`			AS `datum`,
 				`transaction`.`mode`			AS `mode`,
-				`TRAN2`.`text`			        AS `text`,
+				`TRAN2`.`text`                 AS `text`,
 				`transaction`.`status`			AS `MyGroupTheme`
 			".$_SESSION[$ssid]['lisha']['configuration'][10]."
 				`transaction`, -- No alias on update table !!
 				`transaction2` `TRAN2`
 				WHERE 1 = 1
-					AND `transaction`.`mode` = `TRAN2`.`mode`
-			".$_SESSION[$ssid]['lisha']['configuration'][11]."
-				";
+				    AND `transaction`.`mode` = `TRAN2`.`mode`
+				";*/
+
+    // Performance !! Order by ok here but no cache !!!
+    $query = "
+                SELECT
+                    `transaction`.`index`			AS `index`,
+                    `transaction`.`daterec` 		AS `daterec`,
+                    `transaction`.`description`	    AS `description`,
+                    `transaction`.`amount`			AS `amount`,
+                    IF(MOD(`transaction`.`index`,2)=0,MD5(`transaction`.`amount`),SHA1(`transaction`.`amount`))	    AS `encrypt`,
+                    CONCAT('[b]',`transaction`.`status`,'[/b]')			AS `status`,
+                    `transaction`.`checkme`		    AS `checkme`,
+                    `transaction`.`datum`			AS `datum`,
+                    `transaction`.`mode`			AS `mode`,
+                    (SELECT `text` FROM `transaction2` WHERE `mode` = `transaction`.`mode`)  AS `text`,
+                    `transaction`.`status`			AS `MyGroupTheme`
+                ".$_SESSION[$ssid]['lisha']['configuration'][10]."
+                    `transaction` -- No alias on update table !!
+                    WHERE 1 = 1
+                    ";
+
 	$obj_lisha_tran->define_attribute('__main_query', $query);
 	//==================================================================
 
@@ -116,7 +135,6 @@
 											`transaction2` TRANS2
 										WHERE 1 = 1
 											AND TRANS.`mode` =	TRANS2.`mode`
-											".$_SESSION[$ssid]['lisha']['configuration'][11]."
 									",
 									'Title of mode',
                                     'TRANS.`mode`',
@@ -130,7 +148,7 @@
 		//==================================================================
 		// define column : ModuleLib
 		//==================================================================
-		$obj_lisha_tran->define_column("`TRAN2`.`text`",'text','ModuleLibHere',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column("(SELECT `text` FROM `transaction2` WHERE `mode` = `transaction`.`mode`)",'text','ModuleLibHere',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'text');
 		// Match code
 		$obj_lisha_tran->define_lov("	SELECT
@@ -140,7 +158,6 @@
 												`transaction2` TRANS2
 										WHERE 1 = 1
 												AND TRANS2.`mode` = '||TAGLOV_mode**mode||'
-												".$_SESSION[$ssid]['lisha']['configuration'][11]."
 												",
 									  	'Title of description',
                                         'TRANS2.`text`',
