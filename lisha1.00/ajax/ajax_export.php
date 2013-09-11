@@ -25,7 +25,6 @@
 
 	// Page header
     header("Content-type: application/csv; charset=utf-8");
-    //header("Content-type: application/zip");
 	header("Content-Disposition: attachment; filename=my_export.csv");
 
 	$_SESSION[$ssid]['lisha'][$lisha_id]->export_list($_GET['lines'], false);

@@ -86,7 +86,7 @@ function export_list(lisha_id,ajax_return)
                 var conf = [];
 
 				conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
-				conf['delai_tentative'] = 50000;
+				conf['delai_tentative'] = 100000;
 				conf['max_tentative'] = 2;
 				conf['type_retour'] = false;		// ReponseText
 				conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=24&lines='+encodeURIComponent(get_selected_lines(lisha_id));
@@ -107,11 +107,22 @@ function export_list(lisha_id,ajax_return)
 		else
 		{
 			// Prompt export confirmation with amount of rows
-			if(ajax_return != 0)
+            var retour = JSON.parse(ajax_return);
+			if(retour.TOTAL != 0)
 			{
-				var prompt_btn = new Array([lis_lib[31],lis_lib[32]],["launch_export('"+lisha_id+"','"+ajax_return+"')","cancel_export('"+lisha_id+"');"]);
-				
-				lisha_generer_msgbox(lisha_id,lis_lib[113],lis_lib[114].replace(/\$1/g,ajax_return),'info','msg',prompt_btn,false,false);
+                if(retour.MAX == 'NA')
+                {
+                    var prompt_btn = new Array([lis_lib[31],lis_lib[32]],["launch_export('"+lisha_id+"','"+retour.TOTAL+"')","cancel_export('"+lisha_id+"');"]);
+
+                    lisha_generer_msgbox(lisha_id,lis_lib[113],lis_lib[114].replace(/\$1/g,retour.TOTAL),'info','msg',prompt_btn,false,false);
+                }
+                else
+                {
+                    // Max number of rows reached...
+                    var prompt_btn = new Array([lis_lib[31],lis_lib[32]],["launch_export('"+lisha_id+"','"+retour.MAX+"')","cancel_export('"+lisha_id+"');"]);
+
+                    lisha_generer_msgbox(lisha_id,lis_lib[113],lis_lib[130].replace(/\$1/g,retour.TOTAL).replace(/\$2/g,retour.MAX),'info','msg',prompt_btn,false,false);
+                }
 			}
 			else
 			{
@@ -224,7 +235,7 @@ function check_export_downloading(lisha_id)
 	var conf = [];
 
 	conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_export_progress.php';
-	conf['delai_tentative'] = 50000;
+	conf['delai_tentative'] = 100000;
 	conf['max_tentative'] = 2;
 	conf['type_retour'] = false;		// ReponseText
 	conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid');

@@ -52,7 +52,8 @@
                     `transaction`.`checkme`		    AS `checkme`,
                     `transaction`.`datum`			AS `datum`,
                     `transaction`.`mode`			AS `mode`,
-                    (SELECT `text` FROM `transaction2` WHERE `mode` = `transaction`.`mode`)  AS `text`,
+                    (SELECT `text` FROM `transaction2` WHERE `mode` = `transaction`.`mode`)  AS `thistext`,
+                    `transaction`.`text`			AS `text`,
                     `transaction`.`status`			AS `MyGroupTheme`
                 ".$_SESSION[$ssid]['lisha']['configuration'][10]."
                     `transaction` -- No alias on update table !!
@@ -148,8 +149,8 @@
 		//==================================================================
 		// define column : ModuleLib
 		//==================================================================
-		$obj_lisha_tran->define_column("(SELECT `text` FROM `transaction2` WHERE `mode` = `transaction`.`mode`)",'text','ModuleLibHere',__TEXT__,__WRAP__,__LEFT__);
-		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'text');
+		$obj_lisha_tran->define_column("(SELECT `text` FROM `transaction2` WHERE `mode` = `transaction`.`mode`)",'thistext','ModuleLibHere',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'thistext');
 		// Match code
 		$obj_lisha_tran->define_lov("	SELECT
 												TRANS2.`mode` AS `mode`,
@@ -222,7 +223,15 @@
 		$obj_lisha_tran->define_attribute('__column_display_mode',false,'MyGroupTheme');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'MyGroupTheme');
 		//==================================================================
-		
+
+        //==================================================================
+        // define column : masse
+        //==================================================================
+        $obj_lisha_tran->define_column("`transaction`.`text`",'text','Mass text',__TEXT__,__WRAP__,__LEFT__);
+        //$obj_lisha_tran->define_attribute('__column_display_mode',false,'status');
+        //$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'status');
+        //==================================================================
+
 	//==================================================================
 
 		

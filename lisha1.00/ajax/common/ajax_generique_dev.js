@@ -22,33 +22,29 @@
  */
 function ajax_call(configuration,reserve_interne)
 {
-	
-	
-	/**==================================================================
-	 * GESTION DES VARIABLES INTERNE
-	 ====================================================================*/	
+    //==================================================================
+    // Manage internal variables
+    //==================================================================
 	if (typeof(reserve_interne) == "undefined")
 	{		
 		var reserve_interne = new Array();
 		reserve_interne['url_image_wait'] = 'connexion.gif';
 	}
-	/**==================================================================*/	
-		
-	
-	/**==================================================================
-	 * PROTECTION DENY OF SERVICE
-	 * Pour info: Sans cette protection, si vous ometez de passer le paramètre
-	 * delai_tentative ou que vous saisissez une valeur non numérique,
-	 * le client prendra 0 par défaut pour delai_tentative.
-	 * Il en resulte des tentatives de connexion de chaque client au maximum de leur capacité 
-	 * ce qui provoque un Deny Of Service du serveur.
-	 ====================================================================*/	
+    //==================================================================
+
+    //==================================================================
+    // PROTECTION DENY OF SERVICE ( DOS protection )
+    // If you forgot this value or using no numeric value than each client web browser screen will attempt as fast possible to get
+    // answer from your server.
+    // That provide a pur Deny os service process
+    //==================================================================
 	if(configuration['delai_tentative'] < 100)
 	{
-		configuration['delai_tentative'] = 100;										// 100 ms
+        // Down minimum value 100 ms
+		configuration['delai_tentative'] = 100;
 	}
-	/**==================================================================*/	
-	
+    //==================================================================
+
 	
 	/**==================================================================
 	 * GESTION DU CAS DE L'APPEL PAR setTimeout
@@ -264,17 +260,17 @@ function ajax_call(configuration,reserve_interne)
 	
 	
 	/**==================================================================
-	 * DETECTION DE LA REPONSE DU SERVEUR
+	 * CHECK SERVER ANSWER
 	 ====================================================================*/		
 	if(reserve_interne['xhr_nombre_essai'] >= configuration['max_tentative'])
 	{
 		
 		clearTimeout(reserve_interne['xhr_verif_retour_ajax']);
-		reserve_interne['xhr'].abort();								// Le serveur ne répond pas, on annule la requête
+		reserve_interne['xhr'].abort();								// Server won't response, cancel request
 		
 		if (typeof(configuration['div_wait']) != "undefined")
 		{		
-			// Cache l'image d'attente de la réponse du serveur
+			// Hide waiting picture of ajax request
 			document.getElementById(configuration['div_wait']).innerHTML = '';		
 		}
 		
@@ -286,7 +282,7 @@ function ajax_call(configuration,reserve_interne)
 		
 		if (typeof(configuration['fonction_a_executer_cas_non_reponse']) != "undefined")
 		{		
-			// Execute une fonction personnalisée
+			// Proceed a customer function
 			if(typeof(configuration['param_fonction_a_executer_cas_non_reponse']) != "undefined")
 			{
 				eval(configuration['fonction_a_executer_cas_non_reponse']+'('+configuration['param_fonction_a_executer_cas_non_reponse']+',false)');
@@ -296,10 +292,9 @@ function ajax_call(configuration,reserve_interne)
 				eval(configuration['fonction_a_executer_cas_non_reponse']+'()');	
 			}
 					
-		}		
-		
-		alert(get_lib(191));
-		return false;
+		}
+		//alert('Ajax time out');
+		return 'Ajax time out';
 		
 	}
 	else
