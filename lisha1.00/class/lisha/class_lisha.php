@@ -2584,13 +2584,13 @@
 						}
 					}
 
-					$temp_columns .= $str_before.$val_col['before_as'].' '.$str_after.' AS `'.$val_col['sql_as'].'`';
+					$temp_columns .= $str_before.$this->get_quote_col($val_col['sql_as']).' '.$str_after.' AS '.$this->get_quote_col($val_col['sql_as']);
 
 
 					if(isset($val_col['select_function']))
 					{
 						// Special select function defined
-						$sql .= str_replace('__COL_VALUE__',$val_col['sql_as'],$val_col['select_function']).' AS `'.$val_col['sql_as'].'`';
+						$sql .= str_replace('__COL_VALUE__',$this->get_quote_col($val_col['sql_as']),$val_col['select_function']).' AS `'.$this->get_quote_col($val_col['sql_as']);
 					}
 					else
 					{
