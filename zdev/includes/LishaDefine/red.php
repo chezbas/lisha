@@ -23,6 +23,7 @@
 			SELECT
 				`zdev_table`.`index`			AS `index`,
 				`zdev_table`.`daterec` 		    AS `daterec`,
+				`zdev_table`.`otherdate` 		AS `otherdate`,
 				`zdev_table`.`description`	    AS `description`,
 				`zdev_table`.`amount`			AS `amount`,
 				UPPER(`zdev_table`.`amount`)	AS `upper`,
@@ -81,6 +82,14 @@
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'daterec');
 		$obj_lisha_tran->define_input_focus('daterec', true);					// Focused
 		//==================================================================
+
+        //==================================================================
+        // define column : Date modification
+        //==================================================================
+        $obj_lisha_tran->define_column('`zdev_table`.`otherdate`','otherdate','Date Time !!',__DATE__,__WRAP__,__CENTER__,__PERCENT__,__DISPLAY__);
+        $obj_lisha_tran->define_attribute('__column_date_format','%Y-%m-%d %H:%i:%s','otherdate');
+        //$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'otherdate');
+        //==================================================================
 
 
 		//==================================================================

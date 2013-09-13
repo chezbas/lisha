@@ -620,7 +620,7 @@ html,body
     float:left;
     background-image: url(../../images/icons/img_16.png);
     background-repeat: no-repeat;
-    background-position: -560px 0;
+    background-position: -960px 0;
 }
 
 .record_path:hover
@@ -630,9 +630,31 @@ html,body
     float:left;
     background-image: url(../../images/icons/img_16.png);
     background-repeat: no-repeat;
+    background-position: -960px -20px;
+    cursor: pointer;
+}
+
+.record_pref_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -560px 0;
+}
+
+.record_pref_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
     background-position: -560px -20px;
     cursor: pointer;
 }
+
 
 .reset_path
 {

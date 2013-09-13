@@ -1632,7 +1632,7 @@
 					//$html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_column_display" onclick="/*lisha_hide_display_col_lov(\''.$this->c_id.'\',__HIDE_DISPLAY_COLUMN__);*/" '.$this->hover_out_lib(1,1).'></div></td>';
 					$html .= '<td class="toolbar_separator_right btn_toolbar"><div id="'.$this->c_id.'_button_columns_list" onclick="list_columns(\''.$this->c_id.'\',__COLUMN_LIST__);" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_col_feat" '.$this->hover_out_lib(1,26).'></div></td>';
 					
-					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_save" '.$this->hover_out_lib(3,3).' onclick="lisha_display_prompt_create_filter(\''.$this->c_id.'\');"></div></td>';
+					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_save_pref" '.$this->hover_out_lib(3,54).' onclick="lisha_display_prompt_create_filter(\''.$this->c_id.'\');"></div></td>';
                     if($this->any_filter)
                     {
                         // Load custom lov available
@@ -1647,7 +1647,7 @@
 				}
 				else
 				{
-					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_save grey_el" '.$this->hover_out_lib(3,3).'></div></td>';
+					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_save_pref grey_el" '.$this->hover_out_lib(3,54).'></div></td>';
 					$html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_load grey_el" '.$this->hover_out_lib(4,6).'></div></td>';
 				}
 			}
@@ -1670,7 +1670,7 @@
 				
 				if($p_edit != false)
 				{
-					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_save" onclick="save_lines(event,\''.$this->c_id.'\',\'add\');" '.$this->hover_out_lib(50,50).'></div></td>';
+					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_save" onclick="save_lines(event,\''.$this->c_id.'\',\'add\');" '.$this->hover_out_lib(50,54).'></div></td>';
 				}
 				else
 				{
