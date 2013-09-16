@@ -18,8 +18,8 @@ var lisha_timer_check_export_done = '';
 
 /**==================================================================
  * Resize a column to smallest size.
- * @param column id of the column in resize
- * @param lisha_id Id of the lisha
+ * @column      : id of the column in resize
+ * @lisha_id    : internal lisha identifier
  ====================================================================*/
 function lisha_mini_size_column(column, lisha_id) {
     document.getElementById('th' + column + '_' + lisha_id).style.width = document.getElementById('span_' + column + '_' + lisha_id).offsetWidth + 'px';
@@ -288,7 +288,7 @@ function check_export_list_progress(lisha_id, ajax_return)
 
 
 /**==================================================================
- * Called when a checkbox or a line was clicked.
+ * Called when a checkbox or a line was clicked to be selected.
  * 
  * @param line Line of the checkbox
  * @param evt : event handle
@@ -313,9 +313,8 @@ function lisha_checkbox(line,evt,checkbox,id)
 
 				document.getElementById('chk_l'+line+'_c0_'+id).checked = false;
 				
-				//eval('lisha.'+id+'.selected_line.L'+line+'.selected = false;');
-				eval('delete lisha.'+id+'.selected_line.L'+line+';');
-				
+				eval('lisha.'+id+'.selected_line.L'+line+'.selected = false;'); // SRX_UNCHECKBOX_JSON_FEATURE
+
 				if(count_selected_lines(id) == 0)
 				{
 					if(document.getElementById('lisha_td_toolbar_edit_'+id))document.getElementById('lisha_td_toolbar_edit_'+id).className = 'btn_toolbar grey_el';
@@ -383,9 +382,8 @@ function lisha_checkbox(line,evt,checkbox,id)
 						var jsoncolorindex = eval('lisha.'+id+'.lines.L'+i+'.colorkey');
 						document.getElementById('l'+i+'_'+id).className = 'lc_'+jsoncolorindex+'_'+id;
 
-						//eval('lisha.'+id+'.selected_line.L'+i+'.selected = false;');
-						eval('delete lisha.'+id+'.selected_line.L'+i+';');
-						
+						eval('lisha.'+id+'.selected_line.L'+i+'.selected = false;'); // SRX_UNCHECKBOX_JSON_FEATURE
+
 					}
 					if(count_selected_lines(id) == 0)
 					{
@@ -417,9 +415,8 @@ function lisha_checkbox(line,evt,checkbox,id)
 					// Unselect
 					document.getElementById('l'+line+'_'+id).className = 'lc_'+jsoncolorindex+'_'+id;
 
-					//eval('lisha.'+id+'.selected_line.L'+line+'.selected = false;');
-					eval('delete lisha.'+id+'.selected_line.L'+line+';');
-					
+					eval('lisha.'+id+'.selected_line.L'+line+'.selected = false;'); // SRX_UNCHECKBOX_JSON_FEATURE
+
 					if(count_selected_lines(id) == 0)
 					{
 						if(document.getElementById('lisha_td_toolbar_edit_'+id))document.getElementById('lisha_td_toolbar_edit_'+id).className = 'btn_toolbar grey_el';
@@ -1000,17 +997,12 @@ function lisha_move_cur(e)
 	}
 }
 
-/**
- * Handler when mouseup
- * 
- * @param e event
- */
 /**==================================================================
  * Catch event on mouseup
  ====================================================================*/
 function lisha_mouseup()
 {
-	if(lisha_column_in_resize)
+    if(lisha_column_in_resize)
 	{
 		lisha_resize_column_stop();
 	}

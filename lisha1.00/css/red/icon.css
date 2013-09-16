@@ -151,13 +151,20 @@
 }
 
 .__red_ico_save {
-	background-position: -560px 0;
+	background-position: -960px 0;
 }
 
 .__red_ico_save:hover {
-	background-position: -560px -20px;
+	background-position: -960px -20px;
 }
 
+.__red_ico_save_pref {
+    background-position: -560px 0;
+}
+
+.__red_ico_save_pref:hover {
+    background-position: -560px -20px;
+}
 .__red_ico_load {
 	background-position: -380px 0;
 }
