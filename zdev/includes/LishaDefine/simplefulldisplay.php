@@ -77,7 +77,7 @@
 	$obj_lisha_tran->define_attribute('__active_title', true);						// Title bar	
 	$obj_lisha_tran->define_attribute('__title', 'Main test Lisha');	// Title
 
-	$obj_lisha_tran->define_attribute('__max_lines_by_page', 80);					// Limit rows by page	
+	$obj_lisha_tran->define_attribute('__max_lines_by_page', 150);					// Limit rows by page
 	
 	$obj_lisha_tran->define_attribute('__active_column_separation',false);
 	$obj_lisha_tran->define_attribute('__active_row_separation',false);

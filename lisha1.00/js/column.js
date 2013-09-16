@@ -343,30 +343,28 @@ function lisha_move_column(evt)
 /**==================================================================*/
 
 
-/**
- * Move a column, call when stop the move
- */
+/**==================================================================
+ * Call when release mouse button on column header
+ ====================================================================*/
 function lisha_move_column_stop()
 {
-	/**==================================================================
-	 * Hide the float content
-	 ====================================================================*/	
+    // Hide float move div
 	document.getElementById('lisha_column_move_div_float_'+lisha_id_move).style.display = 'none';
-	/**==================================================================*/
-	
-	/**==================================================================
-	 * Initiating global variable
-	 ====================================================================*/	
+
+    //==================================================================
+    // Reset global javascript variable
+    //==================================================================
 	cursor_start = 0;
 	lisha_column_in_move = false;
-	/**==================================================================*/
+    //==================================================================
 	
-	/**==================================================================
-	 * Hide the arrow
-	 ====================================================================*/	
+    //==================================================================
+    // Hide up and down move arrow of column
+    //==================================================================
 	document.getElementById('arrow_move_column_top_'+lisha_id_move).style.display = 'none';
 	document.getElementById('arrow_move_column_bottom_'+lisha_id_move).style.display = 'none';
-	/**==================================================================*/
+    //==================================================================
+
 	document.body.className = lisha_body_style;
 	
 	// IE 
@@ -375,6 +373,7 @@ function lisha_move_column_stop()
 		document.body.onselectstart = null;
 	}
 
+    // Have a real move ?
 	if(lisha_column_move != eval('lisha.'+lisha_id_move+'.destination_column;') && eval('lisha.'+lisha_id_move+'.destination_column;') != eval('undefined') && lisha_column_move + 1 != eval('lisha.'+lisha_id_move+'.destination_column;') && eval('lisha.'+lisha_id_move+'.destination_column;') != eval('undefined'))
 	{
 		move_column_ajax(lisha_id_move);
@@ -385,9 +384,15 @@ function lisha_move_column_stop()
 		{
 			click_column_order(lisha_id_move,lisha_column_move);
 		}
+        else
+        {
+            eval('lisha.'+lisha_id_move+'.destination_column = undefined;'); // SRX_MOVE_COLUMN_THEN_ABORT
+        }
 		/**==================================================================*/
 	}
 }
+/**==================================================================*/
+
 
 /**==================================================================
  * User change or add new column sort order ( Control key with right click )

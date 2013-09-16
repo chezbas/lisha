@@ -946,6 +946,7 @@
 
                         if($p_edit)
                         {
+                            // No columns move available when updating rows
                             $event = '';
                         }
                         else
@@ -961,6 +962,7 @@
 
                         if($p_edit)
                         {
+                            // No columns move available when updating rows
                             $event = '';
                         }
                         else
