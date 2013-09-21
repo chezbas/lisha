@@ -1625,7 +1625,7 @@
 			$html .= '<tr style="border:0;">';
 			
 			if(count($this->c_columns) > 1)
-				$html .= '<td class="btn_toolbar toolbar_separator_right grey_el"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_search_mode" '.$this->hover_out_lib(0,0).'></div></td>';
+				$html .= '<td class="btn_toolbar toolbar_separator_right grey_el"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_search_mode" '.$this->hover_out_lib(0,57).'></div></td>';
 			
 			if($this->c_mode != __CMOD__)
 			{
@@ -1656,7 +1656,7 @@
 			
 			if($p_edit)
 			{
-				$html .= '<td class="toolbar_separator_left toolbar_separator_right btn_toolbar"><div onclick="lisha_cancel_edit(\''.$this->c_id.'\');" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_back" '.$this->hover_out_lib(78,78).'></div></td>';
+				$html .= '<td class="toolbar_separator_left toolbar_separator_right btn_toolbar"><div onclick="lisha_cancel_edit(\''.$this->c_id.'\');" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_back" '.$this->hover_out_lib(78,53).'></div></td>';
 			}
 			else
 			{
@@ -1721,11 +1721,11 @@
 
 			if($this->c_help_button)
 			{
-				$html .= '<td class="btn_toolbar"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_help" onclick="window.open(\''.$this->c_dir_obj.'\');" '.$this->hover_out_lib(10,10).'></div></td>';
+				$html .= '<td class="btn_toolbar"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_help" onclick="window.open(\''.$this->c_dir_obj.'\');" '.$this->hover_out_lib(10,1).'></div></td>';
 			}
 			if($this->c_tech_help_button)
 			{
-				$html .= '<td class="btn_toolbar"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_tech_help" onclick="window.open(\''.$this->c_dir_obj.'/indextech.php\');" '.$this->hover_out_lib(80,80).'></div></td>';
+				$html .= '<td class="btn_toolbar"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_tech_help" onclick="window.open(\''.$this->c_dir_obj.'/indextech.php\');" '.$this->hover_out_lib(80,1).'></div></td>';
 			}
 			$html .= '<td><div id="lis__lisha_help_hover_'.$this->c_id.'__" class="nowrap"></div></td>';
 			$html .= '</tr>';

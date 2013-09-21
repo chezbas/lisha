@@ -442,6 +442,72 @@ html,body
 	cursor: pointer;
 }
 
+.columns_features_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    margin-top: -1px;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-920px 0;
+}
+.columns_features_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    margin-top: -1px;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-920px -20px;
+    cursor: pointer;
+}
+
+.hide_columns_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    margin-top: -1px;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-420px 0;
+}
+.hide_columns_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    margin-top: -1px;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-420px -20px;
+    cursor: pointer;
+}
+
+.calendar_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    margin-top: -1px;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-780px 0;
+}
+.calendar_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    margin-top: -1px;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-780px -20px;
+    cursor: pointer;
+}
+
 .home_path
 {
     height:20px;
