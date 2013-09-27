@@ -1,4 +1,8 @@
-function lisha_menu(id_lisha) 
+/**==================================================================
+ * Go to a specific page number
+ * @id_lisha		: internal lisha identifier
+ ====================================================================*/
+function lisha_menu(id_lisha)
 { 
     this.id_lisha = id_lisha;
     this.line = new Object(); 
@@ -13,9 +17,9 @@ function lisha_menu(id_lisha)
     this.parent = false;
     this.menu_id = 'menu_1';
     
-    /**
-     * Display menu
-     */
+    //==================================================================
+    // Display column contextual menu
+    //==================================================================
     this.display_menu = function()
     { 
     	this.html = '<table class="shadow">';
@@ -26,7 +30,10 @@ function lisha_menu(id_lisha)
     	{
     		if(eval('this.line.l'+j+'.type') == "LINE")
     		{
-	    		this.html += '<tr class="__'+eval('lisha.'+this.id_lisha+'.theme')+'_column_header_menu" '+eval('this.line.l'+j+'.event')+' id="'+this.menu_id+'_l'+j+'" onmouseover="lisha.'+this.id_lisha+'.obj_menu.onmouseover(this,'+j+',\''+eval('this.parent')+'\',\''+this.menu_id+'_'+j+'\');">';
+                // Define one onmouseover event on full line
+                var my_over = eval('this.line.l'+j+'.event_over')+'lisha.'+this.id_lisha+'.obj_menu.onmouseover(this,'+j+',\''+eval('this.parent')+'\',\''+this.menu_id+'_'+j+'\');';
+
+	    		this.html += '<tr class="__'+eval('lisha.'+this.id_lisha+'.theme')+'_column_header_menu" '+eval('this.line.l'+j+'.event')+' id="'+this.menu_id+'_l'+j+'" onmouseover="'+my_over+'">';
 	    		this.html += '<td class="__'+eval('lisha.'+this.id_lisha+'.theme')+'_column_header_menu_icon"><div class="'+eval('this.line.l'+j+'.class_icon')+'"></div></td>';
 	    		this.html += '<td class="__'+eval('lisha.'+this.id_lisha+'.theme')+'_column_header_menu_sep"></td>';
 	    		this.html += '<td class="__'+eval('lisha.'+this.id_lisha+'.theme')+'_column_header_menu_lib">'+eval('this.line.l'+j+'.title')+'</td>';
@@ -60,9 +67,9 @@ function lisha_menu(id_lisha)
 		this.html += '</td></tr>';
 		this.html += '<tr><td class="shadow_l_b"></td><td class="shadow_b"></td><td class="shadow_r_b"></td></tr></table>';
 
-		/**==================================================================
-		 * Child menu
-		 ====================================================================*/	
+        //==================================================================
+        // Children menu
+        //==================================================================
 		var i = 1;
 		for(i = 1;i <= this.qtt_line;i++)
     	{
@@ -71,16 +78,25 @@ function lisha_menu(id_lisha)
     			eval('this.html += \'<div id="'+eval('this.line.l'+i+'.child.menu_id')+'" style="width:0;display:none;position: relative;">\'+this.line.l'+i+'.child.display_menu()+\'</div>\'');
     		}
     	}
-		/**==================================================================*/
-		
-		
+        //==================================================================
 		return this.html;
     };
+    //==================================================================
 
-    /**
-     * Add a new line
-     */
-    this.add_line = function(title,class_icon,event,enable,child)
+    //==================================================================
+    // Add a new line
+    //==================================================================
+    /**==================================================================
+     * Add new contextual column menu line
+     * @title       : Literal expression of lin emenu
+     * @class_icon  : Icon to display at first left position
+     * @event       : Custom javascript function to launch if line clicked
+     * @enable      : Enable line ? ( true means yes )
+     * @child       : Have any sub menu to this line ( true means yes )
+     * @quick_help  : Quick help to display
+     * @link_help   : CTRL + F11 to display contextual documentation page
+     ====================================================================*/
+    this.add_line = function(title,class_icon,event,enable,child,quick_help,link_help)
     {
     	// Increment the number of line
     	this.qtt_line++;
@@ -97,19 +113,27 @@ function lisha_menu(id_lisha)
     		eval('this.line.l'+this.qtt_line+'.title = "<span style=\\"color:grey;\\">'+title+'</span>"');
     	}
         
-    	
-        
         eval('this.line.l'+this.qtt_line+'.id = "l_'+this.qtt_line+'"');
+
+
+
+        // Add new feature for quick help for onmouseover event
+        eval('this.line.l'+this.qtt_line+'.event_over = "lisha_lib_hover('+quick_help+','+link_help+',\''+this.id_lisha+'\',\'null\');"');
+
+
         if(enable)
         {
-        	eval('this.line.l'+this.qtt_line+'.event = "onclick=\\"lisha_toggle_header_menu(\''+this.id_lisha+'\','+eval('lisha.'+this.id_lisha+'.menu_opened_col;')+');'+event+'\\";"');
+        	eval('this.line.l'+this.qtt_line+'.event = "style=\\"cursor: pointer;\\" onmouseout=\\"lisha_lib_out(\''+this.id_lisha+'\');\\" onclick=\\"lisha_toggle_header_menu(\''+this.id_lisha+'\','+eval('lisha.'+this.id_lisha+'.menu_opened_col;')+');'+event+'\\";"');
         	eval('this.line.l'+this.qtt_line+'.class_icon = "'+class_icon+'"');
         }
         else
         {
-        	eval('this.line.l'+this.qtt_line+'.event = ""');
+        	eval('this.line.l'+this.qtt_line+'.event = "style=\\"cursor: not-allowed;\\" onmouseout=\\"lisha_lib_out(\''+this.id_lisha+'\');\\""');
         	eval('this.line.l'+this.qtt_line+'.class_icon = "'+class_icon+' grey_el"');
         }
+
+
+        // Line have a sub menu or not ??
         if(typeof(child) != 'undefined')
         {
         	// The line have a submenu
@@ -119,8 +143,14 @@ function lisha_menu(id_lisha)
         	this.set_menu_id(this.qtt_line,this.menu_id);
         	//this.set_line_id(this.qtt_line);
         }
+        else
+        {
+            // No sub menu
+            //eval('this.line.l'+this.qtt_line+'.event = "'+my_over+'"');
+        }
     };
-    
+    //==================================================================
+
     this.set_menu_id = function(line,parent_id)
     {
     	eval('this.line.l'+line+'.child.menu_id = \''+parent_id+'_'+line+'\'');
@@ -177,9 +207,7 @@ function lisha_menu(id_lisha)
     	{
     		this.el = el;
     	}
-    	
 
-    	
     	eval('lisha.'+this.id_lisha+'.stop_click_event = true');
     	document.getElementById(child_tmp).style.display = 'none';
     };
@@ -193,7 +221,7 @@ function lisha_menu(id_lisha)
     	clearTimeout(this.hover_tempo);
     	
     	this.el = el;
-    	
+
     	if(document.getElementById(this.menu_id+'_'+line) != null && this.opened_child == false)
     	{
     		// This is a parent
@@ -209,12 +237,16 @@ function lisha_menu(id_lisha)
     		}
     	}
     };
-    
+
+    //==================================================================
+    // on mouse event for column contextual menu
+    //==================================================================
     this.onmouseout = function(line)
     {
     	//this.hide_child(line);
     };
-    
+    //==================================================================
+
     this.place_child = function()
     {
     	// Vertical alignment
@@ -263,4 +295,5 @@ function lisha_menu(id_lisha)
     	eval('this.line.l'+this.qtt_line+' = new Object();');
         eval('this.line.l'+this.qtt_line+'.type = "SEP"');
     };
-} 
+}
+/**==================================================================*/

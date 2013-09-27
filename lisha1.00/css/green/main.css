@@ -346,7 +346,6 @@ td.__green_column_header_menu_icon
 	background-color: #DDFAC1;
 	width: 20px;
 	height: 20px;
-	cursor: pointer;
 	display: block;
 	white-space: nowrap;
 }
@@ -391,7 +390,6 @@ td.__green_column_header_menu_lib
 	padding: 0 5px 0 6px;
 	border-left: 1px solid #FFF;
 	font: normal normal normal 11px/normal arial, tahoma, sans-serif;
-	cursor: pointer;
 	white-space: nowrap;
 }
 

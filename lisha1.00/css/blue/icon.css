@@ -6,6 +6,55 @@
 	background-image: url("../../images/icons/img_16.png");
 }
 
+.__blue_ico_equal_operator {
+    background-position: -980px 0;
+}
+.__blue_ico_equal_operator:hover {
+    background-position: -980px -20px;
+}
+
+.__blue_ico_like_operator {
+    background-position: -1000px 0;
+}
+.__blue_ico_like_operator:hover {
+    background-position: -1000px -20px;
+}
+
+.__blue_ico_greather_than_operator {
+    background-position: -1020px 0;
+}
+.__blue_ico_greather_than_operator:hover {
+    background-position: -1020px -20px;
+}
+
+.__blue_ico_less_than_operator {
+    background-position: -1040px 0;
+}
+.__blue_ico_less_than_operator:hover {
+    background-position: -1040px -20px;
+}
+
+.__blue_ico_greather_or_equal_than_operator {
+    background-position: -1060px 0;
+}
+.__blue_ico_greather_or_equal_than_operator:hover {
+    background-position: -1060px -20px;
+}
+
+.__blue_ico_less_or_equal_than_operator {
+    background-position: -1080px 0;
+}
+.__blue_ico_less_or_equal_than_operator:hover {
+    background-position: -1080px -20px;
+}
+
+.__blue_ico_null_operator {
+    background-position: -1100px 0;
+}
+.__blue_ico_null_operator:hover {
+    background-position: -1100px -20px;
+}
+
 .__blue_ico_sort-ascend {
 	background-position: -600px 0;
 }

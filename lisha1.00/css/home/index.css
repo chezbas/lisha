@@ -530,6 +530,154 @@ html,body
 	cursor: pointer;
 }
 
+.ope_strict_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-980px 0;
+}
+
+.ope_strict_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-980px -20px;
+    cursor: pointer;
+}
+
+.ope_like_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1000px 0;
+}
+
+.ope_like_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1000px -20px;
+    cursor: pointer;
+}
+
+.ope_gt_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1020px 0;
+}
+
+.ope_gt_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1020px -20px;
+    cursor: pointer;
+}
+
+.ope_lt_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1040px 0;
+}
+
+.ope_lt_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1040px -20px;
+    cursor: pointer;
+}
+
+.ope_ge_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1060px 0;
+}
+
+.ope_ge_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1060px -20px;
+    cursor: pointer;
+}
+
+.ope_le_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1080px 0;
+}
+
+.ope_le_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1080px -20px;
+    cursor: pointer;
+}
+
+.ope_isnull_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1100px 0;
+}
+
+.ope_isnull_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1100px -20px;
+    cursor: pointer;
+}
+
+
 .add_path
 {
     height:20px;
@@ -634,6 +782,49 @@ html,body
     background-position: -600px -20px;
     cursor: pointer;
 }
+
+.sort_descending_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -640px 0;
+}
+
+.sort_descending_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -640px -20px;
+    cursor: pointer;
+}
+
+.sort_none_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -620px 0;
+}
+
+.sort_none_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position: -620px -20px;
+    cursor: pointer;
+}
+
 
 .export_path
 {

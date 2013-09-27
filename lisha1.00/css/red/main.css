@@ -1,3 +1,64 @@
+/* Advanced filter tab */
+.__red_lisha_tab_filter_ind_included
+{
+    display: block;
+    float: left;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius : 0 10px 0 0;
+    padding: 1px;
+    padding-right: 4px;
+    margin-top: 4px;
+    margin-left: 2px;
+    box-shadow: 2px 0 2px #666;
+}
+.__red_lisha_tab_filter_ind_included:hover
+{
+    display: block;
+    float: left;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius : 0 10px 0 0;
+    padding: 1px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+    margin-top: 1px;
+    box-shadow: 2px 0 4px #333;
+    cursor: pointer;
+}
+
+.__red_lisha_tab_filter_ind_excluded
+{
+    display: block;
+    float: left;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius : 0 10px 0 0;
+    margin-right: 2px;
+    padding: 1px;
+    padding-right: 4px;
+    margin-top: 4px;
+    margin-left: 2px;
+    box-shadow: 2px 0 2px #666;
+}
+.__red_lisha_tab_filter_ind_excluded:hover
+{
+    display: block;
+    float: left;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius : 0 10px 0 0;
+    margin-right: 2px;
+    padding: 1px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+    margin-top: 1px;
+    margin-left: 2px;
+    box-shadow: 2px 0 4px #333;
+    cursor: pointer;
+}
+
+
 /* Title of the lisha */
 .__red_lisha_title
 {
@@ -345,7 +406,6 @@ td.__red_column_header_menu_icon
 	background-color: #ffdddd;
 	width: 20px;
 	height: 20px;
-	cursor: pointer;
 	display: block;
 	white-space: nowrap;
 }
@@ -390,7 +450,6 @@ td.__red_column_header_menu_lib
 	padding: 0 5px 0 6px;
 	border-left: 1px solid #FFF;
 	font: normal normal normal 11px/normal arial, tahoma, sans-serif;
-	cursor: pointer;
 	white-space: nowrap;
 }
 

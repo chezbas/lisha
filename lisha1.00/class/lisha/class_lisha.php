@@ -1726,6 +1726,7 @@
 			$json .= $json_base.'.lmod_opened = true;';							// LMOD or NMOD or __CMOD__
 			$json .= $json_base.'.return_mode = "'.$this->c_return_mode.'";';	// Mode of return (in LMOD mode)
 			$json .= $json_base.'.c_col_return = "'.$this->c_col_return.'";';
+            $json .= $json_base.'.TypeOfChild = "'.$this->c_type_internal_lisha.'";';   // Kind of sub lisha type
 			$json .= $json_base.'.c_col_return_id = "'.$this->get_id_column($this->c_col_return).'";';
 			$json .= $json_base.'.c_position_mode = "'.$this->c_position_mode.'";';
 
@@ -4316,49 +4317,100 @@
         /**==================================================================
          * Advanced filter on column
          * Popup window to add advanced filter on column ( include a range, add list of specific value and so on...)
-         *
-         * Under construction...
+         * @p_column    : Column identifier
         ====================================================================*/
-		public function lisha_internal_adv_filter()
+		public function lisha_internal_adv_filter($p_column)
 		{
 			$id_child = $this->c_id.'_child';
-            $query_adv = "SELECT
-                            `main`.`A` AS `id`,
-                            `main`.`B` AS `version`
-                            FROM (
-                                SELECT
-                                1 AS `A`,
-                                2 AS `B`
-                                UNION
-                                SELECT
-                                2,
-                                3
-                                UNION
-                                SELECT
-                                4,
-                                5
-                                UNION
-                                SELECT
-                                6,
-                                7
-                                UNION
-                                SELECT 8,9 UNION SELECT 10,11
-                                UNION
-                                SELECT 12,13
-                                ) `main`
-                            ";
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_parent($this->c_id);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine,$this->c_ident,$this->c_dir_obj.'/');
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__display_mode',__CMOD__);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_readonly_mode',__R__);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(41));
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$query_adv);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`main`.`A`','id', 'id',__TEXT__, __WRAP__, __CENTER__);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column(`main`.`B`,'version', 'version',__TEXT__, __WRAP__, __CENTER__);
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__id_theme',$this->c_theme);
+            // Create an instance of a lisha
+			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine,$this->c_ident,$this->c_dir_obj,__ADV_FILTER__);
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__internal_color_mask',$this->c_color_mask);
+            //==================================================================
+            // Lisha display setup
+            //==================================================================
+            $adv_filter_query_in_single = "	SELECT
+						        `".__LISHA_TABLE_INTERNAL__."`.`id` AS `id`,
+								`".__LISHA_TABLE_INTERNAL__."`.`name` AS `name`,
+								`".__LISHA_TABLE_INTERNAL__."`.`type` AS `type`,
+								`".__LISHA_TABLE_INTERNAL__."`.`low` AS `low`,
+								`".__LISHA_TABLE_INTERNAL__."`.`high` AS `high`,
+								`".__LISHA_TABLE_INTERNAL__."`.`low1` AS `low1`,
+								`".__LISHA_TABLE_INTERNAL__."`.`ordre` AS `ordre`
+							".$_SESSION[$this->c_ssid]['lisha']['configuration'][10]."
+							    `".__LISHA_TABLE_INTERNAL__."`
+							WHERE 1 = 1
+							    AND `".__LISHA_TABLE_INTERNAL__."`.`id` = '".$this->c_ssid.$this->c_id."'
+						  ";
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$adv_filter_query_in_single);
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(131));
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__display_mode',__CMOD__);
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_readonly_mode',__RW__);
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_size(100,'%',100,'%');
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__id_theme',$this->c_theme);
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__internal_color_mask',$this->c_color_mask);
+
+            // Depend on Build dynamic css Background style for children in class_graphic.php
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_top_bar_page', $this->c_page_selection_display_header);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_bottom_bar_page', $this->c_page_selection_display_footer);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_nb_line(50);
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_tech_doc', false);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_user_doc', false);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_ticket', false);
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__update_table_name', __LISHA_TABLE_INTERNAL__);
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_column_separation',$this->c_cols_sep_display);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_row_separation',$this->c_rows_sep_display);
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_read_only_cells_edit', __RW__);
+            //==================================================================
+
+            //==================================================================
+            // Define columns
+            //==================================================================
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`low1`','low1', 'operator',__TEXT__, __WRAP__, __LEFT__);
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`id`','id','myid',__TEXT__, __WRAP__, __LEFT__);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'id');
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'id');
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`name`','name','myname',__TEXT__, __WRAP__, __LEFT__);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'name');
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'name');
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`type`','type', 'mytype',__TEXT__, __WRAP__, __LEFT__);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'type');
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'type');
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`ordre`','ordre', 'myordre',__TEXT__, __WRAP__, __LEFT__);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'ordre');
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'ordre');
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`low`','low', 'Value',__TEXT__, __WRAP__, __LEFT__);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __REQUIRED__, 'low');
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`high`','high', 'myhigh',__TEXT__, __WRAP__, __LEFT__);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'high');
+            //==================================================================
+
+            // Internal event
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_lisha_action(__ON_UPDATE__,__AFTER__,$id_child,Array('event_lisha_column_list(\''.$this->c_id.'\')'));
+
+            // Order
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_order_column('ordre',__ASC__);
+
+            // Table key
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_key(Array('id','name'));
+            //==================================================================
+
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->new_graphic_lisha();
 
@@ -4367,12 +4419,25 @@
             //==================================================================
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->prepare_query();
 			$json = $_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha_json_param();
+            //error_log(print_r($this->c_columns,true));
+            $html = "<div class='__".$this->c_theme."_lisha_tab_filter_ind_included'>IN</div><div class='__".$this->c_theme."_lisha_tab_filter_ind_excluded'>OUT</div><div class='__".$this->c_theme."_lisha_tab_filter_ind_excluded'>RANGE IN</div><div class='__".$this->c_theme."_lisha_tab_filter_ind_excluded'>RANGE OUT</div><div>".$_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha().'
+                        <div style="float:left;">ADVANCED FILTER on '.$this->c_columns[$p_column]["name"].'</div>
+                        <div style="float:right;">
+                            <table style="margin:0;padding:0;border-collapse:collapse;">
+                                <tr>
+                                <td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$p_column.');" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td>
+                                <td style="margin:0;padding:0;"><div id="'.$this->c_id.'_child_valide" onclick="lisha_child_list_column_ok(\''.$this->c_id.'\');" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_valide hover" '.$this->hover_out_lib(121,121,'_child').' style="margin-right:5px;"></div></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+					';
 
 			// XML return
 			header("Content-type: text/xml");
 			$xml = "<?xml version='1.0' encoding='UTF8'?>";
 			$xml .= "<lisha>";
-			$xml .= "<content>".$this->protect_xml($_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha())."</content>";
+			$xml .= "<content>".$this->protect_xml($html)."</content>";
 			$xml .= "<json>".$this->protect_xml($json)."</json>";
 			$xml .= "</lisha>";
 
@@ -4670,7 +4735,7 @@
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __REQUIRED__, 'low');
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_input_focus('low');					// Focused
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`low1`','low1',$this->lib(125),__CHECKBOX__, __WRAP__, __CENTER__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`low1`','low1',$this->lib(34),__BBCODE__, __WRAP__, __CENTER__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __REQUIRED__, 'low1');//__LISTED__
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`ordre`','ordre','sorted',__TEXT__, __WRAP__, __CENTER__);

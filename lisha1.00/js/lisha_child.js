@@ -277,3 +277,111 @@ function lisha_display_internal_lis(lisha_id,lisha_type,column,ajax_return)
 	}
 }
 /**==================================================================*/
+
+
+/**==================================================================
+ * Call when you try to manage advanced filter option on a column
+ * @lisha_id		: internal lisha identifier
+ * @lisha_type      : Kind of sub lisha
+ * @column		    : Column id
+ * @ajax_return 	: return ajax if any
+ ====================================================================*/
+function column_advanced_filter(lisha_id, column, ajax_return)
+{
+    if(typeof(ajax_return) == 'undefined')
+    {
+        lisha_cover_with_filter(lisha_id);
+        //==================================================================
+        // Setup Ajax configuration
+        //==================================================================
+        var conf = [];
+
+        conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/internal.php';
+        conf['delai_tentative'] = 5000;
+        conf['max_tentative'] = 4;
+        conf['type_retour'] = false;		// ReponseText
+        conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&lisha_type=__ADV_FILTER__&column='+column;
+        conf['fonction_a_executer_reponse'] = 'column_advanced_filter';
+        conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"','"+column+"'";
+
+        ajax_call(conf);
+        //==================================================================
+    }
+    else
+    {
+        try
+        {
+            // Get the ajax return in json format
+            var json = get_json(ajax_return);
+
+            // Update the json object
+            eval(decodeURIComponent(json.lisha.json));
+
+            // Set the content of the lisha
+            lisha_set_innerHTML('internal_lisha_'+lisha_id,decodeURIComponent(json.lisha.content));
+
+            // Manage ok button hide/show
+            if(eval('lisha.'+lisha_id+'_child.button.valide') == 'ok')
+            {
+                document.getElementById(lisha_id+'_child_valide').style.display = 'block';
+            }
+            else
+            {
+                document.getElementById(lisha_id+'_child_valide').style.display = 'none';
+            }
+
+            // Display the internal lisha
+            document.getElementById('internal_lisha_'+lisha_id).style.display = 'block';
+
+            // Init the opened child flag
+            eval('lisha.'+lisha_id+'.lisha_child_opened = 1;');
+
+            // Sub lisha size
+            document.getElementById('internal_lisha_'+lisha_id).style.width = '500px';
+            document.getElementById('internal_lisha_'+lisha_id).style.top = '24px';
+
+
+            if(document.getElementById('liste_'+lisha_id).offsetHeight < 422)
+            {
+                document.getElementById('internal_lisha_'+lisha_id).style.height = document.getElementById('liste_'+lisha_id).offsetHeight+22+'px';
+                document.getElementById('lis__'+eval('lisha.'+lisha_id+'.theme')+'__lisha_table_'+lisha_id+'_child__').style.height = document.getElementById('liste_'+lisha_id).offsetHeight+'px';
+            }
+            else
+            {
+                document.getElementById('internal_lisha_'+lisha_id).style.height = '360px';
+            }
+
+            // _button_columns_list
+            var pos_item = FindXY(document.getElementById('th_menu_'+column+'__'+lisha_id),lisha_id);
+            var pos_x = pos_item.x - document.getElementById('liste_'+lisha_id).scrollLeft;
+
+            document.getElementById('internal_lisha_'+lisha_id).style.left =  pos_x+'px';
+
+            // Compute sub lisha advanced option real top position
+            var pos_y = pos_item.y+ document.getElementById('tr_header_input_'+lisha_id).offsetHeight;
+            document.getElementById('internal_lisha_'+lisha_id).style.top =  pos_y+'px';
+
+            size_table(lisha_id+'_child');
+
+            //==================================================================
+            // Setup default focus
+            //==================================================================
+            var id_focus = "th_input_"+eval('lisha.'+lisha_id+'_child.default_input_focus')+"__"+lisha_id+'_child';
+
+            try
+            {
+                document.getElementById(id_focus).focus();
+            }
+            catch(e)
+            {
+                // Nothing
+            }
+            //==================================================================
+        }
+        catch(e)
+        {
+            lisha_display_error(lisha_id,e,'column list available');
+        }
+    }
+}
+/**==================================================================*/

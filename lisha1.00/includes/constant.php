@@ -26,9 +26,14 @@
 	define("__POSTGRESQL__","postgresql");							// PostgreSQL engine
 	define("__ODBC__","odbc");										// ODBC conection
 	define("__MSSQLSERVER__","mssqlserver");						// Microsoft SQL Server engine
-	define("__PERCENT__","%");										// Percent search (LIKE %%)
-	define("__EXACT__","");											// Exact search
-	define("__ADV_FILTER__","__ADV_FILTER__");						// Advanced filter
+	define("__PERCENT__","%");										// Operator percent (LIKE %%)
+	define("__EXACT__","");											// Operator equal
+    define("__GT__","__GT__");									    // Operator greather than
+    define("__GE__","__GE__");									    // Operator greather or equal than
+    define("__LT__","__LT__");									    // Operator less than
+    define("__LE__","__LE__");									    // Operator less or equal than
+    define("__NULL__","__NULL__");									// Operator is null
+	define("__ADV_FILTER__","__ADV_FILTER__");						// Sublisha of column advanced filter
 	define("__POSSIBLE_VALUES__","__POSSIBLE_VALUES__");			// Possible values
 	define("__LOAD_FILTER__","__LOAD_FILTER__");					// Load a filter
 	define("__HEADER__","header");									// header

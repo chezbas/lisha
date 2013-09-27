@@ -1094,56 +1094,113 @@ function lisha_toggle_header_menu(id,column)
 		// Enable the active menu
 		eval('lisha.'+id+'.menu_opened_col = '+column+';');
 		
-		/**==================================================================
-		 * Prepare order submenu
-		 ====================================================================*/	
-		var obj_order = new lisha_menu(id); 
-		if(eval('lisha.'+id+'.columns.c'+column+'.order') == '')
-		{
-			obj_order.add_line(lis_lib[18],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend','lisha_column_order(\''+id+'\',__ASC__,'+column+',__NEW__)',true);
-			obj_order.add_line(lis_lib[19],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-descend','lisha_column_order(\''+id+'\',__DESC__,'+column+',__NEW__)',true);
-			obj_order.add_line(lis_lib[42],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort_delete',null,false);
-		}
-		else if(eval('lisha.'+id+'.columns.c'+column+'.order') == 'DESC') 
-		{
-			// DESC
-			obj_order.add_line(lis_lib[18],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend','lisha_column_order(\''+id+'\',__ASC__,'+column+',__NEW__)',true);
-			obj_order.add_line(lis_lib[19],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-descend',null,false);
-			obj_order.add_line(lis_lib[42],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort_delete','lisha_column_order(\''+id+'\',__NONE__,'+column+',__NEW__)',true);
-		}
-		else
-		{
-			// ASC
-			obj_order.add_line(lis_lib[18],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend',null,false);
-			obj_order.add_line(lis_lib[19],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-descend','lisha_column_order(\''+id+'\',__DESC__,'+column+',__NEW__)',true);
-			obj_order.add_line(lis_lib[42],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort_delete','lisha_column_order(\''+id+'\',__NONE__,'+column+',__NEW__)',true);
-		}
-		
-		/**==================================================================*/
-		
-		/**==================================================================
-		 * Prepare search mode submenu
-		 ====================================================================*/	
-		var obj_search_mode = new lisha_menu(id); 
-		
-		if(eval('lisha.'+id+'.columns.c'+column+'.search_mode') == __PERCENT__)
-		{
-			// PERCENT
-			obj_search_mode.add_line(lis_lib[35],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_radio_off','lisha_change_search_mode(\''+id+'\',__EXACT__,'+column+');',true);
-			obj_search_mode.add_line(lis_lib[36],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_radio_on',null,false);
-		}
-		else
-		{
-			// STRICT
-			obj_search_mode.add_line(lis_lib[35],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_radio_on',null,false);
-			obj_search_mode.add_line(lis_lib[36],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_radio_off','lisha_change_search_mode(\''+id+'\',__PERCENT__,'+column+');',true);
-		}
-		/**==================================================================*/
-		
-		/**==================================================================
-		 * Prepare alignment submenu
-		 ====================================================================*/	
-		var obj_alignment = new lisha_menu(id); 
+        //==================================================================
+        // Prepare sort column menu list
+        //==================================================================
+		var obj_order = new lisha_menu(id);
+
+        if(eval('lisha.'+id+'.columns.c'+column+'.order') == 'ASC')
+        {
+            obj_order.add_line(lis_lib[18],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend',null,false,undefined,142,50);
+        }
+        else
+        {
+            obj_order.add_line(lis_lib[18],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend','lisha_column_order(\''+id+'\',__ASC__,'+column+',__NEW__)',true,undefined,141,67);
+        }
+
+        if(eval('lisha.'+id+'.columns.c'+column+'.order') == 'DESC')
+        {
+            obj_order.add_line(lis_lib[19],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-descend',null,false,undefined,142,50);
+        }
+        else
+        {
+            obj_order.add_line(lis_lib[19],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-descend','lisha_column_order(\''+id+'\',__DESC__,'+column+',__NEW__)',true,undefined,143,68);
+        }
+
+        if(eval('lisha.'+id+'.columns.c'+column+'.order') == '')
+        {
+            obj_order.add_line(lis_lib[42],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort_delete',null,false,undefined,142,50);
+        }
+        else
+        {
+            obj_order.add_line(lis_lib[42],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort_delete','lisha_column_order(\''+id+'\',__NONE__,'+column+',__NEW__)',true,undefined,42,69);
+        }
+        //==================================================================
+
+        //==================================================================
+        // Search mode operator
+        //==================================================================
+		var obj_search_mode = new lisha_menu(id);
+
+        if(eval('lisha.'+id+'.columns.c'+column+'.search_mode') == __EXACT__)
+        {
+            obj_search_mode.add_line(lis_lib[35],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_equal_operator',null,false,undefined,142,65);
+        }
+        else
+        {
+            obj_search_mode.add_line(lis_lib[35],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_equal_operator','lisha_change_search_mode(\''+id+'\',__EXACT__,'+column+');',true,undefined,137,65);
+        }
+
+        if(eval('lisha.'+id+'.columns.c'+column+'.search_mode') == __PERCENT__)
+        {
+            obj_search_mode.add_line(lis_lib[36],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_like_operator',null,false,undefined,142,66);
+        }
+        else
+        {
+            obj_search_mode.add_line(lis_lib[36],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_like_operator','lisha_change_search_mode(\''+id+'\',__PERCENT__,'+column+');',true,undefined,140,66);
+        }
+
+        if(eval('lisha.'+id+'.columns.c'+column+'.search_mode') == __GT__)
+        {
+            obj_search_mode.add_line(lis_lib[132],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_greather_than_operator',null,false,undefined,142,70);
+        }
+        else
+        {
+            obj_search_mode.add_line(lis_lib[132],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_greather_than_operator','lisha_change_search_mode(\''+id+'\',__GT__,'+column+');',true,undefined,147,70);
+        }
+
+        if(eval('lisha.'+id+'.columns.c'+column+'.search_mode') == __LT__)
+        {
+            obj_search_mode.add_line(lis_lib[133],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_less_than_operator',null,false,undefined,142,71);
+        }
+        else
+        {
+            obj_search_mode.add_line(lis_lib[133],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_less_than_operator','lisha_change_search_mode(\''+id+'\',__LT__,'+column+');',true,undefined,138,71);
+        }
+
+        if(eval('lisha.'+id+'.columns.c'+column+'.search_mode') == __GE__)
+        {
+            obj_search_mode.add_line(lis_lib[134],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_greather_or_equal_than_operator',null,false,undefined,142,72);
+        }
+        else
+        {
+            obj_search_mode.add_line(lis_lib[134],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_greather_or_equal_than_operator','lisha_change_search_mode(\''+id+'\',__GE__,'+column+');',true,undefined,139,72);
+        }
+
+        if(eval('lisha.'+id+'.columns.c'+column+'.search_mode') == __LE__)
+        {
+            obj_search_mode.add_line(lis_lib[135],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_less_or_equal_than_operator',null,false,undefined,142,73);
+        }
+        else
+        {
+            obj_search_mode.add_line(lis_lib[135],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_less_or_equal_than_operator','lisha_change_search_mode(\''+id+'\',__LE__,'+column+');',true,undefined,149,73);
+        }
+
+        if(eval('lisha.'+id+'.columns.c'+column+'.search_mode') == __NULL__)
+        {
+            obj_search_mode.add_line(lis_lib[136],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_null_operator',null,false,undefined,142,74);
+        }
+        else
+        {
+            obj_search_mode.add_line(lis_lib[136],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_null_operator','lisha_change_search_mode(\''+id+'\',__NULL__,'+column+');',true,undefined,150,74);
+        }
+
+        //==================================================================
+
+        //==================================================================
+        // Prepare alignment sub menu
+        //==================================================================
+		var obj_alignment = new lisha_menu(id);
 		
 		switch(eval('lisha.'+id+'.columns.c'+column+'.alignment'))
 		{
@@ -1163,41 +1220,34 @@ function lisha_toggle_header_menu(id,column)
 			obj_alignment.add_line(lis_lib[49],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_right',null,false);
 			break;
 		}
-		/**==================================================================*/
-		
+        //==================================================================
 
-		/**==================================================================
-		 * Prepare the principal menu
-		 ====================================================================*/	
-		var obj = new lisha_menu(id); 
+        //==================================================================
+        // Load main menu
+        //==================================================================
+		var obj = new lisha_menu(id);
 		
-		/**==================================================================
-		 * Prepare calendar button
-		 ====================================================================*/	
-		
-		
+        // Calendar menu
 		if(eval('lisha.'+id+'.columns.c'+column+'.data_type') == 'date')
 		{
-			/*obj.add_sep();*/
-			obj.add_line(lis_lib[66],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_calendar','lisha_generate_calendar(\''+id+'\','+column+');',true);
+			obj.add_line(lis_lib[66],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_calendar','lisha_generate_calendar(\''+id+'\','+column+');',true,undefined,145,31);
 			obj.add_sep();
 		}
-		/**==================================================================*/
-		
+
 		// Order
-		obj.add_line(lis_lib[39],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend',null,true,obj_order);
+		obj.add_line(lis_lib[39],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend',null,true,obj_order,144,36);
 		
 		// Search mode
-		obj.add_line(lis_lib[34],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_search_mode',null,true,obj_search_mode);
+		obj.add_line(lis_lib[146],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_search_mode',null,true,obj_search_mode,34,22);
 		
 		// Alignment
 		obj.add_line(lis_lib[46],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_left',null,true,obj_alignment);
 		
-		
+		// Advanced column filter menu
 		if(eval('lisha.'+id+'.mode') != __CMOD__)
 		{
 			obj.add_sep();
-			obj.add_line(lis_lib[41],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_filter','/*lisha_display_internal_lis(\''+id+'\',__ADV_FILTER__,'+column+');*/',false);
+			obj.add_line(lis_lib[41],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_filter','column_advanced_filter(\''+id+'\','+column+');',true,undefined,50,50);
 
 			var is_lovable = eval('lisha.'+id+'.columns.c'+column+'.is_lovable');
 			
@@ -1218,15 +1268,19 @@ function lisha_toggle_header_menu(id,column)
 			{
 				obj.add_line(eval('lisha.'+id+'.columns.c'+column+'.lov_title'),'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_values','lisha_display_internal_lis(\''+id+'\',__POSSIBLE_VALUES__,'+column+');',line_enable);
 			}
-			
-		
+
+
+            obj.add_sep();
 			// Hide column
 			// Do not display if this column is default focus column
 			if(eval('lisha.'+id+'.c_col_return_id') != column && column != eval('lisha.'+id+'.default_input_focus'))
 			{
-				obj.add_sep();
-				obj.add_line(lis_lib[20],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-hide','lisha_toggle_column(\''+id+'\','+column+');/*msgbox(\''+id+'\',lis_lib[20],lis_lib[20]);*/',true);
+				obj.add_line(lis_lib[20],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-hide','lisha_toggle_column(\''+id+'\','+column+');',true,undefined,20,29);
 			}
+            else
+            {
+                obj.add_line(lis_lib[20],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-hide','lisha_toggle_column(\''+id+'\','+column+');',false,undefined,125,29);
+            }
 		}
 		else
 		{
@@ -1255,10 +1309,8 @@ function lisha_toggle_header_menu(id,column)
 			}
 			*/
 		}
-		/**==================================================================*/
-		
-		
-		
+        //==================================================================
+
 		// Display the menu
 		div_menu.style.display = 'block';
 		div_menu.innerHTML = obj.display_menu();
