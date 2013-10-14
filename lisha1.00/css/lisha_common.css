@@ -127,3 +127,10 @@ tr.lisha_line_separator
 {
 	font-weight: lighter;
 }
+
+.lisha_operator_title
+{
+    top: 0;
+    display: inline-block;
+    opacity: 0.4;
+}

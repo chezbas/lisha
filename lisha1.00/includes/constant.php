@@ -26,7 +26,8 @@
 	define("__POSTGRESQL__","postgresql");							// PostgreSQL engine
 	define("__ODBC__","odbc");										// ODBC conection
 	define("__MSSQLSERVER__","mssqlserver");						// Microsoft SQL Server engine
-	define("__PERCENT__","%");										// Operator percent (LIKE %%)
+    define("__CONTAIN__","__CONTAIN__");							// Operator contain means a LIKE with %%
+	define("__PERCENT__","%");										// Operator percent LIKE without any jocker digit
 	define("__EXACT__","");											// Operator equal
     define("__GT__","__GT__");									    // Operator greather than
     define("__GE__","__GE__");									    // Operator greather or equal than

@@ -677,6 +677,27 @@ html,body
     cursor: pointer;
 }
 
+.ope_contain_path
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1120px 0;
+}
+
+.ope_contain_path:hover
+{
+    height:20px;
+    width:20px;
+    float:left;
+    background-image: url(../../images/icons/img_16.png);
+    background-repeat: no-repeat;
+    background-position:-1120px -20px;
+    cursor: pointer;
+}
+
 
 .add_path
 {

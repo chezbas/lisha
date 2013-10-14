@@ -988,10 +988,41 @@
                         }
 					}
 					//==================================================================
-					
+
+                    //==================================================================
 					// Column title
-					$html .= '<td align="left" class="__'.$this->c_theme.'__cell_h nowrap" id="header_th_'.$key_col.'__'.$this->c_id.'"><div '.$event.' class="align_'.$this->c_columns[$key_col]['alignment'].' __'.$this->c_theme.'_column_title" id="th'.$key_col.'_'.$this->c_id.'" '.$watermark.'><span id="span_'.$key_col.'_'.$this->c_id.'">'.$this->c_columns[$key_col]['name'].'</span></div></td>';
-					
+                    //==================================================================
+                    switch($val_col['search_mode'])
+                    {
+                        case __EXACT__:
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_equal_operator';
+                            break;
+                        case __CONTAIN__:
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_contain_operator';
+                            break;
+                        case __PERCENT__:
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_like_operator';
+                            break;
+                        case __GT__:
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_greather_than_operator';
+                            break;
+                        case __LT__:
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_less_than_operator';
+                            break;
+                        case __GE__:
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_greather_or_equal_than_operator';
+                            break;
+                        case __LE__:
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_less_or_equal_than_operator';
+                            break;
+                        case __NULL__:
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_null_operator';
+                            break;
+                    }
+                    $ope_div = '<span class="lisha_operator_title '.$operator_class.'"></span>';
+					$html .= '<td align="left" class="__'.$this->c_theme.'__cell_h nowrap" id="header_th_'.$key_col.'__'.$this->c_id.'"><div '.$event.' class="align_'.$this->c_columns[$key_col]['alignment'].' __'.$this->c_theme.'_column_title" id="th'.$key_col.'_'.$this->c_id.'" '.$watermark.'><span id="span_'.$key_col.'_'.$this->c_id.'">'.$this->c_columns[$key_col]['name'].$ope_div.'</span></div></td>';
+                    //==================================================================
+
 					//==================================================================
 					// Display other column
 					//==================================================================

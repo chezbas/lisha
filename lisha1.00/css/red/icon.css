@@ -55,6 +55,12 @@
     background-position: -1100px -20px;
 }
 
+.__red_ico_contain_operator {
+    background-position: -1120px 0;
+}
+.__red_ico_contain_operator:hover {
+    background-position: -1120px -20px;
+}
 
 
 .__red_ico_sort-ascend {
