@@ -146,6 +146,8 @@
 			'__id_theme'														=> array('c_theme','A'),
 			'__active_readonly_mode'											=> array('c_readonly','A'),
 			'__main_query'														=> array('c_query','A'),
+            '__active_insert_button'                                            => array('c_toolbar_add_btn','A'),
+            '__active_delete_button'                                            => array('c_toolbar_delete_btn','A'),
             '__active_quick_search'												=> array('c_quick_search','A')
 			);
 			//==================================================================
@@ -389,7 +391,7 @@
 				else
 				{
 					// The column does not exist
-					$this->define_column('NA',$value,$value,__TEXT__,__WRAP__,__CENTER__,__PERCENT__,__HIDE__);
+					$this->define_column('NA',$value,$value,__TEXT__,__WRAP__,__CENTER__,__CONTAIN__,__HIDE__);
 					$col_name = $this->get_id_column($value);
 					$this->c_columns[$col_name]['is_key_part'] = $value;
 					$this->c_columns[$col_name]['auto_create_column'] = true;
@@ -500,11 +502,6 @@
 		/**==================================================================*/
 
 
-		public function define_toolbar_delete_button($p_state)
-		{
-			$this->c_obj_graphic->define_toolbar_delete_button($p_state);
-		}
-
 		/**
 		 * Define the state of the text on the navbar
 		 * @param boolean $p_state true : display / false : hidden
@@ -552,7 +549,7 @@
 		 * @p_alignment		: text alignment
 		 * @p_display		: display or hide column
 		 ====================================================================*/
-		public function define_column($p_before_as,$p_column_id,$p_name,$p_data_type = __BBCODE__,$p_nowrap = __NOWRAP__,$p_alignment = __CENTER__,$p_search_mode = __PERCENT__,$p_display = __DISPLAY__)
+		public function define_column($p_before_as,$p_column_id,$p_name,$p_data_type = __BBCODE__,$p_nowrap = __NOWRAP__,$p_alignment = __CENTER__,$p_search_mode = __CONTAIN__,$p_display = __DISPLAY__)
 		{
 			$column_id = count($this->c_columns)+1;
 			$this->c_columns[$column_id] = array(	"before_as" => $p_before_as,
@@ -655,11 +652,11 @@
 		 * @p_data_type		: column data type
 		 * @p_nowrap		: Kind of values : __NOWRAP__ or __WRAP__
 		 * @p_alignment		: Content alignment __CENTER__, __LEFT__ or __RIGHT__
-		 * @p_search_mode	: Search mode __PERCENT__ or __EXACT__
+		 * @p_search_mode	: Search mode : See operator list
 		 * @p_display		: Show or hide column __DISPLAY__ or __HIDE__
 		 * @p_focus			: identifier column to setup focus
 		 ====================================================================*/
-		public function define_column_lov($p_before_as, $p_column_id, $p_name,$p_data_type = __TEXT__,$p_nowrap = __WRAP__,$p_alignment = __CENTER__,$p_search_mode = __PERCENT__,$p_display = __DISPLAY__, $p_focus = null)
+		public function define_column_lov($p_before_as, $p_column_id, $p_name,$p_data_type = __TEXT__,$p_nowrap = __WRAP__,$p_alignment = __CENTER__,$p_search_mode = __CONTAIN__,$p_display = __DISPLAY__, $p_focus = null)
 		{
 			$column_id = count($this->c_columns);
             $this->c_columns[$column_id]['lov']['columns'][$p_column_id]['before_as'] = $p_before_as;
@@ -867,10 +864,11 @@
 			$this->c_obj_graphic->define_background_logo($logo,$repeat);
 		}
 
-		/**
-		 * Define a timer to refresh automatically the lisha
-		 * @param integer $p_time time in ms
-		 */
+
+        /**==================================================================
+         * Define count down value in ms before refreshing lisha
+         * @p_time          : Count downtime in ms
+        ====================================================================*/
 		public function define_auto_refresh_timer($p_time)
 		{
 			if($p_time < 3000)
@@ -882,6 +880,7 @@
 				$this->c_time_timer_refresh = $p_time;
 			}
 		}
+        /**===================================================================*/
 
 
 		/**==================================================================
@@ -908,7 +907,7 @@
 				{
 					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter'],__MYSQL__); // Database engine hard coded TODO
 
-					$this->c_columns[$column]['filter']['input'] = array('filter' =>  $tmp_result,
+                    $this->c_columns[$column]['filter']['input'] = array('filter' =>  rawurldecode($tmp_result),
 																		'filter_display' => rawurldecode($post['filter'])
 																		);
 				}
@@ -1228,6 +1227,7 @@
 
 					//==================================================================
 					// Recover search mode : SMD
+                    // Todo operator list
 					// __STRICT__, __PERCENT__
 					//==================================================================
 					if(isset($result_array['SMD']))
@@ -1387,24 +1387,38 @@
 				{
 					foreach ($column_value['filter'] AS $filter_value)
 					{
-                        $sql_filter .= ' AND '.$column_value['before_as'].' '.$this->get_like($column_value['search_mode'].$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).$column_value['search_mode']);
+                        switch($column_value['search_mode'])
+                        {
+                            case __EXACT__:
+                                $sql_filter .= " AND ".$column_value['before_as']." = '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
+                                break;
+                            case __CONTAIN__:
+                                $sql_filter .= ' AND '.$column_value['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).__PERCENT__);
+                                break;
+                            case __PERCENT__:
+                                $sql_filter .= ' AND '.$column_value['before_as'].' '.$this->get_like($this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link));
+                                break;
+                            case __GT__:
+                                $sql_filter .= " AND ".$column_value['before_as']." > '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
+                                break;
+                            case __LT__:
+                                $sql_filter .= " AND ".$column_value['before_as']." < '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
+                                break;
+                            case __GE__:
+                                $sql_filter .= " AND ".$column_value['before_as']." >= '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
+                                break;
+                            case __LE__:
+                                $sql_filter .= " AND ".$column_value['before_as']." <= '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
+                                break;
+                            case __NULL__:
+                                $sql_filter .= ' AND '.$column_value['before_as'].' IS NULL ';
+                                break;
+                        }
 					}
 				}
 			}
 			//==================================================================
 
-			//==================================================================
-			// Count number of line of the query
-			//==================================================================
-            /*if($this->c_page_selection_display_header || $this->c_page_selection_display_footer)
-            {
-            }
-            else
-            {
-                // No navigation bar, don't compute total of rows ( Enhance performance )
-                $this->c_recordset_line = 1;
-            }
-            */
             $query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
             $my_query = 'SELECT COUNT(1) AS `TOTAL` '.substr($this->c_query,$query_final_pos).$sql_filter;
             $this->exec_sql($my_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
@@ -3686,7 +3700,7 @@
 		 * change_search_mode
 		 * Method called when change column search mode
 		 * @p_column			: Column id
-		 * @p_type_search		: __EXACT__ or __PERCENT__
+		 * @p_type_search		: See operator list : __CONTAIN__, __PERCENT__, __EXACT__...
 		 * @p_selected_lines	: Selected line in json format
 		 ====================================================================*/
 		public function change_search_mode($p_column,$p_type_search,$p_selected_lines)

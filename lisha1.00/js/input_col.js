@@ -458,7 +458,6 @@ function lisha_define_filter(lisha_id,txt,column,display,ajax_return)
 	{
         // Get all updated filter
         var url_filter = '&filter_col='+column+'&filter='+encodeURIComponent(txt);
-
         //==================================================================
         // Setup Ajax configuration
         //==================================================================

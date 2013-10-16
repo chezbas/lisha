@@ -12,12 +12,26 @@
 .__blue_ico_equal_operator:hover {
     background-position: -980px -20px;
 }
+.__blue_ico_equal_operator_little {
+    background-position: -490px -10px;
+    background-size: cover;
+    margin-bottom: -0.5em;
+    margin-top: 0.5em;
+    width: 10px;
+}
 
 .__blue_ico_like_operator {
     background-position: -1000px 0;
 }
 .__blue_ico_like_operator:hover {
     background-position: -1000px -20px;
+}
+.__blue_ico_like_operator_little {
+    background-position: -500px -10px;
+    background-size: cover;
+    margin-bottom: -0.5em;
+    margin-top: 0.5em;
+    width: 10px;
 }
 
 .__blue_ico_greather_than_operator {
@@ -26,12 +40,26 @@
 .__blue_ico_greather_than_operator:hover {
     background-position: -1020px -20px;
 }
+.__blue_ico_greather_than_operator_little {
+    background-position: -510px -10px;
+    background-size: cover;
+    margin-bottom: -0.5em;
+    margin-top: 0.5em;
+    width: 10px;
+}
 
 .__blue_ico_less_than_operator {
     background-position: -1040px 0;
 }
 .__blue_ico_less_than_operator:hover {
     background-position: -1040px -20px;
+}
+.__blue_ico_less_than_operator_little {
+    background-position: -520px -10px;
+    background-size: cover;
+    margin-bottom: -0.5em;
+    margin-top: 0.5em;
+    width: 10px;
 }
 
 .__blue_ico_greather_or_equal_than_operator {
@@ -40,12 +68,26 @@
 .__blue_ico_greather_or_equal_than_operator:hover {
     background-position: -1060px -20px;
 }
+.__blue_ico_greather_or_equal_than_operator_little {
+    background-position: -530px -10px;
+    background-size: cover;
+    margin-bottom: -0.5em;
+    margin-top: 0.5em;
+    width: 10px;
+}
 
 .__blue_ico_less_or_equal_than_operator {
     background-position: -1080px 0;
 }
 .__blue_ico_less_or_equal_than_operator:hover {
     background-position: -1080px -20px;
+}
+.__blue_ico_less_or_equal_than_operator_little {
+    background-position: -540px -10px;
+    background-size: cover;
+    margin-bottom: -0.5em;
+    margin-top: 0.5em;
+    width: 10px;
 }
 
 .__blue_ico_null_operator {
@@ -54,12 +96,26 @@
 .__blue_ico_null_operator:hover {
     background-position: -1100px -20px;
 }
+.__blue_ico_null_operator_little {
+    background-position: -550px -10px;
+    background-size: cover;
+    margin-bottom: -0.5em;
+    margin-top: 0.5em;
+    width: 10px;
+}
 
 .__blue_ico_contain_operator {
     background-position: -1120px 0;
 }
 .__blue_ico_contain_operator:hover {
     background-position: -1120px -20px;
+}
+.__blue_ico_contain_operator_little {
+    background-position: -560px -10px;
+    background-size: cover;
+    margin-bottom: -0.5em;
+    margin-top: 0.5em;
+    width: 10px;
 }
 
 .__blue_ico_sort-ascend {

@@ -130,6 +130,8 @@
 			'__active_user_doc'													=> array('c_help_button','A'),
 			'__active_tech_doc'													=> array('c_tech_help_button','A'),
             '__active_quick_search'												=> array('c_quick_search','A'),
+            '__active_insert_button'                                            => array('c_toolbar_add_btn','A'),
+            '__active_delete_button'                                            => array('c_toolbar_delete_btn','A'),
 			'__active_ticket'													=> array('c_tickets_link','A')
 			);
 			//==================================================================
@@ -995,28 +997,28 @@
                     switch($val_col['search_mode'])
                     {
                         case __EXACT__:
-                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_equal_operator';
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_equal_operator_little';
                             break;
                         case __CONTAIN__:
-                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_contain_operator';
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_contain_operator_little';
                             break;
                         case __PERCENT__:
-                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_like_operator';
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_like_operator_little';
                             break;
                         case __GT__:
-                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_greather_than_operator';
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_greather_than_operator_little';
                             break;
                         case __LT__:
-                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_less_than_operator';
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_less_than_operator_little';
                             break;
                         case __GE__:
-                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_greather_or_equal_than_operator';
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_greather_or_equal_than_operator_little';
                             break;
                         case __LE__:
-                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_less_or_equal_than_operator';
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_less_or_equal_than_operator_little';
                             break;
                         case __NULL__:
-                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_null_operator';
+                            $operator_class = '__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_null_operator_little';
                             break;
                     }
                     $ope_div = '<span class="lisha_operator_title '.$operator_class.'"></span>';
@@ -2257,12 +2259,7 @@
 		{
 			$this->c_navbar_txt_line_per_page_activate = $p_state;
 		}
-		
-		public function define_toolbar_delete_button($p_state)
-		{
-			$this->c_toolbar_delete_btn = $p_state;
-		}
-		
+
 		
 		/**==================================================================
 		 * define_nb_line

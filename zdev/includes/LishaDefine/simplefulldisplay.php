@@ -98,6 +98,9 @@
 
 	$obj_lisha_tran->define_attribute('__column_name_group_of_color', "MyGroupTheme");		// ( Optional ) Define custom column color name
 
+    //$obj_lisha_tran->define_attribute('__active_insert_button', false);           // Hide or display Add button
+    $obj_lisha_tran->define_attribute('__active_delete_button', false);           // Hide or display Delete button
+
     $obj_lisha_tran->define_attribute('__active_quick_search', true);				        // Quick search mode ( Optional : default true )
 	//==================================================================
 		
@@ -108,7 +111,7 @@
 		//==================================================================
 		// define column : Date modification
 		//==================================================================
-		$obj_lisha_tran->define_column("`transaction`.`daterec`",'daterec','datum ⛵',__DATE__,__WRAP__,__CENTER__,__PERCENT__,__DISPLAY__);
+		$obj_lisha_tran->define_column("`transaction`.`daterec`",'daterec','datum ⛵',__DATE__,__WRAP__,__CENTER__,__EXACT__,__DISPLAY__);
 		$obj_lisha_tran->define_attribute('__column_date_format','%d/%m/%Y','daterec');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'daterec');
 		$obj_lisha_tran->define_input_focus('daterec', true);					// Focused
