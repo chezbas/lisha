@@ -420,6 +420,7 @@
 		 * General or column define attributes fonction
 		 * Check first matchcode list of class_lisha
 		 * if not exists then try matchcode of class_graphic
+         *
 		 * @p_attribute		: External attribute name
 		 * @p_value			: value to setup to attribute
 		 * @p_column_name	: Column name if it's a column feature ( null means main feature )
@@ -467,6 +468,7 @@
 		 * General or column reader attributs fonction
 		 * Check first matchcode list of class_lisha
 		 * if not exists then try matchcode in class class_graphic
+         *
 		 * @p_attribute : External attribute name
 		 * @p_column_name : Column name if it's a column feature ( null means main feature )
 		 ====================================================================*/
@@ -540,7 +542,9 @@
 
 
 		/**==================================================================
-		 * define_column
+		 * Initial definition of column
+         * Most important part, be strict and keep in mind that before AS part can be different with after AS part
+         *
          * @p_before_as     : Define part before as of column
 		 * @p_column_id		: Name column output by query : Key name used for all others column features
 		 * @p_name			: Column title name
@@ -572,35 +576,63 @@
 		/**==================================================================*/
 
 
-		/**
-		 * Define a function for update query, exemple : MD5(__COL_VALUE__) -> MD5(value)
-		 * @p_column column name
-		 * @p_function MD5(__COL_VALUE__),SHA1(__COL_VALUE__),ENCODE("__COL_VALUE__","454fdf")...
-		 */
+        /**==================================================================
+         * Method to define custom function for write access
+         * Example : MD5(__COL_VALUE__) -> MD5(value)
+         *
+         * @p_column		: Column identifier ( have to define column in your lisha and hide )
+         * @p_function    	: MD5(__COL_VALUE__),SHA1(__COL_VALUE__),ENCODE("__COL_VALUE__","454fdf")...
+        ====================================================================*/
 		public function define_col_rw_function($p_column,$p_function)
 		{
-			$this->c_columns[$this->get_id_column($p_column)]['rw_function'] = $p_function;
-		}
+            $column_id = $this->get_id_column($p_column);
+			$this->c_columns[$column_id]['rw_function'] = $p_function;
 
-		/**
-		 * Define a function for select query, exemple : MD5(__COL_VALUE__) -> MD5(value)
-		 * @param string $p_column column name
-		 * @p_function MD5(__COL_VALUE__),SHA1(__COL_VALUE__),ENCODE("__COL_VALUE__","454fdf")...
-		 */
+            // Keep original key value in memory
+            $this->c_columns_init[$column_id]['rw_function'] = $this->c_columns[$column_id]['rw_function'];
+		}
+        /**==================================================================*/
+
+
+        /**==================================================================
+         * Method to define custom function for read access
+         * Example : MD5(__COL_VALUE__) -> MD5(value)
+         *
+         * @p_column		: Column identifier ( have to define column in your lisha and hide )
+         * @p_function    	: MD5(__COL_VALUE__),SHA1(__COL_VALUE__),ENCODE("__COL_VALUE__","454fdf")...
+        ====================================================================*/
 		public function define_col_select_function($p_column,$p_function)
 		{
-			$this->c_columns[$this->get_id_column($p_column)]['select_function'] = $p_function;
-		}
+            $column_id = $this->get_id_column($p_column);
+			$this->c_columns[$column_id]['select_function'] = $p_function;
 
+            // Keep original key value in memory
+            $this->c_columns_init[$column_id]['select_function'] = $this->c_columns[$column_id]['select_function'];
+		}
+        /**==================================================================*/
+
+
+        /**==================================================================
+         * Method to define external key field
+         * Kind of extra field to defined primary key
+         *
+         * @p_column		: Column identifier ( have to define column in your lisha and hide )
+         * @p_value     	: Constant to setup in this key field
+        ====================================================================*/
 		public function define_col_value($p_column,$p_value)
 		{
-			$this->c_columns[$this->get_id_column($p_column)]['predefined_value'] = $p_value;
+            $column_id = $this->get_id_column($p_column);
+			$this->c_columns[$column_id]['predefined_value'] = $p_value;
+
+            // Keep original key value in memory
+            $this->c_columns_init[$column_id]['predefined_value'] = $this->c_columns[$column_id]['predefined_value'];
 		}
+        /**==================================================================*/
 
 
 		/**==================================================================
-		 * define_lov
-		 * Define List Of Value
+		 * Define column list of value or matchcode
+         *
 		 * @p_sql			: Query to build list
 		 * @p_title			: Title of query window
          * @p_before_as	    : string before as of field
@@ -645,7 +677,8 @@
 
 
 		/**==================================================================
-		 * define_column_lov ( initial lov column definition )
+		 * Define initial lov column definition
+         *
          * @p_before_as     : Define part before as of column
 		 * @p_column_id		: Field name output by query ( KeyName )
 		 * @p_name			: Window title
@@ -684,7 +717,8 @@
 
 
 		/**==================================================================
-		 * define_line_theme
+		 * define feature of line in a group ( group by default is zero )
+         *
 		 * @p_color_hex				:	Background color of unselected line no mouse hover
 		 * @p_size_hex				:	font size unselect line no mouse hover
 		 * @p_color_hover_hex 		:	Background line color when mouse hover
@@ -765,8 +799,8 @@
 
 
 		/**==================================================================
-		 * define_lisha_action
 		 * Define javascript extra event user call
+         *
 		 * @p_event		: Kind of internal event ( eg : __ON_LMOD_INSERT__...)
 		 * @p_moment	: Id of column ( __BEFORE__, __AFTER__ )
 		 * @p_lisha		: Id of target lisha in your page
@@ -781,6 +815,7 @@
 
 		/**==================================================================
 		 * define_parent
+         *
 		 * @p_parent		: Name of column definition
 		 * @p_column		:  id of column
 		 ====================================================================*/
@@ -794,7 +829,9 @@
 
 
 		/**==================================================================
-		 * define_order_column
+		 * define column order
+         * Just add new call to define a new column order with lower priority
+         *
 		 * @column_name		: Name of column definition
 		 * @order			: __ASC__ or __DESC__
 		 * @id_column		: id of column ( optional )
@@ -825,6 +862,7 @@
 
 		/**==================================================================
 		 * define_column_lov_order
+         *
 		 * @column_name			:	Column name
 		 * @order			 	:	__ASC__ or __DESC__
 		 ====================================================================*/
@@ -1007,9 +1045,6 @@
 		/**===================================================================*/
 
 
-		/**==================================================================
-		 * Methods
-		 ====================================================================*/
 		private function replace_taglov($p_column,$p_query)
 		{
 			if(isset($this->c_columns[$p_column]['lov']['taglov']))
@@ -1028,9 +1063,9 @@
 
 		private function check_column_lovable()
 		{
-			/**==================================================================
-			 * Check if the column is lovable
-			 ====================================================================*/
+            //==================================================================
+            // Check if column is lovable
+            //==================================================================
 			foreach($this->c_columns as $key => $value_col)
 		 	{
 	 			if(isset($value_col['lov']['taglov']))
@@ -1076,7 +1111,7 @@
 	 				$this->c_columns_init[$key]['is_lovable'] = true;
 	 			}
 		 	}
-	 		/**===================================================================*/
+            //==================================================================
 		}
 
 
@@ -1559,8 +1594,8 @@
 
 
 		/**==================================================================
-		 * convert_localized_date_to_database_format
 		 * Convert a localized date into database format
+         *
 		 * @p_column			: column id to get custom date format if any
 		 * @p_input				: input area in column header
 		 * @p_engine			: Database engine
@@ -1604,8 +1639,8 @@
 
 
 		/**==================================================================
-		 * convert_database_date_to_localized_format
 		 * Convert a database date to localized date format
+         *
 		 * @p_column			: column id to get custom date format if any
 		 * @p_input				: date to convert
 		 * @p_engine			: Database engine
@@ -3748,16 +3783,42 @@
 			// Recover columns filter
 			//==================================================================
 			$sql_filter = '';
-            $sql_filter_fast = '';
 
             // Scan custom filter defined on each column
             foreach($this->c_columns as $column_key => $column_value)
 			{
-				if(isset($column_value['filter']) && $column_key != $column)
+                if(isset($column_value['filter']) && $column_key != $column)
 				{
 					foreach ($column_value['filter'] as $filter_value)
 					{
-                        $sql_filter .= ' AND '.$column_value['before_as'].' '.$this->get_like($column_value['search_mode'].$this->protect_sql($filter_value['filter'],$this->link).$column_value['search_mode']);
+                        switch($column_value['search_mode'])
+                        {
+                            case __EXACT__:
+                                $sql_filter .= " AND ".$column_value['before_as']." = '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
+                                break;
+                            case __CONTAIN__:
+                                $sql_filter .= ' AND '.$column_value['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).__PERCENT__);
+                                break;
+                            case __PERCENT__:
+                                $sql_filter .= ' AND '.$column_value['before_as'].' '.$this->get_like($this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link));
+                                break;
+                            case __GT__:
+                                $sql_filter .= " AND ".$column_value['before_as']." > '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
+                                break;
+                            case __LT__:
+                                $sql_filter .= " AND ".$column_value['before_as']." < '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
+                                break;
+                            case __GE__:
+                                $sql_filter .= " AND ".$column_value['before_as']." >= '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
+                                break;
+                            case __LE__:
+                                $sql_filter .= " AND ".$column_value['before_as']." <= '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
+                                break;
+                            case __NULL__:
+                                $sql_filter .= ' AND '.$column_value['before_as'].' IS NULL ';
+                                break;
+                        }
+                        //$sql_filter .= ' AND '.$column_value['before_as'].' '.$this->get_like($column_value['search_mode'].$this->protect_sql($filter_value['filter'],$this->link).$column_value['search_mode']);
 					}
 				}
 			}
@@ -3868,10 +3929,39 @@
                     // Count matching rows when user type something in input box
                     //==================================================================
                     $query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                    $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($this->c_query,$query_final_pos).' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
+                    $sql_condition_quick_search = "";
+                    switch($column_value['search_mode'])
+                    {
+                        case __EXACT__:
+                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['before_as']." = '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
+                            break;
+                        case __CONTAIN__:
+                            $sql_condition_quick_search = ' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$txt))),true),$this->link).__PERCENT__);
+                            break;
+                        case __PERCENT__:
+                            $sql_condition_quick_search = ' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like($this->protect_sql($this->replace_chevrons($txt),$this->link));
+                            break;
+                        case __GT__:
+                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['before_as']." > '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
+                            break;
+                        case __LT__:
+                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['before_as']." < '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
+                            break;
+                        case __GE__:
+                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['before_as']." >= '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
+                            break;
+                        case __LE__:
+                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['before_as']." <= '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
+                            break;
+                        case __NULL__:
+                            $sql_condition_quick_search = ' AND '.$this->c_columns[$column]['before_as'].' IS NULL ';
+                            break;
+                    }
+
+                    $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($this->c_query,$query_final_pos).$sql_condition_quick_search.$sql_filter;
 
                     $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
-					$count = $this->rds_result($this->resultat,0, 'total');
+                    $count = $this->rds_fetch_array($this->resultat)['total'];
                     //==================================================================
 
                     $str_before = '';
@@ -3901,7 +3991,7 @@
                     //==================================================================
                     // Few first rows found
                     //==================================================================
-                    $sql =  'SELECT DISTINCT ('.$str_before.$this->c_columns[$column]['before_as'].$str_after.' ) AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->c_query,$query_final_pos).' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter.'ORDER BY 1 ASC LIMIT 6';
+                    $sql =  'SELECT DISTINCT ('.$str_before.$this->c_columns[$column]['before_as'].$str_after.' ) AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->c_query,$query_final_pos).$sql_condition_quick_search.$sql_filter.'ORDER BY 1 ASC LIMIT 6';
                     //==================================================================
 
                     $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
@@ -3917,7 +4007,7 @@
                         $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
 
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
-						$count = $this->rds_result($this->resultat,0, 'total');
+                        $count = $this->rds_fetch_array($this->resultat)['total'];
                         //==================================================================
 
                         //==================================================================
@@ -3938,7 +4028,7 @@
                         $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
 
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
-						$count = $this->rds_result($this->resultat,0, 'total');
+                        $count = $this->rds_fetch_array($this->resultat)['total'];
                         //==================================================================
 
                         //==================================================================
@@ -4341,21 +4431,23 @@
 			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine,$this->c_ident,$this->c_dir_obj,__ADV_FILTER__);
 
             //==================================================================
-            // Lisha display setup
+            // Sub lisha of all include values
             //==================================================================
             $adv_filter_query_in_single = "	SELECT
-						        `".__LISHA_TABLE_INTERNAL__."`.`id` AS `id`,
-								`".__LISHA_TABLE_INTERNAL__."`.`name` AS `name`,
-								`".__LISHA_TABLE_INTERNAL__."`.`type` AS `type`,
-								`".__LISHA_TABLE_INTERNAL__."`.`low` AS `low`,
-								`".__LISHA_TABLE_INTERNAL__."`.`high` AS `high`,
-								`".__LISHA_TABLE_INTERNAL__."`.`low1` AS `low1`,
-								`".__LISHA_TABLE_INTERNAL__."`.`ordre` AS `ordre`
+						        `".__LISHA_TABLE_INTERNAL_FILTER__."`.`id` AS `id`,
+								`".__LISHA_TABLE_INTERNAL_FILTER__."`.`name` AS `name`,
+								`".__LISHA_TABLE_INTERNAL_FILTER__."`.`type` AS `type`,
+								`".__LISHA_TABLE_INTERNAL_FILTER__."`.`count` AS `count`,
+								`".__LISHA_TABLE_INTERNAL_FILTER__."`.`operator` AS `operator`,  -- OPERATOR
+								`".__LISHA_TABLE_INTERNAL_FILTER__."`.`low` AS `low`
 							".$_SESSION[$this->c_ssid]['lisha']['configuration'][10]."
-							    `".__LISHA_TABLE_INTERNAL__."`
+							    `".__LISHA_TABLE_INTERNAL_FILTER__."`
 							WHERE 1 = 1
-							    AND `".__LISHA_TABLE_INTERNAL__."`.`id` = '".$this->c_ssid.$this->c_id."'
+							    AND `".__LISHA_TABLE_INTERNAL_FILTER__."`.`id` = '".$this->c_ssid.$this->c_id."'
+							    AND `".__LISHA_TABLE_INTERNAL_FILTER__."`.`type` = 'IEQ'
+							    AND `".__LISHA_TABLE_INTERNAL_FILTER__."`.`name` = '".$this->c_columns[$p_column]["sql_as"]."'
 						  ";
+
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$adv_filter_query_in_single);
 
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(131));
@@ -4379,7 +4471,7 @@
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_user_doc', false);
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_ticket', false);
 
-            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__update_table_name', __LISHA_TABLE_INTERNAL__);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__update_table_name', __LISHA_TABLE_INTERNAL_FILTER__);
 
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_column_separation',$this->c_cols_sep_display);
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_row_separation',$this->c_rows_sep_display);
@@ -4390,40 +4482,44 @@
             //==================================================================
             // Define columns
             //==================================================================
-            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`low1`','low1', 'operator',__TEXT__, __WRAP__, __LEFT__);
-
-            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`id`','id','myid',__TEXT__, __WRAP__, __LEFT__);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL_FILTER__.'`.`id`','id','myid',__TEXT__, __WRAP__, __LEFT__);
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'id');
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'id');
 
-            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`name`','name','myname',__TEXT__, __WRAP__, __LEFT__);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL_FILTER__.'`.`name`','name','myname',__TEXT__, __WRAP__, __LEFT__);
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'name');
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'name');
 
-            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`type`','type', 'mytype',__TEXT__, __WRAP__, __LEFT__);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL_FILTER__.'`.`type`','type', 'mytype',__TEXT__, __WRAP__, __LEFT__);
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'type');
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'type');
 
-            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`ordre`','ordre', 'myordre',__TEXT__, __WRAP__, __LEFT__);
-            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'ordre');
-            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'ordre');
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL_FILTER__.'`.`count`','count', 'count',__TEXT__, __WRAP__, __LEFT__);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'count');
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'count');
 
-            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`low`','low', 'Value',__TEXT__, __WRAP__, __LEFT__);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL_FILTER__.'`.`operator`','operator', 'operator',__TEXT__, __WRAP__, __LEFT__);
+
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL_FILTER__.'`.`low`','low', 'value',__TEXT__, __WRAP__, __LEFT__);
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __REQUIRED__, 'low');
 
-            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`high`','high', 'myhigh',__TEXT__, __WRAP__, __LEFT__);
-            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_display_mode',false,'high');
             //==================================================================
 
             // Internal event
             $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_lisha_action(__ON_UPDATE__,__AFTER__,$id_child,Array('event_lisha_column_list(\''.$this->c_id.'\')'));
 
             // Order
-            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_order_column('ordre',__ASC__);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_order_column('low',__ASC__);
 
             // Table key
-            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_key(Array('id','name'));
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_key(Array('id','name','type','count'));
             //==================================================================
+
+            // External key auto increment
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_col_value('id',$this->c_ssid.$this->c_id);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_col_value('name',$this->c_columns[$p_column]["sql_as"]);
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_col_value('type','IEQ');
+            $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_col_value('count','');
 
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->new_graphic_lisha();
@@ -4433,8 +4529,8 @@
             //==================================================================
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->prepare_query();
 			$json = $_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha_json_param();
-            //error_log(print_r($this->c_columns,true));
-            $html = "<div class='__".$this->c_theme."_lisha_tab_filter_ind_included'>IN</div><div class='__".$this->c_theme."_lisha_tab_filter_ind_excluded'>OUT</div><div class='__".$this->c_theme."_lisha_tab_filter_ind_excluded'>RANGE IN</div><div class='__".$this->c_theme."_lisha_tab_filter_ind_excluded'>RANGE OUT</div><div>".$_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha().'
+
+            $html = "<div class='__".$this->c_theme."_lisha_tab_filter_ind_included'>IN</div><div class='__".$this->c_theme."_lisha_tab_filter_ind_excluded grey_el'>OUT</div><div class='__".$this->c_theme."_lisha_tab_filter_ind_excluded grey_el'>RANGE IN</div><div class='__".$this->c_theme."_lisha_tab_filter_ind_excluded grey_el'>RANGE OUT</div><div>".$_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha().'
                         <div style="float:left;">ADVANCED FILTER on '.$this->c_columns[$p_column]["name"].'</div>
                         <div style="float:right;">
                             <table style="margin:0;padding:0;border-collapse:collapse;">

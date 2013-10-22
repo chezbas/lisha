@@ -98,7 +98,7 @@
 		<title><?php echo 'Main test lisha'?></title>
 	</head>
 	<body onmousemove="lisha_move_cur(event);" onmouseup="lisha_mouseup();">
-		<div class="lisha_1" id ="lisha_1"><?php echo $obj_lisha_tran->generate_lisha(); ?></div>
+		<div class="lisha_1" id ="lisha_1"><?php echo $obj_lisha_tran->generate_lisha(); ?></div>TATA
 		<?php $obj_lisha_tran->lisha_generate_js_body();?>
 
         <?php

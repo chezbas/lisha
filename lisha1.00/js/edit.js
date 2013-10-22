@@ -503,7 +503,7 @@ function add_line(lisha_id,ajax_return)
 			{
 				eval('val.'+iterable_element+' = new Object();');
 				eval('val.'+iterable_element+'.value = \''+protect_json(document.getElementById('th_input_'+i+'__'+lisha_id).value)+'\';');
-				eval('val.'+iterable_element+'.id = '+i+';'); // raw column compteur 1....2....3 and so on
+				eval('val.'+iterable_element+'.id = '+i+';'); // Count column  1....2....3 and so on
 				eval('val.'+iterable_element+'.idorigin = '+eval('lisha.'+lisha_id+'.columns.c'+i+'.idorigin')+';'); // Original id position of column
 			}
 		}
@@ -577,8 +577,7 @@ function add_line(lisha_id,ajax_return)
 			document.getElementById('wait_input_'+lisha_id).style.display = 'none';
 			
 			lisha_execute_event(__ON_ADD__,__AFTER__,lisha_id);
-			
-		} 
+		}
 		catch(e) 
 		{
 			alert(ajax_return);

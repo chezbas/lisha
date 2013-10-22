@@ -1418,6 +1418,9 @@
 						case '__POSSIBLE_VALUES__':
 							$lisha .= '<tr onclick="lisha_child_insert_into_parent(\'div_td_l'.$line.'_c'.$this->get_id_col_lov($this->c_col_return).'_'.$this->c_id.'\',\''.$this->c_id_parent.'\','.$this->c_id_parent_column.');" id="l'.$line.'_'.$this->c_id.'" class="lc_'.$current_group_value.$i_color.'_'.$this->c_id.'" '.$this->hover_out_lib(65,65).'>';
 							break;
+                        case '__ADV_FILTER__':
+                            $lisha .= '<tr id="l'.$line.'_'.$this->c_id.'" class="lc_'.$current_group_value.$i_color.'_'.$this->c_id.'">';
+                            break;
 						case '__LOAD_FILTER__':
 							$lisha .= '<tr onclick="lisha_load_filter(\''.$this->c_id_parent.'\',\'div_td_l'.$line.'_c'.$this->get_id_col_lov($this->c_col_return).'_'.$this->c_id.'\');" id="l'.$line.'_'.$this->c_id.'" class="lc_'.$current_group_value.$i_color.'_'.$this->c_id.'" >';
 							break;
@@ -1460,7 +1463,7 @@
 				
 				$lisha .= '</tr></table></div></td>';
 				//==================================================================
-				
+
 				//==================================================================
 				// Create all data columns
 				//==================================================================

@@ -37,8 +37,7 @@ function read_done(retour)
 	document.getElementById('total_nodes').innerHTML = retour;
 }
 
-function custom_deletion_item(internal_id, row_id, total)
+function after_add_new_line(internal_id)
 {
-	//alert('Number of rows deleted : '+ total);
-	custom_new_item_created(internal_id, row_id);
+	alert('Nouvelle ligne : '+ internal_id);
 }

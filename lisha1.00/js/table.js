@@ -98,17 +98,12 @@ function size_table(lisha_id)
 			if(eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id') != undefined)
 			{
 				element_id = eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id');
-				/**==================================================================
-				 * Get the size of the header
-				 ====================================================================*/
-				var size_header = lisha_get_size_header(iterable_element,lisha_id);
-				/**==================================================================*/
 
-				/**==================================================================
-				 * Get the size of the data
-				 ====================================================================*/
+                // Get the size of the header
+                var size_header = lisha_get_size_header(iterable_element,lisha_id);
+
+                // Get the size of the data
 				var size_data = lisha_get_size_data(iterable_element,lisha_id);
-				/**==================================================================*/
 
 				if(size_data < size_min && size_header < size_min)
 				{
@@ -203,6 +198,7 @@ function size_table(lisha_id)
 				// SRX : Generate dom error on sub lisha with hidden columns if your <tr> is incompleted
 				// It seems that somethings missing in you sublisha
 				// see around switch($this->c_type_internal_lisha) in class_graphic.php
+                // SRX
 				if(element_id != undefined && (lisha_get_el_offsetWidth('liste_'+lisha_id) - (lisha_get_el_offsetWidth('l1_'+lisha_id) + size)) >= 0)
 				//if(element_id != undefined && (lisha_get_el_offsetWidth('liste_'+lisha_id) - size) >= 0)
 				{
@@ -210,7 +206,6 @@ function size_table(lisha_id)
 
 					// Set data size
 					lisha_set_el_width('div_td_l1_c'+element_id+'_'+lisha_id,(lisha_get_el_offsetWidth('div_td_l1_c'+element_id+'_'+lisha_id) + size + res),'px');
-
 					// Set header size
 					lisha_set_el_width('th'+element_id+'_'+lisha_id,lisha_get_el_offsetWidth('th'+element_id+'_'+lisha_id)+size+res,'px');
 

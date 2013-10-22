@@ -19,6 +19,7 @@
 	define("__LISHA_TABLE_LANGUAGE__","lisha_language");					// Localization information
 	define("__LISHA_TABLE_TEXT__","lisha_text");							// Text for internal use
 	define("__LISHA_TABLE_INTERNAL__","lisha_internal");					// internal use ( memory engine )
+    define("__LISHA_TABLE_INTERNAL_FILTER__","lisha_internal_filter");		// internal use for advanced filter on column
 	//==================================================================
 	
 	//==================================================================

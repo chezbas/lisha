@@ -99,7 +99,7 @@
 	$obj_lisha_tran->define_attribute('__column_name_group_of_color', "MyGroupTheme");		// ( Optional ) Define custom column color name
 
     //$obj_lisha_tran->define_attribute('__active_insert_button', false);           // Hide or display Add button
-    $obj_lisha_tran->define_attribute('__active_delete_button', false);           // Hide or display Delete button
+    //$obj_lisha_tran->define_attribute('__active_delete_button', false);           // Hide or display Delete button
 
     $obj_lisha_tran->define_attribute('__active_quick_search', true);				        // Quick search mode ( Optional : default true )
 	//==================================================================
@@ -249,7 +249,7 @@
 	//==================================================================
 	// Define extra events actions 
 	//==================================================================
-	//$obj_lisha_tran->define_lisha_action(__ON_ADD__,__AFTER__,'lisha_transaction',Array('rebuild_account();'));
+	//$obj_lisha_tran->define_lisha_action(__ON_ADD__,__AFTER__,'lisha_transaction',Array('after_add_new_line(\'titi\');'));
 	//==================================================================
 	
 	//==================================================================

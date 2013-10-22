@@ -245,7 +245,7 @@ function lisha_reset(lisha_id,ajax_return)
 		{	
 			// Get the ajax return in json format
 			var json = get_json(ajax_return);
-						
+
 			// Update the json object
 			eval(decodeURIComponent(json.lisha.json));
 
