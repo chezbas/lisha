@@ -226,7 +226,7 @@ cp includes/lishaSetup/main_configuration.php $pack_name/includes/lishaSetup/mai
 ###################################################
 # Database dump
 ###################################################
-mysqldump --databases lisha --tables $table_conf $table_demo $table_doc $table_tickets lisha_text lisha_internal --add-drop-table --quick -u root --password=demo > $pack_name/MySQL_lisha.sql
+mysqldump --databases lisha --tables $table_conf $table_demo $table_doc $table_tickets lisha_text lisha_internal lisha_internal_filter --add-drop-table --quick -u root --password=demo > $pack_name/MySQL_lisha.sql
 ###################################################
 
 cp $pack_name/MySQL_lisha.sql zinstallation/database/

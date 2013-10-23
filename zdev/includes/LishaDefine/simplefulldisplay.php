@@ -128,7 +128,7 @@
 		// define column : module
 		//==================================================================
 		$obj_lisha_tran->define_column("`transaction`.`mode`",'mode','Mymodule',__TEXT__,__WRAP__,__LEFT__);
-		//$obj_lisha_tran->define_attribute('__column_input_check_update', __LISTED__,'mode');
+		$obj_lisha_tran->define_attribute('__column_input_check_update', __LISTED__,'mode');
 		
 		// Match code
 		$obj_lisha_tran->define_lov("	SELECT DISTINCT

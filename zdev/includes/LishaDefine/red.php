@@ -129,6 +129,7 @@
 		//==================================================================
 		$obj_lisha_tran->define_column('`zdev_table`.`status`','status','status',__TEXT__,__WRAP__,__CENTER__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'status');
+        //$obj_lisha_tran->define_attribute('__column_input_check_update', __LISTED__,'status');
 		//$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'status');
 		//==================================================================
 

@@ -2194,7 +2194,7 @@
  			$html .= 'varlisha_'.$this->c_id.'.CurrentCellCompel = "";';
  			$html .= 'varlisha_'.$this->c_id.'.CurrentCellName = "";';
  			$html .= 'varlisha_'.$this->c_id.'.scrollTop = 0;';
-            //$html .= 'varlisha_'.$this->c_id.'.refresh = false;';
+            //$html .= 'varlisha_'.$this->c_id.'.lock = "";';
 
  			$html .= 'varlisha_'.$this->c_id.'_child.CurrentCellUpdate = "";';
  			$html .= 'varlisha_'.$this->c_id.'_child.CellUpdateOriginValue = "";';
@@ -2499,6 +2499,46 @@
 			echo json_encode($retour);
 		}
 		/**===================================================================*/
+
+
+        /**==================================================================
+         * On cell update, check if __LISTED__ column value is in lov feature query
+         *
+         * @column			: id column origin
+         * @p_value			: New value for cell to update
+        ====================================================================*/
+        public function check_listed_compel($column,$p_value)
+        {
+            //error_log($column."-".$p_value);
+            //$retour = array("STATUS" => $status,"VALUE" => 0, "TOTAL" => number_format($_SESSION[$ssid]['lisha'][$lisha_id]->export_total,0,'', htmlentities($_SESSION[$ssid]['lisha']['thousand_symbol'])));
+            //echo json_encode($retour);
+
+            // Need to recover all line information to do compel check
+
+
+            //==================================================================
+            // Search column based on idorigin
+            //==================================================================
+            /*
+            foreach($tab_val_col as $valeur)
+            {
+                if($column == $value_col['original_order'])
+                {
+                    // __LISTED__ ??
+                    if(isset($value_col['lov']['sql']) && $value_col['rw_flag'] == __LISTED__)
+                    {
+                    // Check if lov is solvable
+                    $sql_lov = $this->solve_lov_main_query($value_col['original_order']);
+                    // And condition to check if input value is in list
+                    $sql_lov = $sql_lov." AND ".$value_col['lov']['before_as']." = '".$valeur['value']."'";
+                    }
+                }
+            }
+            */
+            $retour = array("STATUS" => false); // False update disable, true update enable
+            echo json_encode($retour);
+        }
+        /**===================================================================*/
 
 
 		/**==================================================================
@@ -3033,11 +3073,30 @@
 								if(isset($value_col['lov']['sql']) && $value_col['rw_flag'] == __LISTED__)
 								{
 									// LOV defined, ok continue
-									$ctrl_ok = false;
-									$error_str .='<tr><td align=left>'.str_replace('$value',$valeur['value'],str_replace('$name','<b>'.$value_col['name'].'</b>',$this->lib(126))).'</td></tr>';
 
-									$error_line['c'.$key_col]['id'] = $key_col;
-									$error_line['c'.$key_col]['status'] = __LISTED__;
+                                    // Check if lov is solvable
+                                    $sql_lov = $this->solve_lov_main_query($value_col['original_order']);
+                                    // And condition to check if input value is in list
+                                    $sql_lov = $sql_lov." AND ".$value_col['lov']['before_as']." = '".$valeur['value']."'";
+
+                                    // Request query
+                                    $this->exec_sql($sql_lov,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
+
+                                    // This value is enable ?
+                                    if($this->rds_num_rows($this->resultat) == 1)
+                                    {
+                                        // Value exists in LOV
+                                    }
+                                    else
+                                    {
+                                        // Rise an error
+                                        // This value doesn't exist in custom lov
+                                        $ctrl_ok = false;
+                                        $error_str .='<tr><td align=left>'.str_replace('$value',$valeur['value'],str_replace('$name','<b>'.$value_col['name'].'</b>',$this->lib(126))).'</td></tr>';
+
+                                        $error_line['c'.$key_col]['id'] = $key_col;
+                                        $error_line['c'.$key_col]['status'] = __LISTED__;
+                                    }
 									break;
 								}
 								// __REQUIRED__ ??
@@ -3929,6 +3988,7 @@
                     // Count matching rows when user type something in input box
                     //==================================================================
                     $query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+
                     $sql_condition_quick_search = "";
                     switch($column_value['search_mode'])
                     {
@@ -3957,11 +4017,11 @@
                             $sql_condition_quick_search = ' AND '.$this->c_columns[$column]['before_as'].' IS NULL ';
                             break;
                     }
-
                     $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($this->c_query,$query_final_pos).$sql_condition_quick_search.$sql_filter;
 
                     $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
-                    $count = $this->rds_fetch_array($this->resultat)['total'];
+                    $row = $this->rds_fetch_array($this->resultat);
+                    $count = $row['total'];
                     //==================================================================
 
                     $str_before = '';
@@ -3998,45 +4058,80 @@
 				}
 				else
 				{
+                    $sql_condition_quick_search = "";
+                    switch($column_value['search_mode'])
+                    {
+                        case __EXACT__:
+                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['lov']['before_as']." = '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
+                            break;
+                        case __CONTAIN__:
+                            $sql_condition_quick_search = ' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$txt))),true),$this->link).__PERCENT__);
+                            break;
+                        case __PERCENT__:
+                            $sql_condition_quick_search = ' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->protect_sql($this->replace_chevrons($txt),$this->link));
+                            break;
+                        case __GT__:
+                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['lov']['before_as']." > '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
+                            break;
+                        case __LT__:
+                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['lov']['before_as']." < '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
+                            break;
+                        case __GE__:
+                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['lov']['before_as']." >= '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
+                            break;
+                        case __LE__:
+                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['lov']['before_as']." <= '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
+                            break;
+                        case __NULL__:
+                            $sql_condition_quick_search = ' AND '.$this->c_columns[$column]['lov']['before_as'].' IS NULL ';
+                            break;
+                    }
+
 					if(isset($this->c_columns[$column]['lov']['taglov_possible']) || !isset($this->c_columns[$column]['lov']['taglov']))
 					{
+                        // No TAGLOV dependency
                         //==================================================================
                         // Count matching rows when user type something in input box ( Custom lov )
                         //==================================================================
                         $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
 
+                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).$sql_condition_quick_search;
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
-                        $count = $this->rds_fetch_array($this->resultat)['total'];
+                        $row = $this->rds_fetch_array($this->resultat);
+                        $count = $row['total'];
                         //==================================================================
 
                         //==================================================================
                         // Few first rows found
                         //==================================================================
                         $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
-
+                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).$sql_condition_quick_search;
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
                         //==================================================================
 					}
 					else
 					{
+                        // With TAGLOV dependency
+
+                        // Solve lov query if it's possible
+                        $sql_lov = $this->solve_lov_main_query($column);
+
                         //==================================================================
                         // Count matching rows when user type something in input box ( Custom lov )
                         //==================================================================
-                        $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
+                        $query_final_pos = strripos($sql_lov, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
 
+                        $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($sql_lov,$query_final_pos).$sql_condition_quick_search;
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
-                        $count = $this->rds_fetch_array($this->resultat)['total'];
+                        $row = $this->rds_fetch_array($this->resultat);
+                        $count = $row['total'];
                         //==================================================================
 
                         //==================================================================
                         // Few first rows found
                         //==================================================================
-                        $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
-
+                        $query_final_pos = strripos($sql_lov, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+                        $sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($sql_lov,$query_final_pos).$sql_condition_quick_search;
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
                         //==================================================================
 					}
@@ -4557,6 +4652,28 @@
         /**===================================================================*/
 
 
+        /**==================================================================
+         * Sub module that can solve lov query if any
+         *
+         * @column	: Column identifier
+         * Return lov sql
+        ====================================================================*/
+        private function solve_lov_main_query($column)
+        {
+            $sql = $this->c_columns[$column]['lov']['sql'];
+
+            if(isset($this->c_columns[$column]['lov']['taglov']))
+            {
+                foreach($this->c_columns[$column]['lov']['taglov'] as $value)
+                {
+                    $sql = str_replace('||TAGLOV_'.$value['column'].'**'.$value['column_return'].'||',$this->c_columns[$this->get_id_column($value['column'])]['filter']['input']['taglov'][$value['column_return']],$sql);
+                }
+            }
+            return $sql;
+        }
+        /**===================================================================*/
+
+
 		/**==================================================================
 		 * Distinct values on a column
          * Appears on right click on column red marble
@@ -4576,20 +4693,8 @@
 				$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__return_column_id',$this->c_columns[$column]['lov']['col_return']);
 				$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->c_columns[$column]['lov']['title']);
 
-				if(isset($this->c_columns[$column]['lov']['taglov']))
-				{
-					$sql = $this->c_columns[$column]['lov']['sql'];
-
-					foreach($this->c_columns[$column]['lov']['taglov'] as $value)
-					{
-						$sql = str_replace('||TAGLOV_'.$value['column'].'**'.$value['column_return'].'||',$this->c_columns[$this->get_id_column($value['column'])]['filter']['input']['taglov'][$value['column_return']],$sql);
-					}
-					$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$sql);
-				}
-				else
-				{
-					$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$this->c_columns[$column]['lov']['sql']);
-				}
+                // Solve lov query with TAGLOV or not
+                $_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$this->solve_lov_main_query($column));
 
 				// Browse each column of sub lisha
 				foreach($this->c_columns[$column]['lov']['columns'] as $key => $lov_col)
@@ -4846,7 +4951,7 @@
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_input_focus('low');					// Focused
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`low1`','low1',$this->lib(34),__BBCODE__, __WRAP__, __CENTER__);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __REQUIRED__, 'low1');//__LISTED__
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __REQUIRED__, 'low1');
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`'.__LISHA_TABLE_INTERNAL__.'`.`ordre`','ordre','sorted',__TEXT__, __WRAP__, __CENTER__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__column_input_check_update', __FORBIDDEN__, 'ordre');

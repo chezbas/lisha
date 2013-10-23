@@ -168,6 +168,35 @@ LOCK TABLES `lisha_internal` WRITE;
 INSERT INTO `lisha_internal` VALUES ('8a3259e55eaca0dea0fad793c49efc1f3f2d97731609150539lisha_transaction','daterec','datum ⛵',NULL,1,'1',NULL,'0',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:03:50'),('8a3259e55eaca0dea0fad793c49efc1f3f2d97731609150539lisha_transaction','description','⏩ ♌',NULL,2,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:03:50'),('8a3259e55eaca0dea0fad793c49efc1f3f2d97731609150539lisha_transaction','mode','Mymodule',NULL,3,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:03:50'),('8a3259e55eaca0dea0fad793c49efc1f3f2d97731609150539lisha_transaction','thistext','ModuleLibHere',NULL,4,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:03:50'),('8a3259e55eaca0dea0fad793c49efc1f3f2d97731609150539lisha_transaction','amount','',NULL,5,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:03:50'),('8a3259e55eaca0dea0fad793c49efc1f3f2d97731609150539lisha_transaction','encrypt','Maj xxxxx',NULL,6,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:03:50'),('8a3259e55eaca0dea0fad793c49efc1f3f2d97731609150539lisha_transaction','index','Libid',NULL,7,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:03:50'),('8a3259e55eaca0dea0fad793c49efc1f3f2d97731609150539lisha_transaction','checkme','Libcheckbox',NULL,8,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:03:50'),('8a3259e55eaca0dea0fad793c49efc1f3f2d97731609150539lisha_transaction','status','MyColorStatus',NULL,9,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:03:50'),('8a3259e55eaca0dea0fad793c49efc1f3f2d97731609150539lisha_transaction','datum','other date',NULL,10,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:03:50'),('8a3259e55eaca0dea0fad793c49efc1f3f2d97731609150539lisha_transaction','MyGroupTheme','MyGroupTheme',NULL,11,'0',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:03:50'),('8a3259e55eaca0dea0fad793c49efc1f3f2d97731609150539lisha_transaction','text','Mass text',NULL,12,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:03:50'),('0930b7c0f4647103ba29e19848e60612af4e0cf11848145942lisha_zdev','daterec','date',NULL,1,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:56:13'),('0930b7c0f4647103ba29e19848e60612af4e0cf11848145942lisha_zdev','otherdate','Date Time !!',NULL,2,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:56:13'),('0930b7c0f4647103ba29e19848e60612af4e0cf11848145942lisha_zdev','description','Caption',NULL,3,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:56:13'),('0930b7c0f4647103ba29e19848e60612af4e0cf11848145942lisha_zdev','amount','normal',NULL,4,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:56:13'),('0930b7c0f4647103ba29e19848e60612af4e0cf11848145942lisha_zdev','upper','Upper',NULL,5,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:56:13'),('0930b7c0f4647103ba29e19848e60612af4e0cf11848145942lisha_zdev','index','id',NULL,6,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:56:13'),('0930b7c0f4647103ba29e19848e60612af4e0cf11848145942lisha_zdev','status','status',NULL,7,'1',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:56:13'),('0930b7c0f4647103ba29e19848e60612af4e0cf11848145942lisha_zdev','MyGroupTheme','MyGroupTheme',NULL,8,'0',NULL,'1',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-10-22 14:56:13');
 /*!40000 ALTER TABLE `lisha_internal` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `lisha_internal_filter`
+--
+
+DROP TABLE IF EXISTS `lisha_internal_filter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `lisha_internal_filter` (
+  `id` varchar(150) COLLATE utf8_unicode_ci NOT NULL COMMENT 'lisha key',
+  `name` varchar(80) COLLATE utf8_unicode_ci NOT NULL COMMENT 'feature name',
+  `type` enum('IEQ','IBT','EEQ','EBT') COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'group of value and range',
+  `count` int(5) NOT NULL AUTO_INCREMENT COMMENT 'row order',
+  `operator` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'If not defined, use default one',
+  `low` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Low value',
+  `high` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'high value for range',
+  UNIQUE KEY `id` (`id`,`name`,`type`,`count`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='internal use only';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lisha_internal_filter`
+--
+
+LOCK TABLES `lisha_internal_filter` WRITE;
+/*!40000 ALTER TABLE `lisha_internal_filter` DISABLE KEYS */;
+INSERT INTO `lisha_internal_filter` VALUES ('647509fd1de4e28ca58a8f979be0a283477775981124854266lisha_zdev','description','IEQ',1,NULL,'a',NULL),('647509fd1de4e28ca58a8f979be0a283477775981124854266lisha_zdev','description','IEQ',2,NULL,'b',NULL),('647509fd1de4e28ca58a8f979be0a283477775981124854266lisha_zdev','description','IEQ',3,NULL,'c',NULL),('647509fd1de4e28ca58a8f979be0a283477775981124854266lisha_zdev','description','IEQ',4,NULL,'d',NULL),('55b696e364c565f1af5be180e8183cf0062b92711059754796lisha_zdev','description','IEQ',2,NULL,'b',NULL),('55b696e364c565f1af5be180e8183cf0062b92711059754796lisha_zdev','description','IEQ',1,NULL,'a',NULL),('647509fd1de4e28ca58a8f979be0a283477775981124854266lisha_zdev','description','IEQ',7,NULL,'g',NULL),('647509fd1de4e28ca58a8f979be0a283477775981124854266lisha_zdev','description','IEQ',6,NULL,'f',NULL),('647509fd1de4e28ca58a8f979be0a283477775981124854266lisha_zdev','description','IEQ',5,NULL,'e',NULL);
+/*!40000 ALTER TABLE `lisha_internal_filter` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -178,4 +207,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-22 21:46:30
+-- Dump completed on 2013-10-23 21:52:50

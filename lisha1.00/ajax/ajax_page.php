@@ -106,8 +106,8 @@
 			echo $_SESSION[$ssid]['lisha'][$lisha_id]->export_list($_POST['lines'], false);
 			break;
 		case 26:
-			// Following excel export
-			//echo $_SESSION[$ssid]['lisha'][$lisha_id]->export_list($_POST['lines'], false);
+			// Check __LISTED__ Compel on field
+			echo $_SESSION[$ssid]['lisha'][$lisha_id]->check_listed_compel($_POST['column'],$_POST['value']);
 			break;
 		case 27:
 			// Update column hide/show

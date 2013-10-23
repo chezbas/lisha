@@ -163,70 +163,117 @@ function input_key_manager(evt,lisha_id,line,column)
         // Force UTF8 protection using json
         eval('val = new Object();');
         eval('val.value = \''+protect_json(document.getElementById(div_root_updating+'_input').value)+'\';');
+
         // Check Compel
-		/*if(eval('varlisha_'+lisha_id+'.CurrentCellCompel') == __LISTED__)
-		{
-			// Recover if current value is included in defined LOV
-			var message = lis_lib[126].replace(/\$name/g,eval('varlisha_'+lisha_id+'.CurrentCellName')); // Replace $name;
-			message = message.replace(/\$value/g,input_updating);
-			document.getElementById(div_root_updating+'_input_message').innerHTML = message;
-			document.getElementById(div_root_updating+'_input_message').style.display = 'block';
-		}
-		else
-		{*/
-			if(eval('varlisha_'+lisha_id+'.CurrentCellCompel') == __REQUIRED__ && input_updating == "")
-			{
-				
-				var message = lis_lib[57].replace(/\$name/g,eval('varlisha_'+lisha_id+'.CurrentCellName')); // Replace $name;
-				document.getElementById(div_root_updating+'_input_message').innerHTML = message;
-				document.getElementById(div_root_updating+'_input_message').style.display = 'block';
-			}
-			else
-			{
-				// Compel passed... go on
-
-                // Remove focus from input box to avoid extra input
-                document.getElementById(div_root_updating+'_input').blur();
-
-				// Hide error message div
-				document.getElementById(div_root_updating+'_input_message').style.display = 'none';
-	
-				
-				var array_primary_key= JSON.stringify(eval('lisha.'+lisha_id+'.lines.L'+line+'.key'));
-				//==================================================================
-				// Setup Ajax configuration
-				//==================================================================
-				var conf = [];
-		
-				conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
-				conf['delai_tentative'] = 15000;
-				conf['max_tentative'] = 4;
-				conf['type_retour'] = false;		// ReponseText
-				conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=23&arraykey='+array_primary_key+'&column='+column+'&val='+encodeURIComponent(JSON.stringify(val.value));
-				conf['fonction_a_executer_reponse'] = 'ok_edit_cell';
-				conf['param_fonction_a_executer_reponse'] = "'"+evt+"',"+line+",'"+lisha_id+"'";
-				
-				ajax_call(conf);
-				//==================================================================
+        //==================================================================
+        // VALUE REQUIRED
+        //==================================================================
+        if(eval('varlisha_'+lisha_id+'.CurrentCellCompel') == __REQUIRED__ )
+        {
+            if(input_updating == "")
+            {
+                // Flag error
+                var message = lis_lib[57].replace(/\$name/g,eval('varlisha_'+lisha_id+'.CurrentCellName')); // Replace $name;
+                document.getElementById(div_root_updating+'_input_message').innerHTML = message;
+                document.getElementById(div_root_updating+'_input_message').style.display = 'block';
             }
-		//}	
+            else
+            {
+                do_cell_call_update(div_root_updating,lisha_id,line,column,val.value);
+            }
+        }
+        //==================================================================
+
+        //alert(eval('varlisha_'+lisha_id+'.CurrentCellCompel'));
+
+        //==================================================================
+        // VALUE LISTED
+        //==================================================================
+        if(eval('varlisha_'+lisha_id+'.CurrentCellCompel') == __LISTED__)
+        {
+            //==================================================================
+            // Setup Ajax configuration
+            //==================================================================
+            var conf = [];
+
+            var col_origin = eval("lisha."+lisha_id+".columns.c"+column+".idorigin");
+            conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
+            conf['delai_tentative'] = 15000;
+            conf['max_tentative'] = 4;
+            conf['type_retour'] = false;		// ReponseText
+            conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=26&column='+col_origin+'&value='+encodeURIComponent(JSON.stringify(val.value));
+            conf['fonction_a_executer_reponse'] = 'check_compel';
+            conf['param_fonction_a_executer_reponse'] = "'"+div_root_updating+"',"+line+","+column+",'"+val.value+"','"+lisha_id+"'";
+            ajax_call(conf);
+            //==================================================================
+        }
+        //==================================================================
 	}
 }
 /**==================================================================*/
 
 
+function check_compel(div_root_updating,line,column,val,lisha_id,ajax_return)
+{
+    ajax_return = JSON.parse(ajax_return);
+
+    if(ajax_return.STATUS == true)
+    {
+        // This value is in lov
+        do_cell_call_update(div_root_updating,lisha_id,line,column,val);
+    }
+    else
+    {
+        // Display error message
+        var input_updating = document.getElementById(div_root_updating+'_input').value;
+
+        var message = lis_lib[126].replace(/\$name/g,eval('varlisha_'+lisha_id+'.CurrentCellName')); // Replace $name;
+        message = message.replace(/\$value/g,input_updating);
+        document.getElementById(div_root_updating+'_input_message').innerHTML = message;
+        document.getElementById(div_root_updating+'_input_message').style.display = 'block';
+    }
+}
+
+
+function do_cell_call_update(div_root_updating,lisha_id,line,column,val)
+{
+    // Remove focus from input box to avoid extra input
+    document.getElementById(div_root_updating+'_input').blur();
+
+    // Hide error message div
+    document.getElementById(div_root_updating+'_input_message').style.display = 'none';
+
+
+    var array_primary_key= JSON.stringify(eval('lisha.'+lisha_id+'.lines.L'+line+'.key'));
+    //==================================================================
+    // Setup Ajax configuration
+    //==================================================================
+    var conf = [];
+
+    conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
+    conf['delai_tentative'] = 15000;
+    conf['max_tentative'] = 4;
+    conf['type_retour'] = false;		// ReponseText
+    conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=23&arraykey='+array_primary_key+'&column='+column+'&val='+encodeURIComponent(val);
+    conf['fonction_a_executer_reponse'] = 'ok_edit_cell';
+    conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"'";
+
+    ajax_call(conf);
+    //==================================================================
+}
+
+
 /**==================================================================
  * Cell update done successfully
- * @evt				: catch browser event
- * @line			: Number of line clicked on screen
+ *
  * @lisha_id		: internal lisha identifier
  * @ajax_return		: ajax return of standard object
  ====================================================================*/
-function ok_edit_cell(evt,line,lisha_id,ajax_return)
+function ok_edit_cell(lisha_id,ajax_return)
 {	
 	// Clear tempo current cell value
 	eval('varlisha_'+lisha_id+'.CurrentCellUpdate = ""');
-	
+
 	// Record vertical lift position
 	eval('varlisha_'+lisha_id+'.scrollTop = '+document.getElementById('liste_'+lisha_id).scrollTop);
 	
@@ -538,7 +585,7 @@ function add_line(lisha_id,ajax_return)
 			{
 				// An error has occured
 				eval('var test = '+decodeURIComponent(json.lisha.error_col));
-				for(var iterable_element in test) 
+				for(var iterable_element in test)
 				{
 					if(eval('test.'+iterable_element+'.status') == __FORBIDDEN__)
 					{
@@ -548,8 +595,16 @@ function add_line(lisha_id,ajax_return)
 					}
 					else
 					{
-						// Required
-						document.getElementById('th_input_'+eval('test.'+iterable_element+'.id')+'__'+lisha_id).style.backgroundColor = '#FFD4D4';
+                        if(eval('test.'+iterable_element+'.status') == __LISTED__)
+                        {
+                            // listed
+                            document.getElementById('th_input_'+eval('test.'+iterable_element+'.id')+'__'+lisha_id).style.backgroundColor = '#D4D4FF';
+                        }
+                        else
+                        {
+                            // Required
+                            document.getElementById('th_input_'+eval('test.'+iterable_element+'.id')+'__'+lisha_id).style.backgroundColor = '#FFD4D4';
+                        }
 					}
 				}
 				
@@ -667,8 +722,17 @@ function save_lines(evt,lisha_id,up_mode,ajax_return)
 					}
 					else
 					{
-						// Required
-						document.getElementById('th_input_'+eval('test.'+iterable_element+'.id')+'__'+lisha_id).style.backgroundColor = '#FFD4D4';
+                        if(eval('test.'+iterable_element+'.status') == __LISTED__)
+                        {
+                            // listed
+                            document.getElementById('th_input_'+eval('test.'+iterable_element+'.id')+'__'+lisha_id).style.backgroundColor = '#D4D4FF';
+                        }
+                        else
+                        {
+                            // Required
+                            document.getElementById('th_input_'+eval('test.'+iterable_element+'.id')+'__'+lisha_id).style.backgroundColor = '#FFD4D4';
+                        }
+
 					}
 				}
 				
