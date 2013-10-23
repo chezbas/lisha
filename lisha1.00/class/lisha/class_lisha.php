@@ -3961,7 +3961,9 @@
                     $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($this->c_query,$query_final_pos).$sql_condition_quick_search.$sql_filter;
 
                     $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
-                    $count = $this->rds_fetch_array($this->resultat)['total'];
+
+                    $row = $this->rds_fetch_array($this->resultat);
+                    $count = $row['total'];
                     //==================================================================
 
                     $str_before = '';
@@ -4007,7 +4009,9 @@
                         $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
 
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
-                        $count = $this->rds_fetch_array($this->resultat)['total'];
+
+                        $row = $this->rds_fetch_array($this->resultat);
+                        $count = $row['total'];
                         //==================================================================
 
                         //==================================================================
@@ -4028,7 +4032,9 @@
                         $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']);
 
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
-                        $count = $this->rds_fetch_array($this->resultat)['total'];
+
+                        $row = $this->rds_fetch_array($this->resultat);
+                        $count = $row['total'];
                         //==================================================================
 
                         //==================================================================
