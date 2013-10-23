@@ -3838,7 +3838,7 @@
 			// Define the selected lines
 			$this->define_selected_line($p_selected_lines);
 
-			//==================================================================
+            //==================================================================
 			// Recover columns filter
 			//==================================================================
 			$sql_filter = '';
@@ -3990,6 +3990,7 @@
                     $query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
 
                     $sql_condition_quick_search = "";
+                    $column_value = $this->c_columns[$column];
                     switch($column_value['search_mode'])
                     {
                         case __EXACT__:
@@ -4051,7 +4052,7 @@
                     //==================================================================
                     // Few first rows found
                     //==================================================================
-                    $sql =  'SELECT DISTINCT ('.$str_before.$this->c_columns[$column]['before_as'].$str_after.' ) AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->c_query,$query_final_pos).$sql_condition_quick_search.$sql_filter.'ORDER BY 1 ASC LIMIT 6';
+                    $sql =  'SELECT DISTINCT ('.$str_before.$this->c_columns[$column]['before_as'].$str_after.' ) AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->c_query,$query_final_pos).$sql_condition_quick_search.$sql_filter.' ORDER BY 1 ASC LIMIT 6';
                     //==================================================================
 
                     $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
