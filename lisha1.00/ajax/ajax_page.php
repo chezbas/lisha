@@ -45,9 +45,8 @@
 			echo $_SESSION[$ssid]['lisha'][$lisha_id]->toggle_column($_POST['column'],$_POST['selected_lines']);																
 			break;
 		case 11:
-			// Change the number of line per page ( no more in use )
-            // Regroup with action 2
-			//$_SESSION[$ssid]['lisha'][$lisha_id]->change_nb_line($_POST['qtt'],$_POST['selected_lines']);
+			// global_search - Multiple columns search
+			echo $_SESSION[$ssid]['lisha'][$lisha_id]->global_search($_POST['value']);
 			break;
 		case 12:
 			// Change the alignment mode on a column

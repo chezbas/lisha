@@ -1455,7 +1455,7 @@
 			//==================================================================
 
             $query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-            $my_query = 'SELECT COUNT(1) AS `TOTAL` '.substr($this->c_query,$query_final_pos).$sql_filter;
+            $my_query = 'SELECT COUNT(1) AS `TOTAL` '.substr($this->c_query,$query_final_pos).$sql_filter.$add_where;
             $this->exec_sql($my_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 
             $row = $this->rds_fetch_array($this->resultat);
@@ -4373,6 +4373,42 @@
 			echo $xml;
 		}
 		/**===================================================================*/
+
+        /**==================================================================
+         * Called when user wants to search globaly
+         * @p_value  :   Filter value for global search - Multiple columns search
+        ====================================================================*/
+		public function global_search($p_value)
+		{
+            //==================================================================
+            // build query condition to search in all columns displayed
+            //==================================================================
+            $sql_filter = ' AND (0=1';
+
+            foreach($this->c_columns AS $column_value)
+            {
+                if($column_value['display'] != __HIDE__)
+                {
+                    $sql_filter .= ' OR '.$column_value['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$p_value))),true),$this->link).__PERCENT__);
+                }
+            }
+            $sql_filter .= ')';
+
+            $this->prepare_query($sql_filter);
+            $json = $this->generate_lisha_json_param();
+
+            // XML return
+            header("Content-type: text/xml");
+            $xml = "<?xml version='1.0' encoding='UTF8'?>";
+            $xml .= "<lisha>";
+            $xml .= "<content>".$this->protect_xml($this->c_obj_graphic->draw_lisha($this->resultat,false,true))."</content>";
+            $xml .= "<json>".$this->protect_xml($json)."</json>";
+            $xml .= "</lisha>";
+            //==================================================================
+
+            echo $xml;
+		}
+        /**===================================================================*/
 
 
         /**==================================================================
