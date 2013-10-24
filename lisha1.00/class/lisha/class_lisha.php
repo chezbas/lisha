@@ -3838,7 +3838,7 @@
 			// Define the selected lines
 			$this->define_selected_line($p_selected_lines);
 
-            //==================================================================
+			//==================================================================
 			// Recover columns filter
 			//==================================================================
 			$sql_filter = '';
@@ -3850,35 +3850,9 @@
 				{
 					foreach ($column_value['filter'] as $filter_value)
 					{
-                        switch($column_value['search_mode'])
-                        {
-                            case __EXACT__:
-                                $sql_filter .= " AND ".$column_value['before_as']." = '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
-                                break;
-                            case __CONTAIN__:
-                                $sql_filter .= ' AND '.$column_value['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$filter_value['filter']))),true),$this->link).__PERCENT__);
-                                break;
-                            case __PERCENT__:
-                                $sql_filter .= ' AND '.$column_value['before_as'].' '.$this->get_like($this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link));
-                                break;
-                            case __GT__:
-                                $sql_filter .= " AND ".$column_value['before_as']." > '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
-                                break;
-                            case __LT__:
-                                $sql_filter .= " AND ".$column_value['before_as']." < '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
-                                break;
-                            case __GE__:
-                                $sql_filter .= " AND ".$column_value['before_as']." >= '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
-                                break;
-                            case __LE__:
-                                $sql_filter .= " AND ".$column_value['before_as']." <= '".$this->protect_sql($this->replace_chevrons($filter_value['filter']),$this->link)."'";
-                                break;
-                            case __NULL__:
-                                $sql_filter .= ' AND '.$column_value['before_as'].' IS NULL ';
-                                break;
-                        }
-                        //$sql_filter .= ' AND '.$column_value['before_as'].' '.$this->get_like($column_value['search_mode'].$this->protect_sql($filter_value['filter'],$this->link).$column_value['search_mode']);
-					}
+                        // operator_build_query_condition
+                        $sql_filter .= $this->operator_build_query_condition($column_value,$filter_value['filter']);
+                    }
 				}
 			}
 			//==================================================================
@@ -3920,9 +3894,17 @@
                 if(isset($this->c_columns[$column]['lov']))
 				{
                     // PERCENT
-					$sql = 'SELECT * FROM ('.$this->c_columns[$column]['lov']['sql'].') AS `ret` WHERE '.$this->c_columns[$column]['lov']['col_return'].' LIKE "%'.$this->protect_sql(rawurldecode($post['filter']),$this->link).'%"';
+                    //operator_build_query_condition
+                    $sql_lov = $this->solve_lov_main_query($column);
 
-					$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
+                    // operator_build_query_condition
+                    $sql_condition_quick_search = $this->operator_build_query_condition($this->c_columns[$column],$txt,'lov_return');
+
+                    $query_final_pos = strripos($sql_lov, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+
+                    $sql =  'SELECT 1 AS `total` '.substr($sql_lov,$query_final_pos).$sql_condition_quick_search;
+
+                    $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 
 					//if($this->c_columns[$column]['quick_help'])
 					//{
@@ -3989,35 +3971,9 @@
                     //==================================================================
                     $query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
 
-                    $sql_condition_quick_search = "";
-                    $column_value = $this->c_columns[$column];
-                    switch($column_value['search_mode'])
-                    {
-                        case __EXACT__:
-                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['before_as']." = '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
-                            break;
-                        case __CONTAIN__:
-                            $sql_condition_quick_search = ' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$txt))),true),$this->link).__PERCENT__);
-                            break;
-                        case __PERCENT__:
-                            $sql_condition_quick_search = ' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like($this->protect_sql($this->replace_chevrons($txt),$this->link));
-                            break;
-                        case __GT__:
-                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['before_as']." > '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
-                            break;
-                        case __LT__:
-                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['before_as']." < '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
-                            break;
-                        case __GE__:
-                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['before_as']." >= '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
-                            break;
-                        case __LE__:
-                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['before_as']." <= '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
-                            break;
-                        case __NULL__:
-                            $sql_condition_quick_search = ' AND '.$this->c_columns[$column]['before_as'].' IS NULL ';
-                            break;
-                    }
+                    //operator_build_query_condition
+                    $sql_condition_quick_search = $this->operator_build_query_condition($this->c_columns[$column],$txt);
+
                     $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($this->c_query,$query_final_pos).$sql_condition_quick_search.$sql_filter;
 
                     $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
@@ -4059,34 +4015,8 @@
 				}
 				else
 				{
-                    $sql_condition_quick_search = "";
-                    switch($column_value['search_mode'])
-                    {
-                        case __EXACT__:
-                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['lov']['before_as']." = '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
-                            break;
-                        case __CONTAIN__:
-                            $sql_condition_quick_search = ' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$txt))),true),$this->link).__PERCENT__);
-                            break;
-                        case __PERCENT__:
-                            $sql_condition_quick_search = ' AND '.$this->c_columns[$column]['lov']['before_as'].' '.$this->get_like($this->protect_sql($this->replace_chevrons($txt),$this->link));
-                            break;
-                        case __GT__:
-                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['lov']['before_as']." > '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
-                            break;
-                        case __LT__:
-                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['lov']['before_as']." < '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
-                            break;
-                        case __GE__:
-                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['lov']['before_as']." >= '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
-                            break;
-                        case __LE__:
-                            $sql_condition_quick_search = " AND ".$this->c_columns[$column]['lov']['before_as']." <= '".$this->protect_sql($this->replace_chevrons($txt),$this->link)."'";
-                            break;
-                        case __NULL__:
-                            $sql_condition_quick_search = ' AND '.$this->c_columns[$column]['lov']['before_as'].' IS NULL ';
-                            break;
-                    }
+                    //operator_build_query_condition
+                    $sql_condition_quick_search = $this->operator_build_query_condition($this->c_columns[$column],$txt,'lov');
 
 					if(isset($this->c_columns[$column]['lov']['taglov_possible']) || !isset($this->c_columns[$column]['lov']['taglov']))
 					{
@@ -4202,6 +4132,61 @@
 		}
 		/**===================================================================*/
 
+
+        /**==================================================================
+         * Internal function to build part of filter condition with setup operator
+         *
+         *@p_current_column :   Column involved
+         *@p_input_text	    :   Input string in input head column
+         *@p_lov            :   false means main before_as field, lov or lov_return
+        ====================================================================*/
+        private function operator_build_query_condition($p_current_column,$p_input_text,$p_lov = 'no')
+        {
+            $sql_filter = "";
+
+            switch($p_lov)
+            {
+                case 'no':
+                    $my_array = $p_current_column['before_as'];
+                    break;
+                case 'lov':
+                    $my_array = $p_current_column['lov']['before_as'];
+                    break;
+                case 'lov_return';
+                    $my_array = $p_current_column['lov']['before_as'];
+                    break;
+            }
+
+            switch($p_current_column['search_mode'])
+            {
+                case __EXACT__:
+                    $sql_filter = " AND ".$my_array." = '".$this->protect_sql($this->replace_chevrons($p_input_text),$this->link)."'";
+                    break;
+                case __CONTAIN__:
+                    $sql_filter = ' AND '.$my_array.' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$p_input_text))),true),$this->link).__PERCENT__);
+                    break;
+                case __PERCENT__:
+                    $sql_filter = ' AND '.$my_array.' '.$this->get_like($this->protect_sql($this->replace_chevrons($p_input_text),$this->link));
+                    break;
+                case __GT__:
+                    $sql_filter = " AND ".$my_array." > '".$this->protect_sql($this->replace_chevrons($p_input_text),$this->link)."'";
+                    break;
+                case __LT__:
+                    $sql_filter = " AND ".$my_array." < '".$this->protect_sql($this->replace_chevrons($p_input_text),$this->link)."'";
+                    break;
+                case __GE__:
+                    $sql_filter = " AND ".$my_array." >= '".$this->protect_sql($this->replace_chevrons($p_input_text),$this->link)."'";
+                    break;
+                case __LE__:
+                    $sql_filter = " AND ".$my_array." <= '".$this->protect_sql($this->replace_chevrons($p_input_text),$this->link)."'";
+                    break;
+                case __NULL__:
+                    $sql_filter = ' AND '.$my_array.' IS NULL ';
+                    break;
+            }
+            return $sql_filter;
+        }
+        /**===================================================================*/
 
 		/**==================================================================
 		 * protect_js_txt
@@ -4703,7 +4688,10 @@
             {
                 foreach($this->c_columns[$column]['lov']['taglov'] as $value)
                 {
-                    $sql = str_replace('||TAGLOV_'.$value['column'].'**'.$value['column_return'].'||',$this->c_columns[$this->get_id_column($value['column'])]['filter']['input']['taglov'][$value['column_return']],$sql);
+                    if(isset($this->c_columns[$this->get_id_column($value['column'])]['filter']['input']['taglov']))
+                    {
+                        $sql = str_replace('||TAGLOV_'.$value['column'].'**'.$value['column_return'].'||',$this->c_columns[$this->get_id_column($value['column'])]['filter']['input']['taglov'][$value['column_return']],$sql);
+                    }
                 }
             }
             return $sql;
