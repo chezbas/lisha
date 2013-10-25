@@ -1652,16 +1652,28 @@
         /**===================================================================*/
 
 
-		/**
-		 * Generate lisha toolbar
-		 */
+		/**==================================================================
+         * Build lisha toolbar
+         *
+         * @$p_edit      : true means edit mode
+         * @$p_resultat  : query result
+        ====================================================================*/
 		public function generate_toolbar($p_edit = false, $p_resultat = false)
 		{
 			$html  = '<table style="border:0 margin:0;padding:0;height:22px;" cellpadding="0" cellspacing="0">';
 			$html .= '<tr style="border:0;">';
 
 			if(count($this->c_columns) > 1)
-				$html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_search_mode" '.$this->hover_out_lib(0,57).' onclick="lisha_display_prompt_global_search(\''.$this->c_id.'\');"></div></td>';
+            {
+                if($p_edit == false)
+                {
+                    $html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_search_mode" '.$this->hover_out_lib(0,57).' onclick="lisha_display_prompt_global_search(\''.$this->c_id.'\');"></div></td>';
+                }
+                else
+                {
+                    $html .= '<td class="btn_toolbar toolbar_separator_right grey_el"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_search_mode" '.$this->hover_out_lib(0,57).'></div></td>';
+                }
+            }
 
 			if($this->c_mode != __CMOD__)
 			{
@@ -1769,6 +1781,8 @@
 			
 			return $html;
 		}
+		/**===================================================================*/
+
 		
         /**==================================================================
          * hover_out_lib

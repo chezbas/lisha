@@ -4358,12 +4358,15 @@
 		}
 		/**===================================================================*/
 
+
         /**==================================================================
          * Called when user wants to search globaly
+         *
          * @p_value  :   Filter value for global search - Multiple columns search
         ====================================================================*/
 		public function global_search($p_value)
 		{
+		    $p_value = json_decode($p_value);
             //==================================================================
             // build query condition to search in all columns displayed
             //==================================================================

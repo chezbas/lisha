@@ -1818,7 +1818,7 @@ function lisha_global_search(lisha_id,ajax_return)
         //==================================================================
         // Get value for search
         //==================================================================
-		var input_value = encodeURIComponent(document.getElementById('lisha_'+lisha_id+'_msgbox_prompt_value').value);
+		var input_value = encodeURIComponent(JSON.stringify(document.getElementById('lisha_'+lisha_id+'_msgbox_prompt_value').value));
 		//==================================================================
 
         lisha_display_wait(lisha_id);
