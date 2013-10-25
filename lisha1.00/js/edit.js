@@ -166,6 +166,13 @@ function input_key_manager(evt,lisha_id,line,column)
 
         // Check Compel
         //==================================================================
+        // VALUE NOT DEFINE
+        //==================================================================
+        if(eval('varlisha_'+lisha_id+'.CurrentCellCompel') == "" )
+        {
+            do_cell_call_update(div_root_updating,lisha_id,line,column,val.value);
+        }
+        //==================================================================
         // VALUE REQUIRED
         //==================================================================
         if(eval('varlisha_'+lisha_id+'.CurrentCellCompel') == __REQUIRED__ )
