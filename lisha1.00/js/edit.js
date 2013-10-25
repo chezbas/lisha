@@ -254,7 +254,7 @@ function do_cell_call_update(div_root_updating,lisha_id,line,column,val)
     conf['delai_tentative'] = 15000;
     conf['max_tentative'] = 4;
     conf['type_retour'] = false;		// ReponseText
-    conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=23&arraykey='+array_primary_key+'&column='+column+'&val='+encodeURIComponent(val);
+    conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=23&arraykey='+array_primary_key+'&column='+column+'&val='+encodeURIComponent(JSON.stringify(val));
     conf['fonction_a_executer_reponse'] = 'ok_edit_cell';
     conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"'";
 
