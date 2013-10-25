@@ -2554,8 +2554,7 @@
 
             // Force Json UTF8 protection for unknown server issue
             // Have to do investigation on this point
-            $p_value = json_decode($p_value);
-
+            $p_value = rawurldecode($p_value);
 			$string_where = '';
 
 			foreach($array_key as $clef => $value)
