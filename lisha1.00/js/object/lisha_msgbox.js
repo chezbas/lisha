@@ -75,7 +75,7 @@
 				//aff_btn = true;
 				break;
 			case 'prompt':
-				contenu += '<div class="lisha_msgbox_prompt"><input type="text" id="lisha_'+lisha_id+'_msgbox_prompt_value" onkeydown="lisha_msgbox_keypress(event,\''+lisha_id+'\');"/></div>';
+				contenu += '<div class="lisha_msgbox_prompt"><input type="text" id="lisha_'+lisha_id+'_msgbox_prompt_value" onkeypress="lisha_msgbox_keypress(event,\''+lisha_id+'\');"/></div>';
 				focus = 'lisha_'+lisha_id+'_msgbox_prompt_value';
 				break;
 			case 'password':
