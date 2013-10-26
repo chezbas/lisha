@@ -1572,7 +1572,6 @@
 							$lisha .= '<td '.$key_cold_id_l1.' align="'.$this->c_columns[$key_col]['alignment'].'"  class="__'.$this->c_theme.'__cell '.$sep_cell.''.$this->c_columns[$key_col]['nowrap'].'"><div id="div_td_l'.$line.'_c'.$key_col.'_'.$this->c_id.'" class="div_content" '.$watermark.'><span '.$edit_cell.'>'.$content.'</span></div></td>';
 						}
 						
-						
 						// Right border column
 						$lisha .= '<td class="'.$sep_cell.$this->c_columns[$key_col]['nowrap'].'" '.$key_cold_id_l2.'><div class="__'.$this->c_theme.'__cell_resize"></div></td>';
 						
