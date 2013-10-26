@@ -1546,7 +1546,15 @@
 						{
 							// OK for cell edition
 							$watermark = '';
-							if($this->c_readonly == __RW__ && !$p_edit && !$this->c_cells_edit)
+
+                            // Compel on column
+                            if(!isset($this->c_columns[$key_col]["rw_flag"]))
+                            {
+                                $this->c_columns[$key_col]["rw_flag"] = __NONE__;
+                            }
+
+                            // Currently forbidden any cell update if __LISTED__ compel on column
+							if($this->c_readonly == __RW__ && !$p_edit && !$this->c_cells_edit && $this->c_columns[$key_col]["rw_flag"] != __LISTED__)
 							{
 								$edit_cell = 'onclick=lisha_StopEventHandler(event);edit_cell(event,\''.$line.'\',\''.$key_col.'\',\''.$this->c_id.'\',\''.$this->c_columns[$key_col]["data_type"].'\');';
 							}
