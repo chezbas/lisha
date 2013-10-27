@@ -2194,6 +2194,7 @@
  			$html .= 'varlisha_'.$this->c_id.'.CurrentCellCompel = "";';
  			$html .= 'varlisha_'.$this->c_id.'.CurrentCellName = "";';
  			$html .= 'varlisha_'.$this->c_id.'.scrollTop = 0;';
+            $html .= 'varlisha_'.$this->c_id.'.globalsearch = "off";';
             //$html .= 'varlisha_'.$this->c_id.'.lock = "";';
 
  			$html .= 'varlisha_'.$this->c_id.'_child.CurrentCellUpdate = "";';

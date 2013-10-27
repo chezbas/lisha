@@ -1804,6 +1804,7 @@ function lisha_display_prompt_global_search(id_lisha)
     var prompt_btn = new Array([lis_lib[31],lis_lib[32]],["lisha_global_search('"+id_lisha+"');","lisha_cover_with_filter('"+id_lisha+"');"]);
 	lisha_prompt(id_lisha,0,65,prompt_btn);
 }
+/**==================================================================*/
 
 
 /**==================================================================
@@ -1815,13 +1816,17 @@ function lisha_global_search(lisha_id,ajax_return)
 {
 	if(typeof(ajax_return) == 'undefined')
 	{
+        // Prepare global search for cancel
+        eval('varlisha_'+lisha_id+'globalsearch = "on"');
+
         //==================================================================
         // Get value for search
         //==================================================================
 		var input_value = encodeURIComponent(JSON.stringify(document.getElementById('lisha_'+lisha_id+'_msgbox_prompt_value').value));
 		//==================================================================
 
-        lisha_display_wait(lisha_id);
+        var prompt_btn = new Array([lis_lib[32]],["cancel_gloabl_search('"+lisha_id+"');"]);
+        lisha_generer_msgbox(lisha_id,lis_lib[153],lis_lib[154].replace(/\$1/g,document.getElementById('lisha_'+lisha_id+'_msgbox_prompt_value').value),'....','msg', prompt_btn, false, true);
 
         //==================================================================
 		// Setup Ajax configuration
@@ -1843,22 +1848,28 @@ function lisha_global_search(lisha_id,ajax_return)
 	{
 		try
 		{
-            // Get the ajax return in json format
-            var json = get_json(ajax_return);
+            if(eval('varlisha_'+lisha_id+'globalsearch') == "on")
+            {
+                // Search not canceled... continue
+                eval('varlisha_'+lisha_id+'globalsearch = "off"');
 
-            // Update the json object
-            eval(decodeURIComponent(json.lisha.json));
+                // Get the ajax return in json format
+                var json = get_json(ajax_return);
 
-            // Set the content of the lisha
-            lisha_set_content(lisha_id,decodeURIComponent(json.lisha.content));
+                // Update the json object
+                eval(decodeURIComponent(json.lisha.json));
 
-            document.getElementById('liste_'+lisha_id).scrollLeft = document.getElementById('liste_'+lisha_id).scrollLeft - 1; // SRX_UGLY_FIXE DUE TO BROWSER BUG
+                // Set the content of the lisha
+                lisha_set_content(lisha_id,decodeURIComponent(json.lisha.content));
 
-            // Setup Excel export button
-            toolbar_excel_button(lisha_id);
+                document.getElementById('liste_'+lisha_id).scrollLeft = document.getElementById('liste_'+lisha_id).scrollLeft - 1; // SRX_UGLY_FIXE DUE TO BROWSER BUG
 
-            // Hide the wait div
-            lisha_hide_wait(lisha_id);
+                // Setup Excel export button
+                toolbar_excel_button(lisha_id);
+
+                // Hide the wait div
+                lisha_hide_wait(lisha_id);
+            }
 		}
 		catch(e)
 		{
@@ -1867,6 +1878,23 @@ function lisha_global_search(lisha_id,ajax_return)
 	}
 }
 /**==================================================================*/
+
+
+/**==================================================================
+ * Call when user abort global search
+ *
+ * @lisha_id 	: lisha internal identifier
+ ====================================================================*/
+function cancel_gloabl_search(lisha_id)
+{
+    // Abort global search return
+    eval('varlisha_'+lisha_id+'globalsearch = "off"');
+
+    // Hide prompt window and back to lisha
+    lisha_cover_with_filter(lisha_id);
+}
+/**==================================================================*/
+
 
 /**==================================================================
  * Standard function to display wait window
