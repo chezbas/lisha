@@ -38,7 +38,7 @@
     	}
     	else
     	{
-    		document.getElementById('lis__'+theme+'__wait_'+lisha_id+'__').style.backgroundImage = 'url(../../'+eval('lisha.'+lisha_id+'.dir_obj')+'/images/object/msgbox/wait.gif)';
+    		document.getElementById('lis__'+theme+'__wait_'+lisha_id+'__').style.backgroundImage = 'url(./'+eval('lisha.'+lisha_id+'.dir_obj')+'/images/object/msgbox/wait.gif)';
     	}
     	
     	if(typeof(aff_btn) == 'undefined')
