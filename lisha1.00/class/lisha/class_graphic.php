@@ -53,6 +53,8 @@
 		private $c_toolbar_add_btn;
         private $c_quick_search;                    // true means quick search on head column is enable
 
+        public $string_global_search;				// String used to do global search
+
 		private $matchcode;				            // Matchcode between internal external call and function name
         public $any_filter;                        // true if any filter recorder in your lisha
 		//==================================================================
@@ -96,10 +98,11 @@
 			$this->c_navbar_nav_button_activate = true;
 			$this->c_navbar_txt_line_per_page_activate = true;
 			$this->c_lmod_specified_width = null;
+            $this->c_toolbar_global_search = true;
 			$this->c_toolbar_delete_btn = true;
 			$this->c_toolbar_add_btn = true;
             $this->c_quick_search = true;
-			
+
 			//==================================================================
 			// Define matchcode graphical array between external and internal attribut name
 			// For internal call, use direct acces by $this->internal_name_attribut
@@ -130,6 +133,7 @@
 			'__active_user_doc'													=> array('c_help_button','A'),
 			'__active_tech_doc'													=> array('c_tech_help_button','A'),
             '__active_quick_search'												=> array('c_quick_search','A'),
+            '__active_global_search'                                            => array('c_toolbar_global_search','A'),
             '__active_insert_button'                                            => array('c_toolbar_add_btn','A'),
             '__active_delete_button'                                            => array('c_toolbar_delete_btn','A'),
 			'__active_ticket'													=> array('c_tickets_link','A')
@@ -1670,15 +1674,27 @@
 			$html  = '<table style="border:0 margin:0;padding:0;height:22px;" cellpadding="0" cellspacing="0">';
 			$html .= '<tr style="border:0;">';
 
-			if(count($this->c_columns) > 1)
+            if($this->c_toolbar_global_search == true)
             {
-                if($p_edit == false)
+                if(count($this->c_columns) > 1)
                 {
-                    $html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_search_mode" '.$this->hover_out_lib(0,57).' onclick="lisha_display_prompt_global_search(\''.$this->c_id.'\');"></div></td>';
-                }
-                else
-                {
-                    $html .= '<td class="btn_toolbar toolbar_separator_right grey_el"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_search_mode" '.$this->hover_out_lib(0,57).'></div></td>';
+                    if($p_edit == false)
+                    {
+                        // Change global search button then fill in
+                        if($this->string_global_search != "")
+                        {
+                            $w_search_icon = '_ico_search_mode_active';
+                        }
+                        else
+                        {
+                            $w_search_icon = '_ico_search_mode';
+                        }
+                        $html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.$w_search_icon.'" '.$this->hover_out_lib(0,57).' onclick="lisha_display_prompt_global_search(\''.$this->c_id.'\',\''.$this->string_global_search.'\');"></div></td>';
+                    }
+                    else
+                    {
+                        $html .= '<td class="btn_toolbar toolbar_separator_right grey_el"><div class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_search_mode" '.$this->hover_out_lib(0,57).'></div></td>';
+                    }
                 }
             }
 

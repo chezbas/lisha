@@ -54,6 +54,9 @@
         private $c_help_button;                     // Help button
         private $matchcode;				            // Matchcode between internal external call and function name
 
+        private $string_global_search;				// String used to do global search
+
+
         private $last_page_position;                // Keep page number position
         private $last_limit_min;                    // Keep down limit
         //==================================================================
@@ -194,7 +197,6 @@
 
 			$this->define_attribute('__column_name_group_of_color', $_SESSION[$this->c_ssid]['lisha']['configuration'][9]);
 
-
 			$this->define_background_logo('','');
 
 			$this->define_attribute('__internal_HTML_position',__RELATIVE__);			// HTML div position
@@ -221,6 +223,10 @@
 			$this->c_obj_graphic->c_help_button = true;
 			$this->c_obj_graphic->c_tech_help_button = false;
 			$this->c_obj_graphic->c_tickets_link = false ;
+
+            // Dynamic pointer activated
+            $this->c_obj_graphic->string_global_search = &$this->string_global_search;
+
 			//==================================================================
 		}
 		/**===================================================================*/
@@ -577,7 +583,7 @@
 
 
         /**==================================================================
-         * Method to define custom function for write access
+         * Define over load custom function for WRITE access
          * Example : MD5(__COL_VALUE__) -> MD5(value)
          *
          * @p_column		: Column identifier ( have to define column in your lisha and hide )
@@ -595,7 +601,7 @@
 
 
         /**==================================================================
-         * Method to define custom function for read access
+         * Define over load custom function for READ access
          * Example : MD5(__COL_VALUE__) -> MD5(value)
          *
          * @p_column		: Column identifier ( have to define column in your lisha and hide )
@@ -1453,6 +1459,27 @@
 				}
 			}
 			//==================================================================
+
+            //==================================================================
+            // build query condition for global search on all displayed columns
+            //==================================================================
+            if($this->string_global_search != "")
+            {
+                $sql_filter_global = ' AND (0=1';
+
+                foreach($this->c_columns AS $column_value)
+                {
+                    if($column_value['display'] != __HIDE__)
+                    {
+                        $sql_filter_global .= ' OR '.$column_value['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$this->string_global_search))),true),$this->link).__PERCENT__);
+                    }
+                }
+                $sql_filter_global .= ')';
+
+                // Merge filters if global search active
+                $sql_filter = $sql_filter.$sql_filter_global;
+            }
+            //==================================================================
 
             $query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
             $my_query = 'SELECT COUNT(1) AS `TOTAL` '.substr($this->c_query,$query_final_pos).$sql_filter.$add_where;
@@ -4290,6 +4317,9 @@
 			}
 
 			$this->check_column_lovable();
+
+            // Reset global search
+            $this->string_global_search = "";
 		}
 		/**===================================================================*/
 
@@ -4361,28 +4391,16 @@
 
 
         /**==================================================================
-         * Called when user wants to search globaly
+         * Called when user wants to do a general search
          *
          * @p_value  :   Filter value for global search - Multiple columns search
         ====================================================================*/
 		public function global_search($p_value)
 		{
-		    $p_value = json_decode($p_value);
-            //==================================================================
-            // build query condition to search in all columns displayed
-            //==================================================================
-            $sql_filter = ' AND (0=1';
+            $this->string_global_search = json_decode($p_value);
+            $this->prepare_query();
+            $this->string_global_search = $this->protect_js_txt(json_decode($p_value));
 
-            foreach($this->c_columns AS $column_value)
-            {
-                if($column_value['display'] != __HIDE__)
-                {
-                    $sql_filter .= ' OR '.$column_value['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$p_value))),true),$this->link).__PERCENT__);
-                }
-            }
-            $sql_filter .= ')';
-
-            $this->prepare_query($sql_filter);
             $json = $this->generate_lisha_json_param();
 
             // XML return
@@ -4390,6 +4408,7 @@
             $xml = "<?xml version='1.0' encoding='UTF8'?>";
             $xml .= "<lisha>";
             $xml .= "<content>".$this->protect_xml($this->c_obj_graphic->draw_lisha($this->resultat,false,true))."</content>";
+            $xml .= '<toolbar>'.$this->protect_xml($this->c_obj_graphic->generate_toolbar(false)).'</toolbar>';
             $xml .= "<json>".$this->protect_xml($json)."</json>";
             $xml .= "</lisha>";
             //==================================================================

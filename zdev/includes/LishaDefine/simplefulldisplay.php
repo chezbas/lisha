@@ -98,6 +98,7 @@
 
 	$obj_lisha_tran->define_attribute('__column_name_group_of_color', "MyGroupTheme");		// ( Optional ) Define custom column color name
 
+    //$obj_lisha_tran->define_attribute('__active_global_search', false);           // Hide or display global search button
     //$obj_lisha_tran->define_attribute('__active_insert_button', false);           // Hide or display Add button
     //$obj_lisha_tran->define_attribute('__active_delete_button', false);           // Hide or display Delete button
 

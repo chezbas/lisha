@@ -59,7 +59,8 @@
 	$obj_lisha_tran->define_attribute('__active_tech_doc', false);					// technical documentation button
 	$obj_lisha_tran->define_attribute('__active_ticket', true);						// Tickets link
 
-	
+    //$obj_lisha_tran->define_attribute('__active_global_search', false);           // Hide or display global search button
+
 	$obj_lisha_tran->define_attribute('__display_mode', __NMOD__);					// Display mode
 	
 	$obj_lisha_tran->define_attribute('__key_url_custom_view', 'f1');				// Defined key for quick custom view loader in url browser

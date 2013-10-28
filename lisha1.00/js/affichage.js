@@ -1797,12 +1797,16 @@ function lisha_save_filter(lisha_id,ajax_return)
 
 /**==================================================================
  * Call when user click to the button : global search - Multiple columns search
- * @lisha_id 	: lisha internal identifier
+ * @lisha_id 	    : lisha internal identifier
+ * @global_search   : String for gloable search
  ====================================================================*/
-function lisha_display_prompt_global_search(id_lisha)
+function lisha_display_prompt_global_search(id_lisha,global_search)
 {
     var prompt_btn = new Array([lis_lib[31],lis_lib[32]],["lisha_global_search('"+id_lisha+"');","lisha_cover_with_filter('"+id_lisha+"');"]);
 	lisha_prompt(id_lisha,0,65,prompt_btn);
+
+    // Force input value if any
+    document.getElementById('lisha_'+id_lisha+'_msgbox_prompt_value').value = global_search.replace(/\'/g,"'");
 }
 /**==================================================================*/
 
@@ -1863,6 +1867,9 @@ function lisha_global_search(lisha_id,ajax_return)
                 lisha_set_content(lisha_id,decodeURIComponent(json.lisha.content));
 
                 document.getElementById('liste_'+lisha_id).scrollLeft = document.getElementById('liste_'+lisha_id).scrollLeft - 1; // SRX_UGLY_FIXE DUE TO BROWSER BUG
+
+                // Set the content of the toolbar
+                lisha_set_innerHTML('lisha_toolbar_'+lisha_id,decodeURIComponent(json.lisha.toolbar));
 
                 // Setup Excel export button
                 toolbar_excel_button(lisha_id);
