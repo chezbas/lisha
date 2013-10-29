@@ -81,8 +81,9 @@
          * @p_ident                 : Array of database connexion ( array('user' => 'my_database_user,'password' => 'my_database_password','host' => 'localhost','schema' => 'lisha') )
 		 * @p_dir_obj               : Relative path to lisha directory
 		 * @p_type_internal_lisha   : Kind of lisha ( __LOAD_FILTER__, __COLUMN_MODE__ ... )
+         * @p_debug_mode            : mode debug with details for errors recovery
 		 ====================================================================*/
-		public function __construct($p_id,$p_ssid,$p_db_engine,$p_ident,$p_dir_obj,$p_type_internal_lisha = false)
+		public function __construct($p_id,$p_ssid,$p_db_engine,$p_ident,$p_dir_obj,$p_type_internal_lisha = false,$p_debug_mode = false)
 		{
 			if(!isset($_GET['lng']))
 			{
@@ -104,7 +105,7 @@
 			$this->c_ssid = $p_ssid;
 			$this->c_ident = $p_ident;
 
-			parent::__construct($p_db_engine,$p_ident,$p_dir_obj);
+			parent::__construct($p_db_engine,$p_ident,$p_dir_obj,$p_debug_mode);
 
 			$this->db_connect();
 
@@ -4567,7 +4568,7 @@
 			$id_child = $this->c_id.'_child';
 
             // Create an instance of a lisha
-			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine,$this->c_ident,$this->c_dir_obj,__ADV_FILTER__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine,$this->c_ident,$this->c_dir_obj,__ADV_FILTER__,$this->get_debug_mode());
 
             //==================================================================
             // Sub lisha of all include values
@@ -4732,7 +4733,7 @@
 			$id_child = $this->c_id.'_child';
 
 			// Create a lisha instance
-			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child,$this->c_ssid,$this->c_db_engine,$this->c_ident,$this->c_dir_obj,__POSSIBLE_VALUES__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child,$this->c_ssid,$this->c_db_engine,$this->c_ident,$this->c_dir_obj,__POSSIBLE_VALUES__,$this->get_debug_mode());
 
 			if(isset($this->c_columns[$column]['lov']) && $this->c_columns[$column]['lov'])
 			{
@@ -4936,7 +4937,7 @@
 			//==================================================================
 
 			// Create an instance of a lisha
-			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine, $this->c_ident,$this->c_dir_obj,__COLUMN_LIST__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine, $this->c_ident,$this->c_dir_obj,__COLUMN_LIST__,$this->get_debug_mode());
 
 			//==================================================================
 			// Lisha display setup
@@ -5262,7 +5263,7 @@
 			$column = 1;
 			$id_child = $this->c_id.'_child';
 			// Create an instance of a lisha
-			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine, $this->c_ident,$this->c_dir_obj,__LOAD_FILTER__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine, $this->c_ident,$this->c_dir_obj,__LOAD_FILTER__,$this->get_debug_mode());
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(4).' ('.$this->c_param_adv_filter.')');
             $query_lov = "  SELECT
                             DISTINCT

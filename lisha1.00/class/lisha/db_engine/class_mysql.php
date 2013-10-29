@@ -6,14 +6,16 @@
 		public $link;
 		public $link_lisha;
 		private $c_sql;
+        private $b_debug_mode;
 		
 		
 		/**==================================================================
 		* Constructor of MySQL engine
 		====================================================================*/
-		function __construct($p_ident)
+		function __construct($p_ident, $p_debug_mode)
 		{
 			$this->c_ident = $p_ident;
+            $this->b_debug_mode = $p_debug_mode;
 		}
 		/*===================================================================*/
 		
@@ -56,12 +58,20 @@
 		private function die_sql($sql,$line,$file,$function,$class)
 		{
 			error_log($file.' : L '.$line.chr(10).$sql.chr(10).$this->link->errno);
-			$err = '<span style="font-size:18px;font-weight:bold;">lisha</span><br /><br />';
-			$err .= 'MySQL Error<br /><br />';
-			$err .= '<b style="color:#DD2233;">Error '.$this->link->errno."</b> : <b>".$this->link->errno.'</b><br /><br />';
-			$err .= 'Classe : '.$class.' - Ligne : '.$line.' - '.$file.' - '.$function.'<br /><br /><br />';
-			$err .= '<textarea style="width:90%;height:200px;;">'.$sql.'</textarea>';
-			
+
+            if ($this->b_debug_mode)
+            {
+
+                $err = '<span style="font-size:18px;font-weight:bold;">lisha</span><br /><br />';
+                $err .= 'MySQL Error<br /><br />';
+                $err .= '<b style="color:#DD2233;">Error '.$this->link->errno."</b> : <b>".$this->link->error.'</b><br /><br />';
+                $err .= 'Classe : '.$class.' - Ligne : '.$line.' - '.$file.' - '.$function.'<br /><br /><br />';
+                $err .= '<textarea style="width:90%;height:200px;;">'.$sql.'</textarea>';
+            } else {
+                //message for production user
+                $err = '<b>MySQL Error</b><br /><br />';
+                $err .= '<b style="color:#DD2233;">Message</b> : <b>'.$this->link->error.'</b><br /><br />';
+            }
 			echo $err;
 			die();
 		}
@@ -122,9 +132,18 @@
 			return $field->name;
 		}	
 		/*===================================================================*/
-		
-		
-		/**==================================================================
+
+
+        /**==================================================================
+         * Get debug mode
+        ====================================================================*/
+        public function get_debug_mode()
+        {
+            return $this->b_debug_mode;
+        }
+        /*===================================================================*/
+
+        /**==================================================================
 		 * Escapes special characters in a string for use in an SQL statement
 		 ====================================================================*/	
 		public function protect_sql($txt,&$link)

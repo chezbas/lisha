@@ -11,8 +11,9 @@
 														__MYSQL__,
 														array('user' => __LISHA_DATABASE_USER__,'password' => __LISHA_DATABASE_PASSWORD__,'host' => __LISHA_DATABASE_HOST__,'schema' => __LISHA_DATABASE_SCHEMA__),
 														'../',
-														false
-                                            );
+														false, 	// Type of internal lisha ( false by default )
+                                                        false   // Debug mode (false by default)
+                                                    );
 
 	// Create a reference to the session
 	$obj_lisha_bug = &$_SESSION[$ssid]['lisha'][$lisha_bug];

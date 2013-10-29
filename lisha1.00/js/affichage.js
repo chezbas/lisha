@@ -1880,7 +1880,7 @@ function lisha_global_search(lisha_id,ajax_return)
 		}
 		catch(e)
 		{
-			lisha_display_error(lisha_id,e);
+			lisha_display_error(lisha_id,e, ajax_return);
 		}
 	}
 }
@@ -1965,33 +1965,38 @@ function lisha_display_error(id_lisha,e,more)
 		more = '';
 	}
 
-	if(e.sourceURL)
-	{
-		file = e.sourceURL;
-	}
-	else
-	{
-		file = e.fileName;
-	}
-	
-	if(e.line)
-	{
-		line = e.line;
-	}
-	else
-	{
-		line = e.lineNumber;
-	}
+    if(document.getElementById('lis__'+eval('lisha.'+id_lisha+'.theme')+'__hide_container_'+id_lisha+'__').style.display == '' || document.getElementById('lis__'+eval('lisha.'+id_lisha+'.theme')+'__hide_container_'+id_lisha+'__').style.display == 'none')
+    {
+        lisha_cover_with_filter(id_lisha);
+    }
+    var prompt_btn = new Array([lis_lib[31]],["lisha_cover_with_filter('"+id_lisha+"');"]);
 
-	if(document.getElementById('lis__'+eval('lisha.'+id_lisha+'.theme')+'__hide_container_'+id_lisha+'__').style.display == '' || document.getElementById('lis__'+eval('lisha.'+id_lisha+'.theme')+'__hide_container_'+id_lisha+'__').style.display == 'none')
-	{
-		lisha_cover_with_filter(id_lisha);
-	}
-	var prompt_btn = new Array([lis_lib[31]],["lisha_cover_with_filter('"+id_lisha+"');"]);
-	
-	document.getElementById('lis_msgbox_conteneur_'+id_lisha).style.display = '';
+    document.getElementById('lis_msgbox_conteneur_'+id_lisha).style.display = '';
 
-	lisha_generer_msgbox(id_lisha,lis_lib[74],lis_lib[75]+' <b>'+line+'</b> - <b>'+file+'</b><br />'+title+'<br />'+more,'erreur','msg',prompt_btn);
+
+    if(typeof(more) == undefined)
+    {
+        if(e.sourceURL)
+        {
+            file = e.sourceURL;
+        }
+        else
+        {
+            file = e.fileName;
+        }
+
+        if(e.line)
+        {
+            line = e.line;
+        }
+        else
+        {
+            line = e.lineNumber;
+        }
+        lisha_generer_msgbox(id_lisha,lis_lib[74],lis_lib[75]+' <b>'+line+'</b> - <b>'+file+'</b><br />'+title+'<br />'+more,'erreur','msg',prompt_btn);
+    } else {
+        lisha_generer_msgbox(id_lisha,lis_lib[155],more,'erreur','msg',prompt_btn);
+    }
 
     document.getElementById('lis__'+eval('lisha.'+id_lisha+'.theme')+'__wait_'+id_lisha+'__').style.display = 'none';
 }

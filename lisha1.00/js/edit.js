@@ -529,8 +529,8 @@ function delete_lines(lisha_id,confirm,ajax_return)
 		} 	
 		catch(e)
 		{
-			lisha_display_error(lisha_id,e);
-			alert(ajax_return);
+			lisha_display_error(lisha_id,e,ajax_return);
+			//alert(ajax_return);
 		}
 	}
 }
@@ -647,8 +647,8 @@ function add_line(lisha_id,ajax_return)
 		}
 		catch(e) 
 		{
-			alert(ajax_return);
-			lisha_display_error(lisha_id,e);
+			//alert(ajax_return);
+			lisha_display_error(lisha_id,e, ajax_return);
 		}
 	}
 }
@@ -786,7 +786,7 @@ function save_lines(evt,lisha_id,up_mode,ajax_return)
 		} 
 		catch(e) 
 		{
-			lisha_display_error(lisha_id,e);
+			lisha_display_error(lisha_id,e,ajax_return);
 		}
 	}
 }

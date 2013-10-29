@@ -8,7 +8,7 @@ class class_sgbd
 	private $c_obj_bdd;
 	private $c_dir_obj;			// Directory of lisha object
 	
-	public function __construct($p_db_engine,$p_ident,$p_dir_obj)
+	public function __construct($p_db_engine,$p_ident,$p_dir_obj,$p_debug_mode)
 	{
 		$this->c_dir_obj = $p_dir_obj;
 		$this->c_db_engine = $p_db_engine;
@@ -17,7 +17,7 @@ class class_sgbd
 		{
 			case __MYSQL__:
 				// MySQL engine
-				$this->c_obj_bdd = new mysql_engine($p_ident);
+				$this->c_obj_bdd = new mysql_engine($p_ident,$p_debug_mode);
 				break;
 			case __POSTGRESQL__:
 				// PostgreSQL engine
@@ -105,5 +105,13 @@ class class_sgbd
 	{
 		return $this->c_obj_bdd->get_quote_string($string);
 	}
+
+    /**==================================================================
+     * Get debug mode
+    ====================================================================*/
+    protected function get_debug_mode()
+    {
+        return $this->c_obj_bdd->get_debug_mode();
+    }
 	
 }
