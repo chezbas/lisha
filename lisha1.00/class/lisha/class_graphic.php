@@ -940,7 +940,7 @@
 					
 					// Order column
 					$html .= '<td class="__'.$this->c_theme.'_bloc_empty'.$class_order.'"><span class="__lisha_txt_mini_ lisha_txt_top">'.$order_prio.'</span></td>';
-					
+
 					//==================================================================
 					// Define order icon
 					//==================================================================
@@ -957,7 +957,7 @@
                         }
                         else
                         {
-						    $event = $this->hover_out_lib(40,40).' onmousedown="lisha_move_column_start(event,'.$key_col.',\''.$this->c_id.'\');"';
+						    $event = $this->hover_out_lib(40,76).' onmousedown="lisha_move_column_start(event,'.$key_col.',\''.$this->c_id.'\');"';
                         }
                     }
 					else
@@ -973,7 +973,7 @@
                         }
                         else
                         {
-                            $event = $this->hover_out_lib(40,40).' '.'onmousedown="click_column_order(\''.$this->c_id.'\','.$key_col.');"';
+                            $event = $this->hover_out_lib(40,76).' '.'onmousedown="click_column_order(\''.$this->c_id.'\','.$key_col.');"';
                         }
 					}
 					//==================================================================

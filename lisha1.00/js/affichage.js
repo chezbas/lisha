@@ -448,7 +448,7 @@ function lisha_checkbox(line,evt,checkbox,id)
 	}
 	catch(e) 
 	{
-		lisha_display_error(id,e);
+		lisha_display_error(id,e,'aff1');
 	}
 }
 /**==================================================================*/
@@ -825,7 +825,7 @@ function lisha_lib_hover(id_lib,id_help,lisha_id,mode)
 	}
 
     // Only if user documentation is turn on
-    // copy help page node index to global javascript varaible for document event
+    // copy help page node index to global javascript variable for document event
     if(mode)
     {
         g_help_page = id_help;
@@ -1248,18 +1248,19 @@ function lisha_toggle_header_menu(id,column)
 
 		// Order
 		obj.add_line(lis_lib[39],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend',null,true,obj_order,144,36);
-		
-		// Search mode
-		obj.add_line(lis_lib[146],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_search_mode',null,true,obj_search_mode,34,22);
-		
+
 		// Alignment
 		obj.add_line(lis_lib[46],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_left',null,true,obj_alignment);
-		
+
 		// Advanced column filter menu
 		if(eval('lisha.'+id+'.mode') != __CMOD__)
 		{
-			obj.add_sep();
-			obj.add_line(lis_lib[41],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_filter','column_advanced_filter(\''+id+'\','+column+');',true,undefined,50,50);
+            obj.add_sep();
+            // Search operator
+            obj.add_line(lis_lib[146],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_search_mode',null,true,obj_search_mode,34,22);
+
+            obj.add_line(lis_lib[41],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_filter','column_advanced_filter(\''+id+'\','+column+');',true,undefined,50,50);
+            obj.add_sep();
 
 			var is_lovable = eval('lisha.'+id+'.columns.c'+column+'.is_lovable');
 			
@@ -1280,7 +1281,6 @@ function lisha_toggle_header_menu(id,column)
 			{
 				obj.add_line(eval('lisha.'+id+'.columns.c'+column+'.lov_title'),'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_values','lisha_display_internal_lis(\''+id+'\',__POSSIBLE_VALUES__,'+column+');',line_enable);
 			}
-
 
             obj.add_sep();
 			// Hide column

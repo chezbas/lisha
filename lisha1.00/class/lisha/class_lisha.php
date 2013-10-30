@@ -1462,7 +1462,8 @@
 			//==================================================================
 
             //==================================================================
-            // build query condition for global search on all displayed columns
+            // Merge query condition for global search
+            // Only if a global search string is defined
             //==================================================================
             if($this->string_global_search != "")
             {
@@ -1472,12 +1473,21 @@
                 {
                     if($column_value['display'] != __HIDE__)
                     {
-                        $sql_filter_global .= ' OR '.$column_value['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$this->string_global_search))),true),$this->link).__PERCENT__);
+                        // Only displayed column are involved
+
+                        $tmp_result = $this->string_global_search;
+
+                        // Transform string for date localization
+                        if($column_value['data_type'] == 'date')
+                        {
+                            $tmp_result = $this->convert_localized_date_to_database_format($column_value["original_order"],$this->string_global_search,__MYSQL__); // Database engine hard coded TODO
+                        }
+
+                        $sql_filter_global .= ' OR '.$column_value['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$tmp_result))),true),$this->link).__PERCENT__);
                     }
                 }
                 $sql_filter_global .= ')';
 
-                // Merge filters if global search active
                 $sql_filter = $sql_filter.$sql_filter_global;
             }
             //==================================================================
@@ -3105,7 +3115,15 @@
                                     // Check if lov is solvable
                                     $sql_lov = $this->solve_lov_main_query($value_col['original_order']);
                                     // And condition to check if input value is in list
-                                    $sql_lov = $sql_lov." AND ".$value_col['lov']['before_as']." = '".$valeur['value']."'";
+
+                                    if($valeur['value'] == '')
+                                    {
+                                        $sql_lov = $sql_lov." AND ".$value_col['lov']['before_as']." IS NULL";
+                                    }
+                                    else
+                                    {
+                                        $sql_lov = $sql_lov." AND ".$value_col['lov']['before_as']." = '".$valeur['value']."'";
+                                    }
 
                                     // Request query
                                     $this->exec_sql($sql_lov,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
