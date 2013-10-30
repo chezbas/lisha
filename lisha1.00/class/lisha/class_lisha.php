@@ -3114,7 +3114,15 @@
                                     // Check if lov is solvable
                                     $sql_lov = $this->solve_lov_main_query($value_col['original_order']);
                                     // And condition to check if input value is in list
-                                    $sql_lov = $sql_lov." AND ".$value_col['lov']['before_as']." = '".$valeur['value']."'";
+
+                                    if($valeur['value'] == '')
+                                    {
+                                        $sql_lov = $sql_lov." AND ".$value_col['lov']['before_as']." IS NULL";
+                                    }
+                                    else
+                                    {
+                                        $sql_lov = $sql_lov." AND ".$value_col['lov']['before_as']." = '".$valeur['value']."'";
+                                    }
 
                                     // Request query
                                     $this->exec_sql($sql_lov,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);

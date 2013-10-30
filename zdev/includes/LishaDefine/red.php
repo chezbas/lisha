@@ -129,8 +129,27 @@
 		//==================================================================
 		$obj_lisha_tran->define_column('`zdev_table`.`status`','status','status',__TEXT__,__WRAP__,__CENTER__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'status');
-        //$obj_lisha_tran->define_attribute('__column_input_check_update', __LISTED__,'status');
-		//$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'status');
+        $obj_lisha_tran->define_attribute('__column_input_check_update', __LISTED__,'status');
+
+        // Match code
+        $obj_lisha_tran->define_lov("	SELECT
+                                            `main`.`A` AS `mode`
+                                            ".$_SESSION[$ssid]['lisha']['configuration'][10]."
+                                            (
+                                                SELECT 0 AS `A`
+                                                UNION
+                                                SELECT 1 AS `A`
+                                                UNION
+                                                SELECT 2 AS `A`
+                                             ) `main`
+                                                WHERE 1 = 1
+                                            ",
+                                    'Color index',
+                                    '`main`.`A`',
+                                    'mode'
+                                );
+        $obj_lisha_tran->define_column_lov("`main`.`A`",'mode','myColor',__TEXT__,__WRAP__,__LEFT__);
+        $obj_lisha_tran->define_column_lov_order('mode',__ASC__);
 		//==================================================================
 
 		//==================================================================
