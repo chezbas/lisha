@@ -1257,9 +1257,9 @@ function lisha_toggle_header_menu(id,column)
 		{
             obj.add_sep();
             // Search operator
-            obj.add_line(lis_lib[146],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_search_mode',null,true,obj_search_mode,34,22);
+            obj.add_line(lis_lib[41],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_advanced_search','column_advanced_filter(\''+id+'\','+column+');',true,undefined,41,1);
 
-            obj.add_line(lis_lib[41],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_filter','column_advanced_filter(\''+id+'\','+column+');',true,undefined,50,50);
+            obj.add_line(lis_lib[34],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_filter',null,true,obj_search_mode,34,22);
             obj.add_sep();
 
 			var is_lovable = eval('lisha.'+id+'.columns.c'+column+'.is_lovable');
