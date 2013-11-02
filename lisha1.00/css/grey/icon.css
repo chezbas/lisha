@@ -175,6 +175,14 @@
     background-position: -1140px -20px;
 }
 
+.__grey_ico_advanced_search {
+    background-position: -1160px 0;
+}
+
+.__grey_ico_advanced_search:hover {
+    background-position: -1160px -20px;
+}
+
 .__grey_ico_sort-hide {
 	background-position: -420px 0;
 }
