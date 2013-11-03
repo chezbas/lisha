@@ -369,8 +369,12 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
 
 
 /**==================================================================
- * Manage red marble on column header
- * Red marble appears when query condition is solvable
+ * Manage marble on column header
+ * Marble appears when lov query is solvable
+ *  red     : custom lov
+ *  white   : standard distinct list value ( by default on every column without any custom lov defined )
+ *
+ *  if no marble that means that custom lov contain still external reference ( ||TAGLOV_ ) that can't be replace with specific value )
  *
  * @lisha_id 	    : lisha internal identifier
  ====================================================================*/
@@ -382,25 +386,27 @@ function update_column_bullet(lisha_id)
 		{
 			if(document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id))
 			{
+                // is_lovable = true means that distinct values query is solvable ( means no more TAGLOV )
 				var is_lovable = eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.is_lovable');
+
+                // lov_perso = true means that you have defined custom lov on column
 				var lov_perso = eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.lov_perso');
-				
-				if(lov_perso != 'undefined' && is_lovable != 'undefined' && is_lovable == true)
-				{
-					document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header_lovable __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
-				}
-				else
-				{
-					if(lov_perso != undefined)
-					{
-						document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
-					}
-					else
-					{
-						
-						document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
-					}
-				}
+
+                // SRX try to enhance marble part SRX_MANAGE_MARBLE_ON_INPUT_CHANGE
+                 if(is_lovable == true && lov_perso != 'undefined')
+                {
+                    document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
+                }
+
+                if(is_lovable == true && lov_perso == true)
+                {
+                    document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header_lovable __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
+                }
+
+                if(is_lovable == 'undefined' || is_lovable == false)
+                {
+                    document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
+                }
 			}
 		}
 	}
@@ -423,9 +429,10 @@ function wait_column_bullet(lisha_id)
 	{
 		var is_lovable = eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.is_lovable');
 		var lov_perso = eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.lov_perso');
-		
+
 		if(lov_perso != undefined && is_lovable != undefined && is_lovable == true)
 		{
+            //alert(iterable_element+'-'+lov_perso);
 			document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header_check_is_lovable __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
 		}
 		else
@@ -435,6 +442,10 @@ function wait_column_bullet(lisha_id)
 				//alert(eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id'));
 				document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header_check_is_lovable __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
 			}
+            else
+            {
+                //alert(iterable_element+'-'+is_lovable+lov_perso);
+            }
 		}
 	}	
 }

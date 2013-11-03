@@ -966,7 +966,7 @@
 				if(isset($this->c_columns[$column]['lov']))
 				{
 					// Replace all taglov
-					$sql_src = $this->replace_taglov($column,$this->c_columns[$column]['lov']['sql']);
+					$sql_src = $this->solve_lov_main_query($column);
 
 					$sql = 'SELECT * FROM ('.$sql_src.') t WHERE '.$this->c_columns[$column]['lov']['col_return'].' LIKE "%'.$this->protect_sql(rawurldecode($post['filter']),$this->link).'%"';
 
@@ -975,7 +975,7 @@
 					{
 						if($this->rds_num_rows($resultat) == 1)
 						{
-							$this->c_columns[$column]['taglov_possible'] = true;
+							$this->c_columns[$column]['lov']['taglov_possible'] = true;
 
 							while($row = $this->rds_fetch_array($resultat))
 							{
@@ -984,7 +984,7 @@
 						}
 						else
 						{
-							unset($this->c_columns[$column]['taglov_possible']);
+							unset($this->c_columns[$column]['lov']['taglov_possible']);
 						}
 					}
 					else
@@ -1009,13 +1009,13 @@
 						}
 						else
 						{
-							unset($this->c_columns[$column]['taglov_possible']);
+							unset($this->c_columns[$column]['lov']['taglov_possible']);
 						}
 					}
 				}
 			}
 
-			$this->check_column_lovable();
+			$this->set_is_lovable_columns();
 
 			if(isset($this->c_columns[$column]['filter']) && count($this->c_columns[$column]['filter']) == 0)
 			{
@@ -1052,23 +1052,14 @@
 		/**===================================================================*/
 
 
-		private function replace_taglov($p_column,$p_query)
-		{
-			if(isset($this->c_columns[$p_column]['lov']['taglov']))
-			{
-				foreach($this->c_columns[$p_column]['lov']['taglov'] as $value)
-				{
-					if(isset($this->c_columns[$this->get_id_column($value['column'])]['filter']['input']['filter']))
-					{
-						$p_query = str_replace('||TAGLOV_'.$value['column'].'**'.$value['column_return'].'||',$this->c_columns[$this->get_id_column($value['column'])]['filter']['input']['taglov'][$value['column_return']],$p_query);
-					}
-				}
-			}
-			return $p_query;
-		}
-
-
-		private function check_column_lovable()
+        /**==================================================================
+         * Compute and set up all columns is_lovable feature
+         *
+         * is_lovable = true means that you will have a marble
+         *      red     : means a custom lov is defined
+         *      white   : means standard distinct value list ( by default )
+        ====================================================================*/
+		private function set_is_lovable_columns()
 		{
             //==================================================================
             // Check if column is lovable
@@ -1077,29 +1068,18 @@
 		 	{
 	 			if(isset($value_col['lov']['taglov']))
 	 			{
-	 				foreach($value_col['lov']['taglov'] as $value_lov)
-	 				{
-	 					if(isset($this->c_columns[$this->get_id_column($value_lov['column'])]['taglov_possible']))
-	 					{
-	 						$sql = $this->replace_taglov($value_col['original_order'],$value_col['lov']['sql']);
-	 						$resultat = $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
+                    // Check if it's solvable
+                    $sql = $this->solve_lov_main_query($key);
 
-	 						if($this->rds_num_rows($resultat) > 0)
-							{
-	 							$possible = true;
-							}
-							else
-							{
-	 							$possible = false;
-	 							break;
-							}
-	 					}
-	 					else
-	 					{
-	 						$possible = false;
-	 						break;
-	 					}
-	 				}
+                    if(stripos($sql,'||TAGLOV_') === false)
+                    {
+                        // No more TAGLOV in query that means it's solvable
+                        $possible = true;
+                    }
+                    else
+                    {
+                        $possible = false;
+                    }
 
 	 				if(isset($possible) && $possible == true)
 	 				{
@@ -1746,7 +1726,7 @@
 		public function generate_lisha()
 		{
 			// Draw the lisha
-			$this->check_column_lovable();
+			$this->set_is_lovable_columns();
 
             return $this->c_obj_graphic->draw_lisha($this->resultat,false,null,false);
 		}
@@ -1943,7 +1923,7 @@
 		 ====================================================================*/
 		public function generate_json_column()
 		{
-			$this->check_column_lovable();
+			$this->set_is_lovable_columns();
 
 			$json_base = 'lisha.'.$this->c_id;
 
@@ -1991,6 +1971,7 @@
 
 						//==================================================================
 						// Check if the column is lovable
+                        // Means that all TAGLOV are solvable
 						//==================================================================
 			 			if($value['is_lovable'])
 			 			{
@@ -3999,7 +3980,7 @@
 			{
 				// No filter defined, clear the filter clause
 				unset($this->c_columns[$column]['filter']['input']);
-				unset($this->c_columns[$column]['taglov_possible']);
+				unset($this->c_columns[$column]['lov']['taglov_possible']);
 			}
 			else
 			{
@@ -4044,7 +4025,7 @@
 						// Quick help : Strict
 						if($this->rds_num_rows($this->resultat) == 1)
 						{
-							$this->c_columns[$column]['taglov_possible'] = true;
+							$this->c_columns[$column]['lov']['taglov_possible'] = true;
 
 							while($row = $this->rds_fetch_array($this->resultat))
 							{
@@ -4053,7 +4034,7 @@
 						}
 						else
 						{
-							unset($this->c_columns[$column]['taglov_possible']);
+							unset($this->c_columns[$column]['lov']['taglov_possible']);
 						}
 					//}
 					/*else
@@ -4063,14 +4044,13 @@
 
 						// Search if the exact value exist
 						$sql = 'SELECT * FROM ('.$this->c_columns[$column]['lov']['sql'].') AS `ret` WHERE '.$this->c_columns[$column]['lov']['col_return'].' = "'.$this->protect_sql(rawurldecode($post['filter']),$this->link).'"';
-                        error_log("hhhhhhhhh".$sql);
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
                         // SRX fix it please !!
                         // Error due to field in tinyint(3)
                         //if($this->rds_result($this->resultat,0, 'ret') > 0)
 						if($this->rds_num_rows($this->resultat) > 0)
 						{
-							$this->c_columns[$column]['taglov_possible'] = true;
+							$this->c_columns[$column]['lov']['taglov_possible'] = true;
 							while($row = $this->rds_fetch_array($this->resultat))
 							{
 								$this->c_columns[$column]['filter']['input']['taglov'] = $row;
@@ -4078,14 +4058,12 @@
 						}
 						else
 						{
-							unset($this->c_columns[$column]['taglov_possible']);
+							unset($this->c_columns[$column]['lov']['taglov_possible']);
 						}
 					}*/
 				}
 			}
 			//==================================================================
-
-            $this->check_column_lovable();
 
 			if(isset($this->c_columns[$column]['filter']) && count($this->c_columns[$column]['filter']) == 0)
 			{
@@ -4094,11 +4072,10 @@
 
 			if($txt != '')
 			{
-				//==================================================================
-				// No custom lov defined
-				//==================================================================
 				if(!isset($this->c_columns[$column]['lov']))
 				{
+                    // No custom lov defined
+
                     //==================================================================
                     // Count matching rows when user type something in input box
                     //==================================================================
@@ -4148,18 +4125,22 @@
 				}
 				else
 				{
+                    // Whith a custom lov defined
+
                     //operator_build_query_condition
                     $sql_condition_quick_search = $this->operator_build_query_condition($this->c_columns[$column],$txt,'lov');
 
 					if(isset($this->c_columns[$column]['lov']['taglov_possible']) || !isset($this->c_columns[$column]['lov']['taglov']))
 					{
                         // No TAGLOV dependency
+
                         //==================================================================
                         // Count matching rows when user type something in input box ( Custom lov )
                         //==================================================================
                         $query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
 
                         $sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['lov']['before_as'].' ) AS `total` '.substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).$sql_condition_quick_search;
+
                         $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
                         $row = $this->rds_fetch_array($this->resultat);
                         $count = $row['total'];
@@ -4176,8 +4157,6 @@
 					else
 					{
                         // With TAGLOV dependency
-
-                        // Solve lov query if it's possible
                         $sql_lov = $this->solve_lov_main_query($column);
 
                         //==================================================================
@@ -4246,10 +4225,13 @@
 				$html = '';
 			}
 
+            // Check if columns lov query are solvable
+            $this->set_is_lovable_columns();
+
 			//==================================================================
 			// Build json param and xml content
 			//==================================================================
-			$json = $this->generate_lisha_json_param(true,false);
+			$json = $this->generate_lisha_json_param(true,false); // SRX_MANAGE_MARBLE_ON_INPUT_CHANGE
 
 			// XML return
 			header("Content-type: text/xml");
@@ -4436,10 +4418,10 @@
 				{
 					unset($val_column['filter']);
 				}
-				unset($this->c_columns[$key_column]['taglov_possible']);
+				unset($this->c_columns[$key_column]['lov']['taglov_possible']);
 			}
 
-			$this->check_column_lovable();
+			$this->set_is_lovable_columns();
 
             // Reset global search
             $this->string_global_search = "";
@@ -4833,9 +4815,9 @@
             {
                 foreach($this->c_columns[$column]['lov']['taglov'] as $value)
                 {
-                    if(isset($this->c_columns[$this->get_id_column($value['column'])]['filter']['input']['taglov']))
+                    if(isset($this->c_columns[$this->get_id_column($value['column'])]['filter']['input']['filter']))
                     {
-                        $sql = str_replace('||TAGLOV_'.$value['column'].'**'.$value['column_return'].'||',$this->c_columns[$this->get_id_column($value['column'])]['filter']['input']['taglov'][$value['column_return']],$sql);
+                        $sql = str_replace('||TAGLOV_'.$value['column'].'**'.$value['column_return'].'||',$this->c_columns[$this->get_id_column($value['column'])]['filter']['input']['filter'],$sql);
                     }
                 }
             }
