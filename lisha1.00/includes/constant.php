@@ -7,6 +7,8 @@
 	define("__DATE__","date");										// date
 	define("__CHECKBOX__","checkbox");								// checkbox type
 	define("__NUMERIC__","numeric");								// numeric
+    define("__INT__", "int");                                       // int
+    define("__FLOAT__", "float");                                   // float
 	define("__LEFT__","left");										// left
 	define("__RIGHT__","right");									// right
 	define("__CENTER__","center");									// center

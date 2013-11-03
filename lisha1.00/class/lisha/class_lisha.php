@@ -1429,6 +1429,23 @@
 				{
 					foreach ($column_value['filter'] AS $filter_value)
 					{
+                        //==================================================================
+                        // localization decimal symbol
+                        //==================================================================
+                        //float or numeric (same)
+                        if ($column_value['data_type'] == __FLOAT__
+                            || $column_value['data_type'] == __NUMERIC__
+                        )
+                        {
+                            $decimal_symbol = $_SESSION[$this->c_ssid]['lisha']['decimal_symbol'];
+                            if ($decimal_symbol != '.')
+                            {
+                                // if not decimal point, transform decimal symbol in point for search in database
+                                $filter_value = str_replace($decimal_symbol, '.', $filter_value);
+                            }
+                        }
+                        //==================================================================
+
                         switch($column_value['search_mode'])
                         {
                             case __EXACT__:
@@ -2534,6 +2551,19 @@
 				$this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 			}
 
+            // Localization Float / Numeric format
+            if($this->c_columns[$column]['data_type'] == __FLOAT__
+                || $this->c_columns[$column]['data_type'] == __NUMERIC__
+            )
+            {
+                $decimal_symbol = $_SESSION[$this->c_ssid]['lisha']['decimal_symbol'];
+                if ($decimal_symbol != '.')
+                {
+                    // if not decimal point, transform point in decimal symbol for display
+                    $html = str_replace('.', $decimal_symbol, $html);
+                }
+            }
+
 			$retour = array("HTML" => $html,"COMPEL" => $column_compel, "DISPLAY_NAME" => $column_display_name);
 			echo json_encode($retour);
 		}
@@ -2611,11 +2641,22 @@
 					$column_name = $this->c_columns[$val_col["original_order"]]["sql_as"];
 
 					// Localization date format
-					if($this->c_columns[$val_col["original_order"]]['data_type'] == 'date')
+					if($this->c_columns[$val_col["original_order"]]['data_type'] == __DATE__)
 					{
 						$p_value = $this->convert_localized_date_to_database_format($val_col["original_order"], $p_value);
 					}
-
+                    // Localization Float / numeric format
+                    if($this->c_columns[$val_col["original_order"]]['data_type'] == __FLOAT__
+                        || $this->c_columns[$val_col["original_order"]]['data_type'] == __NUMERIC__
+                    )
+                    {
+                        $decimal_symbol = $_SESSION[$this->c_ssid]['lisha']['decimal_symbol'];
+                        if ($decimal_symbol != '.')
+                        {
+                            // if not decimal point, transform decimal symbol in point for update database
+                            $p_value = str_replace($decimal_symbol, '.', $p_value);
+                        }
+                    }
 					// primary key..only one row found... then exit foreach now
 					break;
 				}
@@ -3083,7 +3124,7 @@
 		 * update_data_check	: Check consistency of data row
 		 * Use full to add or update data
 		 ====================================================================*/
-		private function update_data_check($tab_val_col)
+		private function update_data_check(&$tab_val_col)
 		{
 			if(count($tab_val_col) != 0)
 			{
@@ -3094,7 +3135,50 @@
 				//error_log(print_r($tab_val_col,true));
 				foreach($this->c_columns as $key_col => $value_col)
 				{
-					// Check required
+                    if (isset($this->c_columns[$key_col]['data_type'])
+                    && $tab_val_col['c'.$key_col]['value'] != '' )
+                    {
+                        //int
+                        if ($this->c_columns[$key_col]['data_type'] == __INT__
+                            && filter_var($tab_val_col['c'.$key_col]['value'],FILTER_VALIDATE_INT) === false
+                        )
+                        {
+                            $error_line['c'.$key_col]['status'] = __INT__;
+                            $error_str .='<tr><td align=left>'.str_replace('$value',$tab_val_col['c'.$key_col]['value'],str_replace('$name','<b>'.$value_col['name'].'</b>',$this->lib(156))).'</td></tr>';
+                            // error for all case
+                            $error_line['c'.$key_col]['status'] = $this->c_columns[$key_col]['data_type'];
+                            $error_line['c'.$key_col]['id'] = $key_col;
+                            $ctrl_ok = false;
+                            break;
+                        }
+
+                        //float or numeric (same)
+                        if ($this->c_columns[$key_col]['data_type'] == __FLOAT__
+                            || $this->c_columns[$key_col]['data_type'] == __NUMERIC__
+                        )
+                        {
+                            // recovery decimal symbol
+                            $decimal_symbol = $_SESSION[$this->c_ssid]['lisha']['decimal_symbol'];
+                            if ($decimal_symbol != '.')
+                            {
+                                // if not decimal point, transform decimal symbol in point for insert database
+                                $tab_val_col['c'.$key_col]['value'] = str_replace($decimal_symbol, '.', $tab_val_col['c'.$key_col]['value']);
+                            }
+                            // validate data float
+                            if (filter_var($tab_val_col['c'.$key_col]['value'],FILTER_VALIDATE_FLOAT) === false)
+                            {
+                                $error_line['c'.$key_col]['status'] = __FLOAT__;
+                                $error_str .='<tr><td align=left>'.str_replace('$value',$tab_val_col['c'.$key_col]['value'],str_replace('$name','<b>'.$value_col['name'].'</b>',$this->lib(157))).'</td></tr>';
+                                // error for all case
+                                $error_line['c'.$key_col]['status'] = $this->c_columns[$key_col]['data_type'];
+                                $error_line['c'.$key_col]['id'] = $key_col;
+                                $ctrl_ok = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    // Check required
 					if(isset($value_col['rw_flag']) &&
 						($value_col['rw_flag'] == __REQUIRED__ || $value_col['rw_flag'] == __LISTED__) &&
 						!isset($value_col['auto_create_column'])
@@ -3171,7 +3255,7 @@
 									$ctrl_ok = false;
 									$error_str .='<tr><td align=left>'.str_replace('$name','<b>'.$value_col['name'].'</b>',$this->lib(58)).'</td></tr>';
 								}
-								if(isset($value_col['rw_flag']))
+								if(isset($value_col['rw_flag']) && $value_col['rw_flag'] == __FORBIDDEN__)
 								{
 									$error_line['c'.$key_col]['id'] = $key_col;
 									$error_line['c'.$key_col]['status'] = __FORBIDDEN__;
@@ -3249,40 +3333,43 @@
 					{
 						if($value['value'] != "")
 						{
-						// Add a , if necessary
-						if($i > 0)
-						{
-							$sql_insert .= ',';
-							$sql_insert_values .= ',';
-						}
+                            // Add a , if necessary
+                            if($i > 0)
+                            {
+                                $sql_insert .= ',';
+                                $sql_insert_values .= ',';
+                            }
 
 
-						$sql_insert .= $this->get_quote_col($this->c_columns[$value['id']]['sql_as']);
+                            $sql_insert .= $this->get_quote_col($this->c_columns[$value['id']]['sql_as']);
 
-						if($this->c_columns[$value['id']]['data_type'] == 'date')
-						{
-							$value['value'] = $this->convert_localized_date_to_database_format($value['id'], $value['value']);
-						}
+                            if($this->c_columns[$value['id']]['data_type'] == 'date')
+                            {
+                                $value['value'] = $this->convert_localized_date_to_database_format($value['id'], $value['value']);
+                            }
 
-					    // Values
-						if(isset($this->c_columns[$value['id']]['rw_function']))
-						{
-							// Special update function defined on the column
-							$sql_insert_values .= str_replace('__COL_VALUE__',$this->protect_sql($value['value'],$this->link),$this->c_columns[$value['id']]['rw_function']);
-						}
-						else
-						{
-							if($this->c_columns[$value['id']]['data_type'] == __NUMERIC__)
-							{
-								$sql_insert_values .= $this->protect_sql($value['value'],$this->link);
-							}
-							else
-							{
-								$sql_insert_values .= $this->get_quote_string($this->protect_sql($value['value'],$this->link));
-							}
-						}
+                            // Values
+                            if(isset($this->c_columns[$value['id']]['rw_function']))
+                            {
+                                // Special update function defined on the column
+                                $sql_insert_values .= str_replace('__COL_VALUE__',$this->protect_sql($value['value'],$this->link),$this->c_columns[$value['id']]['rw_function']);
+                            }
+                            else
+                            {
+                                if($this->c_columns[$value['id']]['data_type'] == __NUMERIC__
+                                    || $this->c_columns[$value['id']]['data_type'] == __FLOAT__
+                                    || $this->c_columns[$value['id']]['data_type'] == __INT__
+                                )
+                                {
+                                    $sql_insert_values .= $this->protect_sql($value['value'],$this->link);
+                                }
+                                else
+                                {
+                                    $sql_insert_values .= $this->get_quote_string($this->protect_sql($value['value'],$this->link));
+                                }
+                            }
 
-						$i = $i + 1;
+                            $i = $i + 1;
 						}
 					}
 				}
@@ -4189,6 +4276,23 @@
         private function operator_build_query_condition($p_current_column,$p_input_text,$p_lov = 'no')
         {
             $sql_filter = "";
+
+            //==================================================================
+            // localization decimal symbol
+            //==================================================================
+            //float or numeric (same)
+            if ($p_current_column['data_type'] == __FLOAT__
+                || $p_current_column['data_type'] == __NUMERIC__
+            )
+            {
+                $decimal_symbol = $_SESSION[$this->c_ssid]['lisha']['decimal_symbol'];
+                if ($decimal_symbol != '.')
+                {
+                    // if not decimal point, transform decimal symbol in point for search in database
+                    $p_input_text = str_replace($decimal_symbol, '.', $p_input_text);
+                }
+            }
+            //==================================================================
 
             switch($p_lov)
             {
