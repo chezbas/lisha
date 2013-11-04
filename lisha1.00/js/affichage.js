@@ -1247,10 +1247,10 @@ function lisha_toggle_header_menu(id,column)
 		}
 
 		// Order
-		obj.add_line(lis_lib[39],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend',null,true,obj_order,144,36);
+		obj.add_line(lis_lib[39],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend',null,true,obj_order,144,79);
 
 		// Alignment
-		obj.add_line(lis_lib[46],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_left',null,true,obj_alignment);
+		obj.add_line(lis_lib[46],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_left',null,true,obj_alignment,146,76);
 
 		// Advanced column filter menu
 		if(eval('lisha.'+id+'.mode') != __CMOD__)
