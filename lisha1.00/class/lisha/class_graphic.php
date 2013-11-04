@@ -1520,6 +1520,17 @@
                                 $content .= '>';
                             }
 						}
+
+                        if($this->c_columns[$key_col]["data_type"] == __INT__)
+                        {
+                            $content = number_format($content,0,$_SESSION[$this->c_ssid]['lisha']['decimal_symbol'],''.$_SESSION[$this->c_ssid]['lisha']['thousand_symbol']);
+                        }
+
+                        if($this->c_columns[$key_col]["data_type"] == __FLOAT__|| $this->c_columns[$key_col]["data_type"] == __NUMERIC__)
+                        {
+                            //TODO MIZ : rendre paramétrable le nombre de décimal des Float à l'affichage
+                            $content = number_format($content,2,$_SESSION[$this->c_ssid]['lisha']['decimal_symbol'],''.$_SESSION[$this->c_ssid]['lisha']['thousand_symbol']);
+                        }
 						//==================================================================
 						
 						//==================================================================

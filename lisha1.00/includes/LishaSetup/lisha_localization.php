@@ -11,6 +11,7 @@
 	$query = "SELECT
 				`id_tiny`,
 				`date_format` AS 'date_format',
+				`decimal_symbol` AS 'decimal_symbol',
 				`thousand_symbol` AS 'thousand_symbol'
 			FROM 
 				`".__LISHA_TABLE_LANGUAGE__."`
@@ -29,5 +30,6 @@
 
 	$_SESSION[$ssid]['lisha']['langue_TinyMCE'] = $row['id_tiny'];
 	$_SESSION[$ssid]['lisha']['date_format'] = $row['date_format'];
+    $_SESSION[$ssid]['lisha']['decimal_symbol'] = $row['decimal_symbol'];
     $_SESSION[$ssid]['lisha']['thousand_symbol'] = $row['thousand_symbol'];
 	//==================================================================
