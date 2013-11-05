@@ -2250,7 +2250,8 @@
 			$html .= 'lisha = new Object();';
 			$html .= 'lis_lib = new Array();';
 
-			$sql = 'SELECT
+			// TODO MIZ : Bloc a supprimer quand migration des textes OK
+			/*$sql = 'SELECT
 						`id` AS `id`,
 						`corps`AS `corps`
 					FROM '.__LISHA_TABLE_TEXT__.'
@@ -2269,7 +2270,16 @@
 				$_SESSION[$this->c_ssid]['lisha']['lib'][$row['id']] = $row['corps'];
 				$html .= '			lis_lib['.$row['id'].'] = \''.str_replace("'","\'",$row['corps']).'\';';
 
-			}
+			}*/
+
+            $i18n_js =  file_get_contents($this->c_dir_obj.'/language/'.$this->c_lng.'.json');
+            $i18n = json_decode($i18n_js,true);
+
+            foreach($i18n as $key => $value)
+            {
+                $_SESSION[$this->c_ssid]['lisha']['lib'][$key] = $value;
+                $html .= '			lis_lib['.$key.'] = \''.str_replace("'","\'",$value).'\';';
+            }
 
 			$html .='</script>';
 
