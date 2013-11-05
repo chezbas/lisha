@@ -22,11 +22,12 @@
 	$query = "
 			SELECT
 				`demo_table`.`index`			AS `index`,
-				`demo_table`.`daterec` 		AS `daterec`,
-				`demo_table`.`description`	AS `description`,
+				`demo_table`.`daterec`			AS `daterec`,
+				`demo_table`.`description`		AS `description`,
 				`demo_table`.`amount`			AS `amount`,
 				UPPER(`demo_table`.`amount`)	AS `upper`,
 				`demo_table`.`status`			AS `status`,
+				`demo_table`.`mode`				AS `mode`,
 				`demo_table`.`status`			AS `MyGroupTheme`
 			".$_SESSION[$ssid]['lisha']['configuration'][10]."
 				`demo_table`
@@ -54,8 +55,8 @@
 	$obj_lisha_tran->define_attribute('__active_top_bar_page',false);
 	$obj_lisha_tran->define_attribute('__active_bottom_bar_page',true);
 
-	$obj_lisha_tran->define_attribute('__active_user_doc', false);					// user documentation button
-	$obj_lisha_tran->define_attribute('__active_tech_doc', false);					// technical documentation button
+	$obj_lisha_tran->define_attribute('__active_user_doc', true);					// user documentation button
+	$obj_lisha_tran->define_attribute('__active_tech_doc', true);					// technical documentation button
 	$obj_lisha_tran->define_attribute('__active_ticket', false);						// Tickets link
 
 
@@ -115,7 +116,16 @@
 		//==================================================================
 		// define column : status
 		//==================================================================
-		$obj_lisha_tran->define_column('`demo_table`.`status`','status','status',__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column('`demo_table`.`status`','status','status',__INT__,__WRAP__,__CENTER__);
+		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'status');
+		//$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'status');
+		//==================================================================
+
+		//==================================================================
+		// define column : mode
+		//==================================================================
+		$obj_lisha_tran->define_column('`demo_table`.`mode`','mode','mode',__FLOAT__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_attribute('__column_number_of_decimal',3,'mode');
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'status');
 		//$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'status');
 		//==================================================================
@@ -123,7 +133,7 @@
 		//==================================================================
 		// define column : SetOfColor
 		//==================================================================
-		$obj_lisha_tran->define_column('`demo_table`.`status`','MyGroupTheme','MyGroupTheme',__TEXT__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_column('`demo_table`.`status`','MyGroupTheme','MyGroupTheme',__INT__,__WRAP__,__CENTER__);
 		$obj_lisha_tran->define_attribute('__column_display_mode',false,'MyGroupTheme');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'MyGroupTheme');
 		//==================================================================
