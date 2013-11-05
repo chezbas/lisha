@@ -10,12 +10,12 @@
 														$ssid,
 														__MYSQL__,
 														array('user' => __LISHA_DATABASE_USER__,'password' => __LISHA_DATABASE_PASSWORD__,'host' => __LISHA_DATABASE_HOST__,'schema' => __LISHA_DATABASE_SCHEMA__),
-                                                        $path_root_lisha,
+														$path_root_lisha,
 														false);	// Type of internal lisha ( false by default )
 
 	// Create a reference to the session
 	$obj_lisha_tran = &$_SESSION[$ssid]['lisha'][$lisha1_id];
-	
+
 	//==================================================================
 	// Define main query
 	//==================================================================
@@ -34,7 +34,7 @@
 				";
 	$obj_lisha_tran->define_attribute('__main_query', $query);
 	//==================================================================
-	
+
 	//==================================================================
 	// Lisha display setup
 	//==================================================================
@@ -47,10 +47,10 @@
 	$obj_lisha_tran->define_attribute('__title', 'Blue Lisha');							// Title
 
 	$obj_lisha_tran->define_attribute('__max_lines_by_page', 80);					// Limit rows by page	
-	
+
 	$obj_lisha_tran->define_attribute('__active_column_separation',false);
 	$obj_lisha_tran->define_attribute('__active_row_separation',false);
-	
+
 	$obj_lisha_tran->define_attribute('__active_top_bar_page',false);
 	$obj_lisha_tran->define_attribute('__active_bottom_bar_page',true);
 
@@ -58,26 +58,26 @@
 	$obj_lisha_tran->define_attribute('__active_tech_doc', false);					// technical documentation button
 	$obj_lisha_tran->define_attribute('__active_ticket', true);						// Tickets link
 
-	
+
 	$obj_lisha_tran->define_attribute('__display_mode', __NMOD__);					// Display mode
-	
+
 	$obj_lisha_tran->define_attribute('__key_url_custom_view', 'f1');				// Defined key for quick custom view loader in url browser
 
 	$obj_lisha_tran->define_attribute('__update_table_name', "zdev_table");		// Define table to update
 
 	$obj_lisha_tran->define_attribute('__column_name_group_of_color', "MyGroupTheme");		// ( Optional ) Define csutom column color name
 	//==================================================================
-		
+
 	//==================================================================
 	// define columns
 	//==================================================================
-			
+
 		//==================================================================
 		// define column : Date modification
 		//==================================================================
 		$obj_lisha_tran->define_column('`zdev_table`.`daterec`','daterec','date',__DATE__,__WRAP__,__CENTER__,__PERCENT__,__DISPLAY__);
 		//$obj_lisha_tran->define_attribute('__column_date_format','%d/%m/%Y','daterec');
-        $obj_lisha_tran->define_attribute('__column_date_format','%Y-%m-%d','daterec');
+		$obj_lisha_tran->define_attribute('__column_date_format','%Y-%m-%d','daterec');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'daterec');
 		$obj_lisha_tran->define_input_focus('daterec', true);					// Focused
 		//==================================================================
@@ -96,7 +96,7 @@
 		$obj_lisha_tran->define_column('`zdev_table`.`amount`','amount','normal',__BBCODE__,__WRAP__,__LEFT__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'amount');						
 		//==================================================================
-				
+
 		//==================================================================
 		// define column : compute
 		//==================================================================
@@ -128,22 +128,22 @@
 		$obj_lisha_tran->define_attribute('__column_display_mode',false,'MyGroupTheme');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'MyGroupTheme');
 		//==================================================================
-		
+
 	//==================================================================
 
-		
-		
+
+
 	// Table columns primary key
 	// Caution : Can't change key column name from origine query column name
 	// It's not required to declare column key with define_column method
 	$obj_lisha_tran->define_key(Array('index'));
-		
+
 	//==================================================================
 	// Define extra events actions 
 	//==================================================================
 	//$obj_lisha_tran->define_lisha_action(__ON_ADD__,__AFTER__,'lisha_transaction',Array('rebuild_account();'));
 	//==================================================================
-	
+
 	//==================================================================
 	// Column order : Define in ascending priority means first line defined will be first priority column to order by and so on...
 	//==================================================================
@@ -151,7 +151,7 @@
 	$obj_lisha_tran->define_order_column('description',__DESC__);
 	$obj_lisha_tran->define_order_column('amount',__ASC__);
 	//==================================================================
-		
+
 	//==================================================================
 	// Line theme mask
 	//==================================================================
@@ -168,9 +168,9 @@
 	//$obj_lisha_tran->define_line_theme("EEEEFF","0.7em","D0DCE0","0.7em","AEE068","0.7em","AEE068","0.7em","006","000",2);
 	//==================================================================			
 
-	
-	
-	
+
+
+
 	//==================================================================
 	// Do not remove this bloc
 	// Keep this bloc at the end
