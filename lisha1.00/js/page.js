@@ -13,7 +13,7 @@ function lisha_page_change_ajax(lisha_id,type,ajax_return)
 		// Setup Ajax configuration
 		//==================================================================
 		var conf = [];
-		
+
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
 		conf['max_tentative'] = 4;
@@ -35,7 +35,7 @@ function lisha_page_change_ajax(lisha_id,type,ajax_return)
 
 			// Set the content of the lisha
 			lisha_set_content(lisha_id,decodeURIComponent(json.lisha.content));
-			
+
 			// Restore vertical lift position
 			//alert(varlisha_lisha_transaction.scrollTop);
 			restore_vertical_lift(lisha_id);
@@ -46,7 +46,7 @@ function lisha_page_change_ajax(lisha_id,type,ajax_return)
 			eval('lisha.'+lisha_id+'.selected_line = new Object;');
 			//eval(decodeURIComponent(json.lisha.json_line));
 			eval(decodeURIComponent(json.lisha.json)); // SRX ADD
-			
+
 
 			lisha_display_wait(lisha_id);
 		} 
@@ -86,7 +86,7 @@ function lisha_input_line_per_page_change_ajax(lisha_id,qtt,ajax_return)
 		// Setup Ajax configuration
 		//==================================================================
 		var conf = [];
-		
+
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
 		conf['max_tentative'] = 4;
@@ -99,32 +99,32 @@ function lisha_input_line_per_page_change_ajax(lisha_id,qtt,ajax_return)
 	}
 	else
 	{
-        // Force a full list refresh
-        try
-        {
-            // Get the ajax return in json format
-            var json = get_json(ajax_return);
+		// Force a full list refresh
+		try
+		{
+			// Get the ajax return in json format
+			var json = get_json(ajax_return);
 
-            // Update the json object
-            eval(decodeURIComponent(json.lisha.json));
+			// Update the json object
+			eval(decodeURIComponent(json.lisha.json));
 
-            // Set the content of the lisha
-            lisha_set_content(lisha_id,decodeURIComponent(json.lisha.content));
+			// Set the content of the lisha
+			lisha_set_content(lisha_id,decodeURIComponent(json.lisha.content));
 
-            document.getElementById('liste_'+lisha_id).scrollLeft = document.getElementById('liste_'+lisha_id).scrollLeft - 1; // SRX_UGLY_FIXE DUE TO BROWSER BUG
+			document.getElementById('liste_'+lisha_id).scrollLeft = document.getElementById('liste_'+lisha_id).scrollLeft - 1; // SRX_UGLY_FIXE DUE TO BROWSER BUG
 
-            // Setup Excel export button
-            toolbar_excel_button(lisha_id);
+			// Setup Excel export button
+			toolbar_excel_button(lisha_id);
 
-            // Hide the wait div
-            lisha_hide_wait(lisha_id);
+			// Hide the wait div
+			lisha_hide_wait(lisha_id);
 
-            lisha_execute_event(__ON_REFRESH__,__AFTER__,lisha_id);
-        }
-        catch(e)
-        {
-            lisha_display_error(lisha_id,e);
-        }
+			lisha_execute_event(__ON_REFRESH__,__AFTER__,lisha_id);
+		}
+		catch(e)
+		{
+			lisha_display_error(lisha_id,e);
+		}
 	}
 }
 /**==================================================================*/
@@ -147,7 +147,7 @@ function lisha_refresh_page_ajax(lisha_id,ajax_return)
 		// Setup Ajax configuration
 		//==================================================================
 		var conf = [];
-		
+
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
 		conf['max_tentative'] = 4;
@@ -155,7 +155,7 @@ function lisha_refresh_page_ajax(lisha_id,ajax_return)
 		conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&qtt=NA'+'&action=2&selected_lines='+encodeURIComponent(get_selected_lines(lisha_id));
 		conf['fonction_a_executer_reponse'] = 'lisha_refresh_page_ajax';
 		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"'";
-		
+
 		ajax_call(conf);
 		//==================================================================
 	}
@@ -165,21 +165,21 @@ function lisha_refresh_page_ajax(lisha_id,ajax_return)
 		{	
 			// Get the ajax return in json format
 			var json = get_json(ajax_return);
-			
+
 			// Update the json object
 			eval(decodeURIComponent(json.lisha.json));
 
 			// Set the content of the lisha
 			lisha_set_content(lisha_id,decodeURIComponent(json.lisha.content));
-			
+
 			document.getElementById('liste_'+lisha_id).scrollLeft = document.getElementById('liste_'+lisha_id).scrollLeft - 1; // SRX_UGLY_FIXE DUE TO BROWSER BUG
-			
+
 			// Setup Excel export button
 			toolbar_excel_button(lisha_id);
-			
+
 			// Hide the wait div
 			lisha_hide_wait(lisha_id);
-			
+
 			lisha_execute_event(__ON_REFRESH__,__AFTER__,lisha_id);
 		}
 		catch(e) 
@@ -194,9 +194,9 @@ function lisha_refresh_page_ajax(lisha_id,ajax_return)
 function toolbar_excel_button(lisha_id)
 {
 	var td_id = 'lisha_td_toolbar_excel_'+lisha_id;
-	
+
 	var qtt_line = eval('lisha.'+lisha_id+'.qtt_line');
-	
+
 	if(qtt_line == 0)
 	{
 		if(document.getElementById(td_id).className.search("grey_el") == -1)
@@ -224,9 +224,9 @@ function lisha_reset(lisha_id,ajax_return)
 	{
 		lisha_display_wait(lisha_id);
 
-        //==================================================================
-        // Setup Ajax configuration
-        //==================================================================
+		//==================================================================
+		// Setup Ajax configuration
+		//==================================================================
 		var conf = [];
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
@@ -235,9 +235,9 @@ function lisha_reset(lisha_id,ajax_return)
 		conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=9';
 		conf['fonction_a_executer_reponse'] = 'lisha_reset';
 		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"'";
-		
+
 		ajax_call(conf);
-        //==================================================================
+		//==================================================================
 	}
 	else
 	{
@@ -251,7 +251,7 @@ function lisha_reset(lisha_id,ajax_return)
 
 			// Set the content of the lisha
 			lisha_set_content(lisha_id,decodeURIComponent(json.lisha.content));
-			
+
 			if(json.lisha.edit_mode == 'false')		// SRX_fix_update_buttons_display_mode
 			{
 				// Set the content of the toolbar
@@ -261,15 +261,15 @@ function lisha_reset(lisha_id,ajax_return)
 					document.getElementById('lisha_td_toolbar_edit_'+lisha_id).className = 'btn_toolbar grey_el';
 				}
 			}
-			
+
 			// Setup Excel export button
 			toolbar_excel_button(lisha_id);
-			
+
 			// Hide the wait div
 			lisha_display_wait(lisha_id);
 
-            // Hide any ajax search wait
-            document.getElementById('wait_input_'+lisha_id).style.display = 'none';
+			// Hide any ajax search wait
+			document.getElementById('wait_input_'+lisha_id).style.display = 'none';
 		} 
 		catch(e) 
 		{
@@ -290,14 +290,14 @@ function lisha_reset(lisha_id,ajax_return)
 function lisha_input_page_change(evt,lisha_id,element)
 {
 	var evt = (evt)?evt : event;
-	
+
 	if(evt.which == 13)
 	{
 		if(element.value == '')
-        {
-            element.value = 1;
-        }
-        // Change start page number
+		{
+			element.value = 1;
+		}
+		// Change start page number
 		lisha_page_change_ajax(lisha_id,element.value);
 	}
 	else
@@ -335,7 +335,7 @@ function lisha_input_page_change(evt,lisha_id,element)
 function lisha_input_line_per_page_change(evt,lisha_id,element)
 {
 	var evt = (evt)?evt : event;
-	
+
 	if(evt.which == 13)
 	{
 		// Enter key pressed

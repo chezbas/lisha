@@ -15,13 +15,13 @@
 
 .auto_field
 {
-    color: #ff0000;
-    font-weight: bold;
+	color: #ff0000;
+	font-weight: bold;
 }
 
 .auto_text
 {
-    color: #973300;
+	color: #973300;
 }
 .subtitle
 {
@@ -392,67 +392,67 @@
 }
 .onglet_icn_general
 {
-    height:20px;
-    width:20px;
-    float: left;
-    margin-top: 2px;
-    margin-left: -2px;
-    background-image: url(../../images/icons_menu.png);
-    background-repeat: no-repeat;
+	height:20px;
+	width:20px;
+	float: left;
+	margin-top: 2px;
+	margin-left: -2px;
+	background-image: url(../../images/icons_menu.png);
+	background-repeat: no-repeat;
 	background-position:-800px 0;
 	padding-left:2px;
 }
 .onglet_icn_code
 {
-    height:20px;
-    width:20px;
-    float: left;
-    margin-left: -2px;
-    background-image: url(../../images/icons_menu.png);
-    background-repeat: no-repeat;
+	height:20px;
+	width:20px;
+	float: left;
+	margin-left: -2px;
+	background-image: url(../../images/icons_menu.png);
+	background-repeat: no-repeat;
 	background-position:-820px 0;
 	padding-left:2px;
 }
 .onglet_icn_input
 {
-    height:20px;
-    width:20px;
-    float: left;
-    margin-left: -2px;
-    background-image: url(../../images/icons_menu.png);
-    background-repeat: no-repeat;
+	height:20px;
+	width:20px;
+	float: left;
+	margin-left: -2px;
+	background-image: url(../../images/icons_menu.png);
+	background-repeat: no-repeat;
 	background-position:-60px 0;
 }
 .onglet_icn_output
 {
-    height:20px;
-    width:20px;
-    float: left;
-    margin-left: -2px;
-    background-image: url(../../images/icons_menu.png);
-    background-repeat: no-repeat;
+	height:20px;
+	width:20px;
+	float: left;
+	margin-left: -2px;
+	background-image: url(../../images/icons_menu.png);
+	background-repeat: no-repeat;
 	background-position:-80px 0;
 }
 .__blue_ico
 {
-    width: 20px;
-    height: 20px;
-    background-repeat: no-repeat;
-    background-image: url("../../images/icons/img_16.png");
+	width: 20px;
+	height: 20px;
+	background-repeat: no-repeat;
+	background-image: url("../../images/icons/img_16.png");
 }
 
 .__blue_ico_sort-ascend {
-    background-position: -600px 0;
+	background-position: -600px 0;
 }
 
 .__blue_ico_sort-ascend:hover {
-    background-position: -600px -20px;
+	background-position: -600px -20px;
 }
 
 .__blue_ico_sort-descend {
-    background-position: -640px 0;
+	background-position: -640px 0;
 }
 
 .__blue_ico_sort-descend:hover {
-    background-position: -640px -20px;
+	background-position: -640px -20px;
 }

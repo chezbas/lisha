@@ -39,12 +39,12 @@ function sauvegarder(ssid,id)
 {
 	var chaine = encodeURIComponent(document.getElementById("elm1").value);
 	var solution = encodeURIComponent(document.getElementById("solution").value);
-	
+
 	//==================================================================
 	// Setup Ajax configuration
 	//==================================================================
 	var configuration = new Array();	
-	
+
 	configuration['page'] = 'record_ajax.php?ssid='+ssid;
 	//configuration['div_wait'] = 'ajax_load_etape'+id_etape;
 	//configuration['div_wait_nbr_tentative'] = 'ajax_step_qtt_retrieve'+id_etape;
@@ -60,7 +60,7 @@ function sauvegarder(ssid,id)
 	//				"'div_id','tree_item_prefixe','item_number_to_focus'"
 	// if no focus	"'div_id',null,null"
 	//configuration['param_fonction_a_executer_reponse'] = "";
-	
+
 	// Do the call
 	ajax_call(configuration);
 	//==================================================================

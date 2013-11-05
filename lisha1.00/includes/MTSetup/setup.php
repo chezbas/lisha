@@ -24,5 +24,5 @@
 	define("__MAGICTREE_TABLE_LANGUAGE__","mt_lang");							// Liste of language available
 	define("__MAGICTREE_TABLE_TEXT__","mt_text");								// Text for internal use
 	//==================================================================
-	
+
 	$path_root_magictree =  __MAGICTREE_APPLICATION_RELEASE__;					// Internal use for tickets screen. Don't remove please

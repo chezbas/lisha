@@ -31,13 +31,13 @@
 	//		table_tickets_class		: table of class ticket translation
 	//==================================================================
 	$motif = '#&lt;isys:([^/]+)[ ]*/&gt;#i';
-	
+
 	preg_match_all($motif,$row["DETAILS"],$out);
 
 	foreach($out[1] as $key => $value)
 	{
 		$_local_sys = '';
-		
+
 		switch($value)
 		{
 			case 'language':
@@ -116,14 +116,14 @@
 			break;
 			case 'browser':
 				$ua = $_SERVER["HTTP_USER_AGENT"];
-				
+
 				// Safari
 				$motif = '#Version/([^ ]+) ([^ ]+)/#i';
 				if(preg_match_all($motif,$ua,$browser))
 				{	
 					$_local_sys = $browser[2][0]." - ".$browser[1][0];
 				}
-				
+
 				// Firefox
 				$motif = '#(firefox)/([^ ]+)#i';
 				if(preg_match_all($motif,$ua,$browser))
@@ -137,7 +137,7 @@
 				{	
 					$_local_sys = $browser[1][0]." - ".$browser[2][0];
 				}
-				
+
 				// Opera
 				$motif = '#(opera).+Version/([^ ]+)#i';
 				if(preg_match_all($motif,$ua,$browser))
@@ -148,47 +148,47 @@
 			break;
 		}
 		$row["DETAILS"] = str_replace($out[0][$key],$_local_sys,$row["DETAILS"]);
-			
+
 	}	
 	//==================================================================
 
-    //==================================================================
-    // Search special pattern <ilocalization/>
-    //==================================================================
-    $motif = '#&lt;ilocalization/&gt;#i';
-    preg_match_all($motif,$row["DETAILS"],$out);
+	//==================================================================
+	// Search special pattern <ilocalization/>
+	//==================================================================
+	$motif = '#&lt;ilocalization/&gt;#i';
+	preg_match_all($motif,$row["DETAILS"],$out);
 
-    foreach($out[0] as $key => $value)
-    {
-        $replace = '
-                <table class="main_table">
-                <tr class="head_table">
-                <td>ID</td>
-                <td>&lt;ilisha:127/&gt;</td>
-                </tr>';
+	foreach($out[0] as $key => $value)
+	{
+		$replace = '
+				<table class="main_table">
+				<tr class="head_table">
+				<td>ID</td>
+				<td>&lt;ilisha:127/&gt;</td>
+				</tr>';
 
-        $query = "
-                            SELECT
-                                `MTS`.`ID`      AS 'iden',
-                                `MTS`.`text`    AS 'local'
-                            FROM
-                                `".__LISHA_TABLE_LANGUAGE__."` `MTS`
-                            WHERE 1 = 1
-                         ";
+		$query = "
+							SELECT
+								`MTS`.`ID`      AS 'iden',
+								`MTS`.`text`    AS 'local'
+							FROM
+								`".__LISHA_TABLE_LANGUAGE__."` `MTS`
+							WHERE 1 = 1
+						 ";
 
-        $result = $link->query($query);
+		$result = $link->query($query);
 
-        while($rowl = $result->fetch_array(MYSQLI_ASSOC))
-        {
-            $replace .= '<tr class="row_table">
-                    <td>'.$rowl['iden'].'</td>
-                     <td>'.$rowl['local'].'</td>
-                     </tr>
-                    ';
-        };
+		while($rowl = $result->fetch_array(MYSQLI_ASSOC))
+		{
+			$replace .= '<tr class="row_table">
+					<td>'.$rowl['iden'].'</td>
+					 <td>'.$rowl['local'].'</td>
+					 </tr>
+					';
+		};
 
 
-        $replace .= '</table>';
-        $row["DETAILS"] = str_replace($out[0][$key],$replace,$row["DETAILS"]);
-    }
-    //==================================================================
+		$replace .= '</table>';
+		$row["DETAILS"] = str_replace($out[0][$key],$replace,$row["DETAILS"]);
+	}
+	//==================================================================

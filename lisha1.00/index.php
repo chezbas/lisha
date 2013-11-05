@@ -5,7 +5,7 @@
 	require('header.php');
 	/*===================================================================*/		
 
-	
+
 	// Define edit mode for each tree in page
 	if(!isset($_SESSION[$ssid]['lisha']['doc']['tree']['user']))
 	{
@@ -51,7 +51,7 @@
 		}
 	}
 	//==================================================================	
-	
+
 	// Page language equal magic tree language
 	$_SESSION[$ssid]['langue'] = $_SESSION[$ssid]['lisha']['langue'];
 ?>
@@ -59,8 +59,8 @@
 	<head>
 		<META http-equiv="Content-Type" content="text/html; charset=UTF-8">	
 		<script type="text/javascript">
-            var language = '<?php echo $_SESSION[$ssid]['langue']; ?>';
-            var ssid = '<?php echo $ssid; ?>';
+			var language = '<?php echo $_SESSION[$ssid]['langue']; ?>';
+			var ssid = '<?php echo $ssid; ?>';
 		</script>
 		<link rel="stylesheet" href="css/home/index.css" type="text/css"> <!-- * load custom page style * -->
 		<link rel="stylesheet" href="css/home/tiny_details.css" type="text/css"> <!-- * load custom tiny page style * -->
@@ -79,10 +79,10 @@
 		<script type="text/javascript">
 
 			var MainTimer = new Class_timer();
-			
+
 			MainTimer.init(30,"T1");
 
-            MainTimer.add_event(50,"blink()");
+			MainTimer.add_event(50,"blink()");
 			<?php
 			/*if(!$_SESSION[$ssid]['MT']['tree']['id']['ikdoc']["edit_mode"])
 			{
@@ -90,7 +90,7 @@
 			}
 			*/
 			?>
-			
+
 			MainTimer.start();		
 
 			var libelle_common = Array();
@@ -109,7 +109,7 @@
 			{
 				document.getElementById('help').innerHTML = p_txt;
 			}
-	
+
 			function unset_text_help()
 			{
 				document.getElementById('help').innerHTML = '';
@@ -127,7 +127,7 @@
 												$_SESSION[$ssid]['langue']
 												);
 			//==================================================================
-		
+
 			/**==================================================================
 			 * MagicTree definition of each tree in page
 			 ====================================================================*/	
@@ -188,7 +188,7 @@
 		<div id="slidev" style="left:500px;" onclick="active_expand_navigation_tree()"></div>
 		<!-- ========================================== END BARRE INFORMATIONS ===================================== -->
 			<div id="footer" style="z-Index:500;"><div id="txt_help" class="txt_help">...</div></div>
-			
+
 		<!-- ============================================= END FOOTER ================================================= -->
 		<script type="text/javascript">
 		read_details('<?php echo $mt_user_id;?>','<?php echo $id_page; ?>','U',''); // First load

@@ -20,7 +20,7 @@ Class_var.prototype.add = function(p_add) // Add value
 	{
 		return "Nothing to add. Exit";
 	}
-	
+
 	if ( Number(p_add) != "NaN" )
 	{
 		this.c_value = this.c_value + p_add;

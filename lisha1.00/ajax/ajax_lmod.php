@@ -1,6 +1,6 @@
 <?php
 	require('header_ajax.php');
-	
+
 	switch($_POST['action'])
 	{
 		case 1:

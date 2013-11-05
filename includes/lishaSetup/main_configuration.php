@@ -10,7 +10,7 @@
 	define("__LISHA_DATABASE_USER__","adminl");								// user
 	define("__LISHA_DATABASE_PASSWORD__","demo");							// password
 	//==================================================================
-	
+
 	//==================================================================
 	// Define lisha main tables
 	//==================================================================
@@ -19,9 +19,9 @@
 	define("__LISHA_TABLE_LANGUAGE__","lisha_language");					// Localization information
 	define("__LISHA_TABLE_TEXT__","lisha_text");							// Text for internal use
 	define("__LISHA_TABLE_INTERNAL__","lisha_internal");					// internal use ( memory engine )
-    define("__LISHA_TABLE_INTERNAL_FILTER__","lisha_internal_filter");		// internal use for advanced filter on column
+	define("__LISHA_TABLE_INTERNAL_FILTER__","lisha_internal_filter");		// internal use for advanced filter on column
 	//==================================================================
-	
+
 	//==================================================================
 	// Define Tree documentation tables ( Optional )
 	//==================================================================
@@ -30,7 +30,7 @@
 	define("__LISHA_TABLE_EXTRA_TICK__","bugsreports");						// Contains list of tickets / changelog			
 	define("__LISHA_TABLE_EXTRA_TICK_TEXT__","bugstexts");					// Contains texts of bug / ticket screen			
 	define("__LISHA_TABLE_EXTRA_TICK_CLAS__","bugsclass");					// Contains status of tickets ( Open, analyse, valid and so on.. )			
-	
+
 	// User documentation tree table ( Optional )
 	define("__MT_TABLE_USER_DOCU__","lisha_mt_doc_user");					// User tree documentation			
 	define("__MT_TABLE_USER_DOCU_CAPTION__","lisha_mt_doc_user_caption");	// User tree documentation caption			

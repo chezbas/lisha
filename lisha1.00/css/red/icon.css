@@ -7,115 +7,115 @@
 }
 
 .__red_ico_equal_operator {
-    background-position: -980px 0;
+	background-position: -980px 0;
 }
 .__red_ico_equal_operator:hover {
-    background-position: -980px -20px;
+	background-position: -980px -20px;
 }
 .__red_ico_equal_operator_little {
-    background-position: -490px -10px;
-    background-size: cover;
-    margin-bottom: -0.5em;
-    margin-top: 0.5em;
-    width: 10px;
+	background-position: -490px -10px;
+	background-size: cover;
+	margin-bottom: -0.5em;
+	margin-top: 0.5em;
+	width: 10px;
 }
 
 .__red_ico_like_operator {
-    background-position: -1000px 0;
+	background-position: -1000px 0;
 }
 .__red_ico_like_operator:hover {
-    background-position: -1000px -20px;
+	background-position: -1000px -20px;
 }
 .__red_ico_like_operator_little {
-    background-position: -500px -10px;
-    background-size: cover;
-    margin-bottom: -0.5em;
-    margin-top: 0.5em;
-    width: 10px;
+	background-position: -500px -10px;
+	background-size: cover;
+	margin-bottom: -0.5em;
+	margin-top: 0.5em;
+	width: 10px;
 }
 
 .__red_ico_greather_than_operator {
-    background-position: -1020px 0;
+	background-position: -1020px 0;
 }
 .__red_ico_greather_than_operator:hover {
-    background-position: -1020px -20px;
+	background-position: -1020px -20px;
 }
 .__red_ico_greather_than_operator_little {
-    background-position: -510px -10px;
-    background-size: cover;
-    margin-bottom: -0.5em;
-    margin-top: 0.5em;
-    width: 10px;
+	background-position: -510px -10px;
+	background-size: cover;
+	margin-bottom: -0.5em;
+	margin-top: 0.5em;
+	width: 10px;
 }
 
 .__red_ico_less_than_operator {
-    background-position: -1040px 0;
+	background-position: -1040px 0;
 }
 .__red_ico_less_than_operator:hover {
-    background-position: -1040px -20px;
+	background-position: -1040px -20px;
 }
 .__red_ico_less_than_operator_little {
-    background-position: -520px -10px;
-    background-size: cover;
-    margin-bottom: -0.5em;
-    margin-top: 0.5em;
-    width: 10px;
+	background-position: -520px -10px;
+	background-size: cover;
+	margin-bottom: -0.5em;
+	margin-top: 0.5em;
+	width: 10px;
 }
 
 .__red_ico_greather_or_equal_than_operator {
-    background-position: -1060px 0;
+	background-position: -1060px 0;
 }
 .__red_ico_greather_or_equal_than_operator:hover {
-    background-position: -1060px -20px;
+	background-position: -1060px -20px;
 }
 .__red_ico_greather_or_equal_than_operator_little {
-    background-position: -530px -10px;
-    background-size: cover;
-    margin-bottom: -0.5em;
-    margin-top: 0.5em;
-    width: 10px;
+	background-position: -530px -10px;
+	background-size: cover;
+	margin-bottom: -0.5em;
+	margin-top: 0.5em;
+	width: 10px;
 }
 
 .__red_ico_less_or_equal_than_operator {
-    background-position: -1080px 0;
+	background-position: -1080px 0;
 }
 .__red_ico_less_or_equal_than_operator:hover {
-    background-position: -1080px -20px;
+	background-position: -1080px -20px;
 }
 .__red_ico_less_or_equal_than_operator_little {
-    background-position: -540px -10px;
-    background-size: cover;
-    margin-bottom: -0.5em;
-    margin-top: 0.5em;
-    width: 10px;
+	background-position: -540px -10px;
+	background-size: cover;
+	margin-bottom: -0.5em;
+	margin-top: 0.5em;
+	width: 10px;
 }
 
 .__red_ico_null_operator {
-    background-position: -1100px 0;
+	background-position: -1100px 0;
 }
 .__red_ico_null_operator:hover {
-    background-position: -1100px -20px;
+	background-position: -1100px -20px;
 }
 .__red_ico_null_operator_little {
-    background-position: -550px -10px;
-    background-size: cover;
-    margin-bottom: -0.5em;
-    margin-top: 0.5em;
-    width: 10px;
+	background-position: -550px -10px;
+	background-size: cover;
+	margin-bottom: -0.5em;
+	margin-top: 0.5em;
+	width: 10px;
 }
 
 .__red_ico_contain_operator {
-    background-position: -1120px 0;
+	background-position: -1120px 0;
 }
 .__red_ico_contain_operator:hover {
-    background-position: -1120px -20px;
+	background-position: -1120px -20px;
 }
 .__red_ico_contain_operator_little {
-    background-position: -560px -10px;
-    background-size: cover;
-    margin-bottom: -0.5em;
-    margin-top: 0.5em;
-    width: 10px;
+	background-position: -560px -10px;
+	background-size: cover;
+	margin-bottom: -0.5em;
+	margin-top: 0.5em;
+	width: 10px;
 }
 
 
@@ -168,19 +168,19 @@
 }
 
 .__red_ico_search_mode_active {
-    background-position: -1140px 0;
+	background-position: -1140px 0;
 }
 
 .__red_ico_search_mode_active:hover {
-    background-position: -1140px -20px;
+	background-position: -1140px -20px;
 }
 
 .__red_ico_advanced_search {
-    background-position: -1160px 0;
+	background-position: -1160px 0;
 }
 
 .__red_ico_advanced_search:hover {
-    background-position: -1160px -20px;
+	background-position: -1160px -20px;
 }
 
 .__red_ico_sort-hide {
@@ -288,11 +288,11 @@
 }
 
 .__red_ico_save_pref {
-    background-position: -560px 0;
+	background-position: -560px 0;
 }
 
 .__red_ico_save_pref:hover {
-    background-position: -560px -20px;
+	background-position: -560px -20px;
 }
 .__red_ico_load {
 	background-position: -380px 0;

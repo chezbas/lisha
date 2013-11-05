@@ -5,29 +5,29 @@
 	 ====================================================================*/
 	require('../includes/common/ssid_session_start.php');
 	/*===================================================================*/		
-		
+
 
 	/**==================================================================
 	 * Page buffering ( !! No output ( echo, print_r etc..) before this include !! )
 	 ====================================================================*/
 	require('../includes/common/buffering.php');
 	/*===================================================================*/	
-		
-	
+
+
 	/**==================================================================
 	 * Load global functions
 	 ====================================================================*/	
 	require('../includes/common/global_functions.php');
 	/*===================================================================*/	
 
-	
+
 	/**==================================================================
 	 * Lisha configuration ( Need active php session and ssid definition )
 	 ====================================================================*/
 	require('../../includes/lishaSetup/main_configuration.php');
 	/*===================================================================*/		
-	
-	
+
+
 	/**==================================================================
 	 * Application release
 	 * Page database connexion
@@ -35,8 +35,8 @@
 	 ====================================================================*/	
 	require('../includes/common/load_conf_session.php');
 	/*===================================================================*/	
-	
-	
+
+
 	/**==================================================================
 	 * Recover language from URL or Database
 	 ====================================================================*/	
@@ -55,7 +55,7 @@
 		$page = $_GET["ID"];
 	}
 	//==================================================================
-	
+
 	$query = "SELECT
 				BUG.`details` AS 'details',
 				BUG.`solution` AS 'solution',
@@ -82,9 +82,9 @@
 				";
 
 	$result = $link->query($query);
-	
+
 	$row = $result->fetch_array(MYSQLI_ASSOC);
-	
+
 	$texte = $row["details"];
 	if(strlen($texte) == 0)
 	{
@@ -94,7 +94,7 @@
 	{
 		$no_details = '';
 	}
-	
+
 	$classel = $row["ClassL"];
 	$object = $row["Type"];
 	$statusl = $row["StatusL"];
@@ -112,7 +112,7 @@
 		$no_solution = '';
 	}
 	$reference = $row["reference"];
-	
+
 	// Recover URL parameters except some index
 	$param = url_get_exclusion($_GET,array('lng'));
 
@@ -160,7 +160,7 @@
 		<div class="object_caption"><?php echo $_SESSION[$ssid]['lisha']['page_text'][3]['TX']." : "; ?></div>
 		<div class="object"><?php echo $object; ?></div>
 	</div>
-		
+
 	<div class="class_main">
 		<div class="class_caption"><?php echo $_SESSION[$ssid]['lisha']['page_text'][4]['TX']." : "; ?></div>
 		<div class="class"><?php echo $classel; ?></div>

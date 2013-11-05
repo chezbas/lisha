@@ -1,8 +1,8 @@
 <?php
 	require('header_ajax.php');
-	
+
 	$lisha_type = $_POST['lisha_type'];
-	
+
 	switch($_POST['lisha_type'])
 	{
 		case __ADV_FILTER__:

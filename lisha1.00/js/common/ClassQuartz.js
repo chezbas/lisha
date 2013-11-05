@@ -22,16 +22,16 @@ Class_timer.prototype.init = function(p_quartz,p_timername)
 		this.c_message = "p_timername had to be define !!";
 		return this.c_message; // Exit error				
 	}
-	
+
 	if ( p_quartz != undefined )
 	{
-		
+
 		if ( isNaN(p_quartz)  ) // Is not a number
 		{
 			this.c_message = "Quartz is not a numeric !!";
 			return this.c_message; // Exit error		
 		}
-		
+
 		if ( p_quartz < 10) // Deny Of Service protection
 		{
 			p_quartz = 10;
@@ -43,13 +43,13 @@ Class_timer.prototype.init = function(p_quartz,p_timername)
 		this.c_message = "Quartz is mandatory !!";
 		return this.c_message; // Exit error no timer
 	}
-	
+
 	// Ok, let's go
 	//this.queue = new array();
 	//this.queue = array(); 
-	
+
 	this.c_timername = p_timername;
-	
+
 	this.event = new Array(); // Events queue for job
 	this.c_status = true;
 	this.c_stat = null;
@@ -74,16 +74,16 @@ Class_timer.prototype.timer = function()
 		this.c_message = "Abording! Error Exit !!";
 		return this.c_message;
 	}
-	
+
 	var Class_timer = this; 
-	
+
 	function timerRelay()
 	{ 
 		Class_timer.timer(); 
 	}
-	
+
 	this.c_loop = this.c_loop + 1;
-	
+
 	setTimeout(timerRelay, this.c_quartz);
 
 	//*********************************//
@@ -93,14 +93,14 @@ Class_timer.prototype.timer = function()
 	{
 		if (this.event[i][2] != undefined)
 		{
-			
+
 			this.event[i][4] = this.event[i][4] - 1; // count down
-			
+
 			if (this.event[i][4] == 0) // Execute only if countdown reach zero
 			{
-				
+
 				this.event[i][4] = this.event[i][1]; //Reload counter
-				
+
 				this.event[i][3] = eval(this.event[i][2]); // Call function to execute
 
 				//===============================
@@ -114,11 +114,11 @@ Class_timer.prototype.timer = function()
 						this.event[i][3] = false; // Flag to remove item from the queue
 						this.c_remove.splice(j, 1);	// Ok, item to remove found... Flag set. Remove it !
 					}
-					
+
 				}
 				//=================================//
 
-				
+
 				//======================================
 				// Check flag of return function
 				// if flase then remove animation from the queue
@@ -128,12 +128,12 @@ Class_timer.prototype.timer = function()
 					this.event.splice(i, 1);
 				}
 				//=================================//
-				
+
 			}
 		}
-		
+
 	}
-	
+
 	//*********************************//
 }
 /*

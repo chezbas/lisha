@@ -23,7 +23,6 @@ function lisha_set_el_height(el,size,data_type)
 /**
  * Get the offsetWidth of an element
  * @param el element id
- * @returns
  */
 function lisha_get_el_offsetWidth(el)
 {
@@ -33,7 +32,6 @@ function lisha_get_el_offsetWidth(el)
 /**
  * Get the client width of an element
  * @param el element id
- * @returns
  */
 function lisha_get_el_clientWidth(el)
 {
@@ -46,13 +44,13 @@ function lisha_get_el_clientWidth(el)
  ====================================================================*/
 function lisha_get_innerHTML(el)
 {
-	
+
 	try {
 		return document.getElementById(el).innerHTML;
 	} catch (e) {
 		alert('cath error E100 : '+el+' not found in DOM');
 	}
-	
+
 }
 /**==================================================================*/
 
@@ -63,12 +61,12 @@ function lisha_get_innerHTML(el)
  ====================================================================*/
 function lisha_get_innerText(el)
 {
-	
+
 	try {
 		return document.getElementById(el).innerText;
 	} catch (e) {
 		alert('cath error E110 : '+el+' not found in DOM');
 	}
-	
+
 }
 /**==================================================================*/

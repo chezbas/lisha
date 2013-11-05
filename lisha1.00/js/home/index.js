@@ -10,7 +10,7 @@ function blink()
 		found = true;
 		blinkme[0].setAttribute('class',"blink_on");
 	}
-	
+
 	if(!found)
 	{
 		var blinkme = document.getElementsByClassName("blink_on");
@@ -76,7 +76,7 @@ function bounce_tool_bar(amplitude)
 		{
 			return false; // End animation
 		}
-		
+
 	}
 	return true;
 }
@@ -89,7 +89,7 @@ function reduce_tool_bar()
 {
 	if(MainTimer.c_loop >= 60)
 	{
-		
+
 		if(document.getElementById('headdetails').offsetHeight > 1)
 		{
 			document.getElementById('slideh').style.display = "block";
@@ -186,7 +186,7 @@ function read_details(internal_id, row_id, mode, refresh)
 	configuration['param'] = 'ssid='+ssid+'&language='+language+'&mode='+mode+'&internal_id='+internal_id+'&IDitem='+row_id+'&pathname='+window.location.pathname;
 	configuration['fonction_a_executer_reponse'] = 'read_done';
 	configuration['param_fonction_a_executer_reponse'] = "'"+internal_id+"','"+row_id+"','"+refresh+"'";
-	
+
 	// Do the call
 	ajax_call(configuration);
 	//==================================================================
@@ -206,10 +206,10 @@ function read_done(internal_id,row_id,refresh,retour)
 {
 	retour = JSON.parse(retour);
 	document.getElementById('details_tiny').style.display = 'none';
-	
+
 	document.getElementById('details').innerHTML = retour.HTML;
 	document.getElementById('details').style.display = 'block';
-	
+
 	if(refresh == "D")
 	{
 		refresh_display(internal_id,row_id);
@@ -262,10 +262,10 @@ window.onresize = function() {
  ====================================================================*/
 function jump_screen(page,extend_url)
 {
-    if(extend_url == undefined)
-    {
-        extend_url = '?';
-    }
+	if(extend_url == undefined)
+	{
+		extend_url = '?';
+	}
 	var my_root_path = window.location.origin;
 	if (my_root_path == undefined)
 		{
@@ -283,16 +283,16 @@ function user_tree_mode(id_page)
 	// Setup Ajax configuration
 	//==================================================================
 	var configuration = [];
-	
+
 	configuration['page'] = 'ajax/doc/tree_mode.php';
-	
+
 	configuration['delai_tentative'] = 10000; // 10 seconds max
 	configuration['max_tentative'] = 2;
 	configuration['type_retour'] = false;		// ReponseText
 	configuration['param'] = 'ssid='+ssid;
 	configuration['fonction_a_executer_reponse'] = 'tree_mode_back_done';
 	//configuration['param_fonction_a_executer_reponse'] = "'"+internal_id+"','"+row_id+"','"+refresh+"'";
-	
+
 	// Do the call
 	ajax_call(configuration);
 	//==================================================================
@@ -313,7 +313,7 @@ function html_detail_display(internal_id)
 	// Setup Ajax configuration
 	//==================================================================
 	var configuration = [];
-	
+
 	configuration['page'] = 'ajax/doc/get_current_page.php';
 
 	configuration['delai_tentative'] = 10000; // 10 seconds max
@@ -322,7 +322,7 @@ function html_detail_display(internal_id)
 	configuration['param'] = 'ssid='+ssid;
 	configuration['fonction_a_executer_reponse'] = 'get_current_page_done';
 	configuration['param_fonction_a_executer_reponse'] = "'"+internal_id+"'";
-	
+
 	// Do the call
 	ajax_call(configuration);
 	//==================================================================
@@ -342,7 +342,7 @@ function show_tiny(language)
 	// Setup Ajax configuration
 	//==================================================================
 	var configuration = [];
-	
+
 	configuration['page'] = 'ajax/doc/recover_page_for_update.php';
 
 	configuration['delai_tentative'] = 10000; // 10 seconds max
@@ -351,7 +351,7 @@ function show_tiny(language)
 	configuration['param'] = 'ssid='+ssid+'&language='+language;
 	configuration['fonction_a_executer_reponse'] = 'read_for_tiny';
 	//configuration['param_fonction_a_executer_reponse'] = "'"+internal_id+"','"+row_id+"','"+refresh+"'";
-	
+
 	// Do the call
 	ajax_call(configuration);
 	//==================================================================
@@ -376,7 +376,7 @@ function sauvegarder(ssid, language)
 	// Setup Ajax configuration
 	//==================================================================
 	var configuration = [];
-	
+
 	configuration['page'] = 'ajax/doc/record.php';
 	//configuration['div_wait'] = 'ajax_load_etape'+id_etape;
 	//configuration['div_wait_nbr_tentative'] = 'ajax_step_qtt_retrieve'+id_etape;
@@ -392,7 +392,7 @@ function sauvegarder(ssid, language)
 	//				"'div_id','tree_item_prefixe','item_number_to_focus'"
 	// if no focus	"'div_id',null,null"
 	//configuration['param_fonction_a_executer_reponse'] = "";
-	
+
 	// Do the call
 	ajax_call(configuration);
 	//==================================================================

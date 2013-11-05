@@ -13,7 +13,7 @@ body,html
 	height:16px;
 	outline: 0 none;
 }
-		
+
 .lisha_lmod
 {
 	padding-right:20px;
@@ -39,7 +39,7 @@ body,html
 	margin: 2px 0;
 	border-top:2px inset #EEE;
 }
-			
+
 .full_width
 {
 	width: 100%;	
@@ -64,19 +64,19 @@ body,html
 {
 	opacity : 0.25;
 	filter: alpha(opacity=25);
-    cursor:not-allowed;
+	cursor:not-allowed;
 }
 
 .__body_no_select
 {
 	-moz-user-select: none;
-   	-khtml-user-select: none;
+	-khtml-user-select: none;
 }
 
 .__lisha_unselectable
 {
 	-moz-user-select: none;
-   	-khtml-user-select: none;		
+	-khtml-user-select: none;
 }
 
 div.column_menu
@@ -130,7 +130,7 @@ tr.lisha_line_separator
 
 .lisha_operator_title
 {
-    top: 0;
-    display: inline-block;
-    opacity: 0.4;
+	top: 0;
+	display: inline-block;
+	opacity: 0.4;
 }

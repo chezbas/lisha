@@ -12,7 +12,7 @@ function ctrl_free_cookie(div,msg_alert)
 		if(typeof(msg_alert) != 'undefined')
 		{
 			aff_btn = new Array([get_lib(182)],["close_msgbox();"]);
-	        generer_msgbox(decodeURIComponent(libelle_common[4]),decodeURIComponent(libelle_common[3]).replace('$x', free_cookie),'warning','msg',aff_btn);
+			generer_msgbox(decodeURIComponent(libelle_common[4]),decodeURIComponent(libelle_common[3]).replace('$x', free_cookie),'warning','msg',aff_btn);
 		}
 		document.getElementById(div).innerHTML = '<blink class="no_free_cookie">'+decodeURIComponent(libelle_common[3]).replace('$x', free_cookie)+'</blink>';
 	}
@@ -105,14 +105,14 @@ function purger_cookie(reponse)
 		 * Mise à jour du champs last_update et récupération des messages en bdd
 		 ====================================================================*/	
 		var configuration = new Array();	
-				
+
 		configuration['page'] = "includes/common/maj_presence.php";
 		configuration['delai_tentative'] = 5000;		// 5 secondes
 		configuration['max_tentative'] = 4;
 		configuration['type_retour'] = false;			// ResponseText		
 		configuration['param'] = "ssid="+ssid+"&id="+ID_code+"&id_temp="+ID_temp+"&type_action="+application;
 		configuration['fonction_a_executer_reponse'] = 'signal_presence';
-		   		
+
 		ajax_call(configuration);
 		/**==================================================================*/		
 	}
@@ -120,11 +120,11 @@ function purger_cookie(reponse)
 
 function setCookie(nom, valeur, expire, chemin, domaine, securite)
 {
-    document.cookie = nom + ' = ' + escape(valeur) + '  ' +
-              ((expire == undefined) ? '' : ('; expires = ' + expire.toGMTString())) +
-              ((chemin == undefined) ? '' : ('; path = ' + chemin)) +
-              ((domaine == undefined) ? '' : ('; domain = ' + domaine)) +
-              ((securite == true) ? '; secure' : '');
+	document.cookie = nom + ' = ' + escape(valeur) + '  ' +
+			  ((expire == undefined) ? '' : ('; expires = ' + expire.toGMTString())) +
+			  ((chemin == undefined) ? '' : ('; path = ' + chemin)) +
+			  ((domaine == undefined) ? '' : ('; domain = ' + domaine)) +
+			  ((securite == true) ? '; secure' : '');
 }
 
 

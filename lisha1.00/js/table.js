@@ -99,10 +99,10 @@ function size_table(lisha_id)
 			{
 				element_id = eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id');
 
-                // Get the size of the header
-                var size_header = lisha_get_size_header(iterable_element,lisha_id);
+				// Get the size of the header
+				var size_header = lisha_get_size_header(iterable_element,lisha_id);
 
-                // Get the size of the data
+				// Get the size of the data
 				var size_data = lisha_get_size_data(iterable_element,lisha_id);
 
 				if(size_data < size_min && size_header < size_min)
@@ -198,7 +198,7 @@ function size_table(lisha_id)
 				// SRX : Generate dom error on sub lisha with hidden columns if your <tr> is incompleted
 				// It seems that somethings missing in you sublisha
 				// see around switch($this->c_type_internal_lisha) in class_graphic.php
-                // SRX
+				// SRX
 				if(element_id != undefined && (lisha_get_el_offsetWidth('liste_'+lisha_id) - (lisha_get_el_offsetWidth('l1_'+lisha_id) + size)) >= 0)
 				//if(element_id != undefined && (lisha_get_el_offsetWidth('liste_'+lisha_id) - size) >= 0)
 				{
@@ -258,15 +258,15 @@ function size_table(lisha_id)
 				eval('lisha.'+lisha_id+'.columns.c'+element_id+'.arrow = '+left);
 			}
 		}
-        //==================================================================
-        // Initialise position flag of the last column
-        //==================================================================
+		//==================================================================
+		// Initialise position flag of the last column
+		//==================================================================
 		var last_col = eval('lisha.'+lisha_id+'.last_column;');
 		eval('lisha.'+lisha_id+'.columns.c'+(last_col)+' = new Object();');
 		eval('lisha.'+lisha_id+'.columns.c'+(last_col)+'.min = '+eval('lisha.'+lisha_id+'.columns.c'+element_id+'.max +1'));
 		eval('lisha.'+lisha_id+'.columns.c'+(last_col)+'.max = '+document.getElementById('th_0_c'+(last_col)+'_'+lisha_id).offsetLeft);
 		eval('lisha.'+lisha_id+'.columns.c'+(last_col)+'.arrow = '+document.getElementById('th_0_c'+(last_col)+'_'+lisha_id).offsetLeft);
-        //==================================================================
+		//==================================================================
 
 		/**==================================================================*/
 	}

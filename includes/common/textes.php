@@ -1,5 +1,5 @@
 libelle = new Array();<?php
-					
+
 	$query = "SELECT
 				`id_texte` AS id_texte,
 				`texte` AS texte
@@ -7,7 +7,7 @@ libelle = new Array();<?php
 			WHERE 1 = 1
 				AND `id_lang` = '".$_SESSION[$ssid]['langue']."' 
 			";
-	
+
 	$result = $link->query($query);	
 
 	/**==================================================================

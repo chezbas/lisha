@@ -7,7 +7,7 @@
 <?php
 	// Get the datehour of the begin of visualisation
 	$_SESSION[$ssid]['start_visu'] = date('d/m/y H:i');
-		
+
 	echo '<script type="text/javascript">';
 	/**==================================================================
 	* Database connexion and load conf parameters in both session and javascript
@@ -22,7 +22,7 @@
 	echo "var iknow_lng = '".$_SESSION[$ssid]['langue']."';";	
 	echo "var iknow_lng_tinyMCE = '".$_SESSION[$ssid]['lisha']['langue_TinyMCE']."';";	
 	/*===================================================================*/
-		
+
 	/**==================================================================
 	* Recover text
 	====================================================================*/	
@@ -30,10 +30,10 @@
 	require('includes/common/textes.php');
 	echo '</script>';
 	/*===================================================================*/
-	
+
 	if(!isset($_GET['version'])) $_GET['version'] = null;
-	
-	
+
+
 	/**==================================================================
 	* Define page session timeout
 	* Set a protection of minimum time to 1 hour

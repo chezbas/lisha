@@ -6,15 +6,15 @@
 function lisha_user_event_get_type(p_event)
 {
 	//noinspection JSUnresolvedVariable
-    if(p_event == __LMOD_OPEN__)
+	if(p_event == __LMOD_OPEN__)
 	{
 		//noinspection JSUnresolvedVariable
-        return __lisha_INTERNAL__;
+		return __lisha_INTERNAL__;
 	}
 	else
 	{
 		//noinspection JSUnresolvedVariable
-        return __lisha_EXTERNAL__;
+		return __lisha_EXTERNAL__;
 	}
 }
 /**==================================================================*/
@@ -29,7 +29,7 @@ function lisha_user_event_get_type(p_event)
 function lisha_user_action(p_action,lisha_id)
 {
 	//noinspection JSUnresolvedVariable
-    switch(p_action)
+	switch(p_action)
 	{
 		case __LMOD_OPEN__:
 			lisha_lmod_click(lisha_id);
@@ -89,12 +89,12 @@ function event_lisha_column_list(lisha_id,ajax_return)
 
 		// Close the child lisha
 		//document.getElementById('internal_lisha_'+lisha_id).style.display = 'none';
-		
+
 		//==================================================================
 		// Setup Ajax configuration
 		//==================================================================
 		var conf = [];
-		
+
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
 		conf['delai_tentative'] = 15000;
 		conf['max_tentative'] = 4;

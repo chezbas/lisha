@@ -12,11 +12,11 @@ function session_management(p_file_presence,p_ssid,p_dir_object,p_file_presence_
 	this.time_maj_icon_timer = null;
 	this.start_maj_icon_timer = false;
 	this.icon_timer_red = false;
-	
+
 	this.time_maj_icon_cookie = null;
 	this.start_maj_icon_cookie = false;
 	this.icon_cookie_red = false;
-	
+
 	this.counter_session_update = function(ajax_return)
 	{
 		if(typeof(ajax_return) == "undefined")
@@ -25,7 +25,7 @@ function session_management(p_file_presence,p_ssid,p_dir_object,p_file_presence_
 			// Ajax configuration
 			//==================================================================
 			var configuration = new Array();	
-			
+
 			if(this.file_presence != '')
 			{
 				configuration['page'] = this.file_presence;
@@ -56,11 +56,11 @@ function session_management(p_file_presence,p_ssid,p_dir_object,p_file_presence_
 			{
 				// Ctrl free cookie
 				this.ctrl_free_cookie('free_cookie');
-				
+
 				// XML to JSON
 				var reponse_json = get_json(ajax_return); 
 				this.compteur_end_visu(reponse_json.parent.date,reponse_json.parent.time);
-				
+
 				if(typeof(reponse_json.parent.erreur) != "undefined")
 				{
 					//==================================================================
@@ -71,61 +71,61 @@ function session_management(p_file_presence,p_ssid,p_dir_object,p_file_presence_
 						// No more ssid in lock table
 						// Popup to lock screen wih error message
 						clearInterval(this.settimeout_session);			// Stop Ajax timer call
-				    	generer_msgbox(decodeURIComponent(libelle_common[17]),decodeURIComponent(libelle_common[18]),'erreur','msg',false,true);
+						generer_msgbox(decodeURIComponent(libelle_common[17]),decodeURIComponent(libelle_common[18]),'erreur','msg',false,true);
 					}
 				}
 
 			}
 		}
 	};
-	
-	
-	
+
+
+
 	this.dateDiff = function(firstdate,firsttime,seconddate,secondtime) 
 	{
 		date1 = new Date();
 		date2 = new Date();
 		diff  = new Date();
-		
+
 		date1temp = new Date(firstdate + " " + firsttime);
 		date1.setTime(date1temp.getTime());
-		
+
 		date2temp = new Date(seconddate + " " + secondtime);
 		date2.setTime(date2temp.getTime());
-		
+
 		// sets difference date to difference of first date and second date
-		
+
 		diff.setTime(Math.abs(date1.getTime() - date2.getTime()));
-		
+
 		timediff = diff.getTime();
-		
+
 		weeks = Math.floor(timediff / (1000 * 60 * 60 * 24 * 7));
 		timediff -= weeks * (1000 * 60 * 60 * 24 * 7);
-		
+
 		days = Math.floor(timediff / (1000 * 60 * 60 * 24)); 
 		timediff -= days * (1000 * 60 * 60 * 24);
-		
+
 		hours = Math.floor(timediff / (1000 * 60 * 60)); 
 		timediff -= hours * (1000 * 60 * 60);
-		
+
 		mins = Math.floor(timediff / (1000 * 60)); 
 		timediff -= mins * (1000 * 60);
-		
+
 		secs = Math.floor(timediff / 1000); 
 		timediff -= secs * 1000;
 
-		
+
 		if(hours == 0 && mins <= 10 && this.message_alert_affiche == false)
 		{
 			this.message_alert_affiche = true;
-			
+
 			texte_action = decodeURIComponent(libelle_common[2]).replace('$x', mins);
-			
+
 			aff_btn = new Array(['Ok'],["close_msgbox();"]);
-	    	generer_msgbox('',texte_action,'question','msg',aff_btn);
+			generer_msgbox('',texte_action,'question','msg',aff_btn);
 		}
-			
-			
+
+
 		if(hours < 10)
 		{
 			hours = '0'+hours;
@@ -142,20 +142,20 @@ function session_management(p_file_presence,p_ssid,p_dir_object,p_file_presence_
 			{
 				this.start_maj_icon_timer = true;
 				this.time_maj_icon_timer = setInterval("footer.obj_session.blink_icon_timer();",1500);
-				
+
 			}
-			
+
 			this.maj_titre_lifetime(hours,mins);
-			
+
 			if(mins == 0)
 			{
 				// Dépassement du temps imparti. L'objet est HS.
 				var newImage = "url("+this.dir_object+"chronometer_red.png)";
 				document.getElementById('lifetime').style.backgroundImage = newImage;
 				clearInterval(this.settimeout_session);			// On arrête d'envoyer des tops de présence.
-		    	generer_msgbox('',decodeURIComponent(libelle_common[5]),'erreur','msg',false,true);
-		    	clearTimeout(this.time_maj_titre);
-		    	document.title = decodeURIComponent(libelle_common[7]);
+				generer_msgbox('',decodeURIComponent(libelle_common[5]),'erreur','msg',false,true);
+				clearTimeout(this.time_maj_titre);
+				document.title = decodeURIComponent(libelle_common[7]);
 			}
 		}
 		else
@@ -180,13 +180,13 @@ function session_management(p_file_presence,p_ssid,p_dir_object,p_file_presence_
 		}
 		document.getElementById('lifetime').style.backgroundImage = newImage;
 	};
-	
+
 	this.compteur_end_visu = function(date,time)
 	{
 		this.dateDiff(date,time,end_visu_date,end_visu_time);	
 	};
-	
-	
+
+
 	/**
 	 * Executé lorsque le temps imparti pour modifier la fiche est critique.
 	 * Change le titre pour indiquer de sauvegarder l'objet.
@@ -214,7 +214,7 @@ function session_management(p_file_presence,p_ssid,p_dir_object,p_file_presence_
 			}
 		}
 	};
-	
+
 	/**==================================================================
 	 * COOKIE MANAGEMENT
 	 ====================================================================*/	
@@ -225,23 +225,23 @@ function session_management(p_file_presence,p_ssid,p_dir_object,p_file_presence_
 
 	this.ctrl_free_cookie = function(div,msg_alert)
 	{
-		
+
 		var free_cookie = this.get_free_cookie();
 		if(free_cookie <= 5)
 		{
 			if(typeof(msg_alert) != 'undefined')
 			{
 				aff_btn = new Array(['Ok'],["close_msgbox();"]);
-		        generer_msgbox(decodeURIComponent(libelle_common[4]),decodeURIComponent(libelle_common[3]).replace('$x', free_cookie),'warning','msg',aff_btn);
+				generer_msgbox(decodeURIComponent(libelle_common[4]),decodeURIComponent(libelle_common[3]).replace('$x', free_cookie),'warning','msg',aff_btn);
 			}
-			
+
 			document.getElementById(div).innerHTML = '<blink class="no_free_cookie">'+decodeURIComponent(libelle_common[3]).replace('$x', free_cookie)+'</blink>';
-			
+
 			if(this.start_maj_icon_cookie == false)
 			{
 				this.start_maj_icon_cookie = true;
 				this.time_maj_icon_cookie = setInterval("footer.obj_session.blink_icon_cookie();",1500);
-				
+
 			}
 		}
 		else
@@ -249,8 +249,8 @@ function session_management(p_file_presence,p_ssid,p_dir_object,p_file_presence_
 			document.getElementById(div).innerHTML = decodeURIComponent(libelle_common[3]).replace('$x', free_cookie);
 		}
 	};
-	
-	
+
+
 	this.blink_icon_cookie = function()
 	{
 		if(this.icon_cookie_red == false)
@@ -265,8 +265,8 @@ function session_management(p_file_presence,p_ssid,p_dir_object,p_file_presence_
 		}
 		document.getElementById('free_cookie').style.backgroundImage = newImage;
 	};
-	
-	
+
+
 	/**
 	 * Récupère le nombre de cookie actif pour le domaine en cours.
 	 * @return Nombre de cookie actif pour le domaine
@@ -333,7 +333,7 @@ function session_management(p_file_presence,p_ssid,p_dir_object,p_file_presence_
 		}
 	};
 	/**==================================================================*/	
-	
+
 	this.strstr = function(haystack,needle,bool)
 	{
 		var pos = 0;

@@ -11,7 +11,7 @@ $image = imagecreatetruecolor( 200 , 100);
 	//imagettftext($image,15,45,50,100,$textcolor,'arial.ttf','d\'Entrée');
 	imagettftext($image,15,45,20,90,$textcolor,'arial.ttf','Informations');
 	imagettftext($image,15,45,50,100,$textcolor,'arial.ttf','récupérées');
-	
-	
+
+
 	header("Content-type: image/png");
 	Imagepng($image);

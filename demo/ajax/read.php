@@ -1,10 +1,10 @@
 <?php
 	/**==================================================================
 	 * MagicTree configuration
-	 ====================================================================*/
+	====================================================================*/
 	$path_root_framework = '../../';	// MagicTree framework is parent
 	require('../../includes/MTSetup/setup.php');
-	/*===================================================================*/		
+	/**===================================================================*/
 
 	$path_root_magictree = '../../MT0.10';
 	require($path_root_magictree.'/page_includes.php');
@@ -29,12 +29,11 @@
 		die();
 	}
 	$internal_id = $_POST["id"];
-	
+
 	session_name($ssid);
 	session_start();
-	
+
 	// Force node calcul
 	$_SESSION[$ssid]['MT'][$internal_id]->count_node();
-	
+
 	echo $_SESSION[$ssid]['MT'][$internal_id]->read_attribute($attribute);
-?>

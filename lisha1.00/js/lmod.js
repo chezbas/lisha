@@ -14,13 +14,13 @@ function lisha_lmod_click(lisha_id,p_line,ajax_return)
 		{
 			p_line = null;
 		}	
-		
+
 		if(document.getElementById('lisha_lmod_'+lisha_id).style.display == 'none' || document.getElementById('lisha_lmod_'+lisha_id).style.display == '')
 		{
-            //==================================================================
-            // Setup Ajax configuration
-            //==================================================================
-            var conf = [];
+			//==================================================================
+			// Setup Ajax configuration
+			//==================================================================
+			var conf = [];
 
 			conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_lmod.php';
 			conf['delai_tentative'] = 15000;
@@ -30,18 +30,18 @@ function lisha_lmod_click(lisha_id,p_line,ajax_return)
 			conf['fonction_a_executer_reponse'] = 'lisha_lmod_click';
 			conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"',"+p_line;
 			ajax_call(conf);
-            //==================================================================
+			//==================================================================
 		}
 		else
 		{
 			// A line was clicked
-			
+
 			// Hide the lisha
 			document.getElementById('lisha_lmod_'+lisha_id).style.display = 'none';
 			document.getElementById('lisha_lmod_'+lisha_id).style.left = '';
 			document.getElementById('lisha_lmod_'+lisha_id).style.right = '';
 			document.getElementById('lisha_lmod_'+lisha_id).style.top = '';
-			
+
 			// Turn off the flag lmod opened
 			eval('lisha.'+lisha_id+'.lmod_opened = false;');
 
@@ -58,19 +58,19 @@ function lisha_lmod_click(lisha_id,p_line,ajax_return)
 		{	
 			// Get the ajax return in json format
 			var json = get_json(ajax_return);
-			
+
 			lisha_set_innerHTML('lmod_lisha_container_'+lisha_id,decodeURIComponent(json.lisha.content));
 			lisha_lmod_place(lisha_id);
-			
-			
+
+
 			// Update the json object
 			eval(decodeURIComponent(json.lisha.json));
-			
+
 			document.getElementById('liste_'+lisha_id).onscroll = function(){lisha_horizontal_scroll(lisha_id);};
 			size_table(lisha_id);
 			eval('lisha.'+lisha_id+'.lmod_opened = true;');
 			lisha_execute_event(__ON_LMOD_OPEN__,__AFTER__,lisha_id);
-			
+
 		} 
 		catch(e) 
 		{
@@ -92,22 +92,22 @@ function lisha_lmod_place(lisha_id)
 		document.getElementById('lisha_lmod_'+lisha_id).style.top = pos[1] + document.getElementById('lst_'+lisha_id).offsetHeight + 'px';
 		document.getElementById('lisha_lmod_'+lisha_id).style.left = pos[0]-7+'px';
 
-        //==================================================================
-        // Test lisha position
-        //==================================================================
+		//==================================================================
+		// Test lisha position
+		//==================================================================
 
-            // Get the position of the lisha
-            var pos_lisha = lisha_getPosition('lisha_lmod_'+lisha_id);
-            // Get the width of the screen
-            var body_width = document.body.offsetWidth;
-            // Test if the lisha is not out of the left corner of the screen
-            if(pos_lisha[0]+document.getElementById('lisha_lmod_'+lisha_id).offsetWidth > body_width)
-            {
-                document.getElementById('lisha_lmod_'+lisha_id).style.left = '';
-                document.getElementById('lisha_lmod_'+lisha_id).style.right = 0+'px';
-                //alert('trop grand\nlisha : '+(pos_lisha[0]+document.getElementById('lisha_lmod_'+lisha_id).offsetWidth)+'\nbody : '+body_width);
-            }
-        //==================================================================
+			// Get the position of the lisha
+			var pos_lisha = lisha_getPosition('lisha_lmod_'+lisha_id);
+			// Get the width of the screen
+			var body_width = document.body.offsetWidth;
+			// Test if the lisha is not out of the left corner of the screen
+			if(pos_lisha[0]+document.getElementById('lisha_lmod_'+lisha_id).offsetWidth > body_width)
+			{
+				document.getElementById('lisha_lmod_'+lisha_id).style.left = '';
+				document.getElementById('lisha_lmod_'+lisha_id).style.right = 0+'px';
+				//alert('trop grand\nlisha : '+(pos_lisha[0]+document.getElementById('lisha_lmod_'+lisha_id).offsetWidth)+'\nbody : '+body_width);
+			}
+		//==================================================================
 	}
 	else
 	{
@@ -116,7 +116,7 @@ function lisha_lmod_place(lisha_id)
 		var pos_lmod = lisha_getPosition('lisha_lmod_'+lisha_id);
 		document.getElementById('lisha_lmod_'+lisha_id).style.left = pos[0] - pos_lmod[0]-7+'px';
 	}
-	
+
 }
 
 function lisha_clear_value(lisha_id)

@@ -17,6 +17,5 @@
 	$ssid = $_POST["ssid"];
 	require('../../includes/common/active_session.php');
 	/*===================================================================*/	
-	
+
 	echo $_SESSION[$ssid]['current_read_page'];
-?>

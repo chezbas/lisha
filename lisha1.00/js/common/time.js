@@ -6,39 +6,39 @@ function dateDiff(firstdate,firsttime,seconddate,secondtime)
 	date1 = new Date();
 	date2 = new Date();
 	diff  = new Date();
-	
+
 	date1temp = new Date(firstdate + " " + firsttime);
 	date1.setTime(date1temp.getTime());
-	
+
 	date2temp = new Date(seconddate + " " + secondtime);
 	date2.setTime(date2temp.getTime());
-	
+
 	// sets difference date to difference of first date and second date
-	
+
 	diff.setTime(Math.abs(date1.getTime() - date2.getTime()));
-	
+
 	timediff = diff.getTime();
-	
+
 	weeks = Math.floor(timediff / (1000 * 60 * 60 * 24 * 7));
 	timediff -= weeks * (1000 * 60 * 60 * 24 * 7);
-	
+
 	days = Math.floor(timediff / (1000 * 60 * 60 * 24)); 
 	timediff -= days * (1000 * 60 * 60 * 24);
-	
+
 	hours = Math.floor(timediff / (1000 * 60 * 60)); 
 	timediff -= hours * (1000 * 60 * 60);
-	
+
 	mins = Math.floor(timediff / (1000 * 60)); 
 	timediff -= mins * (1000 * 60);
-	
+
 	secs = Math.floor(timediff / 1000); 
 	timediff -= secs * 1000;
 
-	
+
 	if(hours == 0 && mins <= 10 && message_alert_affiche == false)
 	{
 		message_alert_affiche = true;
-		
+
 		if(application == 1 || application == 3)
 		{
 			texte_action = decodeURIComponent(libelle_common[1]).replace('$x', mins);
@@ -47,12 +47,12 @@ function dateDiff(firstdate,firsttime,seconddate,secondtime)
 		{
 			texte_action = decodeURIComponent(libelle_common[2]).replace('$x', mins);
 		}
-		
+
 		aff_btn = new Array([get_lib(182)],["close_msgbox();"]);
-    	generer_msgbox('',texte_action,'question','msg',aff_btn);
+		generer_msgbox('',texte_action,'question','msg',aff_btn);
 	}
-		
-		
+
+
 	if(hours < 10)
 	{
 		hours = '0'+hours;
@@ -71,9 +71,9 @@ function dateDiff(firstdate,firsttime,seconddate,secondtime)
 		{
 			// Dépassement du temps imparti. L'objet est HS.
 			clearInterval(set_interval_presence);			// On arrête d'envoyer des tops de présence.
-	    	generer_msgbox('',decodeURIComponent(libelle_common[5]),'erreur','msg',false,true);
-	    	clearTimeout(time_maj_titre);
-	    	document.title = decodeURIComponent(libelle_common[7]);
+			generer_msgbox('',decodeURIComponent(libelle_common[5]),'erreur','msg',false,true);
+			clearTimeout(time_maj_titre);
+			document.title = decodeURIComponent(libelle_common[7]);
 		}
 	}
 	else

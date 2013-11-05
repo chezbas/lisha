@@ -33,9 +33,9 @@ Class_opacity.prototype.start = function() // Start opacity effect
 		this.message = "Wrong initialization. Abord start function !!";
 		return this.status; // Exit No opacity effect possible	
 	}
-	
+
 	this.actif = true; 	// true : Effect in progress, false : No effect in progress
-	
+
 	if ( (this.mode == 1) && (this.c_value == 0) )
 	{
 		document.getElementById(this.id).style.display = "block";
@@ -86,13 +86,13 @@ Class_opacity.prototype.effect = function() // Do opacity effect
 		return this.message; // Exit No opacity effect possible	
 	}
 	/*======================================================*/
-	
+
 	// Apply current opacity to your div
 	document.getElementById(this.id).style.opacity = this.c_value;
 
 	// Do opacity effect step
 	this.c_value = this.c_value + ( this.mode * this.step );
-	
+
 	// Totaly hidden : Force opacity low value
 	if ( (this.c_value < 0) && (this.mode == -1) ) 
 	{
@@ -132,7 +132,7 @@ Class_opacity.prototype.effect = function() // Do opacity effect
 			{
 				document.getElementById(this.id).style.display = "block";
 			}
-			
+
 			this.stop();
 		}
 	}
@@ -164,12 +164,12 @@ Class_opacity.prototype.init = function(begin,step,p_cycle,id,p_focus)
 	this.actif = false; 		// true : Effect in progress, false : No effect in progress
 	this.mode = false; 			// Currently move : 1 : increase, -1 : Decrease	
 	this.c_setfocus = null;	// Id for focus when effect start
-	
+
 	if ( p_focus != null && p_focus != undefined )
 	{
 		this.c_setfocus = p_focus;
 	}
-	
+
 	// Div id
 	if (id == undefined)
 	{
@@ -180,7 +180,7 @@ Class_opacity.prototype.init = function(begin,step,p_cycle,id,p_focus)
 	{
 		this.id = id;		
 	}
-	
+
 	if ( (begin == undefined) || (step == undefined) )
 	{
 		// Init sequence error
@@ -194,14 +194,14 @@ Class_opacity.prototype.init = function(begin,step,p_cycle,id,p_focus)
 		this.message = "repeat parameters had to be define and be upper than -1 !!";
 		return this.message; // Exit No opacity effect possible
 	}
-	
+
 	if ( isNaN(p_cycle)  ) // Is not a number
 	{
 		// Init sequence error
 		this.message = "repeat parameters had to be a numeric !!";
 		return this.message; // Exit No opacity effect possible
 	}
-	
+
 	if ( (begin != "show") && (begin != "hide") )
 	{
 		// Wrong begin parameter value
@@ -213,7 +213,7 @@ Class_opacity.prototype.init = function(begin,step,p_cycle,id,p_focus)
 	}
 
 	this.c_cycle = p_cycle;
-	
+
 	if ( begin == "show")
 	{
 		this.c_value = 0;
@@ -224,9 +224,9 @@ Class_opacity.prototype.init = function(begin,step,p_cycle,id,p_focus)
 		this.c_value = 1;
 		this.mode = -1;
 	}
-	
+
 	this.step = step;
-	
+
 	this.message = "Initialization Done !!";
 	this.status = true;
 };

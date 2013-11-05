@@ -15,7 +15,7 @@
 				AND `application_release` = '".$_SESSION[$ssid]['MT']['application_release']."'";
 
 	$result = $link->query($query);
-	
+
 	/**==================================================================
 	* Loading conf in javascript page
 	====================================================================*/	
@@ -25,7 +25,6 @@
 	{
 		$s_conf .= 'conf_tree['.$row['id_conf'].']=\''.rawurlencode($row['valeur']).'\';';	
 	}
-	
+
 	echo $s_conf;
 	/*===================================================================*/
-?>

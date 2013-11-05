@@ -13,7 +13,7 @@
 	 ====================================================================*/
 	require('../includes/common/buffering.php');
 	/*===================================================================*/	
-	
+
 	/**==================================================================
 	 * Start unique php session with ssid name
 	 ====================================================================*/
@@ -24,7 +24,7 @@
 	$lisha_id = $_GET['lisha_id'];
 
 	// Page header
-    header("Content-type: application/csv; charset=utf-8");
+	header("Content-type: application/csv; charset=utf-8");
 	header("Content-Disposition: attachment; filename=my_export.csv");
 
 	$_SESSION[$ssid]['lisha'][$lisha_id]->export_list($_GET['lines'], false);

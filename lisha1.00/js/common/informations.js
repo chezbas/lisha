@@ -1,5 +1,5 @@
 	var viewer_aide = '';
-	
+
 	//==================================================================
 	// if global = 'X', then id_libelle come from common iknow text
 	// if text exists ans global not set, then put raw text
@@ -24,7 +24,7 @@
 		{
 			var libelle_temp = decodeURIComponent(libelle_common[id_libelle]);
 		}
-		
+
 		if(typeof(chaine) ==  'undefined' || chaine == '') //SIBY
 		{
 			// No replace
@@ -58,7 +58,7 @@
 		iknow_panel_set_sous_titre('&nbsp;');
 		/**==================================================================*/	
 	}
-	
+
 	/**
 	 * 
 	 * @param id_div	Identifiant de la page dans la documentation (appelé lors d'un CTRL+F1)
@@ -75,14 +75,14 @@
 			viewer_aide = id_div;
 		}
 	}
-	
+
 	function addslashes(ch) {
 		ch = ch.replace(/\\/g,"\\\\");
 		ch = ch.replace(/\'/g,"\\'");
 		ch = ch.replace(/\"/g,"\\\"");
 		return ch;
 	}
-	
+
 	//==================================================================
 	// id_doc id page of documentation linked up, if none, put false
 	// id_help : message to display
@@ -95,7 +95,7 @@
 		ikdoc(id_doc);// Add call of doc page
 		set_text_help(id_help,texte,global,chaine,id_doc);
 	}
-	
+
 	function get_lib(id)
 	{
 		return decodeURIComponent(libelle[id]);
@@ -124,9 +124,9 @@
 			g_blink_error_msg = null;
 			return true;
 		}
-		
+
 		g_blink_error_msg_timer_increment += 1;
-		
+
 		if(g_blink_error_msg_timer_increment & 1)
 		{
 			document.getElementById(id_object).style.color = 'red';
@@ -136,7 +136,7 @@
 			document.getElementById(id_object).style.color = 'black';
 		}
 	}
-	
+
 	function iknow_toggle_control()
 	{
 		if(document.getElementById('iknow_ctrl_arrow') != null)

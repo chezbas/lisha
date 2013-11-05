@@ -8,32 +8,32 @@
  ====================================================================*/
 function lisha_input_keydown_pressed(evt,lisha_id,column, quick_search_mode, edit_mode)
 {
-    //alert(evt.keyCode);
-    if( evt.keyCode == 8 || evt.keyCode == 46 ) // Del or suppr
-    {
-        //==================================================================
-        // Deletion of digit, please update
-        //====================================================================
-        if(quick_search_mode == true && !edit_mode)
-        {
-            // Clear the last timeout
-            eval('clearTimeout(lisha.'+lisha_id+'.time_input_search);');
+	//alert(evt.keyCode);
+	if( evt.keyCode == 8 || evt.keyCode == 46 ) // Del or suppr
+	{
+		//==================================================================
+		// Deletion of digit, please update
+		//====================================================================
+		if(quick_search_mode == true && !edit_mode)
+		{
+			// Clear the last timeout
+			eval('clearTimeout(lisha.'+lisha_id+'.time_input_search);');
 
-            // Set a timeout before send the query
-            eval('lisha.'+lisha_id+'.time_input_search = setTimeout(\'lisha_input_search(\\\''+lisha_id+'\\\','+column+')\', 750)');
-        }
-        //==================================================================
-        document.getElementById('liste_'+lisha_id).scrollLeft = document.getElementById('header_'+lisha_id).scrollLeft;
-    }
+			// Set a timeout before send the query
+			eval('lisha.'+lisha_id+'.time_input_search = setTimeout(\'lisha_input_search(\\\''+lisha_id+'\\\','+column+')\', 750)');
+		}
+		//==================================================================
+		document.getElementById('liste_'+lisha_id).scrollLeft = document.getElementById('header_'+lisha_id).scrollLeft;
+	}
 
-    if(evt.keyCode == 27 ) // Escape
-    {
-        // Clear the last timeout
-        eval('clearTimeout(lisha.'+lisha_id+'.time_input_search);');
+	if(evt.keyCode == 27 ) // Escape
+	{
+		// Clear the last timeout
+		eval('clearTimeout(lisha.'+lisha_id+'.time_input_search);');
 
-        // Hide ajax wait
-        document.getElementById('wait_input_'+lisha_id).style.display = 'none';
-    }
+		// Hide ajax wait
+		document.getElementById('wait_input_'+lisha_id).style.display = 'none';
+	}
 }
 
  /**==================================================================
@@ -53,16 +53,16 @@ function lisha_input_keydown(evt,el,lisha_id,column, quick_search_mode, edit_mod
 		{
 			//==================================================================
 			// A key was pressed (letter,number,backspace or espace)
-            // No rows current in update
+			// No rows current in update
 			//====================================================================
-            if(quick_search_mode == true && !edit_mode)
-            {
-                // Clear the last timeout
-                eval('clearTimeout(lisha.'+lisha_id+'.time_input_search);');
+			if(quick_search_mode == true && !edit_mode)
+			{
+				// Clear the last timeout
+				eval('clearTimeout(lisha.'+lisha_id+'.time_input_search);');
 
-                // Set a timeout before send the query
-                eval('lisha.'+lisha_id+'.time_input_search = setTimeout(\'lisha_input_search(\\\''+lisha_id+'\\\','+column+')\', 750)');
-            }
+				// Set a timeout before send the query
+				eval('lisha.'+lisha_id+'.time_input_search = setTimeout(\'lisha_input_search(\\\''+lisha_id+'\\\','+column+')\', 750)');
+			}
 			//==================================================================
 			document.getElementById('liste_'+lisha_id).scrollLeft = document.getElementById('header_'+lisha_id).scrollLeft;
 		}
@@ -79,16 +79,16 @@ function lisha_input_keydown(evt,el,lisha_id,column, quick_search_mode, edit_mod
 					{
 						document.getElementById('lisha_input_result_1_'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_column_header_input_result';
 					}
-					
+
 					var test_div = document.getElementById('lisha_input_result_'+eval('lisha.'+lisha_id+'.input_search_selected_line + 1')+'_'+lisha_id);
-					
+
 					if(test_div != null)
 					{
 						if(eval('lisha.'+lisha_id+'.input_search_selected_line') > 0)
 							document.getElementById('lisha_input_result_'+eval('lisha.'+lisha_id+'.input_search_selected_line')+'_'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_column_header_input_result';
-						
+
 						eval('lisha.'+lisha_id+'.input_search_selected_line += 1');
-						
+
 						document.getElementById('lisha_input_result_'+eval('lisha.'+lisha_id+'.input_search_selected_line')+'_'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_column_header_input_result_hover';
 					}
 				}
@@ -127,19 +127,19 @@ function lisha_input_keydown(evt,el,lisha_id,column, quick_search_mode, edit_mod
 						{
 							//====================================================================
 							// Carriage return pressed
-						    //====================================================================
+							//====================================================================
 							if(edit_mode == true)
 							{
 								//eval('clearTimeout(lisha.'+lisha_id+'.time_input_search);');
-                                document.getElementById('th_input_'+column+'__'+lisha_id).blur();
+								document.getElementById('th_input_'+column+'__'+lisha_id).blur();
 								save_lines(evt,lisha_id,'update');
-                            }
+							}
 							else
 							{
-                                // Hide any ajax search wait
-                                document.getElementById('wait_input_'+lisha_id).style.display = 'none';
+								// Hide any ajax search wait
+								document.getElementById('wait_input_'+lisha_id).style.display = 'none';
 
-                                document.getElementById('th_input_'+column+'__'+lisha_id).blur();
+								document.getElementById('th_input_'+column+'__'+lisha_id).blur();
 								if(eval('lisha.'+lisha_id+'.input_search_selected_line') > 0)
 								{
 									//alert(0);
@@ -195,21 +195,21 @@ function toggle_wait_input(lisha_id,column)
 {
 	if(document.getElementById('wait_input_'+lisha_id).style.display != 'block')
 	{
-        //==================================================================
-        // Get lisha position and the input
-        //==================================================================
+		//==================================================================
+		// Get lisha position and the input
+		//==================================================================
 		try
-        {
+		{
 			var pos_input = lisha_getPosition('th_input_'+column+'__'+lisha_id);
 		}
-        catch (e)
-        {
+		catch (e)
+		{
 			//alert('zzzzzzzth_input_'+column+'__'+lisha_id);
 		}
-		
+
 		var pos_lisha = lisha_getPosition('lis__'+eval('lisha.'+lisha_id+'.theme')+'__lisha_table_'+lisha_id+'__');
-        //==================================================================
-		
+		//==================================================================
+
 		// Set the size of the wait picture
 		document.getElementById('wait_input_'+lisha_id).style.width = document.getElementById('th_input_'+column+'__'+lisha_id).offsetWidth-4+'px';
 
@@ -219,13 +219,13 @@ function toggle_wait_input(lisha_id,column)
 		// Horizontal placement
 		document.getElementById('wait_input_'+lisha_id).style.left = pos_input[0]-pos_lisha[0]-document.getElementById('liste_'+lisha_id).scrollLeft+'px';
 
-         // Hide the wait picture
+		 // Hide the wait picture
 		document.getElementById('wait_input_'+lisha_id).style.display = 'block';
 	}
 	else
 	{
-         // Hide the wait picture
-        document.getElementById('wait_input_'+lisha_id).style.display = 'none';
+		 // Hide the wait picture
+		document.getElementById('wait_input_'+lisha_id).style.display = 'none';
 	}
 }
 /**==================================================================*/
@@ -243,7 +243,7 @@ function lisha_col_input_change(lisha_id,column)
 	// Do not set a filter when currently updating lines
 	if(eval('lisha.'+lisha_id+'.edit_mode') != __EDIT_MODE__)
 	{
-        //alert(3);
+		//alert(3);
 		//lisha_define_filter(lisha_id,document.getElementById(encodeURIComponent('th_input_'+column+'__'+lisha_id)).value,column,false);
 	}
 }
@@ -264,20 +264,20 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
 	if(typeof(ajax_return) == 'undefined')
 	{
 		if(typeof(quick_search) == 'undefined')
-        {
-            quick_search = true;
-        }
+		{
+			quick_search = true;
+		}
 
-        // Display ajax call in input area
+		// Display ajax call in input area
 		toggle_wait_input(lisha_id,column);
 
-        // Recover last value input by user in header column input box
-        var txt = encodeURIComponent(document.getElementById('th_input_'+column+'__'+lisha_id).value);
-        txt = txt.replace(/\'/g,"\\\\\\\\\\\\\\'");
+		// Recover last value input by user in header column input box
+		var txt = encodeURIComponent(document.getElementById('th_input_'+column+'__'+lisha_id).value);
+		txt = txt.replace(/\'/g,"\\\\\\\\\\\\\\'");
 
-        //==================================================================
-        // Setup Ajax configuration
-        //==================================================================
+		//==================================================================
+		// Setup Ajax configuration
+		//==================================================================
 		var conf = [];
 
 		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
@@ -288,23 +288,23 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
 		conf['fonction_a_executer_reponse'] = 'lisha_input_search';
 		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"','"+column+"','"+quick_search+"'";
 
-        ajax_call(conf);
-        //==================================================================
+		ajax_call(conf);
+		//==================================================================
 
-        // Active red marble animation
+		// Active red marble animation
 		wait_column_bullet(lisha_id);
 	}
 	else
 	{
 		try 
 		{
-            toggle_wait_input(lisha_id,column);
+			toggle_wait_input(lisha_id,column);
 
 			if(eval('lisha.'+lisha_id+'.time_input_search;') != eval('false'))
 			{
-                //==================================================================
-                // Display query result
-                //==================================================================
+				//==================================================================
+				// Display query result
+				//==================================================================
 
 				// Get the ajax return in json format
 				var json = get_json(ajax_return);
@@ -312,9 +312,9 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
 				// Update the json object
 				eval(decodeURIComponent(json.lisha.json));
 				eval('lisha.'+lisha_id+'.lmod_opened = true;');
-				
+
 				update_column_bullet(lisha_id);
-				
+
 				if(quick_search)
 				{
 					// Quick search flag
@@ -322,7 +322,7 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
 					eval('lisha.'+lisha_id+'.menu_quick_search_col = column;');
 					eval('lisha.'+lisha_id+'.lmod_opened = true;');
 					var div_menu = document.getElementById('lis_column_header_menu_'+lisha_id);
-	
+
 					if(typeof(json.lisha.content) != 'object')
 					{
 						// Prepare the div
@@ -333,16 +333,16 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
 						html += decodeURIComponent(json.lisha.content);
 						html += '</td></tr>';
 						html += '<tr><td class="shadow_l_b"></td><td class="shadow_b"></td><td class="shadow_r_b"></td></tr></table>';
-						 
+
 						// Set the result to the menu
 						div_menu.innerHTML = html;
-				
+
 						// Display the menu
 						div_menu.style.display = 'block';
-						
+
 						// Positions the menu
 						position_input_result(lisha_id,column);
-						
+
 						// Initialise the selected line
 						eval('lisha.'+lisha_id+'.input_search_selected_line = 0');
 					}
@@ -356,7 +356,7 @@ function lisha_input_search(lisha_id,column,quick_search,ajax_return)
 				}
 				// Re-Activate the lisha horizontal scroll
 				document.getElementById('liste_'+lisha_id).onscroll = function(){lisha_horizontal_scroll(lisha_id);};
-                //==================================================================
+				//==================================================================
 			}
 		} 
 		catch(e) 
@@ -386,27 +386,27 @@ function update_column_bullet(lisha_id)
 		{
 			if(document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id))
 			{
-                // is_lovable = true means that distinct values query is solvable ( means no more TAGLOV )
+				// is_lovable = true means that distinct values query is solvable ( means no more TAGLOV )
 				var is_lovable = eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.is_lovable');
 
-                // lov_perso = true means that you have defined custom lov on column
+				// lov_perso = true means that you have defined custom lov on column
 				var lov_perso = eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.lov_perso');
 
-                // SRX try to enhance marble part SRX_MANAGE_MARBLE_ON_INPUT_CHANGE
-                 if(is_lovable == true && lov_perso != 'undefined')
-                {
-                    document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
-                }
+				// SRX try to enhance marble part SRX_MANAGE_MARBLE_ON_INPUT_CHANGE
+				 if(is_lovable == true && lov_perso != 'undefined')
+				{
+					document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
+				}
 
-                if(is_lovable == true && lov_perso == true)
-                {
-                    document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header_lovable __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
-                }
+				if(is_lovable == true && lov_perso == true)
+				{
+					document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header_lovable __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
+				}
 
-                if(is_lovable == 'undefined' || is_lovable == false)
-                {
-                    document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
-                }
+				if(is_lovable == 'undefined' || is_lovable == false)
+				{
+					document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
+				}
 			}
 		}
 	}
@@ -432,7 +432,7 @@ function wait_column_bullet(lisha_id)
 
 		if(lov_perso != undefined && is_lovable != undefined && is_lovable == true)
 		{
-            //alert(iterable_element+'-'+lov_perso);
+			//alert(iterable_element+'-'+lov_perso);
 			document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header_check_is_lovable __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
 		}
 		else
@@ -442,10 +442,10 @@ function wait_column_bullet(lisha_id)
 				//alert(eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id'));
 				document.getElementById('th_menu_'+eval('lisha.'+lisha_id+'.columns.'+iterable_element+'.id')+'__'+lisha_id).className = '__'+eval('lisha.'+lisha_id+'.theme')+'_menu_header_check_is_lovable __'+eval('lisha.'+lisha_id+'.theme')+'_men_head';
 			}
-            else
-            {
-                //alert(iterable_element+'-'+is_lovable+lov_perso);
-            }
+			else
+			{
+				//alert(iterable_element+'-'+is_lovable+lov_perso);
+			}
 		}
 	}	
 }
@@ -462,35 +462,35 @@ function wait_column_bullet(lisha_id)
  ====================================================================*/
 function lisha_define_filter(lisha_id,txt,column,display,ajax_return)
 {
-    // Display wait background
-    lisha_display_wait(lisha_id);
+	// Display wait background
+	lisha_display_wait(lisha_id);
 
 	if(typeof(ajax_return) == 'undefined')
 	{
-        // Get all updated filter
-        var url_filter = '&filter_col='+column+'&filter='+encodeURIComponent(txt);
-        //==================================================================
-        // Setup Ajax configuration
-        //==================================================================
-        var conf = [];
+		// Get all updated filter
+		var url_filter = '&filter_col='+column+'&filter='+encodeURIComponent(txt);
+		//==================================================================
+		// Setup Ajax configuration
+		//==================================================================
+		var conf = [];
 
-        conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
-        conf['delai_tentative'] = 15000;
-        conf['max_tentative'] = 4;
-        conf['type_retour'] = false;		// Reponse Text
-        conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=6'+url_filter+'&selected_lines='+encodeURIComponent(get_selected_lines(lisha_id));
-        conf['fonction_a_executer_reponse'] = 'lisha_define_filter';
-        conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"',null,"+column+','+display;
+		conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
+		conf['delai_tentative'] = 15000;
+		conf['max_tentative'] = 4;
+		conf['type_retour'] = false;		// Reponse Text
+		conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=6'+url_filter+'&selected_lines='+encodeURIComponent(get_selected_lines(lisha_id));
+		conf['fonction_a_executer_reponse'] = 'lisha_define_filter';
+		conf['param_fonction_a_executer_reponse'] = "'"+lisha_id+"',null,"+column+','+display;
 
-        ajax_call(conf);
-        //==================================================================
- 	}
+		ajax_call(conf);
+		//==================================================================
+	}
 	else
 	{
 		// Get the ajax return in json format
 		//var json = get_json(ajax_return);
 
-        var quick_search = true;
+		var quick_search = true;
 		// Update the json object
 		try
 		{
@@ -511,9 +511,9 @@ function lisha_define_filter(lisha_id,txt,column,display,ajax_return)
 				eval('lisha.'+lisha_id+'.lmod_opened = true;');
 			}
 
-            // SRX todo marble check
+			// SRX todo marble check
 			update_column_bullet(lisha_id);
-			
+
 			if(quick_search)
 			{
 				eval('lisha.'+lisha_id+'.menu_quick_search = true;');
@@ -527,7 +527,7 @@ function lisha_define_filter(lisha_id,txt,column,display,ajax_return)
 		}
 		catch(e)
 		{
-            lisha_display_error(lisha_id,e,'input_col_4');
+			lisha_display_error(lisha_id,e,'input_col_4');
 		}
 	}
 }
@@ -545,15 +545,15 @@ function lisha_input_result_click(lisha_id,column,line,txt)
 {
 	// Insert the text clicked on the input search
 	document.getElementById('th_input_'+column+'__'+lisha_id).value = txt;
-	
+
 	// Close the search result
 	close_input_result(lisha_id);
 
-    // Shadow on back screen
-    lisha_cover_with_filter(lisha_id);
+	// Shadow on back screen
+	lisha_cover_with_filter(lisha_id);
 
 	// Launch automatic Search
-    //alert(4);
+	//alert(4);
 	lisha_define_filter(lisha_id,encodeURIComponent(document.getElementById('th_input_'+column+'__'+lisha_id).value),column,true);
 }
 /**==================================================================*/
@@ -569,13 +569,13 @@ function close_input_result(lisha_id)
 {
 	// Unset the data of the menu
 	lisha_set_innerHTML('lis_column_header_menu_'+lisha_id,'');
-	
+
 	// Hide the menu
 	document.getElementById('lis_column_header_menu_'+lisha_id).style.display = 'none';
-	
+
 	// Reset the selected line
 	eval('lisha.'+lisha_id+'.input_search_selected_line = 0;');
-	
+
 	// Quick search flag
 	eval('lisha.'+lisha_id+'.menu_quick_search = false;');
 	eval('lisha.'+lisha_id+'.menu_quick_search_col = false;');
@@ -591,20 +591,20 @@ function close_input_result(lisha_id)
  ====================================================================*/
 function position_input_result(lisha_id,column)
 {
-    // Vertical position
+	// Vertical position
 	var top_container = document.getElementById('conteneur_menu_'+lisha_id).offsetTop;
 	document.getElementById('lis_column_header_menu_'+lisha_id).style.top = top_container+'px';
 
-    // Horizontal position
+	// Horizontal position
 	var pos_th = document.getElementById('th_2_c'+column+'_'+lisha_id).offsetLeft - document.getElementById('liste_'+lisha_id).scrollLeft;
 	document.getElementById('lis_column_header_menu_'+lisha_id).style.left = pos_th+'px';
 
-    //==================================================================
-    // Get menu position
-    //==================================================================
+	//==================================================================
+	// Get menu position
+	//==================================================================
 	// Get the position of the menu
 	var pos_menu = lisha_getPosition('lis_column_header_menu_'+lisha_id);
-	
+
 	// Get the position of the lisha
 	var pos_lisha = lisha_getPosition('lis__'+eval('lisha.'+lisha_id+'.theme')+'__lisha_table_'+lisha_id+'__');
 
@@ -613,8 +613,8 @@ function position_input_result(lisha_id,column)
 	{
 		document.getElementById('lis_column_header_menu_'+lisha_id).style.left = 0+'px';
 	}
-    //==================================================================
-	
+	//==================================================================
+
 	eval('lisha.'+lisha_id+'.menu_left = '+document.getElementById('lis_column_header_menu_'+lisha_id).offsetLeft+';');
 }
 /**==================================================================*/

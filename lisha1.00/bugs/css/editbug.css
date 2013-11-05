@@ -4,7 +4,7 @@ html,body
 	padding:0;
 	background-color: #A99;
 	font-family: arial;
-    line-height: 1.2em;
+	line-height: 1.2em;
 	font-style: normal;
 	font-size: 1em;
 }
@@ -18,7 +18,7 @@ html,body
 	display: block;
 	background-color: #889;
 	box-shadow: 0 2px 8px #333;
-    border-radius : 5px 5px 5px 5px;
+	border-radius : 5px 5px 5px 5px;
 }
 
 .description_caption
@@ -47,7 +47,7 @@ html,body
 	display: block;
 	background-color: #99A;
 	box-shadow: 0 2px 8px #333;
-    border-radius : 5px 5px 5px 5px;
+	border-radius : 5px 5px 5px 5px;
 }
 
 .solution_caption

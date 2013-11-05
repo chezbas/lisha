@@ -22,30 +22,30 @@
  */
 function ajax_call(configuration,reserve_interne)
 {
-    //==================================================================
-    // Manage internal variables
-    //==================================================================
+	//==================================================================
+	// Manage internal variables
+	//==================================================================
 	if (typeof(reserve_interne) == "undefined")
 	{		
 		var reserve_interne = new Array();
 		reserve_interne['url_image_wait'] = 'connexion.gif';
 	}
-    //==================================================================
+	//==================================================================
 
-    //==================================================================
-    // PROTECTION DENY OF SERVICE ( DOS protection )
-    // If you forgot this value or using no numeric value than each client web browser screen will attempt as fast possible to get
-    // answer from your server.
-    // That provide a pur Deny os service process
-    //==================================================================
+	//==================================================================
+	// PROTECTION DENY OF SERVICE ( DOS protection )
+	// If you forgot this value or using no numeric value than each client web browser screen will attempt as fast possible to get
+	// answer from your server.
+	// That provide a pur Deny os service process
+	//==================================================================
 	if(configuration['delai_tentative'] < 100)
 	{
-        // Down minimum value 100 ms
+		// Down minimum value 100 ms
 		configuration['delai_tentative'] = 100;
 	}
-    //==================================================================
+	//==================================================================
 
-	
+
 	/**==================================================================
 	 * GESTION DU CAS DE L'APPEL PAR setTimeout
 	 ====================================================================*/	
@@ -54,10 +54,10 @@ function ajax_call(configuration,reserve_interne)
 		reserve_interne['xhr_nombre_essai'] = 0;		
 	}
 	/**==================================================================*/	
-	
-	
-	
-	
+
+
+
+
 	/**==================================================================
 	 * GESTION DU GIF D'ATTENTE
 	 ====================================================================*/	
@@ -69,7 +69,7 @@ function ajax_call(configuration,reserve_interne)
 			{
 				// Image par défaut
 				document.getElementById(configuration['div_wait']).innerHTML  = '<img src="images/'+reserve_interne['url_image_wait']+'"/>';
-					
+
 			}
 			else
 			{
@@ -85,13 +85,13 @@ function ajax_call(configuration,reserve_interne)
 			}
 		}
 	}
-	
-	
+
+
 	/**==================================================================*/	
-		
-	
-	
-	
+
+
+
+
 	/**==================================================================
 	 * GESTION DE L'OBJET AJAX
 	 ====================================================================*/		
@@ -116,9 +116,9 @@ function ajax_call(configuration,reserve_interne)
 		reserve_interne['xhr'].abort();								// Le serveur ne répond pas, on annule la requête
 	}
 	/**==================================================================*/	
-	
-	
-	
+
+
+
 	/**==================================================================
 	 * APPEL AJAX
 	 ====================================================================*/		
@@ -128,20 +128,20 @@ function ajax_call(configuration,reserve_interne)
 	reserve_interne['xhr_nombre_essai']++;
 	/**==================================================================*/
 
-	
+
 	/**==================================================================
 	 * REPONSE ATTENDUE DU SERVEUR
 	 ====================================================================*/		
 	reserve_interne['xhr'].onreadystatechange = function()
 	{
-		
+
 		if(reserve_interne['xhr'].readyState == 4 && reserve_interne['xhr'].status == 200)
 		{
 			if(typeof(configuration['debug']) == "undefined")
 			{	
 				// Le serveur a répondu
 				clearTimeout(reserve_interne['xhr_verif_retour_ajax']);					// Arrête l'appel récursif						
-				
+
 				/**==================================================================
 				 * GESTION DU GIF D'ATTENTE
 				 ====================================================================*/	
@@ -156,18 +156,18 @@ function ajax_call(configuration,reserve_interne)
 					document.getElementById(configuration['div_wait_nbr_tentative']).innerHTML = '';
 				}
 				/**==================================================================*/	
-				
+
 				if (typeof(configuration['div_a_modifier']) == "undefined")
 				{ // Pas de de div à modifier
-					
+
 					if(configuration['type_retour'] == false)
 					{	// TEXTE
-						
+
 						if(typeof(configuration['fonction_a_executer_reponse']) != "undefined")
 						{ // Exectution d'une fonction utilisateur en passant comme paramètre le retour ajax (texte)
-							
+
 							var retour = reserve_interne['xhr'].responseText;
-							
+
 							if(typeof(configuration['param_fonction_a_executer_reponse']) != "undefined")
 							{
 								eval(configuration['fonction_a_executer_reponse']+'('+configuration['param_fonction_a_executer_reponse']+',retour)');
@@ -176,14 +176,14 @@ function ajax_call(configuration,reserve_interne)
 							{
 								eval(configuration['fonction_a_executer_reponse']+'(retour)');		
 							}
-												
+
 						}
-						
+
 						return false;
 					}
 					else
 					{	// XML
-						
+
 						if(typeof(configuration['fonction_a_executer_reponse']) != "undefined")									
 						{ // Exectution d'une fonction utilisateur en passant comme paramètre le retour ajax (XML)		
 							var retour = reserve_interne['xhr'].responseXML;
@@ -191,18 +191,18 @@ function ajax_call(configuration,reserve_interne)
 							{
 								// Passage de parametres supplémentaire
 								eval(configuration['fonction_a_executer_reponse']+'('+configuration['param_fonction_a_executer_reponse']+',retour)');
-								
+
 							}
 							else
 							{
 								// Pas de parametres supplémentaire à passer
 								eval(configuration['fonction_a_executer_reponse']+'(retour)');
-								
+
 							}
 						}
-	
+
 						return false;
-						
+
 					}							
 				}
 				else
@@ -211,31 +211,31 @@ function ajax_call(configuration,reserve_interne)
 					if(typeof(configuration['fonction_a_executer_reponse']) != "undefined")
 					{
 						var retour = reserve_interne['xhr'].responseText; 	// Exectution d'une fonction utilisateur en passant comme paramètre le retour ajax (texte)
-						
+
 						if(typeof(configuration['param_fonction_a_executer_reponse']) != "undefined")
 						{
-							
+
 							eval(configuration['fonction_a_executer_reponse']+'('+configuration['param_fonction_a_executer_reponse']+',retour)');
-							
+
 						}
 						else
 						{
-							
+
 							eval(configuration['fonction_a_executer_reponse']+'(retour)');		
 						}
-						
+
 					}
-					
+
 				}
-				 
-				
-						
+
+
+
 			}
 			else
 			{
 				// Le serveur a répondu
 				clearTimeout(reserve_interne['xhr_verif_retour_ajax']);					// Arrête l'appel récursif						
-				
+
 				/**==================================================================
 				 * GESTION DU GIF D'ATTENTE
 				 ====================================================================*/	
@@ -251,35 +251,35 @@ function ajax_call(configuration,reserve_interne)
 				}
 				/**==================================================================*/					
 				alert(reserve_interne['xhr'].responseText);
-				
+
 			}
 		}
-		
+
 	};	
 	/**==================================================================*/
-	
-	
+
+
 	/**==================================================================
 	 * CHECK SERVER ANSWER
 	 ====================================================================*/		
 	if(reserve_interne['xhr_nombre_essai'] >= configuration['max_tentative'])
 	{
-		
+
 		clearTimeout(reserve_interne['xhr_verif_retour_ajax']);
 		reserve_interne['xhr'].abort();								// Server won't response, cancel request
-		
+
 		if (typeof(configuration['div_wait']) != "undefined")
 		{		
 			// Hide waiting picture of ajax request
 			document.getElementById(configuration['div_wait']).innerHTML = '';		
 		}
-		
+
 		if (typeof(configuration['div_wait_nbr_tentative']) != "undefined")
 		{		
 			// Cache le nombre de tentative de contact du serveur
 			document.getElementById(configuration['div_wait_nbr_tentative']).innerHTML = '';		
 		}
-		
+
 		if (typeof(configuration['fonction_a_executer_cas_non_reponse']) != "undefined")
 		{		
 			// Proceed a customer function
@@ -291,17 +291,17 @@ function ajax_call(configuration,reserve_interne)
 			{
 				eval(configuration['fonction_a_executer_cas_non_reponse']+'()');	
 			}
-					
+
 		}
 		//alert('Ajax time out');
 		return 'Ajax time out';
-		
+
 	}
 	else
 	{
 		reserve_interne['appel_auto'] = true;
 		reserve_interne['xhr_verif_retour_ajax'] = setTimeout(function(){ajax_call(configuration,reserve_interne)},configuration['delai_tentative']);
-		
+
 	}
 	/**==================================================================*/	
 }	
@@ -498,8 +498,8 @@ if(!Array.prototype.push){
 
 if (!Array.prototype.pop){
 	Array.prototype.pop=function(){
-  		var response = this[this.length-1];
-  		this.length--;
-  		return response
+		var response = this[this.length-1];
+		this.length--;
+		return response
 	}
 };

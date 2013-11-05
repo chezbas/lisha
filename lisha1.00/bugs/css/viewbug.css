@@ -4,7 +4,7 @@ html,body
 	padding:0;
 	background-color: #fff;
 	font-family: arial;
-    line-height: 1.2em;
+	line-height: 1.2em;
 	font-style: normal;
 	font-size: 1em;
 }
@@ -23,8 +23,8 @@ p
 	padding: 2px 2px 2px 2px;
 	display: block;
 	background-color: #fff;
-    box-shadow: 0 2px 8px #333;
-    border-radius : 5px 5px 5px 5px;
+	box-shadow: 0 2px 8px #333;
+	border-radius : 5px 5px 5px 5px;
 }
 
 .shadow
@@ -56,12 +56,12 @@ p
 	padding: 2px 0 2px 0;
 	width: 100%;
 	display: block;
- 	border-top: 1px;
+	border-top: 1px;
 	border-top-style:solid;
 	border-bottom: 1px;
 	border-bottom-style:solid;
 	background-color: #889;
-    border-radius : 5px 5px 5px 5px;
+	border-radius : 5px 5px 5px 5px;
 }
 .business_caption
 {
@@ -82,9 +82,9 @@ p
 	border-bottom: 1px;
 	border-bottom-style:solid;
 	background-color: #99A;
-    border-radius : 5px 5px 5px 5px;
+	border-radius : 5px 5px 5px 5px;
 }
-	
+
 .title_caption
 {
 	float: left; 
@@ -99,8 +99,8 @@ p
 	padding: 2px 2px 2px 2px;
 	display: block;
 	background-color: #fff;
-    box-shadow: 0 2px 8px #333;
-    border-radius : 5px 5px 5px 5px;
+	box-shadow: 0 2px 8px #333;
+	border-radius : 5px 5px 5px 5px;
 }
 
 .object_main
@@ -109,14 +109,14 @@ p
 	padding: 2px 0 2px 0;
 	width: 100%;
 	display: block;
- 	border-top: 1px;
+	border-top: 1px;
 	border-top-style:solid;
 	border-bottom: 1px;
 	border-bottom-style:solid;
 	background-color: #889;
-    border-radius : 5px 5px 5px 5px;
+	border-radius : 5px 5px 5px 5px;
 }
-	
+
 .object_caption
 {
 	float: left;
@@ -132,8 +132,8 @@ p
 	display: block;
 	font-size: 0.9em;
 	background-color: #fff;
-    box-shadow: 0 2px 8px #333;
-    border-radius : 5px 5px 5px 5px;
+	box-shadow: 0 2px 8px #333;
+	border-radius : 5px 5px 5px 5px;
 }
 
 .class_main
@@ -145,7 +145,7 @@ p
 	background-color: #99A;
 	border-radius : 5px 5px 5px 5px;
 }
-	
+
 .class_caption
 {
 	float: left;
@@ -161,8 +161,8 @@ p
 	display: block;
 	font-size: 0.9em;
 	background-color: #fff;
-    box-shadow: 0 2px 8px #333;
-    border-radius : 5px 5px 5px 5px;
+	box-shadow: 0 2px 8px #333;
+	border-radius : 5px 5px 5px 5px;
 }
 
 .version_main
@@ -171,14 +171,14 @@ p
 	padding: 2px 0 2px 0;
 	width: 100%;
 	display: block;
- 	border-top: 1px;
+	border-top: 1px;
 	border-top-style:solid;
 	border-bottom: 1px;
 	border-bottom-style:solid;
 	background-color: #889;
-    border-radius : 5px 5px 5px 5px;
+	border-radius : 5px 5px 5px 5px;
 }
-	
+
 .version_caption
 {
 	float: left;
@@ -194,8 +194,8 @@ p
 	display: block;
 	font-size: 0.9em;
 	background-color: #fff;
-    box-shadow: 0 2px 8px #333;
-    border-radius : 5px 5px 5px 5px;
+	box-shadow: 0 2px 8px #333;
+	border-radius : 5px 5px 5px 5px;
 }
 
 
@@ -207,9 +207,9 @@ p
 	display: block;
 	background-color: #99A;
 	box-shadow: 0 2px 8px #333;
-    border-radius : 5px 5px 5px 5px;
+	border-radius : 5px 5px 5px 5px;
 }
-	
+
 .status_caption
 {
 	float: left;
@@ -225,8 +225,8 @@ p
 	display: block;
 	font-size: 0.9em;
 	background-color: #fff;
-    box-shadow: 0 2px 8px #333;
-    border-radius : 5px 5px 5px 5px;
+	box-shadow: 0 2px 8px #333;
+	border-radius : 5px 5px 5px 5px;
 }
 
 
@@ -236,14 +236,14 @@ p
 	width: 100%; 
 	display: block;
 	padding-bottom: 5px;
- 	border-top: 1px;
+	border-top: 1px;
 	border-top-style:solid;
 	border-bottom: 1px;
 	border-bottom-style:solid;
 	background-color: #889;
 	border-radius : 5px 5px 5px 5px;
 }
-	
+
 .corps_caption
 {
 	float: left;
@@ -258,8 +258,8 @@ p
 	display: block;
 	font-size: 0.8em;
 	background-color: #fff;
-    box-shadow: 0 2px 8px #333;
-    border-radius : 5px 5px 5px 5px;
+	box-shadow: 0 2px 8px #333;
+	border-radius : 5px 5px 5px 5px;
 }
 
 .solution_main
@@ -270,9 +270,9 @@ p
 	display: block;
 	background-color: #99A;
 	box-shadow: 0 2px 8px #333;
-    border-radius : 5px 5px 5px 5px;
+	border-radius : 5px 5px 5px 5px;
 }
-	
+
 .solution_caption
 {
 	float: right;
@@ -287,8 +287,8 @@ p
 	display: block;
 	font-size: 0.9em;
 	background-color: #fff;
-    box-shadow: 0 2px 8px #333;
-    border-radius : 5px 5px 5px 5px;
+	box-shadow: 0 2px 8px #333;
+	border-radius : 5px 5px 5px 5px;
 }
 
 .devindex_main
@@ -297,14 +297,14 @@ p
 	padding: 2px 0 2px 0;
 	width: 100%;
 	display: block;
- 	border-top: 1px;
+	border-top: 1px;
 	border-top-style:solid;
 	border-bottom: 1px;
 	border-bottom-style:solid;
 	background-color: #889;
-    border-radius : 5px 5px 5px 5px;
+	border-radius : 5px 5px 5px 5px;
 }
-	
+
 .devindex_caption
 {
 	float: left;
@@ -320,6 +320,6 @@ p
 	display: block;
 	font-size: 0.9em;
 	background-color: #fff;
-    box-shadow: 0 2px 8px #333;
-    border-radius : 5px 5px 5px 5px;
+	box-shadow: 0 2px 8px #333;
+	border-radius : 5px 5px 5px 5px;
 }

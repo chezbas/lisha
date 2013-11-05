@@ -58,8 +58,8 @@
 	font-style: italic;
 	text-align: center;
 	-moz-user-select: none;
-   	-khtml-user-select: none;
-   	margin:0 4px;
+	-khtml-user-select: none;
+	margin:0 4px;
 }
 
 /* Table for the informations */
@@ -87,8 +87,8 @@ td.__blue_table_page_selection
 	background-color:#DDD;
 	border:1px solid #4B9CD8;
 	padding:0 10px;
-  	-moz-user-select: none;
-   	-khtml-user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
 }
 
 /* Td for the page selection on hover envent */
@@ -103,13 +103,13 @@ td.__blue_table_page_selection:hover
 div.__blue_column_title
 {
 	cursor:pointer;
-    height: 20px;
-    line-height: 20px;
+	height: 20px;
+	line-height: 20px;
 	font-size: 0.7em;
 	font-weight:bold;
 	font-family: tahoma, arial, helvetica, sans-serif;
 	-moz-user-select: none;
-   	-khtml-user-select: none;
+	-khtml-user-select: none;
 }
 
 /* Column header */
@@ -167,7 +167,7 @@ div.__blue__lisha_header__
 {
 	padding:0 3px 0 3px;
 	-moz-user-select: -moz-none;
-   	-khtml-user-select: -moz-none;
+	-khtml-user-select: -moz-none;
 }
 
 /* Header column cell input box */
@@ -175,7 +175,7 @@ input.__blue__cell_h
 {
 	padding:0 3px 0 3px;
 	-moz-user-select:text ;
-   	-khtml-user-select:text;
+	-khtml-user-select:text;
 }
 
 
@@ -226,8 +226,8 @@ input.__blue_input_text
 	background-repeat: no-repeat;
 	background-position:-180px 0;
 	-moz-user-select: none;
-   	-khtml-user-select: none;
-   	position: relative;
+	-khtml-user-select: none;
+	position: relative;
 }
 
 .__blue_menu_header_no_icon
@@ -236,8 +236,8 @@ input.__blue_input_text
 	height:20px;
 	display:block;
 	-moz-user-select: none;
-   	-khtml-user-select: none;
-   	position: relative;
+	-khtml-user-select: none;
+	position: relative;
 }
 
 .__blue_menu_header_lovable
@@ -249,8 +249,8 @@ input.__blue_input_text
 	background-repeat: no-repeat;
 	background-position:-700px 0;
 	-moz-user-select: none;
-   	-khtml-user-select: none;
-   	position: relative;
+	-khtml-user-select: none;
+	position: relative;
 }
 
 .__blue_menu_header_check_is_lovable
@@ -261,8 +261,8 @@ input.__blue_input_text
 	background-image: url(../../images/gif/connexion.gif);
 	background-repeat: no-repeat;
 	-moz-user-select: none;
-   	-khtml-user-select: none;
-   	position: relative;
+	-khtml-user-select: none;
+	position: relative;
 }
 
 
@@ -275,8 +275,8 @@ input.__blue_input_text
 	background-repeat: no-repeat;
 	background-position:-480px 0;
 	-moz-user-select: none;
-   	-khtml-user-select: none;
-   	position: relative;
+	-khtml-user-select: none;
+	position: relative;
 }
 
 .__blue_men_head:hover
@@ -296,8 +296,8 @@ input.__blue_input_text
 	background-repeat: no-repeat;
 	background-position:-1140px 0;
 	-moz-user-select: none;
-   	-khtml-user-select: none;
-   	position: relative;
+	-khtml-user-select: none;
+	position: relative;
 }
 
 td.__blue_bloc_empty
@@ -582,7 +582,7 @@ div.shadow
 	background-position:0px -8px;
 	background-repeat:  repeat-x;
 	margin:2.5px 0 0 2.5px;
-	
+
 }
 
 .__blue_lmod_container
@@ -713,7 +713,7 @@ input.__blue__input_h_forbidden
 
 
 
-	
+
 /* nowrap class */
 .nowrap
 {

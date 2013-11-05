@@ -22,16 +22,16 @@
 				<head>
 					<script language="javascript" >
 					chaine = document.location.href + "'.$w_digit.'ssid=" + "'.$new_ssid.'";
-	      			window.location.href = chaine;
-	      			</script>
-	      		</head>
-	      	  	<body>
-	      	  	</body>
-	      	  </html>';
+					window.location.href = chaine;
+					</script>
+				</head>
+				<body>
+				</body>
+			  </html>';
 		//==================================================================
 		die();
 	}
-	
+
 	$ssid = $_GET["ssid"];
 	/**==================================================================
 	 * Start session on ssid name

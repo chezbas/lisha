@@ -10,14 +10,14 @@
 	{
 		$fi_lng = $link->real_escape_string($_GET[$a_valeur_interdite[4]]);
 
-        $query = 'SELECT
+		$query = 'SELECT
 					1  
 				FROM 
 					`'.__LISHA_TABLE_LANGUAGE__.'`
 				WHERE 1 = 1
 					AND `id` = "'.$fi_lng.'"';
 		$result = $link->query($query);
-		
+
 		if(mysqli_num_rows($result) == 1)
 		{			
 			$_SESSION[$ssid]['lisha']['langue'] = $fi_lng;

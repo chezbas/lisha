@@ -46,7 +46,7 @@ var libelle_page = new Array();
 		// if no type_soft define, then load only global label
 		$objet = "global";
 	}
-	
+
 	//==================================================================
 	// Read all text on a specific language
 	//==================================================================		
@@ -74,7 +74,7 @@ var libelle_page = new Array();
 		// Specific page text
 		// PHP part
 		$_SESSION[$ssid]['lisha']['page_text'][$row['ID']]['TX'] = $row['TX']; // Load text
-		
+
 		// Javascript part
 		$w_libelle_common .= 'libelle_page["TX_'.$row['ID'].'"]=\''.rawurlencode($row['TX']).'\';';
 	}
