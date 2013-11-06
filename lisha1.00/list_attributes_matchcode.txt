@@ -237,3 +237,8 @@ $this->c_img_obj = $p_dir_obj;
 remove
 define_toolbar_delete_button
 replace by standard function __active_delete_button
+
+Move lisha_texte to /language/xxx.json files
+Advantage : Text available for developpers in github
+
+define("__LISHA_TABLE_LANGUAGE__","lisha_text"); ==> define("__LISHA_TABLE_LOCALIZATION__","lisha_i18n");

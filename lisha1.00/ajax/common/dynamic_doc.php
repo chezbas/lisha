@@ -77,7 +77,7 @@
 				$_local_sys = __LISHA_TABLE_FILTER__;
 			break;
 			case 'table_language':
-				$_local_sys = __LISHA_TABLE_LANGUAGE__;
+				$_local_sys = __LISHA_TABLE_LOCALIZATION__;
 			break;
 			case 'table_doc_user':
 				$_local_sys = __MT_TABLE_USER_DOCU__;
@@ -169,7 +169,7 @@
 								`MTS`.`ID`      AS 'iden',
 								`MTS`.`text`    AS 'local'
 							FROM
-								`".__LISHA_TABLE_LANGUAGE__."` `MTS`
+								`".__LISHA_TABLE_LOCALIZATION__."` `MTS`
 							WHERE 1 = 1
 						 ";
 

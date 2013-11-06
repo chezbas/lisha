@@ -105,7 +105,7 @@
 	//==================================================================
 	// Get localization feature using field name
 	// Search special pattern <ilocal:xx/>
-	// xx values come from your lisha configuration table : __LISHA_TABLE_LANGUAGE__
+	// xx values come from your lisha configuration table : __LISHA_TABLE_LOCALIZATION__
 	// text         : To get current language in text
 	// date_format  : To get date format pattern
 	//==================================================================
@@ -119,7 +119,7 @@
 						SELECT
 							`MTL`.`".$value."` AS 'sortie'
 						FROM
-							`".__LISHA_TABLE_LANGUAGE__."` `MTL`
+							`".__LISHA_TABLE_LOCALIZATION__."` `MTL`
 						WHERE 1 = 1
 							AND `MTL`.`id`		= '".$language."'
 					";

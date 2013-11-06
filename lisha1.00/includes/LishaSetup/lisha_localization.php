@@ -15,7 +15,7 @@
 				`thousand_symbol` 	AS 'thousand_symbol',
 				`number_of_decimal` AS 'number_of_decimal'
 			FROM 
-				`".__LISHA_TABLE_LANGUAGE__."`
+				`".__LISHA_TABLE_LOCALIZATION__."`
 			WHERE 1 = 1
 				AND `id` ='".$_SESSION[$ssid]['lisha']['langue']."'";
 

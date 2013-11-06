@@ -16,7 +16,7 @@
 	//==================================================================
 	define("__LISHA_TABLE_FILTER__","lisha_filter");						// Record custom view
 	define("__LISHA_TABLE_SETUP__","lisha_config");							// General configuration
-	define("__LISHA_TABLE_LANGUAGE__","lisha_language");					// Localization information
+	define("__LISHA_TABLE_LOCALIZATION__","lisha_i18n");					// Localization information
 	define("__LISHA_TABLE_INTERNAL__","lisha_internal");					// internal use ( memory engine )
 	define("__LISHA_TABLE_INTERNAL_FILTER__","lisha_internal_filter");		// internal use for advanced filter on column
 	//==================================================================
