@@ -5,14 +5,15 @@
 	require($path_root_lisha.'/includes/common/db_connect.php');
 	/**===================================================================*/
 
-	//==================================================================
-	// Load lisha localization data
-	//==================================================================
+	/**==================================================================
+	* Load lisha localization data
+	====================================================================*/
 	$query = "SELECT
 				`id_tiny`,
-				`date_format` AS 'date_format',
-				`decimal_symbol` AS 'decimal_symbol',
-				`thousand_symbol` AS 'thousand_symbol'
+				`date_format` 		AS 'date_format',
+				`decimal_symbol` 	AS 'decimal_symbol',
+				`thousand_symbol` 	AS 'thousand_symbol',
+				`number_of_decimal` AS 'number_of_decimal'
 			FROM 
 				`".__LISHA_TABLE_LANGUAGE__."`
 			WHERE 1 = 1
@@ -26,4 +27,5 @@
 	$_SESSION[$ssid]['lisha']['date_format'] = $row['date_format'];
 	$_SESSION[$ssid]['lisha']['decimal_symbol'] = $row['decimal_symbol'];
 	$_SESSION[$ssid]['lisha']['thousand_symbol'] = $row['thousand_symbol'];
-	//==================================================================
+	$_SESSION[$ssid]['lisha']['number_of_decimal'] = $row['number_of_decimal'];
+	/**===================================================================*/

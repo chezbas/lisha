@@ -118,6 +118,7 @@
 			'__return_column_id'												=> array('c_col_return','A'),
 			'__current_page'													=> array('c_active_page','A'),
 			'__column_date_format'												=> array('date_format','A'),
+			'__column_number_of_decimal'										=> array('number_of_decimal','A'),
 			'__column_name_focus'												=> array('c_default_input_focus','A'),
 			'__column_id_focus'													=> array('c_default_input_focus_id','W'), // internal
 			'__return_mode'														=> array('c_return_mode','A'),
@@ -1521,15 +1522,27 @@
 							}
 						}
 
-						if($this->c_columns[$key_col]["data_type"] == __INT__)
+						// for __INT__ or __FLOAT__
+						// if $content is null, don't display 0,00 or 0
+						if($content)
 						{
-							$content = number_format($content,0,$_SESSION[$this->c_ssid]['lisha']['decimal_symbol'],''.$_SESSION[$this->c_ssid]['lisha']['thousand_symbol']);
-						}
+							if($this->c_columns[$key_col]["data_type"] == __INT__)
+							{
+								$content = number_format($content,0,$_SESSION[$this->c_ssid]['lisha']['decimal_symbol'],''.$_SESSION[$this->c_ssid]['lisha']['thousand_symbol']);
+							}
 
-						if($this->c_columns[$key_col]["data_type"] == __FLOAT__)
-						{
-							//TODO MIZ : rendre paramétrable le nombre de décimal des Float à l'affichage
-							$content = number_format($content,2,$_SESSION[$this->c_ssid]['lisha']['decimal_symbol'],''.$_SESSION[$this->c_ssid]['lisha']['thousand_symbol']);
+							if($this->c_columns[$key_col]["data_type"] == __FLOAT__)
+							{
+								//TODO MIZ : rendre paramétrable le nombre de décimal des Float à l'affichage
+								if(isset($this->c_columns[$key_col]['number_of_decimal']))
+								{
+									$content = number_format($content,$this->c_columns[$key_col]['number_of_decimal'],$_SESSION[$this->c_ssid]['lisha']['decimal_symbol'],''.$_SESSION[$this->c_ssid]['lisha']['thousand_symbol']);
+								}
+								else
+								{
+									$content = number_format($content,$_SESSION[$this->c_ssid]['lisha']['number_of_decimal'],$_SESSION[$this->c_ssid]['lisha']['decimal_symbol'],''.$_SESSION[$this->c_ssid]['lisha']['thousand_symbol']);
+								}
+							}
 						}
 						//==================================================================
 
