@@ -951,7 +951,7 @@
 			}
 			else
 			{
-				if($this->c_columns[$column]['data_type'] == 'date')
+				if($this->c_columns[$column]['data_type'] == __DATE__)
 				{
 					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter'],__MYSQL__); // Database engine hard coded TODO
 
@@ -1235,7 +1235,7 @@
 					{
 						foreach($result_array['QSC'] as $row)
 						{
-							if($column_temp[$row['val1']]['data_type'] == 'date')
+							if($column_temp[$row['val1']]['data_type'] == __DATE__)
 							{
 								$tmp_result = $this->convert_database_date_to_localized_format($row['val1'],$row['val2'],__MYSQL__); // Database engine hard coded TODO
 								$column_temp[$row['val1']]['filter']['input'] = array('filter' => $row['val2'],
@@ -1475,7 +1475,7 @@
 						$tmp_result = $this->string_global_search;
 
 						// Transform string for date localization
-						if($column_value['data_type'] == 'date')
+						if($column_value['data_type'] == __DATE__)
 						{
 							$tmp_result = $this->convert_localized_date_to_database_format($column_value["original_order"],$this->string_global_search,__MYSQL__); // Database engine hard coded TODO
 						}
@@ -1573,7 +1573,7 @@
 				$str_before =''; $str_after = '';
 
 
-				if ($value['data_type'] == 'date')
+				if ($value['data_type'] == __DATE__)
 				{
 					if(isset($value['date_format']))
 					{
@@ -2460,7 +2460,7 @@
 
 
 					// Localization date format
-					if ($this->c_columns[$val_col["original_order"]]['data_type'] == 'date')
+					if ($this->c_columns[$val_col["original_order"]]['data_type'] == __DATE__)
 					{
 						if(isset($this->c_columns[$val_col["original_order"]]['date_format']))
 						{
@@ -2698,7 +2698,7 @@
 					// Localization date format
 					$str_before =''; $str_after = ''; $temp_columns = '';
 
-					if ($val_col['data_type'] == 'date')
+					if ($val_col['data_type'] == __DATE__)
 					{
 						if(isset($val_col['date_format']))
 						{
@@ -3111,7 +3111,7 @@
 						//==================================================================
 						// Search idorigin in list return by javascript part
 						//==================================================================
-						foreach($tab_val_col as $valeur)
+						foreach($tab_val_col as &$valeur)
 						{
 							if($valeur['idorigin'] == $value_col['original_order'])
 							{
@@ -3215,6 +3215,8 @@
 								break; // Only one line possible, so exit foreach
 							}
 						}
+						// because reference
+						unset($valeur);
 						//==================================================================
 					}
 					else
@@ -3316,7 +3318,7 @@
 
 						$sql_insert .= $this->get_quote_col($this->c_columns[$value['id']]['sql_as']);
 
-						if($this->c_columns[$value['id']]['data_type'] == 'date')
+						if($this->c_columns[$value['id']]['data_type'] == __DATE__)
 						{
 							$value['value'] = $this->convert_localized_date_to_database_format($value['id'], $value['value']);
 						}
@@ -3433,7 +3435,7 @@
 						// Add a SET if necessary or a ,
 						($i > 0) ? $sql_update .= ',' : $sql_update .= 'SET ';
 
-						if($this->c_columns[$value['id']]['data_type'] == 'date')
+						if($this->c_columns[$value['id']]['data_type'] == __DATE__)
 						{
 							$value['value'] = $this->convert_localized_date_to_database_format($value['id'], $value['value']);
 						}
@@ -3446,7 +3448,16 @@
 						else
 						{
 							// No special function
-							$sql_update .= $this->get_quote_col($this->c_columns[$value['id']]['sql_as']).' = '.$this->get_quote_string($this->protect_sql($value['value'],$this->link));
+							if($this->c_columns[$value['id']]['data_type'] == __FLOAT__
+								|| $this->c_columns[$value['id']]['data_type'] == __INT__
+							)
+							{
+								$sql_update .= $this->get_quote_col($this->c_columns[$value['id']]['sql_as']).' = '.$this->protect_sql($value['value'],$this->link);
+							}
+							else
+							{
+								$sql_update .= $this->get_quote_col($this->c_columns[$value['id']]['sql_as']).' = '.$this->get_quote_string($this->protect_sql($value['value'],$this->link));
+							}
 						}
 
 						unset($this->c_columns[$value['id']]['filter']);
@@ -3980,7 +3991,7 @@
 				//==================================================================
 				// Convert date in native form if any
 				//==================================================================
-				if($this->c_columns[$column]['data_type'] == 'date')
+				if($this->c_columns[$column]['data_type'] == __DATE__)
 				{
 					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter'],__MYSQL__); // Database engine hard coded TODO
 
@@ -4085,7 +4096,7 @@
 					$str_before = '';
 					$str_after = '';
 					// Localization date format
-					if ($this->c_columns[$column]['data_type'] == 'date')
+					if ($this->c_columns[$column]['data_type'] == __DATE__)
 					{
 						if(isset($this->c_columns[$column]['date_format']))
 						{
@@ -4591,7 +4602,7 @@
 					//==================================================================
 					if(isset($val_key['filter']['input']))
 					{
-						/*if($val_key['data_type'] == 'date')
+						/*if($val_key['data_type'] == __DATE__)
 						{
 							error_log(print_r($val_key['filter']['input']['filter'],true));
 							//$val_key['filter']['input']['filter'] = $this->convert_localized_date_to_database_format($col_key,$val_key['filter']['input']['filter']);

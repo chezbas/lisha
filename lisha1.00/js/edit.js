@@ -220,6 +220,7 @@ function input_key_manager(evt,lisha_id,line,column)
 			return true;
 		}
 		//==================================================================
+		//TODO Cobalt - mettre les messages si les INT et FLOAT sont incorrects. ?
 	}
 }
 /**==================================================================*/
