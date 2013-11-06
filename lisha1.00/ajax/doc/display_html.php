@@ -259,21 +259,10 @@
 	$motif = '#&lt;ilisha:([0-9]+)([^/]*)/&gt;#i';
 	preg_match_all($motif,$row["DETAILS"],$out);
 
+	//error_log(print_r($_SESSION[$ssid]['lisha']['lib'],true));
 	foreach($out[1] as $key => $value)
 	{
-		$query = "
-							SELECT
-								`MTT`.`corps`      AS 'corps'
-							FROM
-								`".__LISHA_TABLE_TEXT__."` `MTT`
-							WHERE 1 = 1
-								AND `id` = '".$value."'
-								AND `MTT`.`id_lang` = '".$language."'
-						 ";
-		$result = $link->query($query);
-
-		$rowl = $result->fetch_array(MYSQLI_ASSOC);
-		$replace = $rowl['corps'];
+		$replace = $_SESSION[$ssid]['lisha']['lib'][$value];
 
 		$row["DETAILS"] = str_replace($out[0][$key],'<span class="auto_text">'.$replace.'</span>',$row["DETAILS"]);
 	}

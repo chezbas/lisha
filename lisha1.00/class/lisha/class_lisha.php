@@ -2250,28 +2250,6 @@
 			$html .= 'lisha = new Object();';
 			$html .= 'lis_lib = new Array();';
 
-			// TODO MIZ : Bloc a supprimer quand migration des textes OK
-			/*$sql = 'SELECT
-						`id` AS `id`,
-						`corps`AS `corps`
-					FROM '.__LISHA_TABLE_TEXT__.'
-					WHERE 1 = 1
-						AND `id_lang` = "'.$this->c_lng.'"
-						AND `version_active` = "'.__LISHA_APPLICATION_RELEASE__.'"
-					';
-
-			$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
-
-			while($row = $this->rds_fetch_array($this->resultat))
-			{
-				$row['corps'] = str_replace(chr(10),'',$row['corps']);
-				$row['corps'] = str_replace(chr(13),'',$row['corps']);
-
-				$_SESSION[$this->c_ssid]['lisha']['lib'][$row['id']] = $row['corps'];
-				$html .= '			lis_lib['.$row['id'].'] = \''.str_replace("'","\'",$row['corps']).'\';';
-
-			}*/
-
             $i18n_js =  file_get_contents($this->c_dir_obj.'/language/'.$this->c_lng.'.json');
             $i18n = json_decode($i18n_js,true);
 

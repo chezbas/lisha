@@ -79,9 +79,6 @@
 			case 'table_language':
 				$_local_sys = __LISHA_TABLE_LANGUAGE__;
 			break;
-			case 'table_text':
-				$_local_sys = __LISHA_TABLE_TEXT__;
-			break;
 			case 'table_doc_user':
 				$_local_sys = __MT_TABLE_USER_DOCU__;
 			break;
