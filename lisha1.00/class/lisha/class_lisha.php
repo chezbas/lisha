@@ -260,8 +260,12 @@
 		/**==================================================================
 		 * Generate common HTML bottom part
 		 * Build javascript part for help ( CTRL + F11 )
+		 *
+		 * @p_dir_obj			:	Relative path access of Lisha
+		 * @p_get_url_directive	:	GET Keyword used for language
+		 * @p_i18n_id			:	3 digits localization to use
 		====================================================================*/
-		static function generate_common_html_bottom($p_dir_obj)
+		static function generate_common_html_bottom($p_dir_obj,$p_get_url_directive,$p_i18n_id)
 		{
 			echo '
 			<script type="text/javascript">
@@ -282,7 +286,7 @@
 				{
 					if((g_help_page) && (g_help_page!=""))
 					{
-						window.open("'.$p_dir_obj.'/index.php?id="+g_help_page);
+						window.open("'.$p_dir_obj.'/index.php?'.$p_get_url_directive.'='.$p_i18n_id.'&id="+g_help_page);
 					}
 					else
 					{
@@ -4415,16 +4419,33 @@
 
 
 		/**==================================================================
-		 * reset_lisha
 		 * Called when reset button in toolbar is left clicked
+		 *
+		 * Restore all features defined by default or from a loaded preference forced by url directive
 		 ====================================================================*/
 		public function reset_lisha()
 		{
 			// Reset filter on all columns
 			$this->reset_filters();
 
+			//==================================================================
 			// Reset all columns features
+			//==================================================================
+
+			// Reload general lisha features
 			$this->c_columns = $this->c_columns_init;
+
+			// Reload graphic lisha feature if not defined in main lisha
+			foreach($this->c_obj_graphic->c_columns_init as $key => $value)
+			{
+				foreach($value as $clef => $valeur)
+				{
+					//error_log(print_r())
+					$this->c_columns[$key][$clef] = $this->c_obj_graphic->c_columns_init[$key][$clef];
+				}
+			}
+			//==================================================================
+
 
 			//error_log(print_r($this->c_columns_init,true));
 

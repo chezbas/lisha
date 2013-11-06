@@ -4,7 +4,7 @@
 
 	if(!isset($_GET[$a_valeur_interdite[4]]))
 	{
-			$fi_lng = $_SESSION[$ssid]['lisha']['configuration'][1];
+		$fi_lng = $_SESSION[$ssid]['lisha']['configuration'][1];
 	}
 	else
 	{

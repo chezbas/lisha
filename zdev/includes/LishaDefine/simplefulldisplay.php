@@ -107,7 +107,9 @@
 		//==================================================================
 		// define column : module
 		//==================================================================
-		$obj_lisha_tran->define_column("`transaction`.`mode`",'mode','Mymodule',__INT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column("`transaction`.`mode`",'mode','Mymodule',__FLOAT__,__WRAP__,__LEFT__);
+		//$obj_lisha_tran->define_attribute('__column_number_of_decimal', 3,'mode');
+
 		//$obj_lisha_tran->define_attribute('__column_input_check_update', __LISTED__,'mode');
 
 		// Match code

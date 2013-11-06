@@ -828,6 +828,7 @@ function lisha_lib_hover(id_lib,id_help,lisha_id,mode)
 	// copy help page node index to global javascript variable for document event
 	if(mode)
 	{
+		// g_help_page is global javascript variable defined in class_lisha
 		g_help_page = id_help;
 	}
 }

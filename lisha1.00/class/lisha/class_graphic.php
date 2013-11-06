@@ -17,7 +17,7 @@
 		private $c_w_unity;				// lisha unity width (px,%)
 		private $c_nb_line;				// Number of line per page
 
-		private $c_columns_init;		// Original columns values
+		public $c_columns_init;		// Original columns values
 
 		private $c_title;				// lisha title
 		private $c_color_mask;			// Color mask (array())
@@ -1533,7 +1533,6 @@
 
 							if($this->c_columns[$key_col]["data_type"] == __FLOAT__)
 							{
-								//TODO MIZ : rendre paramétrable le nombre de décimal des Float à l'affichage
 								if(isset($this->c_columns[$key_col]['number_of_decimal']))
 								{
 									$content = number_format($content,$this->c_columns[$key_col]['number_of_decimal'],$_SESSION[$this->c_ssid]['lisha']['decimal_symbol'],''.$_SESSION[$this->c_ssid]['lisha']['thousand_symbol']);
@@ -2235,7 +2234,7 @@
 						{
 							$this->c_columns_init[$p_column_id][$var] = $p_value;
 						}
-					}	
+					}
 				}
 				else
 				{

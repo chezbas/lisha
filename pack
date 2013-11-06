@@ -196,7 +196,7 @@ fi
 if test $table_conf = "y"
 then
 	echo "Keep configuration table"
-	table_conf="lisha_config lisha_language lisha_filter"
+	table_conf="lisha_config lisha_i18n lisha_filter"
 else
 	echo "Remove configuration table"
 	table_conf=""
