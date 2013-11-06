@@ -106,8 +106,7 @@
 		//==================================================================
 		// Lisha HTML bottom generation
 		//==================================================================
-		$get_keyword_localization = explode('|',$_SESSION[$ssid]['lisha']['configuration'][2]);
-		lisha::generate_common_html_bottom($obj_lisha_tran->c_dir_obj,$get_keyword_localization[4],$_SESSION[$ssid]['lisha']['langue']);	// Once
+		lisha::generate_common_html_bottom($obj_lisha_tran->c_dir_obj,$_SESSION[$ssid]['lisha']['configuration'][12],$_SESSION[$ssid]['lisha']['langue']);	// Once
 		//==================================================================
 		?>
 	</body>

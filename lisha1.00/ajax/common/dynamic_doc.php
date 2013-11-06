@@ -59,16 +59,14 @@
 				$_local_sys = __LISHA_APPLICATION_NAME__;
 			break;
 			case 'language_url':
-				$reserved_word = explode('|',$_SESSION[$ssid]['lisha']['configuration'][2]);
-				$_local_sys = $reserved_word[4]."=".$language;
+				$_local_sys = $_SESSION[$ssid]['lisha']['configuration'][12]."=".$language;
 			break;
 			case 'keyword_ssid':
-				$reserved_word = explode('|',$_SESSION[$ssid]['lisha']['configuration'][2]);
+				$reserved_word = $_SESSION[$ssid]['lisha']['configuration'][2];
 				$_local_sys = $reserved_word[1];
 			break;
 			case 'keyword_language':
-				$reserved_word = explode('|',$_SESSION[$ssid]['lisha']['configuration'][2]);
-				$_local_sys = $reserved_word[4];
+				$_local_sys = $_SESSION[$ssid]['lisha']['configuration'][12];
 			break;
 			case 'table_config':
 				$_local_sys = __LISHA_TABLE_SETUP__;

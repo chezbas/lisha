@@ -987,7 +987,7 @@
 						// Display mode ??
 						if(!$this->c_readonly)
 						{
-							$watermark = 'style="opacity:	0.4;"';
+							$watermark = 'style="opacity:	0.6;"';
 						}
 						else
 						{
@@ -1561,7 +1561,7 @@
 							// Display mode ??
 							if(!$this->c_readonly)
 							{
-								$watermark = 'style="opacity:	0.4;"';
+								$watermark = 'style="opacity:	0.6;"';
 							}
 							else
 							{

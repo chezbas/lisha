@@ -1,14 +1,12 @@
 <?php
 	// Get the key name of language directive
-	$a_valeur_interdite = explode('|',$_SESSION[$ssid]['lisha']['configuration'][2]);
-
-	if(!isset($_GET[$a_valeur_interdite[4]]))
+	if(!isset($_GET[$_SESSION[$ssid]['lisha']['configuration'][12]]))
 	{
 		$fi_lng = $_SESSION[$ssid]['lisha']['configuration'][1];
 	}
 	else
 	{
-		$fi_lng = $link->real_escape_string($_GET[$a_valeur_interdite[4]]);
+		$fi_lng = $link->real_escape_string($_GET[$_SESSION[$ssid]['lisha']['configuration'][12]]);
 	}
 
 	// Try this language
