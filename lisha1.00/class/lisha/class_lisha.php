@@ -135,6 +135,7 @@
 			'__column_display_mode'												=> array('display','A'),
 			'__column_display_name'												=> array('name','A'),
 			'__column_date_format'												=> array('date_format','A'),
+			'__column_number_of_decimal'										=> array('number_of_decimal','A'),
 			'__column_name_focus'												=> array('c_default_input_focus','A'),
 			'__column_id_focus'													=> array('c_default_input_focus_id','W'), // internal
 			'__return_mode'														=> array('c_return_mode','A'),
