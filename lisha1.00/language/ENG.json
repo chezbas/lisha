@@ -156,5 +156,7 @@
 	"154" : "Searching <strong>$1</strong> at least in one of currently displayed column",
 	"155" : "Error",
 	"156" : "Value <b>$value</b> of <b>$name</b> is not an integer !!",
-	"157" : "Value <b>$value</b> of <b>$name</b> is not a float value!!"
+	"157" : "Value <b>$value</b> of <b>$name</b> is not a float value!!",
+	"158" : "is not an integer",
+	"159" : "is not a float value"
 }
