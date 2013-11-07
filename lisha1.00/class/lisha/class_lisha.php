@@ -2254,14 +2254,14 @@
 			$html .= 'lisha = new Object();';
 			$html .= 'lis_lib = new Array();';
 
-            $i18n_js =  file_get_contents($this->c_dir_obj.'/language/'.$this->c_lng.'.json');
-            $i18n = json_decode($i18n_js,true);
+			$i18n_js =  file_get_contents($this->c_dir_obj.'/language/'.$this->c_lng.'.json');
+			$i18n = json_decode($i18n_js,true);
 
-            foreach($i18n as $key => $value)
-            {
-                $_SESSION[$this->c_ssid]['lisha']['lib'][$key] = $value;
-                $html .= '			lis_lib['.$key.'] = \''.str_replace("'","\'",$value).'\';';
-            }
+			foreach($i18n as $key => $value)
+			{
+				$_SESSION[$this->c_ssid]['lisha']['lib'][$key] = $value;
+				$html .= '			lis_lib['.$key.'] = \''.str_replace("'","\'",$value).'\';';
+			}
 
 			$html .='</script>';
 
@@ -2667,9 +2667,8 @@
 				}
 			}
 
-
 			$prepared_query = 'UPDATE '.$this->c_update_table.' SET '.$set_string.' WHERE '.$string_where;
-			error_log($prepared_query);
+
 			$this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 
 			echo $prepared_query;
@@ -3470,9 +3469,7 @@
 						if(isset($this->c_columns[$value['id']]['rw_function']))
 						{
 							// Special update function defined on the column
-							error_log($this->c_columns[$value['id']]['rw_function']);
 							$sql_update .= $this->get_quote_col($this->c_columns[$value['id']]['sql_as']).' = '.str_replace('__COL_VALUE__',$this->protect_sql($value['value'],$this->link),$this->c_columns[$value['id']]['rw_function']);
-							error_log($sql_update);
 						}
 						else
 						{
