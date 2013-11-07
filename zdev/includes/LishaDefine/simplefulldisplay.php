@@ -33,6 +33,7 @@
 					`transaction`.`mode`			AS `mode`,
 					(SELECT `text` FROM `transaction2` WHERE `mode` = `transaction`.`mode`)  AS `thistext`,
 					`transaction`.`text`			AS `text`,
+					`transaction`.`my_numeric`		AS `my_numeric`,
 					`transaction`.`status`			AS `MyGroupTheme`
 				".$_SESSION[$ssid]['lisha']['configuration'][10]."
 					`transaction` -- No alias on update table !!
@@ -107,10 +108,8 @@
 		//==================================================================
 		// define column : module
 		//==================================================================
-		$obj_lisha_tran->define_column("`transaction`.`mode`",'mode','Mymodule',__FLOAT__,__WRAP__,__LEFT__);
-		//$obj_lisha_tran->define_attribute('__column_number_of_decimal', 3,'mode');
-
-		//$obj_lisha_tran->define_attribute('__column_input_check_update', __LISTED__,'mode');
+		$obj_lisha_tran->define_column("`transaction`.`mode`",'mode','Mymodule',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_attribute('__column_input_check_update', __LISTED__,'mode');
 
 		// Match code
 		$obj_lisha_tran->define_lov("	SELECT DISTINCT
@@ -130,6 +129,14 @@
 		$obj_lisha_tran->define_column_lov("TRANS2.`text`",'text','myText',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_column_lov_order('mode',__ASC__);
 		//==================================================================
+
+		//==================================================================
+		// define column : numeric
+		//==================================================================
+		$obj_lisha_tran->define_column("`transaction`.`my_numeric`",'my_numeric','MyNum',__FLOAT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_attribute('__column_number_of_decimal', 7,'my_numeric');
+		//==================================================================
+
 
 		//==================================================================
 		// define column : ModuleLib
