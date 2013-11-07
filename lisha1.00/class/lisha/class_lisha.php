@@ -2481,7 +2481,15 @@
 						}
 					}
 
-					$temp_columns .= $str_before.'`'.$this->c_update_table.'`.`'.$column_name.'` '.$str_after.' AS `'.$column_name.'`';
+					if(isset($val_col['select_function']))
+					{
+						// Special select function defined
+						$temp_columns .= str_replace('__COL_VALUE__',$this->get_quote_col($column_name),$val_col['select_function']).' AS '.$this->get_quote_col($column_name);
+					}
+					else
+					{
+						$temp_columns .= $str_before.'`'.$this->c_update_table.'`.`'.$column_name.'` '.$str_after.' AS `'.$column_name.'`';
+					}
 
 					// primary key..only one row found... then exit foreach now
 					break;
@@ -2592,6 +2600,7 @@
 			// Have to do investigation on this point
 			$p_value = json_decode($p_value);
 			$string_where = '';
+			$custom_function = '';
 
 			foreach($array_key as $clef => $value)
 			{
@@ -2613,6 +2622,14 @@
 						$p_value = $this->convert_localized_date_to_database_format($val_col["original_order"], $p_value);
 					}
 
+					// Over load with custom function : rw_function
+					if(isset($val_col['rw_function']))
+					{
+						// Special select function defined
+						$p_value = str_replace('__COL_VALUE__',$this->protect_sql($this->my_htmlentities($p_value),$this->link),$val_col['rw_function']);
+						$custom_function = 'X';
+					}
+
 					// Localization Float / numeric format
 					if($this->c_columns[$val_col["original_order"]]['data_type'] == __FLOAT__)
 					{
@@ -2627,9 +2644,12 @@
 					break;
 				}
 			}
+
 			// Issue of htmlentities between &hearts; and ? and <html></html>
-			//$p_value = $this->link->real_escape_string(htmlentities($p_value));
-			$p_value = $this->protect_sql($this->my_htmlentities($p_value),$this->link);
+			if($custom_function == "")
+			{
+				$p_value = $this->protect_sql($this->my_htmlentities($p_value),$this->link);
+			}
 
 			if($p_value == "")
 			{
@@ -2637,11 +2657,19 @@
 			}
 			else
 			{
-				$set_string = '`'.$column_name.'` = \''.$p_value.'\'';
+				if($custom_function == "")
+				{
+					$set_string = '`'.$column_name.'` = \''.$p_value.'\'';
+				}
+				else
+				{
+					$set_string = '`'.$column_name.'` = '.$p_value;
+				}
 			}
 
-			$prepared_query = 'UPDATE '.$this->c_update_table.' SET '.$set_string.' WHERE '.$string_where;
 
+			$prepared_query = 'UPDATE '.$this->c_update_table.' SET '.$set_string.' WHERE '.$string_where;
+			error_log($prepared_query);
 			$this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 
 			echo $prepared_query;
@@ -2725,7 +2753,7 @@
 					if(isset($val_col['select_function']))
 					{
 						// Special select function defined
-						$sql .= str_replace('__COL_VALUE__',$this->get_quote_col($val_col['sql_as']),$val_col['select_function']).' AS `'.$this->get_quote_col($val_col['sql_as']);
+						$sql .= str_replace('__COL_VALUE__',$this->get_quote_col($val_col['sql_as']),$val_col['select_function']).' AS '.$this->get_quote_col($val_col['sql_as']);
 					}
 					else
 					{
@@ -3302,7 +3330,6 @@
 				// Browse all columns
 				foreach($tab_val_col as $value)
 				{
-					//$value['value'] = htmlentities($value['value'],ENT_QUOTES,'UTF-8');
 					$value['value'] = $this->replace_chevrons($value['value'],true);
 					if(!isset($this->c_columns[$value['id']]['rw_flag']) || $this->c_columns[$value['id']]['rw_flag'] != __FORBIDDEN__)
 					{
@@ -3443,7 +3470,9 @@
 						if(isset($this->c_columns[$value['id']]['rw_function']))
 						{
 							// Special update function defined on the column
+							error_log($this->c_columns[$value['id']]['rw_function']);
 							$sql_update .= $this->get_quote_col($this->c_columns[$value['id']]['sql_as']).' = '.str_replace('__COL_VALUE__',$this->protect_sql($value['value'],$this->link),$this->c_columns[$value['id']]['rw_function']);
+							error_log($sql_update);
 						}
 						else
 						{
@@ -4127,7 +4156,7 @@
 				}
 				else
 				{
-					// Whith a custom lov defined
+					// With a custom lov defined
 
 					//operator_build_query_condition
 					$sql_condition_quick_search = $this->operator_build_query_condition($this->c_columns[$column],$txt,'lov');

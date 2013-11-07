@@ -135,6 +135,8 @@
 		//==================================================================
 		$obj_lisha_tran->define_column("`transaction`.`my_numeric`",'my_numeric','MyNum',__FLOAT__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_number_of_decimal', 7,'my_numeric');
+//$obj_lisha_tran->define_col_select_function('password','DECODE(password,"gfqhz__234j&-bhjq")');
+		//.... DECODE(`password`,'gfqhz__234j&-bhjq') AS `password`,
 		//==================================================================
 
 
