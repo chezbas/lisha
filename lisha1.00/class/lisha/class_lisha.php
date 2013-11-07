@@ -3169,6 +3169,11 @@
 										// if not decimal point, transform decimal symbol in point for insert database
 										$valeur['value'] = str_replace($decimal_symbol, '.', $valeur['value']);
 									}
+									// recovery thousand symbol
+									$thousand_symbol = $_SESSION[$this->c_ssid]['lisha']['thousand_symbol'];
+									// if not decimal point, transform decimal symbol in point for insert database
+									$valeur['value'] = str_replace($thousand_symbol, '', $valeur['value']);
+
 									// validate data float
 									if (filter_var($valeur['value'],FILTER_VALIDATE_FLOAT) === false)
 									{
