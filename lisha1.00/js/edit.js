@@ -175,33 +175,36 @@ function input_key_manager(evt,lisha_id,line,column)
 		//==================================================================
 		// VALUE FLOAT OR INT
 		//==================================================================
-		if(eval('varlisha_'+lisha_id+'.CurrentCellDataType') == __INT__ )
+		if (val.value != '')
 		{
-			if (!isInteger(val.value))
+			if(eval('varlisha_'+lisha_id+'.CurrentCellDataType') == __INT__ )
 			{
-				// Flag error
-				var message = lis_lib[158].replace(/\$name/g,eval('varlisha_'+lisha_id+'.CurrentCellName')); // Replace $name;
-				document.getElementById(div_root_updating+'_input_message').innerHTML = message;
-				document.getElementById(div_root_updating+'_input_message').style.display = 'block';
-				return false;
+				if (!isInteger(val.value))
+				{
+					// Flag error
+					var message = lis_lib[158].replace(/\$name/g,eval('varlisha_'+lisha_id+'.CurrentCellName')); // Replace $name;
+					document.getElementById(div_root_updating+'_input_message').innerHTML = message;
+					document.getElementById(div_root_updating+'_input_message').style.display = 'block';
+					return false;
+				}
 			}
-		}
 
-		if(eval('varlisha_'+lisha_id+'.CurrentCellDataType') == __FLOAT__ )
-		{
-			// replace decimal Symbol in Point
-			val.value = val.value.replace(eval('varlisha_'+lisha_id+'.CurrentDecimalSymbol'),'.');
-			// replace Thousand Symbol in Nothing
-			var re = new RegExp(eval('varlisha_'+lisha_id+'.CurrentThousandSymbol'),"g");
-			val.value = val.value.replace(re,'');
-			
-			if (!isFloat(val.value))
+			if(eval('varlisha_'+lisha_id+'.CurrentCellDataType') == __FLOAT__ )
 			{
-				// Flag error
-				var message = lis_lib[159].replace(/\$name/g,eval('varlisha_'+lisha_id+'.CurrentCellName')); // Replace $name;
-				document.getElementById(div_root_updating+'_input_message').innerHTML = message;
-				document.getElementById(div_root_updating+'_input_message').style.display = 'block';
-				return false;
+				// replace decimal Symbol in Point
+				val.value = val.value.replace(eval('varlisha_'+lisha_id+'.CurrentDecimalSymbol'),'.');
+				// replace Thousand Symbol in Nothing
+				var re = new RegExp(eval('varlisha_'+lisha_id+'.CurrentThousandSymbol'),"g");
+				val.value = val.value.replace(re,'');
+
+				if (!isFloat(val.value))
+				{
+					// Flag error
+					var message = lis_lib[159].replace(/\$name/g,eval('varlisha_'+lisha_id+'.CurrentCellName')); // Replace $name;
+					document.getElementById(div_root_updating+'_input_message').innerHTML = message;
+					document.getElementById(div_root_updating+'_input_message').style.display = 'block';
+					return false;
+				}
 			}
 		}
 		//==================================================================
