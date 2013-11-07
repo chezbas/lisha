@@ -25,7 +25,7 @@
 				`zdev_table`.`daterec` 		    AS `daterec`,
 				`zdev_table`.`otherdate` 		AS `otherdate`,
 				`zdev_table`.`description`	    AS `description`,
-				ENCODE(`zdev_table`.`password`,'hX*sqdkjf3_--é0Fz.')	AS `password`,
+				DECODE(`zdev_table`.`password`,'hX*sqdkjf3_--é0Fz.')	AS `password`,
 				`zdev_table`.`amount`			AS `amount`,
 				UPPER(`zdev_table`.`amount`)	AS `upper`,
 				`zdev_table`.`status`			AS `status`,
@@ -96,11 +96,12 @@
 
 		//==================================================================
 		// define column : Password
+		// Caution : MySQL column type Blob
 		//==================================================================
 		$obj_lisha_tran->define_column("ENCODE(`zdev_table`.`password`,'hX*sqdkjf3_--é0Fz.')",'password','Encode/Decode',__TEXT__,__WRAP__,__LEFT__);
 		//$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'password');
-		$obj_lisha_tran->define_col_rw_function('password',"DECODE('__COL_VALUE__','hX*sqdkjf3_--é0Fz.')");
-		$obj_lisha_tran->define_col_select_function('password',"ENCODE(`zdev_table`.__COL_VALUE__,'hX*sqdkjf3_--é0Fz.')");
+		$obj_lisha_tran->define_col_rw_function('password',"ENCODE('__COL_VALUE__','hX*sqdkjf3_--é0Fz.')");
+		$obj_lisha_tran->define_col_select_function('password',"DECODE(`zdev_table`.__COL_VALUE__,'hX*sqdkjf3_--é0Fz.')");
 		//==================================================================
 
 		//==================================================================
