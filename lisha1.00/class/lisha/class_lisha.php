@@ -2443,6 +2443,7 @@
 			$temp_columns = '';
 			$column_display_name = '';
 			$column_name = '';
+			$column_data_type = $this->c_columns[$column]['data_type'];
 
 			// Browse column to find the right one
 			foreach($this->c_columns as $val_col)
@@ -2509,7 +2510,7 @@
 			// Checkbox
 			//error_log($column_name.$val_col["original_order"]);
 
-			if($this->c_columns[$column]['data_type'] == __CHECKBOX__)
+			if($column_data_type == __CHECKBOX__)
 			{
 				//error_log(print_r($this->c_columns[$column],true));
 
@@ -2529,7 +2530,7 @@
 			}
 
 			// Localization Float / Numeric format
-			if($this->c_columns[$column]['data_type'] == __FLOAT__)
+			if($column_data_type == __FLOAT__)
 			{
 				$decimal_symbol = $_SESSION[$this->c_ssid]['lisha']['decimal_symbol'];
 				if ($decimal_symbol != '.')
@@ -2539,7 +2540,14 @@
 				}
 			}
 
-			$retour = array("HTML" => $html,"COMPEL" => $column_compel, "DISPLAY_NAME" => $column_display_name);
+			$retour = array(
+				"HTML" => $html,
+				"COMPEL" => $column_compel,
+				"DISPLAY_NAME" => $column_display_name,
+				"DATA_TYPE" => $column_data_type,
+				"DECIMAL_SYMBOL" => $_SESSION[$this->c_ssid]['lisha']['decimal_symbol'],
+				"THOUSAND_SYMBOL" => $_SESSION[$this->c_ssid]['lisha']['thousand_symbol']
+			);
 			echo json_encode($retour);
 		}
 		/**===================================================================*/
@@ -3148,6 +3156,7 @@
 								// __INT__
 								if ($value_col['data_type'] == __INT__
 									&& filter_var($valeur['value'],FILTER_VALIDATE_INT) === false
+									&& $valeur['value'] != ''
 								)
 								{
 									$error_line['c'.$key_col]['status'] = __INT__;
@@ -3175,7 +3184,8 @@
 									$valeur['value'] = str_replace($thousand_symbol, '', $valeur['value']);
 
 									// validate data float
-									if (filter_var($valeur['value'],FILTER_VALIDATE_FLOAT) === false)
+									if (filter_var($valeur['value'],FILTER_VALIDATE_FLOAT) === false
+										&& $valeur['value'] != '')
 									{
 										$error_line['c'.$key_col]['status'] = __FLOAT__;
 										$error_str .='<tr><td align=left>'.str_replace('$value',$valeur['value'],str_replace('$name','<b>'.$value_col['name'].'</b>',$this->lib(157))).'</td></tr>';
@@ -3233,7 +3243,9 @@
 								//==================================================================
 								// __REQUIRED__
 								//==================================================================
-								if($valeur['value'] == '')
+								if($value_col['rw_flag'] == __REQUIRED__
+									&& $valeur['value'] == ''
+								)
 								{
 									$ctrl_ok = false;
 									$error_str .='<tr><td align=left>'.str_replace('$name','<b>'.$value_col['name'].'</b>',$this->lib(57)).'</td></tr>';

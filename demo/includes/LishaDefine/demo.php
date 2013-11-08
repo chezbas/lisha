@@ -127,7 +127,7 @@
 		$obj_lisha_tran->define_column('`demo_table`.`mode`','mode','mode',__FLOAT__,__WRAP__,__CENTER__);
 		$obj_lisha_tran->define_attribute('__column_number_of_decimal',3,'mode');
 		//$obj_lisha_tran->define_attribute('__column_display_mode',false,'status');
-		//$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'status');
+		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'status');
 		//==================================================================
 
 		//==================================================================

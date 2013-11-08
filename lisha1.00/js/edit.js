@@ -62,6 +62,15 @@ function edit_cell(evt,line,column,lisha_id, column_format, ajax_return)
 				// Name of column
 				eval('varlisha_'+lisha_id+'.CurrentCellName = "'+retour.DISPLAY_NAME+'"');
 
+				// Column data type
+				eval('varlisha_'+lisha_id+'.CurrentCellDataType = "'+retour.DATA_TYPE+'"');
+
+				// decimal_symbol
+				eval('varlisha_'+lisha_id+'.CurrentDecimalSymbol = "'+retour.DECIMAL_SYMBOL+'"');
+
+				// thousand_symbol
+				eval('varlisha_'+lisha_id+'.CurrentThousandSymbol = "'+retour.THOUSAND_SYMBOL+'"');
+
 				var html = retour.HTML;
 
 				if(html != null) // Check if null
@@ -135,7 +144,6 @@ function edit_cell(evt,line,column,lisha_id, column_format, ajax_return)
 }
 /**==================================================================*/
 
-
 /**==================================================================
  * input_key_manager : Manage keypress on input cell
  * @evt : catch browser event
@@ -165,6 +173,47 @@ function input_key_manager(evt,lisha_id,line,column)
 		eval('val.value = \''+protect_json(document.getElementById(div_root_updating+'_input').value)+'\';');
 
 		//==================================================================
+		// VALUE FLOAT OR INT
+		//==================================================================
+		if (val.value != '')
+		{
+			if(eval('varlisha_'+lisha_id+'.CurrentCellDataType') == __INT__ )
+			{
+				// replace Thousand Symbol in Nothing
+				var re = new RegExp(eval('varlisha_'+lisha_id+'.CurrentThousandSymbol'),"g");
+				val.value = val.value.replace(re,'');
+
+				if (!isInteger(val.value))
+				{
+					// Flag error
+					var message = lis_lib[158].replace(/\$name/g,eval('varlisha_'+lisha_id+'.CurrentCellName')); // Replace $name;
+					document.getElementById(div_root_updating+'_input_message').innerHTML = message;
+					document.getElementById(div_root_updating+'_input_message').style.display = 'block';
+					return false;
+				}
+			}
+
+			if(eval('varlisha_'+lisha_id+'.CurrentCellDataType') == __FLOAT__ )
+			{
+				// replace decimal Symbol in Point
+				val.value = val.value.replace(eval('varlisha_'+lisha_id+'.CurrentDecimalSymbol'),'.');
+				// replace Thousand Symbol in Nothing
+				var re = new RegExp(eval('varlisha_'+lisha_id+'.CurrentThousandSymbol'),"g");
+				val.value = val.value.replace(re,'');
+
+				if (!isFloat(val.value))
+				{
+					// Flag error
+					var message = lis_lib[159].replace(/\$name/g,eval('varlisha_'+lisha_id+'.CurrentCellName')); // Replace $name;
+					document.getElementById(div_root_updating+'_input_message').innerHTML = message;
+					document.getElementById(div_root_updating+'_input_message').style.display = 'block';
+					return false;
+				}
+			}
+		}
+		//==================================================================
+
+		//==================================================================
 		// Check Compel
 		//==================================================================
 		// NO COMPEL
@@ -176,6 +225,7 @@ function input_key_manager(evt,lisha_id,line,column)
 		}
 		//==================================================================
 
+		//==================================================================
 		// VALUE REQUIRED
 		//==================================================================
 		if(eval('varlisha_'+lisha_id+'.CurrentCellCompel') == __REQUIRED__ )
@@ -220,7 +270,6 @@ function input_key_manager(evt,lisha_id,line,column)
 			return true;
 		}
 		//==================================================================
-		//TODO Cobalt - mettre les messages si les INT et FLOAT sont incorrects. ?
 	}
 }
 /**==================================================================*/
