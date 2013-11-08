@@ -13,13 +13,8 @@
 	require('../includes/common/buffering.php');
 	/**===================================================================*/
 
-
-	// Serveur acces
-	$_SESSION['demo'][$ssid]['acces_serveur_bdd'] = 'localhost';
-	$_SESSION['demo'][$ssid]['acces_user_iknow'] = 'root';
-	$_SESSION['demo'][$ssid]['acces_password_iknow'] = 'demo';
-	$_SESSION['demo'][$ssid]['acces_schema_iknow'] = 'lisha';
-
+	// Just to get global lisha access
+	require('../includes/lishaSetup/main_configuration.php');
 
 	/**==================================================================
 	 * Load global functions
@@ -33,9 +28,9 @@
 	if(isset($_POST['login']) && isset($_POST['password']))
 	{
 		// Check identification
-		$link_access = mysql_connect($_SESSION['demo'][$ssid]['acces_serveur_bdd'], $_SESSION['demo'][$ssid]['acces_user_iknow'], $_SESSION['demo'][$ssid]['acces_password_iknow']);
+		$link_access = mysql_connect(__LISHA_DATABASE_HOST__, __LISHA_DATABASE_USER__, __LISHA_DATABASE_PASSWORD__);
 		mysql_set_charset('utf8'); // FORCE_UTF8_CHARSET
-		mysql_select_db($_SESSION['demo'][$ssid]['acces_schema_iknow'],$link_access) or die('Error database connexion');
+		mysql_select_db(__LISHA_DATABASE_SCHEMA__,$link_access) or die('Error database connexion');
 
 		$sql = "SELECT
 						`level` LEVEL
