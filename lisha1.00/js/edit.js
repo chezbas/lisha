@@ -179,6 +179,10 @@ function input_key_manager(evt,lisha_id,line,column)
 		{
 			if(eval('varlisha_'+lisha_id+'.CurrentCellDataType') == __INT__ )
 			{
+				// replace Thousand Symbol in Nothing
+				var re = new RegExp(eval('varlisha_'+lisha_id+'.CurrentThousandSymbol'),"g");
+				val.value = val.value.replace(re,'');
+
 				if (!isInteger(val.value))
 				{
 					// Flag error
