@@ -68,6 +68,8 @@ then replace **demo** by your **own database user password**
 **To run demo :**
 http://localhost/demo/
 
+**To run demo password :**
+http://localhost/demo/password/
 ---
 
 ### Setup technical documentation

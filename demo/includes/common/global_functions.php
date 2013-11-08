@@ -44,17 +44,17 @@
 
 		return str_pad($heures, 2, "0", STR_PAD_LEFT).':'.str_pad($minutes, 2, "0", STR_PAD_LEFT).':'.str_pad($secondes, 2, "0", STR_PAD_LEFT);
 	}
-	/*===================================================================*/	
+	/**===================================================================*/
 
 
 	/**==================================================================
 	 * Recover all URL parameters except key items in @param_exclure
+	 *
 	 * @geturl : Common value means $_GET
-	 * @param_exclure : array : Set of parameters to ignore
-	 * 					eg : $aram_exclure = array(ssid); 
-	 * @return : string that you can put on end url called to keep context 
-	 ====================================================================*/	
-	function url_get_exclusion($geturl,$param_exclure = array()) 
+	 * @param_exclure :  Set of parameters to ignore
+	 * 					eg : $param_exclure = array(ssid);
+	 ====================================================================*/
+	function url_get_exclusion($geturl,$param_exclure = array())
 	{
 		$param_exclure = array_flip($param_exclure);
 
@@ -68,7 +68,7 @@
 		}
 		return $url_param;
 	}
-	/*===================================================================*/	
+	/**===================================================================*/
 
 
 	/**==================================================================

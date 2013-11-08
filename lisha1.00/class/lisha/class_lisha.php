@@ -4478,12 +4478,15 @@
 			$this->c_columns = $this->c_columns_init;
 
 			// Reload graphic lisha feature if not defined in main lisha
-			foreach($this->c_obj_graphic->c_columns_init as $key => $value)
+			if(is_array($this->c_obj_graphic->c_columns_init))
 			{
-				foreach($value as $clef => $valeur)
+				foreach($this->c_obj_graphic->c_columns_init as $key => $value)
 				{
-					//error_log(print_r())
-					$this->c_columns[$key][$clef] = $this->c_obj_graphic->c_columns_init[$key][$clef];
+					foreach($value as $clef => $valeur)
+					{
+						//error_log(print_r())
+						$this->c_columns[$key][$clef] = $this->c_obj_graphic->c_columns_init[$key][$clef];
+					}
 				}
 			}
 			//==================================================================

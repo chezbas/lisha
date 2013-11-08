@@ -98,7 +98,7 @@
 		// define column : Password
 		// Caution : MySQL column type Blob
 		//==================================================================
-		$obj_lisha_tran->define_column("ENCODE(`zdev_table`.`password`,'hX*sqdkjf3_--é0Fz.')",'password','Encode/Decode',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column("DECODE(`zdev_table`.`password`,'hX*sqdkjf3_--é0Fz.')",'password','Encode/Decode',__TEXT__,__WRAP__,__LEFT__);
 		//$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'password');
 		$obj_lisha_tran->define_col_rw_function('password',"ENCODE('__COL_VALUE__','hX*sqdkjf3_--é0Fz.')");
 		$obj_lisha_tran->define_col_select_function('password',"DECODE(`zdev_table`.__COL_VALUE__,'hX*sqdkjf3_--é0Fz.')");
