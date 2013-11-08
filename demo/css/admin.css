@@ -10,25 +10,9 @@ body
 	font-size: 16px;
 }
 
-#footer
-{
-	border-top: 1px solid #8B92B1;
-	position: absolute;
-	bottom: 0px;
-	height: 22px;
-	width: 100%;
-	background-image: url(../../images/footer.png);
-	line-height: 22px;
-	left:0;
-	right:0;
-	font-size: 10px;
-	text-align:left;
-	text-indent: 10px;
-}
 
 #header
 {
-	background: url(../../images/err_head_back.jpg) repeat-x ;
 	margin:0;
 	padding-top:10px;
 	width: 100%;
@@ -38,12 +22,6 @@ body
 	-webkit-box-shadow: 1px 1px 2px #555;
 }
 
-.logo
-{
-	background: url(../../images/iknow_100.png) no-repeat center ;
-	height: 39px;
-	width: 100%;
-}
 
 #identification_title
 {
@@ -58,7 +36,6 @@ body
 
 .gradient
 {
-	background-image: url(../../images/shadow-tb.png);
 	background-position:0px -8px;
 	background-repeat:  repeat-x;
 }

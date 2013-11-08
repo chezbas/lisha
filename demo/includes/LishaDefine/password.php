@@ -29,7 +29,8 @@
 			".$_SESSION[$ssid]['lisha']['configuration'][10]."
 				`demo_password`
 				WHERE 1 = 1
-				";
+				AND `demo_password`.`level` <= ".$_SESSION['demo'][$ssid]['identified_level']
+				;
 	$obj_lisha_password->define_attribute('__main_query', $query);
 	//==================================================================
 
@@ -112,7 +113,37 @@
 		// define column : Level
 		//==================================================================
 		$obj_lisha_password->define_column('`demo_password`.`level`','level','Niveau',__BBCODE__,__WRAP__,__LEFT__);
-		$obj_lisha_password->define_attribute('__column_input_check_update', __REQUIRED__,'level');
+		$obj_lisha_password->define_attribute('__column_input_check_update', __LISTED__,'level');
+
+		// Match code
+
+		// Build level lov list
+		$i = $_SESSION['demo'][$ssid]['identified_level'];
+		$temp_query = '';
+		while($i > 0)
+		{
+			$temp_query .= 'SELECT '.$i.' AS `niv`';
+			$i = $i -1;
+			if($i != 0)
+			{
+				$temp_query .= ' UNION ';
+			}
+		}
+
+		$obj_lisha_password->define_lov("	SELECT
+											`main`.`niv` AS `level`
+											".$_SESSION[$ssid]['lisha']['configuration'][10]."
+											(
+											".$temp_query."
+											) `main`
+											WHERE 1 = 1
+											",
+			'Level available',
+			'`main`.`niv`',
+			'level'
+		);
+		$obj_lisha_password->define_column_lov("`main`.`niv`",'level','Niveau',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_password->define_column_lov_order('level',__ASC__);
 		//==================================================================
 
 		//==================================================================

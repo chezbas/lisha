@@ -182,7 +182,7 @@ CREATE TABLE `demo_group` (
 
 LOCK TABLES `demo_group` WRITE;
 /*!40000 ALTER TABLE `demo_group` DISABLE KEYS */;
-INSERT INTO `demo_group` VALUES ('admin','fe01ce2a7fbac8fafaed7c982a04e229',4),('documentation','d3bfeb5f82bb08b1fa2e46da160d95d2',4),('level1','43d3810c065f4bf3550fac648d605fcb',1);
+INSERT INTO `demo_group` VALUES ('admin','fe01ce2a7fbac8fafaed7c982a04e229',4),('level2','fe01ce2a7fbac8fafaed7c982a04e229',2),('level1','fe01ce2a7fbac8fafaed7c982a04e229',1),('level3','fe01ce2a7fbac8fafaed7c982a04e229',3);
 /*!40000 ALTER TABLE `demo_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,7 +204,7 @@ CREATE TABLE `demo_password` (
   PRIMARY KEY (`id`,`object`,`user`),
   KEY `Theme` (`theme`),
   KEY `user` (`user`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0 COMMENT='Access information';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0 COMMENT='Access information';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +213,7 @@ CREATE TABLE `demo_password` (
 
 LOCK TABLES `demo_password` WRITE;
 /*!40000 ALTER TABLE `demo_password` DISABLE KEYS */;
-INSERT INTO `demo_password` VALUES (1,'iddx','root','‡Vy¬¿”∑','',0,'general');
+INSERT INTO `demo_password` VALUES (1,'iddx','root','‡Vy¬¿”∑','',0,'general'),(2,'ittx01','demo level1','æú◊ù','',1,''),(3,'machine','admin','˘u*—Ò˜L»Öíd –dîÎì´≠¬€‡','',4,'');
 /*!40000 ALTER TABLE `demo_password` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -605,4 +605,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-11-08 16:40:20
+-- Dump completed on 2013-11-08 22:11:07

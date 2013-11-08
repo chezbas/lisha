@@ -34,7 +34,6 @@
 	$_SESSION['demo'][$ssid]['redirect_page'] = getenv("SCRIPT_NAME");
 	$_SESSION['demo'][$ssid]['logout_page'] = 'check_id.php';
 	$_SESSION['demo'][$ssid]['level_require_path'] = './';
-	$_SESSION['demo'][$ssid]['level_require'] = __STANDARD_LEVEL_ACCESS__;
 
 	require('./check_login.php');
 	/**===================================================================*/
@@ -79,7 +78,7 @@
 <html>
 	<head>
 		<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" href="css/password.css" type="text/css">
+		<link rel="stylesheet" href="../css/password.css" type="text/css">
 		<script type="text/javascript">
 			<?php
 				/**==================================================================
@@ -105,12 +104,13 @@
 		/*===================================================================*/
 
 		?>
-		<script type="text/javascript" src="js/password.js"></script> <!-- Custom javascript -->
+		<script type="text/javascript" src="../js/password.js"></script> <!-- Custom javascript -->
 
 		<title><?php echo $_SESSION[$ssid]['message'][3]?></title>
 	</head>
 	<body onmousemove="lisha_move_cur(event);" onmouseup="lisha_mouseup();">
 	<div class="mydiv"><?php echo $obj_lisha_password->generate_lisha(); ?></div>
+	<div class="logout" onclick="logout();">LOG OUT</div>
 	<?php $obj_lisha_password->lisha_generate_js_body();?>
 
 	<?php

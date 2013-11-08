@@ -38,7 +38,6 @@
 						`demo_group` AS `GR`
 					WHERE 1 = 1
 						AND `GR`.`name` ='".mysql_real_escape_string($_POST['login'])."'
-						AND `GR`.`level` >= ".$_SESSION['demo'][$ssid]['level_require']."
 						AND `GR`.`password`='".md5(mysql_real_escape_string($_POST['password']))."'";
 
 		$resultat = mysql_query($sql,$link_access) or die('Error'.$sql);
@@ -107,6 +106,8 @@
 	</div>
 	<div class="details">
 		user : admin<br>
+		pass : demo<br><hr>
+		user : level1 or level2 or level3<br>
 		pass : demo
 	</div>
 </div>
