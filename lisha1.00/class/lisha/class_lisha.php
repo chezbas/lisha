@@ -3207,6 +3207,7 @@
 
 									// Check if lov is solvable
 									$sql_lov = $this->solve_lov_main_query($value_col['original_order']);
+
 									// And condition to check if input value is in list
 
 									if($valeur['value'] == '')

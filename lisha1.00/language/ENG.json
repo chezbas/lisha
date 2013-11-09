@@ -125,7 +125,7 @@
 	"123" : "Column name <b>$1</b> is defined as focus column.<br>You can't hide !!",
 	"124" : "You have to display at least one column !!",
 	"125" : "Hide forbidden on this column",
-	"126" : "Value ➝$value← of column <b>$name</b> have to be included in defined list !!",
+	"126" : "Input value <span style='font-size: 1.2em;'>«<b>$value</b>»</span> in head of column <b>$name</b> have to be included in defined list !!",
 	"127" : "Localization",
 	"128" : "Only right click available",
 	"129" : "No preference list to load",

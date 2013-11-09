@@ -125,7 +125,7 @@
 	"123" : "La colonne <b>$1</b> est définie comme colonne ayant le focus.<br>Vous ne pouvez pas la masquer !!",
 	"124" : "Vous devez afficher au minimum une colonne !!",
 	"125" : "Masquage de cette colonne interdite",
-	"126" : "la valeur ➝$value← de la colonne <b>$name</b> doit appartenir à la liste de valeur définie !!",
+	"126" : "la valeur <span style='font-size: 1.2em;'>«<b>$value</b>»</span> saisie dans l'entête de la colonne <b>$name</b> doit appartenir à la liste de valeur définie !!",
 	"127" : "Localisation",
 	"128" : "Click droit seul disponible",
 	"129" : "Aucune préférence à charger",

@@ -122,7 +122,7 @@
 		$temp_query = '';
 		while($i > 0)
 		{
-			$temp_query .= 'SELECT '.$i.' AS `niv`';
+			$temp_query .= 'SELECT \''.$i.'\' AS `niv`';
 			$i = $i -1;
 			if($i != 0)
 			{
