@@ -75,7 +75,7 @@
 		// define column : id
 		//==================================================================
 		$obj_lisha_password->define_column('`demo_password`.`id`','id','Identification',__TEXT__,__WRAP__,__CENTER__,__PERCENT__,__DISPLAY__);
-		$obj_lisha_password->define_attribute('__column_input_check_update', __REQUIRED__,'id');
+		$obj_lisha_password->define_attribute('__column_input_check_update', __FORBIDDEN__,'id');
 		//==================================================================
 
 
