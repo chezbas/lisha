@@ -1,46 +1,11 @@
-html,body
+body
 {
+	background-color: #F5F9FE;
 	margin:0;
 	padding:0;
-	background-color: #DDD;
-}
-
-.home
-{
-	height:20px;
-	width:20px;
-	float:left;
-	background-image: url(../images/icons.png);
-	background-repeat: no-repeat;
-	background-position:-220px 0;
-}
-
-.home:hover
-{
-	height:20px;
-	width:20px;
-	float:left;
-	background-image: url(../images/icons.png);
-	background-repeat: no-repeat;
-	background-position:-220px -20px;
-}
-
-.new
-{
-	height:20px;
-	width:20px;
-	float:left;
-	background-image: url(../images/icons.png);
-	background-repeat: no-repeat;
-	background-position:-680px 0;
-}
-
-.new:hover
-{
-	height:20px;
-	width:20px;
-	float:left;
-	background-image: url(../images/icons.png);
-	background-repeat: no-repeat;
-	background-position:-680px -20px;
+	height: 100%;
+	width:100%;
+	position: absolute;
+	font-family: sans-serif;
+	font-size: 16px;
 }

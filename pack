@@ -186,7 +186,7 @@ if test $demo = "y"
 then
 	echo "Keep demo files"
 	cp -R demo $pack_name
-	table_demo="demo_table demo_screen_texts demo_group demo_password"
+	table_demo="demo_table demo_screen_texts demo_group demo_password demo_list_example"
 else
 	echo "Remove demo files"
 	table_demo=""
