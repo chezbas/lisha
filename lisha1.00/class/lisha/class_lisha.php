@@ -2754,6 +2754,24 @@
 						}
 					}
 
+					// Localization FLOAT Format
+					if ($val_col['data_type'] == __FLOAT__)
+					{
+						// replace decimal symbol for localization
+						$decimal_symbol = $_SESSION[$this->c_ssid]['lisha']['decimal_symbol'];
+						if ($decimal_symbol != '.')
+						{
+							switch ($p_engine)
+							{
+								case __MYSQL__:
+								case __POSTGRESQL__:
+									$str_before = "REPLACE(";
+									$str_after = ",'.','".$decimal_symbol."')";
+								break;
+							}
+						}
+					}
+
 					$temp_columns .= $str_before.$this->get_quote_col($val_col['sql_as']).' '.$str_after.' AS '.$this->get_quote_col($val_col['sql_as']);
 
 
