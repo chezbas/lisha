@@ -21,7 +21,7 @@
 				`demo_password`.`id`			AS `id`,
 				`demo_password`.`object`		AS `object`,
 				`demo_password`.`user`			AS `user`,
-				DECODE(`demo_password`.`password`,'FhX*24é\"3_--é0Fz.')	AS `password`,
+				AES_DECRYPT(`demo_password`.`password`,'FhX*24é\"3_--é0Fz.')	AS `password`,
 				`demo_password`.`comment`			AS `comment`,
 				`demo_password`.`level`				AS `level`,
 				`demo_password`.`theme`				AS `theme`
@@ -97,9 +97,9 @@
 		//==================================================================
 		// define column : password
 		//==================================================================
-		$obj_lisha_password->define_column("DECODE(`demo_password`.`password`,'FhX*24é\"3_--é0Fz.')",'password','mot de passe',__TEXT__,__WRAP__,__LEFT__);
-		$obj_lisha_password->define_col_rw_function('password',"ENCODE('__COL_VALUE__','FhX*24é\"3_--é0Fz.')");
-		$obj_lisha_password->define_col_select_function('password',"DECODE(`demo_password`.`password`,'FhX*24é\"3_--é0Fz.')");
+		$obj_lisha_password->define_column("AES_DECRYPT(`demo_password`.`password`,'FhX*24é\"3_--é0Fz.')",'password','mot de passe',__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_password->define_col_rw_function('password',"AES_ENCRYPT('__COL_VALUE__','FhX*24é\"3_--é0Fz.')");
+		$obj_lisha_password->define_col_select_function('password',"AES_DECRYPT(`demo_password`.`password`,'FhX*24é\"3_--é0Fz.')");
 		//$obj_lisha_password->define_attribute('__column_display_mode',false,'amount');
 		//==================================================================
 

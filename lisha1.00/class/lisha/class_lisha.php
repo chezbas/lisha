@@ -2434,7 +2434,7 @@
 
 			foreach($array_key as $clef => $value)
 			{
-				$string_where .= 'AND `'.$this->c_update_table.'`.`'.$clef.'` = \''.$value.'\'';
+				$string_where .= ' AND `'.$this->c_update_table.'`.`'.$clef.'` = \''.$value.'\'';
 			}
 
 			$column_compel = '';

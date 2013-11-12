@@ -38,7 +38,7 @@
 						`demo_group` AS `GR`
 					WHERE 1 = 1
 						AND `GR`.`name` ='".mysql_real_escape_string($_POST['login'])."'
-						AND `GR`.`password`='".md5(mysql_real_escape_string($_POST['password']))."'";
+						AND `GR`.`password`= AES_ENCRYPT('".mysql_real_escape_string($_POST['password'])."','FhX*24é\"3_--é0Fz.')";
 
 		$resultat = mysql_query($sql,$link_access) or die('Error'.$sql);
 
