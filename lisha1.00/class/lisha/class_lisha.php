@@ -1396,7 +1396,6 @@
 		 * prepare_query
 		 * build and run query with all WHERE condition
 		 * @ad_where			: Extra clause condition
-		 * @p_engine			: Database engine
 		 * @p_only_count        : only return numbers of rows found
 		 ====================================================================*/
 		private function prepare_query($add_where = '',$p_active_limit = true, $p_only_count = false)
@@ -1629,7 +1628,6 @@
 		 *
 		 * @p_column			: column id to get custom date format if any
 		 * @p_input				: input area in column header
-		 * @p_engine			: Database engine
 		 ====================================================================*/
 		public function convert_localized_date_to_database_format($p_column,$p_input)
 		{
@@ -1643,7 +1641,7 @@
 				$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
 			}
 
-			$str_final = $this->get_str_to_date_format("'".rawurldecode($p_input)."'",$final_date_format);
+			$str_final = $this->get_str_to_date_format(rawurldecode($p_input),$final_date_format);
 
 			$query = "SELECT ".$str_final."  AS `result`";
 
@@ -1667,7 +1665,6 @@
 		 *
 		 * @p_column			: column id to get custom date format if any
 		 * @p_input				: date to convert
-		 * @p_engine			: Database engine
 		 ====================================================================*/
 		public function convert_database_date_to_localized_format($p_column,$p_input)
 		{
@@ -2666,7 +2663,6 @@
 		 * edit_lines method
 		 * Edit selected lines
 		 * @json_lines		: json format of selected lines
-		 * @p_engine		: Database engine used
 		 ====================================================================*/
 		public function edit_lines($json_lines)
 		{
@@ -2827,7 +2823,6 @@
 		 * Export filter or selected lines to local file
 		 * @json_lines		: json format of selected lines
 		 * @p_only_count	: if true return only count of lines to export
-		 * @p_engine		: Database engine used
 		 ====================================================================*/
 		public function export_list($json_lines, $p_only_count = false)
 		{
