@@ -1,3 +1,5 @@
+var isCtrl = false;
+
 /**==================================================================
  * edit_cell : Recover cells value to update
  * @evt				: catch event
@@ -97,7 +99,7 @@ function edit_cell(evt,line,column,lisha_id, column_format, ajax_return)
 				}
 				//==================================================================
 
-				document.getElementById(div_adresse).innerHTML = '<input type="text" onclick="lisha_StopEventHandler(event);" size="'+input_size+'" onkeydown="return input_key_manager(event,\''+lisha_id+'\',\''+line+'\',\''+column+'\')" id=\''+div_adresse+'_input\' value="'+html+'"><div id=\''+div_adresse+'_input_message\' style="display:none; color:red; background-color:white; border-radius: 5px;"></div>';
+				document.getElementById(div_adresse).innerHTML = '<input type="text" onclick="lisha_StopEventHandler(event);" size="'+input_size+'" onkeyup="input_key_up_manager(event)" onkeydown="return input_key_manager(event,\''+lisha_id+'\',\''+line+'\',\''+column+'\')" id=\''+div_adresse+'_input\' value="'+html+'"><div id=\''+div_adresse+'_input_message\' style="display:none; color:red; background-color:white; border-radius: 5px;"></div>';
 			}
 			else
 			{
@@ -144,6 +146,14 @@ function edit_cell(evt,line,column,lisha_id, column_format, ajax_return)
 }
 /**==================================================================*/
 
+/**==================================================================
+ * input_key_up_manager : Manage keypress up on input cell
+ * @evt : catch browser event
+ ====================================================================*/
+function input_key_up_manager(evt)
+{
+	isCtrl=false;
+}
 /**==================================================================
  * input_key_manager : Manage keypress on input cell
  * @evt : catch browser event
@@ -270,6 +280,19 @@ function input_key_manager(evt,lisha_id,line,column)
 			return true;
 		}
 		//==================================================================
+	}
+
+	if(charCode == 17) { isCtrl=true; }
+
+	if(charCode == 186) // key ;
+	{
+		if(isCtrl)
+		{
+			var date = new Date();
+			//todo : a voir comment faire pour retrouver le format de localisation des dates
+			var str = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+			document.getElementById(div_root_updating+'_input').value = str;
+		}
 	}
 }
 /**==================================================================*/
