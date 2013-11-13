@@ -106,4 +106,18 @@ class class_sgbd
 		return $this->c_obj_bdd->get_quote_string($string);
 	}
 
+	protected function get_date_format($column, $format)
+	{
+		return $this->c_obj_bdd->get_date_format($column, $format);
+	}
+
+	protected function get_str_to_date_format($column, $format)
+	{
+		return $this->c_obj_bdd->get_str_to_date_format($column, $format);
+	}
+
+	protected function get_replace($column, $search_value, $new_value)
+	{
+		return $this->c_obj_bdd->get_replace($column, $search_value, $new_value);
+	}
 }

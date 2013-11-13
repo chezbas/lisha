@@ -86,7 +86,7 @@
 			break;
 		case 21:
 			// Format date
-			echo $_SESSION[$ssid]['lisha'][$lisha_id]->db_format(__MYSQL__,$_POST['mode'],$_POST['column'],$_POST['value']);
+			echo $_SESSION[$ssid]['lisha'][$lisha_id]->db_format($_POST['mode'],$_POST['column'],$_POST['value']);
 			break;
 		case 22:
 			// Recover cell content

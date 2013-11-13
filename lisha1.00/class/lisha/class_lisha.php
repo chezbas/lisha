@@ -357,18 +357,17 @@
 
 		/**==================================================================
 		 * db_format : database date format
-		 * @p_db_engine 			: MySQL, PostGrey...
 		 * @p_mode					: date for date conversion
 		 * @p_column				: column id
 		 * @p_value					: input string
 		 ====================================================================*/
-		public function db_format($p_db_engine,$p_mode,$p_column,$p_value)
+		public function db_format($p_mode,$p_column,$p_value)
 		{
 			switch($p_mode)
 			{
 				case 'date':
 					// Setup customer filter
-					$tmp_final = $this->convert_database_date_to_localized_format($p_column,$p_value,$p_db_engine);
+					$tmp_final = $this->convert_database_date_to_localized_format($p_column,$p_value);
 
 					$this->c_columns[$p_column]['filter']['input'] = array('filter' =>  $p_value,
 																		'filter_display' => $tmp_final
@@ -953,7 +952,7 @@
 			{
 				if($this->c_columns[$column]['data_type'] == __DATE__)
 				{
-					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter'],__MYSQL__); // Database engine hard coded TODO
+					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter']); // Database engine hard coded TODO
 
 					$this->c_columns[$column]['filter']['input'] = array('filter' =>  rawurldecode($tmp_result),
 																		'filter_display' => rawurldecode($post['filter'])
@@ -1237,7 +1236,7 @@
 						{
 							if($column_temp[$row['val1']]['data_type'] == __DATE__)
 							{
-								$tmp_result = $this->convert_database_date_to_localized_format($row['val1'],$row['val2'],__MYSQL__); // Database engine hard coded TODO
+								$tmp_result = $this->convert_database_date_to_localized_format($row['val1'],$row['val2']); // Database engine hard coded TODO
 								$column_temp[$row['val1']]['filter']['input'] = array('filter' => $row['val2'],
 																					 'filter_display' => $tmp_result
 																				);
@@ -1400,7 +1399,7 @@
 		 * @p_engine			: Database engine
 		 * @p_only_count        : only return numbers of rows found
 		 ====================================================================*/
-		private function prepare_query($add_where = '',$p_active_limit = true, $p_engine = __MYSQL__, $p_only_count = false)
+		private function prepare_query($add_where = '',$p_active_limit = true, $p_only_count = false)
 		{
 			//==================================================================
 			// Get Column filter
@@ -1477,7 +1476,7 @@
 						// Transform string for date localization
 						if($column_value['data_type'] == __DATE__)
 						{
-							$tmp_result = $this->convert_localized_date_to_database_format($column_value["original_order"],$this->string_global_search,__MYSQL__); // Database engine hard coded TODO
+							$tmp_result = $this->convert_localized_date_to_database_format($column_value["original_order"],$this->string_global_search); // Database engine hard coded TODO
 						}
 
 						$sql_filter_global .= ' OR '.$column_value['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$tmp_result))),true),$this->link).__PERCENT__);
@@ -1570,8 +1569,6 @@
 			$temp_columns = '';
 			foreach($this->c_columns as $value)
 			{
-				$str_before =''; $str_after = '';
-
 
 				if ($value['data_type'] == __DATE__)
 				{
@@ -1585,15 +1582,14 @@
 						$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
 					}
 
-					switch ($p_engine)
-					{
-					case __MYSQL__:
-						$str_before = "DATE_FORMAT(";
-						$str_after = ",'".$final_date_format."')";
-					break;
-					}
+					$str_final = $this->get_date_format($this->get_quote_col($value['sql_as']),$final_date_format);
 				}
-				$temp_columns .= $str_before.$this->get_quote_col($value['sql_as']).$str_after.' AS `'.$value['sql_as'].'`,';
+				else
+				{
+					// In all other case
+					$str_final = $this->get_quote_col($value['sql_as']);
+				}
+				$temp_columns .= $str_final.' AS `'.$value['sql_as'].'`,';
 			}
 			$temp_columns = substr($temp_columns,0,-1);
 			//==================================================================
@@ -1635,40 +1631,33 @@
 		 * @p_input				: input area in column header
 		 * @p_engine			: Database engine
 		 ====================================================================*/
-		public function convert_localized_date_to_database_format($p_column,$p_input, $p_engine = __MYSQL__)
+		public function convert_localized_date_to_database_format($p_column,$p_input)
 		{
-			switch ($p_engine)
+			if(isset($this->c_columns[$p_column]['date_format']))
 			{
-				case __MYSQL__:
-					if(isset($this->c_columns[$p_column]['date_format']))
-					{
-						$final_date_format = $this->c_columns[$p_column]['date_format'];
-					}
-					else
-					{
-						// No custom date format then use country localization format
-						$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
-					}
-					$str_before = "STR_TO_DATE('";
-					$str_after = "','".$final_date_format."') AS `result`;";
-
-					$query = "SELECT ".$str_before.rawurldecode($p_input).$str_after;
-
-					$result = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
-					$row = $this->rds_fetch_array($result);
-					if($row['result'] == '' || strpos($row['result'],'0000') !== false || strlen($p_input) < 7 )
-					{
-						// No conversion possible.... return source
-						return $p_input;
-					}
-					else
-					{
-						return $row['result'];
-					}
-				break;
+				$final_date_format = $this->c_columns[$p_column]['date_format'];
 			}
-			error_log($p_engine." doesn't exist !!");
-			return true;
+			else
+			{
+				// No custom date format then use country localization format
+				$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
+			}
+
+			$str_final = $this->get_str_to_date_format("'".rawurldecode($p_input)."'",$final_date_format);
+
+			$query = "SELECT ".$str_final."  AS `result`";
+
+			$result = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
+			$row = $this->rds_fetch_array($result);
+			if($row['result'] == '' || strpos($row['result'],'0000') !== false || strlen($p_input) < 7 )
+			{
+				// No conversion possible.... return source
+				return $p_input;
+			}
+			else
+			{
+				return $row['result'];
+			}
 		}
 		/**===================================================================*/
 
@@ -1680,41 +1669,34 @@
 		 * @p_input				: date to convert
 		 * @p_engine			: Database engine
 		 ====================================================================*/
-		public function convert_database_date_to_localized_format($p_column,$p_input, $p_engine = __MYSQL__)
+		public function convert_database_date_to_localized_format($p_column,$p_input)
 		{
-			switch ($p_engine)
+			if(isset($this->c_columns[$p_column]['date_format']))
 			{
-				case __MYSQL__:
-					if(isset($this->c_columns[$p_column]['date_format']))
-					{
-						$final_date_format = $this->c_columns[$p_column]['date_format'];
-					}
-					else
-					{
-						// No custom date format then use country localization format
-						$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
-					}
-					$str_before = "DATE_FORMAT('";
-					$str_after = "','".$final_date_format."') AS `result`;";
-
-					$query = "SELECT ".$str_before.rawurldecode($p_input).$str_after;
-
-					$result = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
-					$row = $this->rds_fetch_array($result);
-
-					if($row['result'] == '' || strpos($row['result'],'0000') !== false || strlen($p_input) < 7)
-					{
-						// No conversion possible.... return source
-						return $p_input;
-					}
-					else
-					{
-						return $row['result'];
-					}
-				break;
+				$final_date_format = $this->c_columns[$p_column]['date_format'];
 			}
-			error_log($p_engine." doesn't exist !!");
-			return false;
+			else
+			{
+				// No custom date format then use country localization format
+				$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
+			}
+			$str_final = $this->get_date_format("'".rawurldecode($p_input)."'",$final_date_format);
+
+			$query = "SELECT ".$str_final."  AS `result`";
+
+			$result = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
+			$row = $this->rds_fetch_array($result);
+
+			if($row['result'] == '' || strpos($row['result'],'0000') !== false || strlen($p_input) < 7)
+			{
+				// No conversion possible.... return source
+				return $p_input;
+			}
+			else
+			{
+				return $row['result'];
+
+			}
 		}
 		/**===================================================================*/
 
@@ -2426,7 +2408,7 @@
 		 * @array_key 		: clicked cell json format of primary key
 		 * @column			: relative column position
 		 ====================================================================*/
-		public function recover_cell($array_key, $column, $p_engine = __MYSQL__)
+		public function recover_cell($array_key, $column)
 		{
 			$array_key = json_decode($array_key);
 
@@ -2438,8 +2420,6 @@
 			}
 
 			$column_compel = '';
-			$str_before ='';
-			$str_after = '';
 			$temp_columns = '';
 			$column_display_name = '';
 			$column_name = '';
@@ -2460,28 +2440,6 @@
 					$column_display_name = $this->c_columns[$val_col["original_order"]]["name"];
 
 
-					// Localization date format
-					if ($this->c_columns[$val_col["original_order"]]['data_type'] == __DATE__)
-					{
-						if(isset($this->c_columns[$val_col["original_order"]]['date_format']))
-						{
-							$final_date_format = $this->c_columns[$val_col["original_order"]]['date_format'];
-						}
-						else
-						{
-							// No custom date format then use country localization format
-							$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
-						}
-
-						switch ($p_engine)
-						{
-						case __MYSQL__:
-							$str_before = "DATE_FORMAT(";
-							$str_after = ",'".$final_date_format."')";
-						break;
-						}
-					}
-
 					if(isset($val_col['select_function']))
 					{
 						// Special select function defined
@@ -2489,7 +2447,27 @@
 					}
 					else
 					{
-						$temp_columns .= $str_before.'`'.$this->c_update_table.'`.`'.$column_name.'` '.$str_after.' AS `'.$column_name.'`';
+						// Localization date format
+						if ($this->c_columns[$val_col["original_order"]]['data_type'] == __DATE__)
+						{
+							if(isset($this->c_columns[$val_col["original_order"]]['date_format']))
+							{
+								$final_date_format = $this->c_columns[$val_col["original_order"]]['date_format'];
+							}
+							else
+							{
+								// No custom date format then use country localization format
+								$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
+							}
+
+							$str_final = $this->get_date_format('`'.$this->c_update_table.'`.`'.$column_name.'`',$final_date_format);
+							$temp_columns .= $str_final.' AS `'.$column_name.'`';
+						}
+						else
+						{
+							// all other columns
+							$temp_columns .= '`'.$this->c_update_table.'`.`'.$column_name.'` AS `'.$column_name.'`';
+						}
 					}
 
 					// primary key..only one row found... then exit foreach now
@@ -2690,7 +2668,7 @@
 		 * @json_lines		: json format of selected lines
 		 * @p_engine		: Database engine used
 		 ====================================================================*/
-		public function edit_lines($json_lines, $p_engine = __MYSQL__)
+		public function edit_lines($json_lines)
 		{
 			// Define the lisha mode
 			$this->c_edit_mode = __EDIT_MODE__;
@@ -2730,11 +2708,11 @@
 						$sql .= ',';
 					}
 
-					// Localization date format
-					$str_before =''; $str_after = ''; $temp_columns = '';
+					$temp_columns = '';
 
 					if ($val_col['data_type'] == __DATE__)
 					{
+						// Localization date format
 						if(isset($val_col['date_format']))
 						{
 							$final_date_format = $val_col['date_format'];
@@ -2745,35 +2723,30 @@
 							$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
 						}
 
-						switch ($p_engine)
-						{
-						case __MYSQL__:
-							$str_before = "DATE_FORMAT(";
-							$str_after = ",'".$final_date_format."')";
-						break;
-						}
+						$str_final = $this->get_date_format($this->get_quote_col($val_col['sql_as']),$final_date_format);
 					}
-
-					// Localization FLOAT Format
-					if ($val_col['data_type'] == __FLOAT__)
+					elseif ($val_col['data_type'] == __FLOAT__)
 					{
+						// Localization FLOAT Format
 						// replace decimal symbol for localization
 						$decimal_symbol = $_SESSION[$this->c_ssid]['lisha']['decimal_symbol'];
 						if ($decimal_symbol != '.')
 						{
-							switch ($p_engine)
-							{
-								case __MYSQL__:
-								case __POSTGRESQL__:
-									$str_before = "REPLACE(";
-									$str_after = ",'.','".$decimal_symbol."')";
-								break;
-							}
+							$str_final = $this->get_replace($this->get_quote_col($val_col['sql_as']),'.',$decimal_symbol);
 						}
+						else
+						{
+							$str_final = $this->get_quote_col($val_col['sql_as']);
+						}
+
+					}
+					else
+					{
+						// all other case
+						$str_final = $this->get_quote_col($val_col['sql_as']);
 					}
 
-					$temp_columns .= $str_before.$this->get_quote_col($val_col['sql_as']).' '.$str_after.' AS '.$this->get_quote_col($val_col['sql_as']);
-
+					$temp_columns .= $str_final.' AS '.$this->get_quote_col($val_col['sql_as']);
 
 					if(isset($val_col['select_function']))
 					{
@@ -2782,9 +2755,10 @@
 					}
 					else
 					{
+						// TODO MIZ, les contrôles sur la localisation seront à mettre ici pour
+						//   éviter de rentrer en conflit avec les functions spécifiques (select_function)
 						$sql .= $temp_columns;
 					}
-
 					$i_sql = $i_sql + 1;
 				}
 			}
@@ -2899,11 +2873,11 @@
 			// Filtering selected lines if any
 			if($only_selected_lines != ' AND (()')
 			{
-				$this->prepare_query($only_selected_lines, false,__MYSQL__,$p_only_count);
+				$this->prepare_query($only_selected_lines, false,$p_only_count);
 			}
 			else
 			{
-				$this->prepare_query('',false,__MYSQL__,$p_only_count);
+				$this->prepare_query('',false,$p_only_count);
 			}
 
 			// If only total of lines
@@ -4009,9 +3983,8 @@
 		 * @column		    	: column id
 		 * @txt				    : input search
 		 * @p_selected_lines	: selected line in json format
-		 * @p_engine            : Default __MYSQL__
 		 ====================================================================*/
-		public function lisha_input_search_onkeyup($column,$txt,$p_selected_lines,$p_engine = __MYSQL__)
+		public function lisha_input_search_onkeyup($column,$txt,$p_selected_lines)
 		{
 			// Define the selected lines
 			$this->define_selected_line($p_selected_lines);
@@ -4055,7 +4028,7 @@
 				//==================================================================
 				if($this->c_columns[$column]['data_type'] == __DATE__)
 				{
-					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter'],__MYSQL__); // Database engine hard coded TODO
+					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter']); // Database engine hard coded TODO
 
 					$this->c_columns[$column]['filter']['input'] = array('filter' => $tmp_result,
 																		'filter_display' => rawurldecode($post['filter'])
@@ -4154,9 +4127,6 @@
 					$row = $this->rds_fetch_array($this->resultat);
 					$count = $row['total'];
 					//==================================================================
-
-					$str_before = '';
-					$str_after = '';
 					// Localization date format
 					if ($this->c_columns[$column]['data_type'] == __DATE__)
 					{
@@ -4170,19 +4140,17 @@
 							$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
 						}
 
-						switch ($p_engine)
-						{
-							case __MYSQL__:
-								$str_before = "DATE_FORMAT(";
-								$str_after = ",'".$final_date_format."')";
-								break;
-						}
+						$str_final = $this->get_date_format($this->c_columns[$column]['before_as'], $final_date_format);
 					}
-
+					else
+					{
+						// all other case
+						$str_final = $this->c_columns[$column]['before_as'];
+					}
 					//==================================================================
 					// Few first rows found
 					//==================================================================
-					$sql =  'SELECT DISTINCT ('.$str_before.$this->c_columns[$column]['before_as'].$str_after.' ) AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->c_query,$query_final_pos).$sql_condition_quick_search.$sql_filter.' ORDER BY 1 ASC LIMIT 6';
+					$sql =  'SELECT DISTINCT ('.$str_final.' ) AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->c_query,$query_final_pos).$sql_condition_quick_search.$sql_filter.' ORDER BY 1 ASC LIMIT 6';
 					//==================================================================
 
 					$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
