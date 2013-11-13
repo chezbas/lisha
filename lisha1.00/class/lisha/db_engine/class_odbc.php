@@ -7,25 +7,30 @@
 		public $link;
 		public $link_lisha;
 		private $c_sql;
-		
-		
+
+
+		/**==================================================================
+		 * Constructor of obdc_engine
+		 *
+		====================================================================*/
 		function __construct($p_ident)
 		{
 			$this->c_ident = $p_ident;
 		}
-		
-		/**
-		 * Connect to the database
-		 */
+		/**===================================================================*/
+
+
+		/**==================================================================
+		 * Connect to database
+		 *
+		====================================================================*/
 		public function db_connect()
 		{
-			/**==================================================================
-			 * Connect to the user databsae
-			 ====================================================================*/		
 			$this->link = odbc_connect($this->c_ident['host'],$this->c_ident['user'],$this->c_ident['password']);
-			/*===================================================================*/	
 		}
-		
+		/**===================================================================*/
+
+
 		public function exec_sql($sql,$line,$file,$function,$class,$link)
 		{
 			return odbc_exec($link,"SET NAMES 'utf8'");
@@ -38,7 +43,9 @@
 		
 		
 		/**==================================================================
-		 * Methods
+		 * Catch query error
+		 *
+		 * Display sql error into HTML div and write error into error_log file
 		 ====================================================================*/	
 		private function die_sql($sql,$line,$file,$function,$class)
 		{
@@ -52,7 +59,8 @@
 			echo $err;
 			die();
 		}
-		
+		/**===================================================================*/
+
 		
 		public function rds_num_rows(&$resultat)
 		{
