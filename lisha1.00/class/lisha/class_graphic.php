@@ -2412,6 +2412,7 @@
 			$p_text = preg_replace('`\[left\](.*?(\[/left\]\[/left\].*?)*)\[/left\](?!(\[/left\]))`ie','"<p style=\"text-align: left;\">".str_replace("[/left][/left]","[/left]","\\1")."</p>"',$p_text);
 			$p_text = preg_replace('`\[right\](.*?(\[/right\]\[/right\].*?)*)\[/right\](?!(\[/right\]))`ie','"<p style=\"text-align: right;\">".str_replace("[/right][/right]","[/right]","\\1")."</p>"',$p_text);
 			$p_text = preg_replace('`\[img\](.*?(\[/img\]\[/img\].*?)*)\[/img\](?!(\[/img\]))`ie','"<img src=\"".str_replace("[/img][/img]","[/img]","\\1")."\" />"',$p_text);
+			$p_text = preg_replace('`\[img=(.*?)\](.*?(\[/img\]\[/img\].*?)*)\[/img\](?!(\[/img\]))`ie','"<img width=\"\\1\" src=\"".str_replace("[/img][/img]","[/img]","\\2")."\" />"',$p_text);
 			$p_text = preg_replace('`\[color=(.*?)\](.*?(\[/color\]\[/color\].*?)*)\[/color\](?!(\[/color\]))`ie','"<font color=\"\\1\">".str_replace("[/color][/color]","[/color]","\\2")."</font>"',$p_text);
 			$p_text = preg_replace('`\[bg=(.*?)\](.*?(\[/bg\]\[/bg\].*?)*)\[/bg\](?!(\[/bg\]))`ie','"<font style=\"background-color:\\1;\">".str_replace("[/bg][/bg]","[/bg]","\\2")."</font>"',$p_text);
 			$p_text = preg_replace('`\[size=(.*?)\](.*?(\[/size\]\[/size\].*?)*)\[/size\](?!(\[/size\]))`ie','"<font size=\"\\1\">".str_replace("[/size][/size]","[/size]","\\2")."</font>"',$p_text);

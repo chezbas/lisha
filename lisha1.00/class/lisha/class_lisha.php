@@ -5701,6 +5701,7 @@
 			//$p_text = preg_replace('`\[img\](.*?)\[/img\]`i','<img src="\\1" />',$p_text);
 			// Information : Double [/img][/img] to avoid end of picture area
 			$p_text = preg_replace('`\[img\](.*?(\[/img\]\[/img\].*?)*)\[/img\](?!(\[/img\]))`i','\\1',$p_text);
+			$p_text = preg_replace('`\[img=(.*?)\](.*?(\[/img\]\[/img\].*?)*)\[/img\](?!(\[/img\]))`ie','"<img width=\"\\1\" src=\"".str_replace("[/img][/img]","[/img]","\\2")."\" />"',$p_text);
 
 			//$p_text = preg_replace('`\[color=([^[]*)\]([^[]*)\[/color\]`i','<font color="\\1">\\2</font>',$p_text);
 			//$p_text = preg_replace('`\[color=(.*?)\](.*?)\[/color\]`i','<font color="\\1">\\2</font>',$p_text);
