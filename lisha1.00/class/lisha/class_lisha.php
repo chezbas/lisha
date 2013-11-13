@@ -952,7 +952,7 @@
 			{
 				if($this->c_columns[$column]['data_type'] == __DATE__)
 				{
-					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter']); // Database engine hard coded TODO
+					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter']);
 
 					$this->c_columns[$column]['filter']['input'] = array('filter' =>  rawurldecode($tmp_result),
 																		'filter_display' => rawurldecode($post['filter'])
@@ -1236,7 +1236,7 @@
 						{
 							if($column_temp[$row['val1']]['data_type'] == __DATE__)
 							{
-								$tmp_result = $this->convert_database_date_to_localized_format($row['val1'],$row['val2']); // Database engine hard coded TODO
+								$tmp_result = $this->convert_database_date_to_localized_format($row['val1'],$row['val2']);
 								$column_temp[$row['val1']]['filter']['input'] = array('filter' => $row['val2'],
 																					 'filter_display' => $tmp_result
 																				);
@@ -1476,7 +1476,7 @@
 						// Transform string for date localization
 						if($column_value['data_type'] == __DATE__)
 						{
-							$tmp_result = $this->convert_localized_date_to_database_format($column_value["original_order"],$this->string_global_search); // Database engine hard coded TODO
+							$tmp_result = $this->convert_localized_date_to_database_format($column_value["original_order"],$this->string_global_search);
 						}
 
 						$sql_filter_global .= ' OR '.$column_value['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$tmp_result))),true),$this->link).__PERCENT__);
@@ -4028,7 +4028,7 @@
 				//==================================================================
 				if($this->c_columns[$column]['data_type'] == __DATE__)
 				{
-					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter']); // Database engine hard coded TODO
+					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter']);
 
 					$this->c_columns[$column]['filter']['input'] = array('filter' => $tmp_result,
 																		'filter_display' => rawurldecode($post['filter'])

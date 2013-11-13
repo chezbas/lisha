@@ -44,7 +44,7 @@
 		{
 			error_log($file.' : L '.$line.chr(10).$sql.chr(10).odbc_errormsg($this->link));
 			$err = '<span style="font-size:18px;font-weight:bold;">lisha</span><br /><br />';
-			$err .= 'Erreur MySQL<br /><br />';
+			$err .= 'Erreur ODBC<br /><br />';
 			$err .= '<b style="color:#DD2233;">Erreur '.odbc_error($this->link)."</b> : <b>".odbc_errormsg($this->link).'</b><br /><br />';
 			$err .= 'Classe : '.$class.' - Ligne : '.$line.' - '.$file.' - '.$function.'<br /><br /><br />';
 			$err .= '<textarea style="width:90%;height:200px;;">'.$sql.'</textarea>';
@@ -116,4 +116,47 @@
 		{
 			return '"'.$string.'"';
 		}
+
+		/**==================================================================
+		 * Date Format
+		 * @column : column date
+		 * @format : format date
+		====================================================================*/
+		public function get_date_format($column, $format)
+		{
+			$str_before = "to_char(";
+			$str_after = ",'".$format."')";
+			$string_final = $str_before.$column.$str_after;
+			return $string_final;
+		}
+		/*===================================================================*/
+
+		/**==================================================================
+		 * String to Date Format
+		 * @column : column date
+		 * @format : format date
+		====================================================================*/
+		public function get_str_to_date_format($column, $format)
+		{
+			$str_before = "to_date('";
+			$str_after = "','".$format."')";
+			$string_final = $str_before.$column.$str_after;
+			return $string_final;
+		}
+		/*===================================================================*/
+
+		/**==================================================================
+		 * String to Date Format
+		 * @column : column date
+		 * @search_value : search value to replace
+		 * @new_value : replacement value
+		====================================================================*/
+		public function get_replace($column, $search_value, $new_value)
+		{
+			$str_before = "replace(";
+			$str_after = ",'".$search_value."','".$new_value."')";
+			$string_final = $str_before.$column.$str_after;
+			return $string_final;
+		}
+		/*===================================================================*/
 	}
