@@ -25,6 +25,7 @@
 				`demo_list_example`.`name`			AS `name`,
 				`demo_list_example`.`description`	AS `description`,
 				CONCAT('<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\"',`demo_list_example`.`link`,'</a>')	AS `link`,
+				`demo_list_example`.`screen`		AS `screen`,
 				`demo_list_example`.`last_update`	AS `last_update`,
 				`demo_list_example`.`title`			AS `title`
 			".$_SESSION[$ssid]['lisha']['configuration'][10]."
@@ -39,7 +40,7 @@
 	//==================================================================
 	$obj_lisha_tran->define_nb_line(20);											// Row by page								
 	$obj_lisha_tran->define_size(100,'%',100,'%');									// Size of object
-	$obj_lisha_tran->define_attribute('__active_readonly_mode', __R__);			// Read & Write
+	$obj_lisha_tran->define_attribute('__active_readonly_mode', __RW__);			// Read & Write
 	$obj_lisha_tran->define_attribute('__id_theme','grey');							// Define style	
 
 	$obj_lisha_tran->define_attribute('__active_title', true);						// Title bar	
@@ -74,7 +75,7 @@
 		//==================================================================
 		// define column : id
 		//==================================================================
-		$obj_lisha_tran->define_column('`demo_list_example`.`id`','id','Identifier',__INT__,__WRAP__,__CENTER__,__PERCENT__,__DISPLAY__);
+		$obj_lisha_tran->define_column('`demo_list_example`.`id`','id','Identifier',__INT__,__WRAP__,__CENTER__,__EXACT__,__DISPLAY__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'id');
 		//==================================================================
 
@@ -99,6 +100,13 @@
 		//==================================================================
 		$obj_lisha_tran->define_column('`demo_list_example`.`title`','title','Title',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'title');
+		//==================================================================
+
+		//==================================================================
+		// define column : Screenshot
+		//==================================================================
+		$obj_lisha_tran->define_column('`demo_list_example`.`screen`','screen','Screenshot',__BBCODE__,__WRAP__,__LEFT__);
+		//$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'description');
 		//==================================================================
 
 		//==================================================================
@@ -142,7 +150,7 @@
 	// Column order : Define in ascending priority means first line defined will be first priority column to order by and so on...
 	//==================================================================
 	$obj_lisha_tran->define_order_column('id',__DESC__);
-	$obj_lisha_tran->define_order_column('name',__DESC__);
+	//$obj_lisha_tran->define_order_column('name',__DESC__);
 	//==================================================================
 
 	//==================================================================

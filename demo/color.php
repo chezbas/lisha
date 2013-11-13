@@ -66,7 +66,7 @@
 <html>
 	<head>
 		<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<link rel="stylesheet" href="css/main.css" type="text/css">
+		<link rel="stylesheet" href="css/color.css" type="text/css">
 		<script type="text/javascript">
 		<?php 
 			/**==================================================================
@@ -88,11 +88,11 @@
 			/**==================================================================
 			 * Include all Lisha list setup
 			 ====================================================================*/	
-			include ('./includes/LishaDefine/main.php');
+			include ('./includes/LishaDefine/color.php');
 			/*===================================================================*/
 
 		?>
-		<script type="text/javascript" src="js/main.js"></script> <!-- Custom javascript -->
+		<script type="text/javascript" src="js/color.js"></script> <!-- Custom javascript -->
 
 		<title><?php echo $_SESSION[$ssid]['message'][1]?></title>
 	</head>

@@ -92,7 +92,7 @@
 		/**===================================================================*/
 
 		?>
-		<script type="text/javascript" src="../js/index.js"></script> <!-- Custom javascript -->
+		<script type="text/javascript" src="./js/index.js"></script> <!-- Custom javascript -->
 
 		<title><?php echo $_SESSION[$ssid]['message'][4]?></title>
 	</head>
