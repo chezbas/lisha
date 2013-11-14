@@ -368,6 +368,11 @@
 				case 'date':
 					// Setup customer filter
 					$tmp_final = $this->convert_database_date_to_localized_format($p_column,$p_value);
+					if($tmp_final == "-1")
+					{
+						// No localized date format conversion possible then keep original value
+						$tmp_final = $p_value;
+					}
 
 					$this->c_columns[$p_column]['filter']['input'] = array('filter' =>  $p_value,
 																		'filter_display' => $tmp_final
@@ -953,6 +958,11 @@
 				if($this->c_columns[$column]['data_type'] == __DATE__)
 				{
 					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter']);
+					if($tmp_result == "-1")
+					{
+						// No localized date format conversion possible then keep original value
+						$tmp_result = $post['filter'];
+					}
 
 					$this->c_columns[$column]['filter']['input'] = array('filter' =>  rawurldecode($tmp_result),
 																		'filter_display' => rawurldecode($post['filter'])
@@ -1237,6 +1247,12 @@
 							if($column_temp[$row['val1']]['data_type'] == __DATE__)
 							{
 								$tmp_result = $this->convert_database_date_to_localized_format($row['val1'],$row['val2']);
+								if($tmp_result == "-1")
+								{
+									// No localized date format conversion possible then keep original value
+									$tmp_result = $row['val2'];
+								}
+
 								$column_temp[$row['val1']]['filter']['input'] = array('filter' => $row['val2'],
 																					 'filter_display' => $tmp_result
 																				);
@@ -1476,6 +1492,11 @@
 						if($column_value['data_type'] == __DATE__)
 						{
 							$tmp_result = $this->convert_localized_date_to_database_format($column_value["original_order"],$this->string_global_search);
+							if($tmp_result == "-1")
+							{
+								// No localized date format conversion possible then keep original value
+								$tmp_result = $this->string_global_search;
+							}
 						}
 
 						$sql_filter_global .= ' OR '.$column_value['before_as'].' '.$this->get_like(__PERCENT__.$this->protect_sql($this->replace_chevrons(str_replace('_','\\_',str_replace('%','\\%',str_replace("\\","\\\\",$tmp_result))),true),$this->link).__PERCENT__);
@@ -1612,7 +1633,6 @@
 			$prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter.' '.$add_where.' '.$order.' '.$my_limit.') deriv WHERE 1 = 1 ';
 
 			$this->c_prepared_query = $prepared_query;
-			//error_log($this->c_prepared_query);
 
 			$this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 
@@ -1641,6 +1661,9 @@
 				$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
 			}
 
+			// Year format
+			//SELECT STR_TO_DATE('00/00/2013','%d/%m/%Y')  AS `result`
+
 			$str_final = $this->get_str_to_date_format(rawurldecode($p_input),$final_date_format);
 
 			$query = "SELECT ".$str_final."  AS `result`";
@@ -1649,8 +1672,8 @@
 			$row = $this->rds_fetch_array($result);
 			if($row['result'] == '' || strpos($row['result'],'0000') !== false || strlen($p_input) < 7 )
 			{
-				// No conversion possible.... return source
-				return $p_input;
+				// No conversion possible.... return -1 as error
+				return "-1";
 			}
 			else
 			{
@@ -1677,8 +1700,13 @@
 				// No custom date format then use country localization format
 				$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
 			}
+
+			// Year format
+			//SELECT STR_TO_DATE('00/00/2013','%d/%m/%Y')  AS `result`
+
 			$str_final = $this->get_date_format("'".rawurldecode($p_input)."'",$final_date_format);
 
+			// Build query
 			$query = "SELECT ".$str_final."  AS `result`";
 
 			$result = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
@@ -1686,8 +1714,8 @@
 
 			if($row['result'] == '' || strpos($row['result'],'0000') !== false || strlen($p_input) < 7)
 			{
-				// No conversion possible.... return source
-				return $p_input;
+				// No conversion possible.... return -1 as error
+				return "-1";
 			}
 			else
 			{
@@ -2382,7 +2410,7 @@
 			if(strlen($p_input) > 0)
 			{
 				$sortie = $this->convert_localized_date_to_database_format($p_column,$p_input);
-				if($sortie != '')
+				if($sortie != '-1')
 				{
 					$p_year = substr($sortie,0,4);
 					$p_month = substr($sortie,5,2);
@@ -2602,7 +2630,15 @@
 					// Localization date format
 					if($this->c_columns[$val_col["original_order"]]['data_type'] == __DATE__)
 					{
-						$p_value = $this->convert_localized_date_to_database_format($val_col["original_order"], $p_value);
+						$my_date_value = $this->convert_localized_date_to_database_format($val_col["original_order"], $p_value);
+						if( $my_date_value != "-1")
+						{
+							$p_value = $my_date_value;
+						}
+						else
+						{
+							// Date error conversion
+						}
 					}
 
 					// Over load with custom function : rw_function
@@ -3351,7 +3387,15 @@
 
 						if($this->c_columns[$value['id']]['data_type'] == __DATE__)
 						{
-							$value['value'] = $this->convert_localized_date_to_database_format($value['id'], $value['value']);
+							$my_date_value = $this->convert_localized_date_to_database_format($value['id'], $value['value']);
+							if($my_date_value != "-1")
+							{
+								$value['value'] = $my_date_value;
+							}
+							else
+							{
+								// Date error conversion
+							}
 						}
 
 						// Values
@@ -3468,7 +3512,15 @@
 
 						if($this->c_columns[$value['id']]['data_type'] == __DATE__)
 						{
-							$value['value'] = $this->convert_localized_date_to_database_format($value['id'], $value['value']);
+							$my_date_value = $this->convert_localized_date_to_database_format($value['id'], $value['value']);
+							if($my_date_value != "-1")
+							{
+								$value['value'] = $my_date_value;
+							}
+							else
+							{
+								// Date error conversion
+							}
 						}
 
 						if(isset($this->c_columns[$value['id']]['rw_function']))
@@ -4033,6 +4085,11 @@
 				if($this->c_columns[$column]['data_type'] == __DATE__)
 				{
 					$tmp_result = $this->convert_localized_date_to_database_format($column,$post['filter']);
+					if($tmp_result == "-1")
+					{
+						// No localized date format conversion possible then keep original value
+						$tmp_result = $post['filter'];
+					}
 
 					$this->c_columns[$column]['filter']['input'] = array('filter' => $tmp_result,
 																		'filter_display' => rawurldecode($post['filter'])
@@ -4306,6 +4363,19 @@
 				{
 					// if not decimal point, transform decimal symbol in point for search in database
 					$p_input_text = str_replace($decimal_symbol, '.', $p_input_text);
+				}
+			}
+			//==================================================================
+
+			//==================================================================
+			// localization date
+			//==================================================================
+			if($p_current_column['data_type'] == __DATE__)
+			{
+				$tmp_result = $this->convert_localized_date_to_database_format($p_current_column['original_order'],$p_input_text);
+				if($tmp_result != "-1")
+				{
+					$p_input_text = $tmp_result;
 				}
 			}
 			//==================================================================
