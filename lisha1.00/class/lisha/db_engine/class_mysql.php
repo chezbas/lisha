@@ -179,7 +179,7 @@
 		 * Do a date conversion using database operator
 		 * Have a look on his reverse function called get_str_to_date_format
 		 *
-		 * @column : column date
+		 * @column : date value
 		 * @format : format date
 		====================================================================*/
 		public function get_date_format($column, $format)
@@ -213,7 +213,7 @@
 
 		/**==================================================================
 		 * Do a replace using database operator
-		 * 
+		 *
 		 * @column : column date
 		 * @search_value : search value to replace
 		 * @new_value : replacement value

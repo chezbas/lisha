@@ -75,7 +75,7 @@
 		//==================================================================
 		// define column : id
 		//==================================================================
-		$obj_lisha_tran->define_column('`demo_list_example`.`id`','id','Identifier',__INT__,__WRAP__,__CENTER__,__EXACT__,__DISPLAY__);
+		$obj_lisha_tran->define_column('`demo_list_example`.`id`','id','Identifier',__INT__,__WRAP__,__CENTER__,__CONTAIN__,__DISPLAY__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'id');
 		//==================================================================
 
