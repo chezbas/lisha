@@ -1249,7 +1249,7 @@
 						$onchange = '';
 					}
 
-					$html .= '<div style="margin:0 3px;"><input value="'.str_replace('"','&quot;',$filter_input_value).'" class="__'.$this->c_theme.'__input_h full_width" '.$state_filter_input.' id="th_input_'.$key_col.'__'.$this->c_id.'" '.$contextual_input.' type="text" style="margin: 2px 0;" size=1 onkeydown="lisha_input_keydown_pressed(event,\''.$this->c_id.'\','.$key_col.',\''.$this->c_quick_search.'\',\''.$p_edit.'\');" onkeypress="if(document.getElementById(\'chk_edit_c'.$key_col.'_'.$this->c_id.'\') && event.keyCode != 13){document.getElementById(\'chk_edit_c'.$key_col.'_'.$this->c_id.'\').checked=true;};lisha_input_keydown(event,this,\''.$this->c_id.'\','.$key_col.',\''.$this->c_quick_search.'\',\''.$p_edit.'\');"'.$onchange.'/></div>';
+					$html .= '<div style="margin:0 3px;"><input value="'.str_replace('"','&quot;',$filter_input_value).'" class="__'.$this->c_theme.'__input_h full_width" '.$state_filter_input.' id="th_input_'.$key_col.'__'.$this->c_id.'" '.$contextual_input.' type="text" style="margin: 2px 0;" size=1 onkeyup="lisha_input_keyup_pressed(event)" onkeydown="lisha_input_keydown_pressed(event,\''.$this->c_id.'\','.$key_col.',\''.$this->c_quick_search.'\',\''.$p_edit.'\');" onkeypress="if(document.getElementById(\'chk_edit_c'.$key_col.'_'.$this->c_id.'\') && event.keyCode != 13){document.getElementById(\'chk_edit_c'.$key_col.'_'.$this->c_id.'\').checked=true;};lisha_input_keydown(event,this,\''.$this->c_id.'\','.$key_col.',\''.$this->c_quick_search.'\',\''.$p_edit.'\');"'.$onchange.'/></div>';
 
 
 					if($p_edit != false)

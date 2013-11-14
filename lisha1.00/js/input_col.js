@@ -1,3 +1,15 @@
+var isCtrl = false;
+/**==================================================================
+ * onkeydown event to catch special key that not provide visible digit like delete, suppr function key f1...f12, escape and so on...
+ * @evt				    : catch browser event
+ ====================================================================*/
+function lisha_input_keyup_pressed(evt)
+{
+	isCtrl=false;
+}
+/**==================================================================*/
+
+
 /**==================================================================
  * onkeydown event to catch special key that not provide visible digit like delete, suppr function key f1...f12, escape and so on...
  * @evt				    : catch browser event
@@ -8,6 +20,19 @@
  ====================================================================*/
 function lisha_input_keydown_pressed(evt,lisha_id,column, quick_search_mode, edit_mode)
 {
+	if(evt.keyCode == 17) { isCtrl=true; }
+
+	if(evt.keyCode == 186) // key ;
+	{
+		if(isCtrl)
+		{
+			var date = new Date();
+			//todo : a voir comment faire pour retrouver le format de localisation des dates
+			var str = date.toLocaleDateString();
+			document.getElementById('th_input_'+column+'__'+lisha_id).value = str;
+		}
+	}
+
 	//alert(evt.keyCode);
 	if( evt.keyCode == 8 || evt.keyCode == 46 ) // Del or suppr
 	{
@@ -35,6 +60,8 @@ function lisha_input_keydown_pressed(evt,lisha_id,column, quick_search_mode, edi
 		document.getElementById('wait_input_'+lisha_id).style.display = 'none';
 	}
 }
+/**==================================================================*/
+
 
  /**==================================================================
  * lisha_input_keydown  : Key pressed on column header input area

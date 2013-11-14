@@ -146,6 +146,7 @@ function edit_cell(evt,line,column,lisha_id, column_format, ajax_return)
 }
 /**==================================================================*/
 
+
 /**==================================================================
  * input_key_up_manager : Manage keypress up on input cell
  * @evt : catch browser event
@@ -154,6 +155,9 @@ function input_key_up_manager(evt)
 {
 	isCtrl=false;
 }
+/**==================================================================*/
+
+
 /**==================================================================
  * input_key_manager : Manage keypress on input cell
  * @evt : catch browser event
@@ -290,7 +294,7 @@ function input_key_manager(evt,lisha_id,line,column)
 		{
 			var date = new Date();
 			//todo : a voir comment faire pour retrouver le format de localisation des dates
-			var str = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+			var str = date.toLocaleDateString();
 			document.getElementById(div_root_updating+'_input').value = str;
 		}
 	}
@@ -298,6 +302,17 @@ function input_key_manager(evt,lisha_id,line,column)
 /**==================================================================*/
 
 
+/**==================================================================
+ * Check Compel
+ *
+ * @div_root_updating 	: div for display value
+ * @line				: line number
+ * @column				: relative column position
+ * @val					: New value for cell to update
+ * @lisha_id			: internal lisha identifier
+ * @ajax_return			: return ajax if any
+ *
+ ====================================================================*/
 function check_compel(div_root_updating,line,column,val,lisha_id,ajax_return)
 {
 	ajax_return = JSON.parse(ajax_return);
@@ -318,8 +333,19 @@ function check_compel(div_root_updating,line,column,val,lisha_id,ajax_return)
 		document.getElementById(div_root_updating+'_input_message').style.display = 'block';
 	}
 }
+/**==================================================================*/
 
 
+/**==================================================================
+ * Do Cell update
+ *
+ * @div_root_updating 	: div for display value
+ * @lisha_id			: internal lisha identifier
+ * @line				: line number
+ * @column				: relative column position
+ * @val					: New value for cell to update
+ *
+ ====================================================================*/
 function do_cell_call_update(div_root_updating,lisha_id,line,column,val)
 {
 	// Remove focus from input box to avoid extra input
@@ -346,6 +372,7 @@ function do_cell_call_update(div_root_updating,lisha_id,line,column,val)
 	ajax_call(conf);
 	//==================================================================
 }
+/**==================================================================*/
 
 
 /**==================================================================
