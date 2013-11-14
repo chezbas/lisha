@@ -3483,10 +3483,19 @@
 								|| $this->c_columns[$value['id']]['data_type'] == __INT__
 							)
 							{
-								$sql_update .= $this->get_quote_col($this->c_columns[$value['id']]['sql_as']).' = '.$this->protect_sql($value['value'],$this->link);
+								// is a numeric
+								if($value['value'] == "")
+								{
+									$sql_update .= $this->get_quote_col($this->c_columns[$value['id']]['sql_as']).' = NULL';
+								}
+								else
+								{
+									$sql_update .= $this->get_quote_col($this->c_columns[$value['id']]['sql_as']).' = '.$this->protect_sql($value['value'],$this->link);
+								}
 							}
 							else
 							{
+								// Other case
 								$sql_update .= $this->get_quote_col($this->c_columns[$value['id']]['sql_as']).' = '.$this->get_quote_string($this->protect_sql($value['value'],$this->link));
 							}
 						}
