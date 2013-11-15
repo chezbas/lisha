@@ -2592,23 +2592,27 @@
 			$array_key = json_decode($array_key);
 
 			// Force Json UTF8 protection for unknown server issue
-			// Have to do investigation on this point
+			// TODO Have to do investigation on this point
 			$p_value = json_decode($p_value);
 			$string_where = '';
 			$custom_function = '';
 
+			//==================================================================
+			// Build primary key query part to update right row
+			//==================================================================
 			foreach($array_key as $clef => $value)
 			{
 				$string_where .= 'AND `'.$clef.'` = \''.$value.'\'';
 			}
 			$string_where = substr($string_where,4);
+			//==================================================================
 
 			$column_name = $this->c_columns[$column]["sql_as"];
 
 			// Localization date format
 			if($this->c_columns[$column]['data_type'] == __DATE__)
 			{
-				$my_date_value = $this->convert_localized_date_to_database_format($this->c_columns[$column]["original_order"], $p_value);
+				$my_date_value = $this->convert_localized_date_to_database_format($column, $p_value);
 				if( $my_date_value != "-1")
 				{
 					$p_value = $my_date_value;
@@ -2661,7 +2665,7 @@
 			}
 
 			$prepared_query = 'UPDATE '.$this->c_update_table.' SET '.$set_string.' WHERE '.$string_where;
-
+			
 			$this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 
 			echo $prepared_query;
@@ -4029,10 +4033,10 @@
 			{
 				if(isset($column_value['filter']) && $column_key != $column)
 				{
-					foreach ($column_value['filter'] as $filter_value)
+					foreach ($column_value['filter'] as $my_key => $filter_value)
 					{
 						// operator_build_query_condition
-						$sql_filter .= $this->operator_build_query_condition($column_value,$filter_value['filter']);
+						$sql_filter .= $this->operator_build_query_condition($my_key,$column_value,$filter_value['filter']);
 					}
 				}
 			}
@@ -4080,11 +4084,10 @@
 				if(isset($this->c_columns[$column]['lov']))
 				{
 					// PERCENT
-					//operator_build_query_condition
 					$sql_lov = $this->solve_lov_main_query($column);
 
 					// operator_build_query_condition
-					$sql_condition_quick_search = $this->operator_build_query_condition($this->c_columns[$column],$txt,'lov_return');
+					$sql_condition_quick_search = $this->operator_build_query_condition($column,$this->c_columns[$column],$txt,'lov_return');
 
 					$query_final_pos = strripos($sql_lov, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
 
@@ -4154,7 +4157,7 @@
 					$query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
 
 					//operator_build_query_condition
-					$sql_condition_quick_search = $this->operator_build_query_condition($this->c_columns[$column],$txt);
+					$sql_condition_quick_search = $this->operator_build_query_condition($column,$this->c_columns[$column],$txt);
 
 					$sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($this->c_query,$query_final_pos).$sql_condition_quick_search.$sql_filter;
 
@@ -4195,7 +4198,7 @@
 					// With a custom lov defined
 
 					//operator_build_query_condition
-					$sql_condition_quick_search = $this->operator_build_query_condition($this->c_columns[$column],$txt,'lov');
+					$sql_condition_quick_search = $this->operator_build_query_condition($column,$this->c_columns[$column],$txt,'lov');
 
 					if(isset($this->c_columns[$column]['lov']['taglov_possible']) || !isset($this->c_columns[$column]['lov']['taglov']))
 					{
@@ -4318,11 +4321,12 @@
 		/**==================================================================
 		 * Internal function to build part of filter condition with setup operator
 		 *
-		 *@p_current_column :   Column involved
-		 *@p_input_text	    :   Input string in input head column
-		 *@p_lov            :   false means main before_as field, lov or lov_return
+		 * @p_column_id			: Id column identifier
+		 * @p_current_column 	: Whole Column array involved
+		 * @p_input_text	    : Input string in input head column
+		 * @p_lov            	: false means main before_as field, lov or lov_return
 		====================================================================*/
-		private function operator_build_query_condition($p_current_column,$p_input_text,$p_lov = 'no')
+		private function operator_build_query_condition($p_column_id,$p_current_column,$p_input_text,$p_lov = 'no')
 		{
 			$sql_filter = "";
 
@@ -4346,7 +4350,7 @@
 			//==================================================================
 			if($p_current_column['data_type'] == __DATE__)
 			{
-				$tmp_result = $this->convert_localized_date_to_database_format($p_current_column['original_order'],$p_input_text);
+				$tmp_result = $this->convert_localized_date_to_database_format($p_column_id,$p_input_text);
 				if($tmp_result != "-1")
 				{
 					$p_input_text = $tmp_result;
