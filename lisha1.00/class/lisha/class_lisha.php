@@ -2446,57 +2446,45 @@
 
 			$column_compel = '';
 			$temp_columns = '';
-			$column_display_name = '';
-			$column_name = '';
 			$column_data_type = $this->c_columns[$column]['data_type'];
 
-			// Browse column to find the right one
-			foreach($this->c_columns as $val_col)
+			$column_name = $this->c_columns[$column]["sql_as"];
+
+			if(isset($this->c_columns[$column]["rw_flag"]))
 			{
-				if($val_col["original_order"] == $column)
+				$column_compel = $this->c_columns[$column]["rw_flag"];
+			}
+
+			$column_display_name = $this->c_columns[$column]["name"];
+
+
+			if(isset($this->c_columns[$column]['select_function']))
+			{
+				// Special select function defined
+				$temp_columns .= str_replace('__COL_VALUE__',$this->get_quote_col($column_name),$this->c_columns[$column]['select_function']).' AS '.$this->get_quote_col($column_name);
+			}
+			else
+			{
+				// Localization date format
+				if ($this->c_columns[$column]['data_type'] == __DATE__)
 				{
-					$column_name = $this->c_columns[$val_col["original_order"]]["sql_as"];
-
-					if(isset($this->c_columns[$val_col["original_order"]]["rw_flag"]))
+					if(isset($this->c_columns[$column]['date_format']))
 					{
-						$column_compel = $this->c_columns[$val_col["original_order"]]["rw_flag"];
-					}
-
-					$column_display_name = $this->c_columns[$val_col["original_order"]]["name"];
-
-
-					if(isset($val_col['select_function']))
-					{
-						// Special select function defined
-						$temp_columns .= str_replace('__COL_VALUE__',$this->get_quote_col($column_name),$val_col['select_function']).' AS '.$this->get_quote_col($column_name);
+						$final_date_format = $this->c_columns[$column]['date_format'];
 					}
 					else
 					{
-						// Localization date format
-						if ($this->c_columns[$val_col["original_order"]]['data_type'] == __DATE__)
-						{
-							if(isset($this->c_columns[$val_col["original_order"]]['date_format']))
-							{
-								$final_date_format = $this->c_columns[$val_col["original_order"]]['date_format'];
-							}
-							else
-							{
-								// No custom date format then use country localization format
-								$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
-							}
-
-							$str_final = $this->get_date_format('`'.$this->c_update_table.'`.`'.$column_name.'`',$final_date_format);
-							$temp_columns .= $str_final.' AS `'.$column_name.'`';
-						}
-						else
-						{
-							// all other columns
-							$temp_columns .= '`'.$this->c_update_table.'`.`'.$column_name.'` AS `'.$column_name.'`';
-						}
+						// No custom date format then use country localization format
+						$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
 					}
 
-					// primary key..only one row found... then exit foreach now
-					break;
+					$str_final = $this->get_date_format('`'.$this->c_update_table.'`.`'.$column_name.'`',$final_date_format);
+					$temp_columns .= $str_final.' AS `'.$column_name.'`';
+				}
+				else
+				{
+					// all other columns
+					$temp_columns .= '`'.$this->c_update_table.'`.`'.$column_name.'` AS `'.$column_name.'`';
 				}
 			}
 
@@ -2511,12 +2499,8 @@
 			$html = current($row);
 
 			// Checkbox
-			//error_log($column_name.$val_col["original_order"]);
-
 			if($column_data_type == __CHECKBOX__)
 			{
-				//error_log(print_r($this->c_columns[$column],true));
-
 				if($html == "0")
 				{
 					$html = "1";
@@ -2619,48 +2603,38 @@
 			}
 			$string_where = substr($string_where,4);
 
-			$column_name = '';
-			// Browse column to find the right one
-			foreach($this->c_columns as $val_col)
+			$column_name = $this->c_columns[$column]["sql_as"];
+
+			// Localization date format
+			if($this->c_columns[$column]['data_type'] == __DATE__)
 			{
-				if($val_col["original_order"] == $column)
+				$my_date_value = $this->convert_localized_date_to_database_format($this->c_columns[$column]["original_order"], $p_value);
+				if( $my_date_value != "-1")
 				{
-					$column_name = $this->c_columns[$val_col["original_order"]]["sql_as"];
+					$p_value = $my_date_value;
+				}
+				else
+				{
+					// Date error conversion
+				}
+			}
 
-					// Localization date format
-					if($this->c_columns[$val_col["original_order"]]['data_type'] == __DATE__)
-					{
-						$my_date_value = $this->convert_localized_date_to_database_format($val_col["original_order"], $p_value);
-						if( $my_date_value != "-1")
-						{
-							$p_value = $my_date_value;
-						}
-						else
-						{
-							// Date error conversion
-						}
-					}
+			// Over load with custom function : rw_function
+			if(isset($this->c_columns[$column]['rw_function']))
+			{
+				// Special select function defined
+				$p_value = str_replace('__COL_VALUE__',$this->protect_sql($this->my_htmlentities($p_value),$this->link),$this->c_columns[$column]['rw_function']);
+				$custom_function = 'X';
+			}
 
-					// Over load with custom function : rw_function
-					if(isset($val_col['rw_function']))
-					{
-						// Special select function defined
-						$p_value = str_replace('__COL_VALUE__',$this->protect_sql($this->my_htmlentities($p_value),$this->link),$val_col['rw_function']);
-						$custom_function = 'X';
-					}
-
-					// Localization Float / numeric format
-					if($this->c_columns[$val_col["original_order"]]['data_type'] == __FLOAT__)
-					{
-						$decimal_symbol = $_SESSION[$this->c_ssid]['lisha']['decimal_symbol'];
-						if ($decimal_symbol != '.')
-						{
-							// if not decimal point, transform decimal symbol in point for update database
-							$p_value = str_replace($decimal_symbol, '.', $p_value);
-						}
-					}
-					// primary key..only one row found... then exit foreach now
-					break;
+			// Localization Float / numeric format
+			if($this->c_columns[$column]['data_type'] == __FLOAT__)
+			{
+				$decimal_symbol = $_SESSION[$this->c_ssid]['lisha']['decimal_symbol'];
+				if ($decimal_symbol != '.')
+				{
+					// if not decimal point, transform decimal symbol in point for update database
+					$p_value = str_replace($decimal_symbol, '.', $p_value);
 				}
 			}
 
