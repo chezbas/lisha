@@ -2019,7 +2019,7 @@
 
 		/**==================================================================
 		 * generate_json_line
-		 * Build json structure to transfert php data to javascript space
+		 * Build json structure to transfer php data to javascript space
 		 ====================================================================*/
 		public function generate_json_line()
 		{
@@ -2111,6 +2111,7 @@
 			{
 				$this->rds_data_seek($this->resultat,0);
 			}
+
 			return $json;
 		}
 		/**===================================================================*/
@@ -2665,7 +2666,7 @@
 			}
 
 			$prepared_query = 'UPDATE '.$this->c_update_table.' SET '.$set_string.' WHERE '.$string_where;
-			
+
 			$this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 
 			echo $prepared_query;
@@ -3958,6 +3959,7 @@
 			// Build query and generate xml content
 			//==================================================================
 			$this->prepare_query();
+
 			$json_line = $this->generate_json_line();
 			$json = $this->generate_json_column();
 

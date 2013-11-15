@@ -5,7 +5,7 @@
 	 ====================================================================*/
 	// check if ssid already exists in URL
 	if( !isset($_GET["ssid"]) )
-	{ 
+	{
 		if (count($_GET) > 0)
 		{
 			$w_digit = '&';
@@ -21,7 +21,12 @@
 		echo '<html>
 				<head>
 					<script language="javascript" >
-					chaine = document.location.href + "'.$w_digit.'ssid=" + "'.$new_ssid.'";
+					var chaine = document.location.href;
+					if(chaine.substring(chaine.length-1,chaine.length) == "?")
+					{
+						chaine = chaine.substring(0,chaine.length-1);
+					}
+					chaine = chaine + "'.$w_digit.'ssid=" + "'.$new_ssid.'";
 	      			window.location.href = chaine;
 	      			</script>
 	      		</head>
@@ -37,4 +42,4 @@
 	 * Start session on ssid name
 	 ====================================================================*/
 	require('active_session.php');
-	/*===================================================================*/
+	/**===================================================================*/
