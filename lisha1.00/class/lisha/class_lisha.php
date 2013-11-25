@@ -1199,6 +1199,18 @@
 					//==================================================================
 
 					//==================================================================
+					// Get global features
+					//==================================================================
+					if(isset($result_array['IEQ']["##GLOBALF##"]))
+					{
+						if($result_array['IEQ']["##GLOBALF##"]['type'] == 'IEQ')
+						{
+							$this->string_global_search = $result_array['IEQ']["##GLOBALF##"]['val1'];
+						}
+					}
+					//==================================================================
+
+					//==================================================================
 					// Restore column position : CPS
 					//==================================================================
 					if(isset($result_array['CPS']))
@@ -2111,7 +2123,6 @@
 			{
 				$this->rds_data_seek($this->resultat,0);
 			}
-
 			return $json;
 		}
 		/**===================================================================*/
@@ -4742,6 +4753,13 @@
 				}
 
 				//==================================================================
+				// Save global features
+				//==================================================================
+				// Global search
+				$s_sql[] ='INSERT INTO '.__LISHA_TABLE_FILTER__.' (`name`, `id`, `id_column`, `type`, `val1`, `val2`, `val3`) VALUES ("'.$p_name.'","'.$this->c_id.'","##GLOBALF##","IEQ","'.$this->string_global_search.'","","")';
+				//==================================================================
+
+				//==================================================================
 				// Get the filter definition to create query
 				//==================================================================
 				foreach($s_sql as $value)
@@ -5474,20 +5492,28 @@
 			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine, $this->c_ident,$this->c_dir_obj,__LOAD_FILTER__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(4).' ('.$this->c_param_adv_filter.')');
 			$query_lov = "  SELECT
-							DISTINCT
-								`main`.`name` AS `name`,
-								`main`.`date` AS `date`,
-								`main`.`id` AS `id`
+								`main`.`A` AS `name`,
+								`main`.`B` AS `date`,
+								`main`.`C` AS `id`
 							".$_SESSION[$this->c_ssid]['lisha']['configuration'][10]."
-								`".__LISHA_TABLE_FILTER__."` `main`
+							(
+								SELECT
+									DISTINCT
+									`main`.`name` AS `A`,
+									`main`.`date` AS `B`,
+									`main`.`id` AS `C`
+								FROM
+									`".__LISHA_TABLE_FILTER__."` `main`
+								WHERE 1 = 1
+									AND `main`.`id` = '".$this->c_id."'
+							) `main`
 							WHERE 1 = 1
-								AND `main`.`id` = '".$this->c_id."'
 						 ";
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$query_lov);
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`main`.`name`','name',$this->lib(60),__TEXT__, __WRAP__, __LEFT__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`main`.`A`','name',$this->lib(60),__TEXT__, __WRAP__, __LEFT__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_input_focus('name');					// Focused
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`main`.`date`','date',$this->lib(61),__TEXT__, __WRAP__, __LEFT__);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_column('`main`.`B`','date',$this->lib(61),__TEXT__, __WRAP__, __LEFT__);
 
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_parent($this->c_id,$column);
@@ -5587,23 +5613,34 @@
 			$this->get_and_set_filter($filter_name);
 
 			//==================================================================
-			// Build query and generate xml content
+			// Run query and build xml content
 			//==================================================================
 			$this->prepare_query();
-			$json_line = $this->generate_json_line();
-			$json = $this->generate_json_column();
+			$json = $this->generate_lisha_json_param();
 
 			// XML return
 			header("Content-type: text/xml");
 			$xml = "<?xml version='1.0' encoding='UTF8'?>";
 			$xml .= "<lisha>";
 			$xml .= "<content>".$this->protect_xml($this->c_obj_graphic->draw_lisha($this->resultat,false,true))."</content>";
+			if($this->c_edit_mode == __EDIT_MODE__)
+			{
+				// Define the lisha mode
+				$this->c_edit_mode = __DISPLAY_MODE__;
+				$xml .= '<toolbar>'.$this->protect_xml($this->c_obj_graphic->generate_toolbar(false,$this->resultat)).'</toolbar>';
+				$xml .= "<edit_mode>true</edit_mode>";
+			}
+			else
+			{
+				$xml .= '<toolbar>'.$this->protect_xml($this->c_obj_graphic->generate_toolbar(false,$this->resultat)).'</toolbar>';
+				$xml .= "<edit_mode>false</edit_mode>";
+			}
+
 			$xml .= "<json>".$this->protect_xml($json)."</json>";
-			$xml .= "<json_line>".$this->protect_xml($json_line)."</json_line>";
 			$xml .= "</lisha>";
+			//==================================================================
 
 			echo $xml;
-			//==================================================================
 		}
 		/**===================================================================*/
 

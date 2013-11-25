@@ -798,6 +798,19 @@ function lisha_load_filter(lisha_id,filter_name,ajax_return)
 
 			// Set the content of the lisha
 			lisha_set_content(lisha_id,decodeURIComponent(json.lisha.content));
+
+			if(json.lisha.edit_mode == 'false')		// SRX_fix_update_buttons_display_mode
+			{
+				// Set the content of the toolbar
+				lisha_set_innerHTML('lisha_toolbar_'+lisha_id,decodeURIComponent(json.lisha.toolbar));
+				if(document.getElementById('lisha_td_toolbar_edit_'+lisha_id) != undefined)
+				{
+					document.getElementById('lisha_td_toolbar_edit_'+lisha_id).className = 'btn_toolbar grey_el';
+				}
+			}
+
+			// Setup Excel export button
+			toolbar_excel_button(lisha_id);
 		}
 		catch(e) 
 		{
