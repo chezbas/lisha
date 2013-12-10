@@ -1,0 +1,68 @@
+html,body
+{
+	margin:0;
+	padding:0;
+	background-color: #DDD;
+}
+
+.home
+{
+	height:20px;
+	width:20px;
+	float:left;
+	background-image: url(../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-220px 0;
+}
+
+.home:hover
+{
+	height:20px;
+	width:20px;
+	float:left;
+	background-image: url(../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-220px -20px;
+}
+
+.new
+{
+	height:20px;
+	width:20px;
+	float:left;
+	background-image: url(../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-680px 0;
+}
+
+.new:hover
+{
+	height:20px;
+	width:20px;
+	float:left;
+	background-image: url(../images/icons.png);
+	background-repeat: no-repeat;
+	background-position:-680px -20px;
+}
+
+.mydiv_green
+{
+	position: absolute;
+	top: 5%;
+	left: 5%;
+	display: block;
+	height: 40%;
+	width: 70%;
+	box-shadow: 8px 8px 8px #666;
+}
+
+.mydiv_blue
+{
+	position: absolute;
+	bottom: 5%;
+	right: 5%;
+	display: block;
+	height: 40%;
+	width: 70%;
+	box-shadow: 8px 8px 8px #333;
+}

@@ -64,7 +64,7 @@
 	"62" : "The name of the filter already exit. Please check an other.",
 	"63" : "Impossible save",
 	"64" : "Display / Hide columns",
-	"65" : "Input string to found at least in one of displayed columns",
+	"65" : "Input string to found rows which matched at least in one of displayed columns",
 	"66" : "Calendar",
 	"67" : "Next month",
 	"68" : "Previous month",
