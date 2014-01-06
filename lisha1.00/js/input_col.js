@@ -278,7 +278,7 @@ function lisha_col_input_change(lisha_id,column)
 
 
  /**==================================================================
- * Call when change contant of column to display quick first matched results
+ * Call when change column contain to display quick first matched results
  * Use to show first distinct entries found
  *
  * @lisha_id 	    : lisha internal identifier

@@ -188,8 +188,8 @@
 	// Line theme mask
 	//==================================================================
 	// Default group
-	$obj_lisha_password->define_line_theme("EEEEEE","0.7em","EECCCC","0.7em","AA8888","0.7em","BB7878","0.7em","000","000");
-	$obj_lisha_password->define_line_theme("FFFFFF","0.7em","FFCDCD","0.7em","EECCCC","0.7em","DDC8C8","0.7em","000","000");
+	$obj_lisha_password->define_line_theme("EEEEEE","0.8em","EECCCC","0.8em","AA8888","0.8em","BB7878","0.8em","555","000");
+	$obj_lisha_password->define_line_theme("FFFFFF","0.8em","FFCDCD","0.8em","EECCCC","0.8em","DDC8C8","0.8em","000","000");
 
 	/*
 	// Group 2

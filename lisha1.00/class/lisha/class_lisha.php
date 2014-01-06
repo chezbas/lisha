@@ -970,9 +970,19 @@
 				}
 				else
 				{
-					$this->c_columns[$column]['filter']['input'] = array('filter' => rawurldecode($post['filter']),
-																		'filter_display' => rawurldecode($post['filter'])
-																		);
+					if ($this->c_columns[$column]['data_type'] == __FLOAT__ || $this->c_columns[$column]['data_type'] == __INT__)
+					{
+						$tmp_result = str_replace($_SESSION[$this->c_ssid]['lisha']['thousand_symbol'],"",rawurldecode($post['filter']));
+						$this->c_columns[$column]['filter']['input'] = array('filter' => $tmp_result,
+																			 'filter_display' => rawurldecode($post['filter'])
+						);
+					}
+					else
+					{
+						$this->c_columns[$column]['filter']['input'] = array('filter' => rawurldecode($post['filter']),
+																			 'filter_display' => rawurldecode($post['filter'])
+						);
+					}
 				}
 
 				if(isset($this->c_columns[$column]['lov']))
@@ -4026,7 +4036,9 @@
 
 
 		/**==================================================================
-		 * lisha_input_search_onkeyup
+		 * Call when user type entry in input column head
+		 * This method return entries that can match with input contain
+		 *
 		 * @column		    	: column id
 		 * @txt				    : input search
 		 * @p_selected_lines	: selected line in json format
@@ -4197,6 +4209,21 @@
 					{
 						// all other case
 						$str_final = $this->c_columns[$column]['before_as'];
+
+						//==================================================================
+						// localization decimal symbol
+						//==================================================================
+						//float or numeric (same)
+						if ($this->c_columns[$column]['data_type'] == __FLOAT__)
+						{
+							$decimal_symbol = $_SESSION[$this->c_ssid]['lisha']['decimal_symbol'];
+							//if ($decimal_symbol != '.')
+							//{
+								// if not decimal point, transform decimal symbol in point for search in database
+								$str_final = "REPLACE(REPLACE(FORMAT(".$this->c_columns[$column]['before_as'].",".$_SESSION[$this->c_ssid]['lisha']['number_of_decimal']."),',','".$_SESSION[$this->c_ssid]['lisha']['thousand_symbol']."'),'.','".$decimal_symbol."')";
+							//}
+						}
+						//==================================================================
 					}
 					//==================================================================
 					// Few first rows found

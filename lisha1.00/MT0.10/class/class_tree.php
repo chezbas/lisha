@@ -900,7 +900,7 @@
 		public function add_node($p_mode,$node_id,$p_caption)
 		{
 			// MySQL injection protection
-			$caption= str_replace("'","''",$this->mysql_protect($p_caption));
+			$caption= $this->mysql_protect($p_caption);
 	
 			switch ($p_mode)
 			{
