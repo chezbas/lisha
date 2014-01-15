@@ -249,6 +249,20 @@ function check_export_downloading(lisha_id)
 
 
 /**==================================================================
+ * Display global message to user ( Message box in lisha )
+ * @title	:	Title of message box
+ * @body	:	Body detail
+ ====================================================================*/
+function no_contextual_help(title,body)
+{
+	var prompt_btn = new Array([lis_lib[31]],["lisha_cover_with_filter('"+g_lisha_id+"');"]);
+	lisha_cover_with_filter(g_lisha_id);
+	lisha_generer_msgbox(g_lisha_id,title,body,'','msg',prompt_btn);
+}
+/**==================================================================*/
+
+
+/**==================================================================
  * export_list_done	: check if export is done
  * @lisha_id	: internal lisha identifier
  * @ajax_return : return ajax if any
@@ -828,7 +842,7 @@ function lisha_load_filter(lisha_id,filter_name,ajax_return)
  * @id_lib      : index of text to display
  * @id_help     : index of help page node to display if CTRL + F11 pressed
  * @lisha_id    : lisha internal id
- * @mode        : Active user documentation ( CTRL +F11 ) or not ( true means user actived )
+ * @mode        : if user documentation is active then contextual documentation ( CTRL + F11 ) is active too
  ====================================================================*/
 function lisha_lib_hover(id_lib,id_help,lisha_id,mode)
 {
@@ -839,10 +853,18 @@ function lisha_lib_hover(id_lib,id_help,lisha_id,mode)
 
 	// Only if user documentation is turn on
 	// copy help page node index to global javascript variable for document event
-	if(mode)
+
+	if(mode == '1')
 	{
 		// g_help_page is global javascript variable defined in class_lisha
 		g_help_page = id_help;
+	}
+	else
+	{
+		// Disable contextual help
+		// update lisha id in javascript of page
+		g_help_page = '';
+		g_lisha_id = lisha_id;
 	}
 }
 /**==================================================================*/
@@ -1118,29 +1140,29 @@ function lisha_toggle_header_menu(id,column)
 
 		if(eval('lisha.'+id+'.columns.c'+column+'.order') == 'ASC')
 		{
-			obj_order.add_line(lis_lib[18],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend',null,false,undefined,142,50);
+			obj_order.add_line(lis_lib[18],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend',null,false,undefined,142,79);
 		}
 		else
 		{
-			obj_order.add_line(lis_lib[18],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend','lisha_column_order(\''+id+'\',__ASC__,'+column+',__NEW__)',true,undefined,141,67);
+			obj_order.add_line(lis_lib[18],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend','lisha_column_order(\''+id+'\',__ASC__,'+column+',__NEW__)',true,undefined,141,80);
 		}
 
 		if(eval('lisha.'+id+'.columns.c'+column+'.order') == 'DESC')
 		{
-			obj_order.add_line(lis_lib[19],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-descend',null,false,undefined,142,50);
+			obj_order.add_line(lis_lib[19],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-descend',null,false,undefined,142,79);
 		}
 		else
 		{
-			obj_order.add_line(lis_lib[19],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-descend','lisha_column_order(\''+id+'\',__DESC__,'+column+',__NEW__)',true,undefined,143,68);
+			obj_order.add_line(lis_lib[19],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-descend','lisha_column_order(\''+id+'\',__DESC__,'+column+',__NEW__)',true,undefined,143,81);
 		}
 
 		if(eval('lisha.'+id+'.columns.c'+column+'.order') == '')
 		{
-			obj_order.add_line(lis_lib[42],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort_delete',null,false,undefined,142,50);
+			obj_order.add_line(lis_lib[42],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort_delete',null,false,undefined,142,79);
 		}
 		else
 		{
-			obj_order.add_line(lis_lib[42],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort_delete','lisha_column_order(\''+id+'\',__NONE__,'+column+',__NEW__)',true,undefined,42,69);
+			obj_order.add_line(lis_lib[42],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort_delete','lisha_column_order(\''+id+'\',__NONE__,'+column+',__NEW__)',true,undefined,42,82);
 		}
 		//==================================================================
 
@@ -1232,17 +1254,17 @@ function lisha_toggle_header_menu(id,column)
 		{
 		case __LEFT__:
 			obj_alignment.add_line(lis_lib[47],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_left',null,false);
-			obj_alignment.add_line(lis_lib[48],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_center','lisha_change_col_alignment(\''+id+'\',__CENTER__,'+column+');',true);
-			obj_alignment.add_line(lis_lib[49],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_right','lisha_change_col_alignment(\''+id+'\',__RIGHT__,'+column+');',true);
+			obj_alignment.add_line(lis_lib[48],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_center','lisha_change_col_alignment(\''+id+'\',__CENTER__,'+column+');',true,undefined,48,86);
+			obj_alignment.add_line(lis_lib[49],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_right','lisha_change_col_alignment(\''+id+'\',__RIGHT__,'+column+');',true,undefined,49,84);
 			break;
 		case __CENTER__:
-			obj_alignment.add_line(lis_lib[47],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_left','lisha_change_col_alignment(\''+id+'\',__LEFT__,'+column+');',true);
+			obj_alignment.add_line(lis_lib[47],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_left','lisha_change_col_alignment(\''+id+'\',__LEFT__,'+column+');',true,undefined,47,85);
 			obj_alignment.add_line(lis_lib[48],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_center',null,false);
-			obj_alignment.add_line(lis_lib[49],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_right','lisha_change_col_alignment(\''+id+'\',__RIGHT__,'+column+');',true);
+			obj_alignment.add_line(lis_lib[49],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_right','lisha_change_col_alignment(\''+id+'\',__RIGHT__,'+column+');',true,undefined,49,84);
 			break;
 		case __RIGHT__:
-			obj_alignment.add_line(lis_lib[47],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_left','lisha_change_col_alignment(\''+id+'\',__LEFT__,'+column+');',true);
-			obj_alignment.add_line(lis_lib[48],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_center','lisha_change_col_alignment(\''+id+'\',__CENTER__,'+column+');',true);
+			obj_alignment.add_line(lis_lib[47],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_left','lisha_change_col_alignment(\''+id+'\',__LEFT__,'+column+');',true,undefined,47,85);
+			obj_alignment.add_line(lis_lib[48],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_center','lisha_change_col_alignment(\''+id+'\',__CENTER__,'+column+');',true,undefined,48,86);
 			obj_alignment.add_line(lis_lib[49],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_right',null,false);
 			break;
 		}

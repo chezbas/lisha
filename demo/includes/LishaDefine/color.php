@@ -55,16 +55,16 @@
 	$obj_lisha_tran->define_attribute('__active_top_bar_page',false);
 	$obj_lisha_tran->define_attribute('__active_bottom_bar_page',true);
 
-	$obj_lisha_tran->define_attribute('__active_user_doc', false);					// user documentation button
+	$obj_lisha_tran->define_attribute('__active_user_doc', true);					// user documentation button
 	$obj_lisha_tran->define_attribute('__active_tech_doc', true);					// technical documentation button
-	$obj_lisha_tran->define_attribute('__active_ticket', false);						// Tickets link
+	$obj_lisha_tran->define_attribute('__active_ticket', false);					// Tickets link
 
 
 	$obj_lisha_tran->define_attribute('__display_mode', __NMOD__);					// Display mode
 
 	$obj_lisha_tran->define_attribute('__key_url_custom_view', 'f1');				// Defined key for quick custom view loader in url browser
 
-	$obj_lisha_tran->define_attribute('__update_table_name', "demo_table");		// Define table to update
+	$obj_lisha_tran->define_attribute('__update_table_name', "demo_table");			// Define table to update
 
 	$obj_lisha_tran->define_attribute('__column_name_group_of_color', "MyGroupTheme");		// ( Optional ) Define csutom column color name
 	//==================================================================

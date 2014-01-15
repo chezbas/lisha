@@ -58,7 +58,7 @@
 	"56" : "Enregistrement incohérent",
 	"57" : "Le champ $name est obligatoire.",
 	"58" : "Le champ $name est interdit.",
-
+	"59" : "Aide contextuelle désactivée",
 	"60" : "Filtre",
 	"61" : "Date",
 	"62" : "Le nom du filtre que vous avez saisi existe déjà. Merci d'en choisir un autre.",
@@ -158,5 +158,6 @@
 	"156" : "La valeur <b>$value</b> de <b>$name</b> n'est pas un entier",
 	"157" : "La valeur <b>$value</b> de <b>$name</b> n'est pas un nombre décimal",
 	"158" : "n'est pas un entier",
-	"159" : "n'est pas un nombre décimal"
+	"159" : "n'est pas un nombre décimal",
+	"160" : "L'aide utilisateur est désactivée<br>Ceci implique que l'aide contextuelle est désactivée également."
 }

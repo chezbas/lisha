@@ -104,7 +104,7 @@
 		//==================================================================
 		// Lisha HTML bottom generation
 		//==================================================================
-		lisha::generate_common_html_bottom($obj_lisha_tran->c_dir_obj,$_SESSION[$ssid]['lisha']['configuration'][12],$_SESSION[$ssid]['lisha']['langue']);	// Once
+		lisha::generate_common_html_bottom($obj_lisha_tran->c_dir_obj,$_SESSION[$ssid]['lisha']['configuration'][12],$_SESSION[$ssid]['lisha']['langue'],true);	// Once
 		//==================================================================
 		?>
 	</body>

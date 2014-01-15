@@ -148,6 +148,7 @@
 			'__active_title'													=> array('c_title_display','A'),
 			'__id_theme'														=> array('c_theme','A'),
 			'__active_readonly_mode'											=> array('c_readonly','A'),
+			'__active_user_doc'													=> array('c_help_button','A'),
 			'__main_query'														=> array('c_query','A'),
 			'__active_insert_button'                                            => array('c_toolbar_add_btn','A'),
 			'__active_delete_button'                                            => array('c_toolbar_delete_btn','A'),
@@ -252,6 +253,7 @@
 			echo '<script type="text/javascript">';
 			echo "var ssid = '".$p_ssid."';";
 			echo "var g_help_page = '';";        // Global javascript variable for help page
+			echo "var g_lisha_id = '';";        // lisha id of last lisha action in page
 			echo '</script>';
 		}
 		/**===================================================================*/
@@ -290,14 +292,14 @@
 					}
 					else
 					{
-						// Default help page
-						window.open("'.$p_dir_obj.'/index.php?id=1");
+						// No contextual help
+						no_contextual_help(lis_lib[59],lis_lib[160]);
 					}
 				}
 			};	// End onkeydown
 			</script>
 			';
-		}
+			}
 		/**===================================================================*/
 
 
@@ -1842,6 +1844,7 @@
 			$json .= $json_base.'.TypeOfChild = "'.$this->c_type_internal_lisha.'";';   // Kind of sub lisha type
 			$json .= $json_base.'.c_col_return_id = "'.$this->get_id_column($this->c_col_return).'";';
 			$json .= $json_base.'.c_position_mode = "'.$this->c_position_mode.'";';
+			$json .= $json_base.'.user_doc = "'.$this->c_help_button.'";';
 
 			$json .= $json_base.'.button = new Object();';
 			$json .= $json_base.'.button.valide = "'.$p_ok_button.'";';

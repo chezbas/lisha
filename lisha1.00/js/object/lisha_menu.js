@@ -115,10 +115,9 @@ function lisha_menu(id_lisha)
 
 		eval('this.line.l'+this.qtt_line+'.id = "l_'+this.qtt_line+'"');
 
-
-
+		eval('var l_user_doc_enable = lisha.'+this.id_lisha+'.user_doc');
 		// Add new feature for quick help for onmouseover event
-		eval('this.line.l'+this.qtt_line+'.event_over = "lisha_lib_hover('+quick_help+','+link_help+',\''+this.id_lisha+'\',\'null\');"');
+		eval('this.line.l'+this.qtt_line+'.event_over = "lisha_lib_hover('+quick_help+','+link_help+',\''+this.id_lisha+'\',\''+l_user_doc_enable+'\');"');
 
 
 		if(enable)

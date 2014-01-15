@@ -58,7 +58,7 @@
 	"56" : "Inconsistent record",
 	"57" : "The field $name is mandatory !!",
 	"58" : "The field $name is forbidden.",
-
+	"59" : "Contextual help disabled",
 	"60" : "Filter",
 	"61" : "Date",
 	"62" : "The name of the filter already exit. Please check an other.",
@@ -158,5 +158,6 @@
 	"156" : "Value <b>$value</b> of <b>$name</b> is not an integer !!",
 	"157" : "Value <b>$value</b> of <b>$name</b> is not a float value!!",
 	"158" : "is not an integer",
-	"159" : "is not a float value"
+	"159" : "is not a float value",
+	"160" : "User documentation is disabled that means that contextual help is disable too."
 }
