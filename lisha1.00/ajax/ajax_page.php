@@ -116,4 +116,8 @@
 			// Check column list user choice
 			echo $_SESSION[$ssid]['lisha'][$lisha_id]->check_column_choice();
 			break;
+		case 29:
+			// Get current date hour format on keyboard shortcut CTRL + ;
+			echo $_SESSION[$ssid]['lisha'][$lisha_id]->current_date_hours($_POST['column']);
+			break;
 	}

@@ -159,6 +159,7 @@ function input_key_up_manager(evt)
 
 
 /**==================================================================
+ * Update mode
  * input_key_manager : Manage keypress on input cell
  * @evt : catch browser event
  ====================================================================*/
@@ -285,21 +286,44 @@ function input_key_manager(evt,lisha_id,line,column)
 		}
 		//==================================================================
 	}
-
 	if(charCode == 17) { isCtrl=true; }
 
 	if(charCode == 186) // key ;
 	{
 		if(isCtrl)
 		{
-			var date = new Date();
-			//todo : a voir comment faire pour retrouver le format de localisation des dates
-			var str = date.toLocaleDateString();
-			document.getElementById(div_root_updating+'_input').value = str;
+			//==================================================================
+			// Setup Ajax configuration
+			//==================================================================
+			var conf = [];
+
+			var col_origin = eval("lisha."+lisha_id+".columns.c"+column+".idorigin");
+			conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
+			conf['delai_tentative'] = 15000;
+			conf['max_tentative'] = 4;
+			conf['type_retour'] = false;		// ReponseText
+			conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=29&column='+col_origin;
+			conf['fonction_a_executer_reponse'] = 'write_current_date';
+			conf['param_fonction_a_executer_reponse'] = "'"+div_root_updating+"_input'";
+			ajax_call(conf);
+			//==================================================================
 		}
 	}
 }
 /**==================================================================*/
+
+
+/**==================================================================
+ * Write current date / hours information in input head column
+ * @evt : catch browser event
+ ====================================================================*/
+function write_current_date(div_root_updating,ajax_return)
+{
+	ajax_return = JSON.parse(ajax_return);
+	document.getElementById(div_root_updating).value = ajax_return.DATE;
+}
+/**==================================================================*/
+
 
 
 /**==================================================================

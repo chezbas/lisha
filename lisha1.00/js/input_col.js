@@ -26,10 +26,22 @@ function lisha_input_keydown_pressed(evt,lisha_id,column, quick_search_mode, edi
 	{
 		if(isCtrl)
 		{
-			var date = new Date();
-			//todo : a voir comment faire pour retrouver le format de localisation des dates
-			var str = date.toLocaleDateString();
-			document.getElementById('th_input_'+column+'__'+lisha_id).value = str;
+			var div_root_updating = 'th_input_'+column+'__'+lisha_id;
+			//==================================================================
+			// Setup Ajax configuration
+			//==================================================================
+			var conf = [];
+
+			var col_origin = eval("lisha."+lisha_id+".columns.c"+column+".idorigin");
+			conf['page'] = eval('lisha.'+lisha_id+'.dir_obj')+'/ajax/ajax_page.php';
+			conf['delai_tentative'] = 15000;
+			conf['max_tentative'] = 4;
+			conf['type_retour'] = false;		// ReponseText
+			conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=29&column='+col_origin;
+			conf['fonction_a_executer_reponse'] = 'write_current_date';
+			conf['param_fonction_a_executer_reponse'] = "'"+div_root_updating+"'";
+			ajax_call(conf);
+			//==================================================================
 		}
 	}
 

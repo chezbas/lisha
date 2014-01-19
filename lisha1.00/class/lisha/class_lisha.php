@@ -2606,6 +2606,32 @@
 
 
 		/**==================================================================
+		 * Return current date / hours format
+		 *
+		 * @column			: id column origin
+		====================================================================*/
+		public function current_date_hours($p_column)
+		{
+			// Localization date format
+			if(isset($this->c_columns[$p_column]['date_format']))
+			{
+				$final_date_format = $this->c_columns[$p_column]['date_format'];
+			}
+			else
+			{
+				// No custom date format then use country localization format
+				$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
+			}
+			// TODO TO FINISH
+			// replace php date function by Database engine base transformation
+			$my_date = date(str_replace("%","",$final_date_format));
+			$retour = array("DATE" => $my_date);
+			echo json_encode($retour);
+		}
+		/**===================================================================*/
+
+
+		/**==================================================================
 		 * edit_cell method
 		 * Update cell content
 		 * @array_key 		: json format of array primary key of cell to update
