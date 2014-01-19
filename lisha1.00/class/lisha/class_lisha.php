@@ -2622,9 +2622,15 @@
 				// No custom date format then use country localization format
 				$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
 			}
-			// TODO TO FINISH
+
+			$str_final = $this->get_date_format("NOW()",$final_date_format);
+
+			$query = "SELECT ".$str_final."  AS `result`";
+			$result = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
+			$row = $this->rds_fetch_array($result);
+
 			// replace php date function by Database engine base transformation
-			$my_date = date(str_replace("%","",$final_date_format));
+			$my_date = $row["result"];
 			$retour = array("DATE" => $my_date);
 			echo json_encode($retour);
 		}

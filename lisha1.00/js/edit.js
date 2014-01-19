@@ -320,7 +320,7 @@ function input_key_manager(evt,lisha_id,line,column)
 function write_current_date(div_root_updating,ajax_return)
 {
 	ajax_return = JSON.parse(ajax_return);
-	document.getElementById(div_root_updating).value = ajax_return.DATE;
+	document.getElementById(div_root_updating).value = document.getElementById(div_root_updating).value+ajax_return.DATE;
 }
 /**==================================================================*/
 
