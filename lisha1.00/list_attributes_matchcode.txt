@@ -242,3 +242,9 @@ Move lisha_texte to /language/xxx.json files
 Advantage : Text available for developpers in github
 
 define("__LISHA_TABLE_LANGUAGE__","lisha_text"); ==> define("__LISHA_TABLE_LOCALIZATION__","lisha_i18n");
+
+
+remove external function
+public function define_background_logo($p_logo,$p_repeat)
+replace by standard attribut
+$obj_lisha_tran->define_attribute('__background_picture', 'iknow.png');

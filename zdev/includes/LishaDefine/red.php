@@ -60,6 +60,7 @@
 	$obj_lisha_tran->define_attribute('__active_tech_doc', true);					// technical documentation button
 	$obj_lisha_tran->define_attribute('__active_ticket', true);						// Tickets link
 
+	$obj_lisha_tran->define_attribute('__background_picture', 'iknow.png');
 
 	$obj_lisha_tran->define_attribute('__display_mode', __NMOD__);					// Display mode
 

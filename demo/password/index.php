@@ -101,7 +101,7 @@
 		 * Include all Lisha list setup
 		====================================================================*/
 		include ('../includes/LishaDefine/password.php');
-		/*===================================================================*/
+		/**===================================================================*/
 
 		?>
 		<script type="text/javascript" src="../js/password.js"></script> <!-- Custom javascript -->

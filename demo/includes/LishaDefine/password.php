@@ -13,9 +13,22 @@
 	// Create a reference to the session
 	$obj_lisha_password = &$_SESSION[$ssid]['lisha'][$lisha_id];
 
+
 	//==================================================================
 	// Define main query
 	//==================================================================
+
+	// Get ID directive
+	// Use Key ID to focus on require row identification
+	if(isset($_GET['ID']))
+	{
+		$str_id = 'AND `demo_password`.`id` = "'.$_GET['ID'].'"';
+	}
+	else
+	{
+		$str_id = '';
+	}
+
 	$query = "
 			SELECT
 				`demo_password`.`id`			AS `id`,
@@ -29,7 +42,8 @@
 			".$_SESSION[$ssid]['lisha']['configuration'][10]."
 				`demo_password`
 				WHERE 1 = 1
-				AND `demo_password`.`level` <= ".$_SESSION['demo'][$ssid]['identified_level']
+				AND `demo_password`.`level` <= ".$_SESSION['demo'][$ssid]['identified_level']."
+				$str_id"
 				;
 	$obj_lisha_password->define_attribute('__main_query', $query);
 	//==================================================================

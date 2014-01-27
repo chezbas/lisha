@@ -31,8 +31,6 @@
 		private $c_limit_max;						// Max value of the limit
 		private $c_recordset_line;					// Total line of the recordset
 		private $c_page_qtt_line;					// Total line of the page
-		private $c_background_logo;					// Background logo of the Lisha
-		private $c_background_repeat;				// Background repeat of the logo
 		private $c_id_parent;
 		private $c_id_parent_column;
 		private $c_update_table;
@@ -119,40 +117,40 @@
 			// W : Write only
 			//==================================================================
 			$this->matchcode = array(
-			'__active_read_only_cells_edit'										=> array('c_cells_edit','A'),
-			'__internal_HTML_position'											=> array('c_position_mode','W'),
-			'__column_name_group_of_color'										=> array('c_group_of_color_column_name','A'),
-			'__internal_color_mask'												=> array('c_color_mask','A'),
-			'__column_input_check_update'										=> array('rw_flag','A'),
-			'__update_table_name'												=> array('c_update_table','A'),
-			'__return_column_id'												=> array('c_col_return','A'),
-			'__key_url_custom_view'												=> array('c_param_adv_filter','A'),
-			'__current_page'													=> array('c_active_page','A'),
-			'__column_search_mode'												=> array('search_mode','A'),
-			'__column_no_wrap'													=> array('nowrap','A'),
-			'__column_text_alignment'											=> array('alignment','A'),
-			'__column_data_type'												=> array('data_type','A'),
-			'__column_display_mode'												=> array('display','A'),
-			'__column_display_name'												=> array('name','A'),
-			'__column_date_format'												=> array('date_format','A'),
-			'__column_name_focus'												=> array('c_default_input_focus','A'),
-			'__column_id_focus'													=> array('c_default_input_focus_id','W'), // internal
-			'__return_mode'														=> array('c_return_mode','A'),
-			'__display_mode'													=> array('c_mode','A'),
-			'__active_top_bar_page'												=> array('c_page_selection_display_header','A'),
-			'__active_bottom_bar_page'											=> array('c_page_selection_display_footer','A'),
-			'__max_lines_by_page'												=> array('c_max_line_per_page','A'),
-			'__active_column_separation'										=> array('c_cols_sep_display','A'),
-			'__active_row_separation'											=> array('c_rows_sep_display','A'),
-			'__title'															=> array('c_title','A'),
-			'__active_title'													=> array('c_title_display','A'),
-			'__id_theme'														=> array('c_theme','A'),
-			'__active_readonly_mode'											=> array('c_readonly','A'),
-			'__active_user_doc'													=> array('c_help_button','A'),
-			'__main_query'														=> array('c_query','A'),
-			'__active_insert_button'                                            => array('c_toolbar_add_btn','A'),
-			'__active_delete_button'                                            => array('c_toolbar_delete_btn','A'),
-			'__active_quick_search'												=> array('c_quick_search','A')
+			'__active_read_only_cells_edit'										=> array('c_cells_edit','A',''),
+			'__internal_HTML_position'											=> array('c_position_mode','W',''),
+			'__column_name_group_of_color'										=> array('c_group_of_color_column_name','A',''),
+			'__internal_color_mask'												=> array('c_color_mask','A',''),
+			'__column_input_check_update'										=> array('rw_flag','A',''),
+			'__update_table_name'												=> array('c_update_table','A',''),
+			'__return_column_id'												=> array('c_col_return','A',''),
+			'__key_url_custom_view'												=> array('c_param_adv_filter','A',''),
+			'__current_page'													=> array('c_active_page','A',''),
+			'__column_search_mode'												=> array('search_mode','A',''),
+			'__column_no_wrap'													=> array('nowrap','A',''),
+			'__column_text_alignment'											=> array('alignment','A',''),
+			'__column_data_type'												=> array('data_type','A',''),
+			'__column_display_mode'												=> array('display','A',''),
+			'__column_display_name'												=> array('name','A',''),
+			'__column_date_format'												=> array('date_format','A',''),
+			'__column_name_focus'												=> array('c_default_input_focus','A',''),
+			'__column_id_focus'													=> array('c_default_input_focus_id','W',''), // internal
+			'__return_mode'														=> array('c_return_mode','A',''),
+			'__display_mode'													=> array('c_mode','A',''),
+			'__active_top_bar_page'												=> array('c_page_selection_display_header','A',''),
+			'__active_bottom_bar_page'											=> array('c_page_selection_display_footer','A',''),
+			'__max_lines_by_page'												=> array('c_max_line_per_page','A',''),
+			'__active_column_separation'										=> array('c_cols_sep_display','A',''),
+			'__active_row_separation'											=> array('c_rows_sep_display','A',''),
+			'__title'															=> array('c_title','A',''),
+			'__active_title'													=> array('c_title_display','A',''),
+			'__id_theme'														=> array('c_theme','A',''),
+			'__active_readonly_mode'											=> array('c_readonly','A',''),
+			'__active_user_doc'													=> array('c_help_button','A',''),
+			'__main_query'														=> array('c_query','A',''),
+			'__active_insert_button'                                            => array('c_toolbar_add_btn','A',''),
+			'__active_delete_button'                                            => array('c_toolbar_delete_btn','A',''),
+			'__active_quick_search'												=> array('c_quick_search','A','')
 			);
 			//==================================================================
 
@@ -197,8 +195,6 @@
 
 
 			$this->define_attribute('__column_name_group_of_color', $_SESSION[$this->c_ssid]['lisha']['configuration'][9]);
-
-			$this->define_background_logo('','');
 
 			$this->define_attribute('__internal_HTML_position',__RELATIVE__);			// HTML div position
 
@@ -458,7 +454,8 @@
 					$var = $this->matchcode[$p_attribute][0];
 					if($p_column_name == null)
 					{
-						$this->$var = $p_value;
+						$this->$var = $p_value; // TODO remove local variable definition then all transfert is done
+						$this->matchcode[$p_attribute][2] = $p_value; // Use third position of array to record value to use
 					}
 					else
 					{
@@ -503,7 +500,8 @@
 					$var = $this->matchcode[$p_attribute][0];
 					if(!isset($p_column_name))
 					{
-						return $this->$var;
+						return $this->matchcode[$p_attribute][2];
+						//return $this->$var;
 					}
 					else
 					{
@@ -904,19 +902,6 @@
 			$this->order_priority_lov = $this->order_priority_lov + 1;
 		}
 		/**==================================================================*/
-
-
-		/**
-		 * Define a background logo
-		 * @param string $logo
-		 * @param string $repeat no-repeat,repeat-x,repeat-y
-		 */
-		public function define_background_logo($logo,$repeat = 'no-repeat')
-		{
-			$this->c_background_logo = $logo;
-			$this->c_background_repeat = $repeat;
-			$this->c_obj_graphic->define_background_logo($logo,$repeat);
-		}
 
 
 		/**==================================================================
