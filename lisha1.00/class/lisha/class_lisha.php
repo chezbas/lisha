@@ -8,49 +8,33 @@
 		private $c_id;								// Lisha Id
 		private $c_ssid;							// Session Id
 		private $c_lng;								// Lisha language
-		private $c_query;							// Main query to draw
 		private $c_ident;							// DB Identification
 		private $c_columns;							// Columns (array())
 		private $c_columns_init;					// Original columns values
-		private $c_theme;							// Lisha css theme
 		private $c_height;							// Lisha height
 		private $c_h_unity;							// Lisha unity height (px,%)
 		private $c_width;							// Lisha width
 		private $c_w_unity;							// Lisha unity width (px,%)
 		private $c_nb_line;							// Number of line per page
 		private $c_default_nb_line;					// Number of line per page
-		private $c_max_line_per_page;				// max line per page
-		private $c_color_mask;						// Color mask (array())
-		private $c_group_of_color_column_name;		// Group of color column name
 		private $c_obj_graphic;						// Graphic instance of Lisha
-		private $c_mode;							// Display mode LMOD ( list ) or NMOD ( normal )
-		private $c_return_mode;						// Mode of lisha return (in LMOD mode)
-		private $c_col_return;						// Column to return (in LMOD mode)
-		private $c_active_page;						// Current page
 		private $c_limit_min;						// Min value of the limit
 		private $c_limit_max;						// Max value of the limit
 		private $c_recordset_line;					// Total line of the recordset
 		private $c_page_qtt_line;					// Total line of the page
 		private $c_id_parent;
 		private $c_id_parent_column;
-		private $c_update_table;
 		private $c_db_keys;							// list of Primary key ( Array )
 		private $c_selected_lines;
 		private $c_prepared_query;
 		private $c_edit_mode;
-		private $c_param_adv_filter;
-		private	$c_cols_sep_display;
-		private $c_rows_sep_display;
 		private $c_lisha_action;
-		private $c_default_input_focus;				// name of column will get the focus
-		private $c_position_mode;					// Type of position for LMOD, relative or absolute
 		private $c_time_timer_refresh;				// Timer for refresh auto
 		private $c_lmod_specified_width;
 		private $order_priority;                    // Order priority index for main query
 		private $order_priority_lov;                // Order priority index for current column lov
 		private $order_priority_lov_column_id;		// Last column id identifier for order priority
-		private $c_help_button;                     // Help button
-		private $matchcode;				            // Matchcode between internal external call and function name
+		public $matchcode;				            // Matchcode between internal external call and function name
 
 		private $string_global_search;				// String used to do global search
 
@@ -110,47 +94,48 @@
 
 
 			//==================================================================
-			// Define matchcode array between external and internal attribut name
-			// For internal call, use direct acces by $this->internal_name_attribut
+			// Define here lisha features that need to be handle with read_attribute() or get_attribute()
+			// 2 modes are available
+			//	With column name : read_attribute('__column_display_name','id')
+			//		That means data is store in this->c_columns
+			//
+			//	Without column name : read_attribute('__main_query')
+			// 		That means it's a general feature and it value is recorded in $this->matchcode array
+			//
 			// A : All ( Read and Write )
 			// R : Read only
 			// W : Write only
 			//==================================================================
 			$this->matchcode = array(
-			'__active_read_only_cells_edit'										=> array('c_cells_edit','A',''),
-			'__internal_HTML_position'											=> array('c_position_mode','W',''),
-			'__column_name_group_of_color'										=> array('c_group_of_color_column_name','A',''),
-			'__internal_color_mask'												=> array('c_color_mask','A',''),
+			// -- Beginning of columns features
+			'__column_date_format'												=> array('date_format','A'),
+			'__column_number_of_decimal'										=> array('number_of_decimal','A'),
+			'__column_display_name'												=> array('name','A'),
+			'__column_search_mode'												=> array('search_mode','A'),
+			'__column_no_wrap'													=> array('nowrap','A'),
+			'__column_text_alignment'											=> array('alignment','A'),
+			'__column_data_type'												=> array('data_type','A'),
+			'__column_display_mode'												=> array('display','A'),
 			'__column_input_check_update'										=> array('rw_flag','A',''),
-			'__update_table_name'												=> array('c_update_table','A',''),
-			'__return_column_id'												=> array('c_col_return','A',''),
-			'__key_url_custom_view'												=> array('c_param_adv_filter','A',''),
-			'__current_page'													=> array('c_active_page','A',''),
-			'__column_search_mode'												=> array('search_mode','A',''),
-			'__column_no_wrap'													=> array('nowrap','A',''),
-			'__column_text_alignment'											=> array('alignment','A',''),
-			'__column_data_type'												=> array('data_type','A',''),
-			'__column_display_mode'												=> array('display','A',''),
-			'__column_display_name'												=> array('name','A',''),
-			'__column_date_format'												=> array('date_format','A',''),
-			'__column_name_focus'												=> array('c_default_input_focus','A',''),
-			'__column_id_focus'													=> array('c_default_input_focus_id','W',''), // internal
-			'__return_mode'														=> array('c_return_mode','A',''),
-			'__display_mode'													=> array('c_mode','A',''),
-			'__active_top_bar_page'												=> array('c_page_selection_display_header','A',''),
-			'__active_bottom_bar_page'											=> array('c_page_selection_display_footer','A',''),
-			'__max_lines_by_page'												=> array('c_max_line_per_page','A',''),
-			'__active_column_separation'										=> array('c_cols_sep_display','A',''),
-			'__active_row_separation'											=> array('c_rows_sep_display','A',''),
-			'__title'															=> array('c_title','A',''),
-			'__active_title'													=> array('c_title_display','A',''),
-			'__id_theme'														=> array('c_theme','A',''),
-			'__active_readonly_mode'											=> array('c_readonly','A',''),
-			'__active_user_doc'													=> array('c_help_button','A',''),
-			'__main_query'														=> array('c_query','A',''),
-			'__active_insert_button'                                            => array('c_toolbar_add_btn','A',''),
-			'__active_delete_button'                                            => array('c_toolbar_delete_btn','A',''),
-			'__active_quick_search'												=> array('c_quick_search','A','')
+			// -- Beginning of main features
+			'__internal_HTML_position'											=> array('c_position_mode','A',''),
+			'__internal_color_mask'												=> array('','A',''),
+			'__update_table_name'												=> array('','A',''),
+			'__key_url_custom_view'												=> array('','A',''),
+			'__current_page'													=> array('','A',''),
+			'__return_column_id'												=> array('','A',''),
+			'__column_name_group_of_color'										=> array('','A',''),
+			'__column_name_focus'												=> array(null,'A',null),
+			'__return_mode'														=> array(__MULTIPLE__,'A',__MULTIPLE__),
+			'__display_mode'													=> array(__NMOD__,'A',__NMOD__),
+			'__active_top_bar_page'												=> array('','A',''),
+			'__active_bottom_bar_page'											=> array('','A',''),
+			'__max_lines_by_page'												=> array('','A',''),
+			'__active_column_separation'										=> array(true,'A',true),
+			'__active_row_separation'											=> array(true,'A',true),
+			'__id_theme'														=> array('grey','A','grey'),
+			'__active_user_doc'													=> array(true,'A',true),
+			'__main_query'														=> array('','A','')
 			);
 			//==================================================================
 
@@ -171,8 +156,6 @@
 
 			$this->define_attribute('__active_column_separation',true);
 			$this->define_attribute('__active_row_separation',true);
-
-			$this->define_attribute('__id_theme', 'grey');
 
 			$this->define_nb_line(20);
 			$this->define_size(50,'%',50,'%');
@@ -204,7 +187,21 @@
 			$this->order_priority = 1;
 			$this->order_priority_lov = 1;
 			$this->order_priority_lov_column_id = null;
-			$this->c_default_input_focus = null;										// No default focus column
+
+			//==================================================================
+			// Feature not setup in your lisha setup file
+			// If attribute is both defined in graphic and this part
+			// then use in first priority default attribute from here
+			//==================================================================
+			foreach($this->matchcode as $clef => $my_val)
+			{
+				if(isset($this->c_obj_graphic->matchcode[$clef]))
+				{
+					$this->c_obj_graphic->matchcode[$clef][2] = $this->matchcode[$clef][2];
+				}
+			}
+			//==================================================================
+
 
 			// Check if any filter is already recorded
 			$this->c_obj_graphic->any_filter = $this->any_filter();
@@ -216,10 +213,6 @@
 			// Reset page position navigation
 			$this->last_page_position = null;
 			$this->last_limit_min = null;
-
-			$this->c_obj_graphic->c_help_button = true;
-			$this->c_obj_graphic->c_tech_help_button = false;
-			$this->c_obj_graphic->c_tickets_link = false ;
 
 			// Dynamic pointer activated
 			$this->c_obj_graphic->string_global_search = &$this->string_global_search;
@@ -423,7 +416,7 @@
 			$this->define_attribute('__column_name_focus',$column_name);
 
 			$tmp_focus_id_column = $this->get_id_column($column_name);
-			$this->define_attribute('__column_id_focus',$tmp_focus_id_column);
+			$this->c_obj_graphic->c_default_input_focus_id = $tmp_focus_id_column;
 		}
 		/**==================================================================*/
 
@@ -451,14 +444,16 @@
 				{
 					$this->c_obj_graphic->define_attribute($p_attribute,$p_value, true, $p_column_name, $this->get_id_column($p_column_name),$p_to_init);
 
-					$var = $this->matchcode[$p_attribute][0];
 					if($p_column_name == null)
 					{
-						$this->$var = $p_value; // TODO remove local variable definition then all transfert is done
-						$this->matchcode[$p_attribute][2] = $p_value; // Use third position of array to record value to use
+						// No column name that means use internal feature is recorded in matchcode array
+						$this->matchcode[$p_attribute][2] = $p_value;
 					}
 					else
 					{
+						// Column name exists that means record feature in c_columns array
+						$var = $this->matchcode[$p_attribute][0];
+
 						$this->c_columns[$this->get_id_column($p_column_name)][$var] = $p_value;
 
 						// Record column feature in memory
@@ -466,6 +461,7 @@
 						{
 							$this->c_columns_init[$this->get_id_column($p_column_name)][$var] = $p_value;
 						}
+
 					}
 				}
 				else
@@ -482,7 +478,7 @@
 		 * Check first matchcode list of class_lisha
 		 * if not exists then try matchcode in class class_graphic
 		 *
-		 * @p_attribute : External attribute name
+		 * @p_attribute : External attribute name to match with internal name
 		 * @p_column_name : Column name if it's a column feature ( null means main feature )
 		 ====================================================================*/
 		public function read_attribute($p_attribute,$p_column_name = null)
@@ -497,14 +493,15 @@
 				{
 					$this->c_obj_graphic->read_attribute($p_attribute, true, $p_column_name, $this->get_id_column($p_column_name));
 
-					$var = $this->matchcode[$p_attribute][0];
 					if(!isset($p_column_name))
 					{
+						// No column name that means use internal feature is recorded in matchcode array
 						return $this->matchcode[$p_attribute][2];
-						//return $this->$var;
 					}
 					else
 					{
+						// Column name exists that means record feature in c_columns array
+						$var = $this->matchcode[$p_attribute][0];
 						return $this->c_columns[$this->get_id_column($p_column_name)][$var];
 					}
 				}
@@ -757,7 +754,7 @@
 											$p_color_text_selected,
 											$p_group = 0)
 		{
-			$this->c_color_mask[$p_group][] = array("color_code" => $p_color_hex,
+			$this->matchcode['__internal_color_mask'][2][$p_group][] = array("color_code" => $p_color_hex,
 													"size_text" => $p_size_hex,
 													"color_hover_code" => $p_color_hover_hex,
 													"size_hover_code" => $p_size_hover_hex,
@@ -1118,7 +1115,7 @@
 		{
 			$html = 'array_js_color_selected_code = new Array();';
 			$html .= 'array_js_color_text_selected = new Array();';
-			foreach($this->c_color_mask as $clef => $valeur)
+			foreach($this->matchcode['__internal_color_mask'][2] as $clef => $valeur)
 			{
 				foreach ($valeur as $key => $value)
 				{
@@ -1155,12 +1152,12 @@
 		private function get_and_set_filter($filter_name = null)
 		{
 			// Verify if a filter exist in the URL
-			if(isset($_GET[$this->c_param_adv_filter]) || !is_null($filter_name))
+			if(isset($_GET[$this->matchcode['__key_url_custom_view'][2]]) || !is_null($filter_name))
 			{
 
 				if(is_null($filter_name))
 				{
-					$filter_name = $_GET[$this->c_param_adv_filter];
+					$filter_name = $_GET[$this->matchcode['__key_url_custom_view'][2]];
 					$this->filter_name = $filter_name;
 				}
 
@@ -1517,8 +1514,8 @@
 			}
 			//==================================================================
 
-			$query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-			$my_query = 'SELECT COUNT(1) AS `TOTAL` '.substr($this->c_query,$query_final_pos).$sql_filter.$add_where;
+			$query_final_pos = strripos($this->matchcode['__main_query'][2], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+			$my_query = 'SELECT COUNT(1) AS `TOTAL` '.substr($this->matchcode['__main_query'][2],$query_final_pos).$sql_filter.$add_where;
 			$this->exec_sql($my_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 
 			$row = $this->rds_fetch_array($this->resultat);
@@ -1528,7 +1525,7 @@
 
 			if($p_only_count)
 			{
-				$my_query = 'SELECT COUNT(1) AS `TOTAL` '.substr($this->c_query,$query_final_pos).$sql_filter.$add_where;
+				$my_query = 'SELECT COUNT(1) AS `TOTAL` '.substr($this->matchcode['__main_query'][2],$query_final_pos).$sql_filter.$add_where;
 				$this->exec_sql($my_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 
 				$row = $this->rds_fetch_array($this->resultat);
@@ -1639,7 +1636,7 @@
 			//==================================================================
 			// Execute query
 			//==================================================================
-			$prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->c_query.$sql_filter.' '.$add_where.' '.$order.' '.$my_limit.') deriv WHERE 1 = 1 ';
+			$prepared_query = 'SELECT '.$temp_columns.',CONCAT('.$key_concatenation.') AS `lisha_internal_key_concat` FROM ('.$this->matchcode['__main_query'][2].$sql_filter.' '.$add_where.' '.$order.' '.$my_limit.') deriv WHERE 1 = 1 ';
 
 			$this->c_prepared_query = $prepared_query;
 
@@ -1811,8 +1808,8 @@
 			$json .= $json_base.'.ssid = \''.$this->c_ssid.'\';';
 			$json .= $json_base.'.qtt_column = '.$this->get_qtt_column().';';
 			$json .= $json_base.'.total_page = '.ceil($this->c_recordset_line / $this->c_nb_line).';';
-			$json .= $json_base.'.active_page = '.$this->c_active_page.';';
-			$json .= $json_base.'.theme = \''.$this->c_theme.'\';';
+			$json .= $json_base.'.active_page = '.$this->matchcode['__current_page'][2].';';
+			$json .= $json_base.'.theme = \''.$this->matchcode['__id_theme'][2].'\';';
 			$json .= $json_base.'.width = '.$this->c_width.';';
 			$json .= $json_base.'.width_unity = \''.$this->c_w_unity.'\';';
 			$json .= $json_base.'.height = '.$this->c_height.';';
@@ -1822,22 +1819,22 @@
 			$json .= $json_base.'.menu_quick_search_col = false;';				// Quick search column
 			$json .= $json_base.'.menu_left = 0;';								// Left value for menu on display menu
 			$json .= $json_base.'.last_checked = 0;';							// Last line checked
-			$json .= $json_base.'.mode = "'.$this->c_mode.'";';					// LMOD or NMOD
+			$json .= $json_base.'.mode = "'.$this->matchcode['__display_mode'][2].'";';					// LMOD or NMOD
 			$json .= $json_base.'.lmod_opened = true;';							// LMOD or NMOD or __CMOD__
-			$json .= $json_base.'.return_mode = "'.$this->c_return_mode.'";';	// Mode of return (in LMOD mode)
-			$json .= $json_base.'.c_col_return = "'.$this->c_col_return.'";';
+			$json .= $json_base.'.return_mode = "'.$this->matchcode['__return_mode'][2].'";';	// Mode of return (in LMOD mode)
+			$json .= $json_base.'.c_col_return = "'.$this->matchcode['__return_column_id'][2].'";';
 			$json .= $json_base.'.TypeOfChild = "'.$this->c_type_internal_lisha.'";';   // Kind of sub lisha type
-			$json .= $json_base.'.c_col_return_id = "'.$this->get_id_column($this->c_col_return).'";';
-			$json .= $json_base.'.c_position_mode = "'.$this->c_position_mode.'";';
-			$json .= $json_base.'.user_doc = "'.$this->c_help_button.'";';
+			$json .= $json_base.'.c_col_return_id = "'.$this->get_id_column($this->matchcode['__return_column_id'][2]).'";';
+			$json .= $json_base.'.c_position_mode = "'.$this->matchcode['__internal_HTML_position'][2].'";';
+			$json .= $json_base.'.user_doc = "'.$this->matchcode['__active_user_doc'][2].'";';
 
 			$json .= $json_base.'.button = new Object();';
 			$json .= $json_base.'.button.valide = "'.$p_ok_button.'";';
 
 
-			if(!is_null($this->c_default_input_focus))
+			if(!is_null($this->matchcode['__column_name_focus'][2]))
 			{
-				$json .= $json_base.'.default_input_focus = '.$this->get_id_column($this->c_default_input_focus).';';
+				$json .= $json_base.'.default_input_focus = '.$this->get_id_column($this->matchcode['__column_name_focus'][2]).';';
 			}
 			else
 			{
@@ -1875,7 +1872,7 @@
 			$json .= $json_base.'.time_input_search = false;';
 			$json .= $json_base.'.input_search_selected_line = 0;';
 			$json .= $json_base.'.qtt_line = '.$this->c_page_qtt_line.';';
-			$json .= $json_base.'.max_line_per_page = '.$this->c_max_line_per_page.';';
+			$json .= $json_base.'.max_line_per_page = '.$this->matchcode['__max_lines_by_page'][2].';';
 			$json .= $json_base.'.lisha_child_opened = false;';
 			$json .= $json_base.'.edit_mode = '.$this->c_edit_mode.';';
 
@@ -2070,10 +2067,10 @@
 				// Keep last group in memory
 				$last_group = $current_group_value;
 
-				if(isset($row[$this->c_group_of_color_column_name]))
+				if(isset($row[$this->matchcode['__column_name_group_of_color'][2]]))
 				{
-					$current_group_value = $row[$this->c_group_of_color_column_name];
-					if(!isset($this->c_color_mask[$current_group_value]))
+					$current_group_value = $row[$this->matchcode['__column_name_group_of_color'][2]];
+					if(!isset($this->matchcode['__internal_color_mask'][2][$current_group_value]))
 					{
 						// Ok, you try to use group color with no serie of color defined, so back to default group 0
 						$current_group_value = 0;
@@ -2092,9 +2089,9 @@
 				}
 
 				// Cound total lines in current group
-				if(isset($this->c_color_mask[$current_group_value]))
+				if(isset($this->matchcode['__internal_color_mask'][2][$current_group_value]))
 				{
-					$max_line_in_group = count($this->c_color_mask[$current_group_value]);
+					$max_line_in_group = count($this->matchcode['__internal_color_mask'][2][$current_group_value]);
 				}
 				else
 				{
@@ -2134,7 +2131,7 @@
 			$js = $this->generate_table_color();
 			$js .= $this->generate_lisha_json_param();
 
-			if($this->c_mode == __NMOD__)
+			if($this->matchcode['__display_mode'][2] == __NMOD__)
 			{
 				$js .= "document.getElementById('liste_".$this->c_id."').onscroll = function(){lisha_horizontal_scroll('".$this->c_id."');};";
 			}
@@ -2146,7 +2143,7 @@
 
 		public function draw_lisha_js()
 		{
-			if($this->c_mode != __LMOD__)
+			if($this->matchcode['__display_mode'][2] != __LMOD__)
 			{
 				$js = "size_table('".$this->c_id."');";
 			}
@@ -2451,7 +2448,7 @@
 
 			foreach($array_key as $clef => $value)
 			{
-				$string_where .= ' AND `'.$this->c_update_table.'`.`'.$clef.'` = \''.$value.'\'';
+				$string_where .= ' AND `'.$this->matchcode['__update_table_name'][2].'`.`'.$clef.'` = \''.$value.'\'';
 			}
 
 			$column_compel = '';
@@ -2488,19 +2485,19 @@
 						$final_date_format = $_SESSION[$this->c_ssid]['lisha']['date_format'];
 					}
 
-					$str_final = $this->get_date_format('`'.$this->c_update_table.'`.`'.$column_name.'`',$final_date_format);
+					$str_final = $this->get_date_format('`'.$this->matchcode['__update_table_name'][2].'`.`'.$column_name.'`',$final_date_format);
 					$temp_columns .= $str_final.' AS `'.$column_name.'`';
 				}
 				else
 				{
 					// all other columns
-					$temp_columns .= '`'.$this->c_update_table.'`.`'.$column_name.'` AS `'.$column_name.'`';
+					$temp_columns .= '`'.$this->matchcode['__update_table_name'][2].'`.`'.$column_name.'` AS `'.$column_name.'`';
 				}
 			}
 
-			$query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-			//$sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($this->c_query,$query_final_pos).' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
-			$prepared_query = 'SELECT DISTINCT '.$temp_columns.substr($this->c_query,$query_final_pos).$string_where;
+			$query_final_pos = strripos($this->matchcode['__main_query'][2], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+			//$sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($this->matchcode['__main_query'][2],$query_final_pos).' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
+			$prepared_query = 'SELECT DISTINCT '.$temp_columns.substr($this->matchcode['__main_query'][2],$query_final_pos).$string_where;
 
 			$p_result_header = $this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 
@@ -2522,7 +2519,7 @@
 
 				$set_string = '`'.$column_name.'` = \''.$html.'\'';
 
-				$prepared_query = 'UPDATE '.$this->c_update_table.' SET '.$set_string.' WHERE 1 = 1 '.$string_where;
+				$prepared_query = 'UPDATE '.$this->matchcode['__update_table_name'][2].' SET '.$set_string.' WHERE 1 = 1 '.$string_where;
 				$this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 			}
 
@@ -2706,7 +2703,7 @@
 				}
 			}
 
-			$prepared_query = 'UPDATE '.$this->c_update_table.' SET '.$set_string.' WHERE '.$string_where;
+			$prepared_query = 'UPDATE '.$this->matchcode['__update_table_name'][2].' SET '.$set_string.' WHERE '.$string_where;
 
 			$this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 
@@ -2748,9 +2745,9 @@
 
 			foreach($this->c_columns as $val_col)
 			{
-				// Special column $this->c_group_of_color_column_name
+				// Special column $this->matchcode['__column_name_group_of_color'][2]
 				if(
-					$val_col['sql_as'] != $this->c_group_of_color_column_name
+					$val_col['sql_as'] != $this->matchcode['__column_name_group_of_color'][2]
 					&& !isset($val_col['rw_flag']) || (isset($val_col['rw_flag'])
 					&& $val_col['rw_flag'] != __FORBIDDEN__
 					&& $val_col['display']))
@@ -2832,11 +2829,11 @@
 				{
 					if($j == 0)
 					{
-						$only_selected_lines .= $this->get_quote_col($this->c_update_table).'.`'.$key.'` = "'.$value_key.'"';
+						$only_selected_lines .= $this->get_quote_col($this->matchcode['__update_table_name'][2]).'.`'.$key.'` = "'.$value_key.'"';
 					}
 					else
 					{
-						$only_selected_lines .= ' AND '.$this->get_quote_col($this->c_update_table).'.`'.$key.'` = "'.$value_key.'"';
+						$only_selected_lines .= ' AND '.$this->get_quote_col($this->matchcode['__update_table_name'][2]).'.`'.$key.'` = "'.$value_key.'"';
 					}
 
 					$j = $j + 1;
@@ -2852,7 +2849,7 @@
 			//==================================================================
 			// Assembly, run and return xml final query
 			//==================================================================
-			$sql .= ' FROM '.$this->c_update_table.' WHERE 1 = 1 '.$only_selected_lines;
+			$sql .= ' FROM '.$this->matchcode['__update_table_name'][2].' WHERE 1 = 1 '.$only_selected_lines;
 			$p_result_header = $this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 
 			$this->prepare_query($only_selected_lines);
@@ -2905,11 +2902,11 @@
 					{
 						if($j == 0)
 						{
-							$only_selected_lines .= $this->get_quote_col($this->c_update_table).'.`'.$key.'` = "'.$value_key.'"';
+							$only_selected_lines .= $this->get_quote_col($this->matchcode['__update_table_name'][2]).'.`'.$key.'` = "'.$value_key.'"';
 						}
 						else
 						{
-							$only_selected_lines .= ' AND '.$this->get_quote_col($this->c_update_table).'.`'.$key.'` = "'.$value_key.'"';
+							$only_selected_lines .= ' AND '.$this->get_quote_col($this->matchcode['__update_table_name'][2]).'.`'.$key.'` = "'.$value_key.'"';
 						}
 
 						$j = $j + 1;
@@ -2964,7 +2961,7 @@
 						if($val_col['sql_as'] == $clef)
 						{
 							// ok, key column found
-							//if($val_col['sql_as'] != $this->c_group_of_color_column_name && $val_col['display'])
+							//if($val_col['sql_as'] != $this->matchcode['__column_name_group_of_color'][2] && $val_col['display'])
 							if($val_col['display'])
 							{
 								// ok, column to export
@@ -3111,7 +3108,7 @@
 			//==================================================================
 			// Build query
 			//==================================================================
-			$sql_delete = 'DELETE FROM '.$this->c_update_table.' WHERE (';
+			$sql_delete = 'DELETE FROM '.$this->matchcode['__update_table_name'][2].' WHERE (';
 			$i = 0;
 			foreach($this->c_selected_lines['keys'] as $value)
 			{
@@ -3382,7 +3379,7 @@
 				$this->define_limit_min(0);
 
 				// Control line OK, add the line
-				$sql_insert = 'INSERT INTO '.$this->c_update_table.'(';
+				$sql_insert = 'INSERT INTO '.$this->matchcode['__update_table_name'][2].'(';
 				$sql_insert_values = '';
 
 				$i = 0;
@@ -3518,7 +3515,7 @@
 					//==================================================================
 					// Build update set of values
 					//==================================================================
-					$sql_update = 'UPDATE '.$this->c_update_table.' ';
+					$sql_update = 'UPDATE '.$this->matchcode['__update_table_name'][2].' ';
 
 					$i = 0;
 
@@ -3704,7 +3701,7 @@
 			$xml .= "<lisha>";
 			$xml .= "<content>".$this->protect_xml($this->c_obj_graphic->draw_lisha($this->resultat,true,$p_ajax))."</content>";
 			$xml .= "<total_page>".ceil($this->c_recordset_line / $this->c_nb_line)."</total_page>";
-			$xml .= "<active_page>".$this->c_active_page."</active_page>";
+			$xml .= "<active_page>".$this->matchcode['__current_page'][2]."</active_page>";
 			$xml .= "<json>".$this->protect_xml($json)."</json>";
 			$xml .= "<qtt_line>".$this->c_page_qtt_line."</qtt_line>";
 			$xml .= "</lisha>";
@@ -3737,7 +3734,7 @@
 					}
 					else
 					{
-						$this->define_attribute('__current_page',$this->c_active_page+1);
+						$this->define_attribute('__current_page',$this->matchcode['__current_page'][2]+1);
 					}
 					$this->define_limit_min($this->c_limit_min + $this->c_nb_line);
 					break;
@@ -3750,7 +3747,7 @@
 					}
 					else
 					{
-						$this->define_attribute('__current_page',$this->c_active_page-1);
+						$this->define_attribute('__current_page',$this->matchcode['__current_page'][2]-1);
 						$this->define_limit_min($this->c_limit_min - $this->c_nb_line);
 					}
 
@@ -3795,7 +3792,7 @@
 			$xml .= "<lisha>";
 			$xml .= "<content>".$this->protect_xml($this->c_obj_graphic->draw_lisha($this->resultat,true,true))."</content>";
 			$xml .= "<total_page>".ceil($this->c_recordset_line / $this->c_nb_line)."</total_page>";
-			$xml .= "<active_page>".$this->c_active_page."</active_page>";
+			$xml .= "<active_page>".$this->matchcode['__current_page'][2]."</active_page>";
 			//$xml .= "<json_line>".$this->protect_xml($json_line)."</json_line>";
 			$xml .= "<json>".$this->protect_xml($json)."</json>";
 			$xml .= "<qtt_line>".$this->c_page_qtt_line."</qtt_line>";
@@ -4199,12 +4196,12 @@
 					//==================================================================
 					// Count matching rows when user type something in input box
 					//==================================================================
-					$query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+					$query_final_pos = strripos($this->matchcode['__main_query'][2], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
 
 					//operator_build_query_condition
 					$sql_condition_quick_search = $this->operator_build_query_condition($column,$this->c_columns[$column],$txt);
 
-					$sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($this->c_query,$query_final_pos).$sql_condition_quick_search.$sql_filter;
+					$sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($this->matchcode['__main_query'][2],$query_final_pos).$sql_condition_quick_search.$sql_filter;
 
 					$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__, $this->link);
 					$row = $this->rds_fetch_array($this->resultat);
@@ -4248,7 +4245,7 @@
 					//==================================================================
 					// Few first rows found
 					//==================================================================
-					$sql =  'SELECT DISTINCT ('.$str_final.' ) AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->c_query,$query_final_pos).$sql_condition_quick_search.$sql_filter.' ORDER BY 1 ASC LIMIT 6';
+					$sql =  'SELECT DISTINCT ('.$str_final.' ) AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->matchcode['__main_query'][2],$query_final_pos).$sql_condition_quick_search.$sql_filter.' ORDER BY 1 ASC LIMIT 6';
 					//==================================================================
 
 					$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
@@ -4314,7 +4311,7 @@
 				//==================================================================
 				// Build result
 				//==================================================================
-				$html = '<div id="div_input_search_'.$this->c_id.'" class="__'.$this->c_theme.'_div_input_search"><table style="width:100%;" style="border-collapse:collapse;">';
+				$html = '<div id="div_input_search_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][2].'_div_input_search"><table style="width:100%;" style="border-collapse:collapse;">';
 				$i = 1;
 				$motif = '#'.$this->protect_expreg($txt).'#i';
 
@@ -4329,7 +4326,7 @@
 						$result = $this->clearHTML($row[$this->c_columns[$column]['sql_as']]);
 						$result = $this->replace_chevrons($result,false);
 					}
-					$html .= '<tr style="margin:0;padding:0;border-collapse:collapse;" id="'.$this->c_id.'_rapid_search_l'.$i.'" onclick="lisha_input_result_click(\''.$this->c_id.'\','.$column.','.$i.',\''.$this->protect_js_txt($result).'\');"><td style="margin:0;padding:0;"><div class="__'.$this->c_theme.'_column_header_input_result" id="lisha_input_result_'.$i.'_'.$this->c_id.'">'.preg_replace($motif,'<b>$0</b>',$result).'</div></td></tr>';
+					$html .= '<tr style="margin:0;padding:0;border-collapse:collapse;" id="'.$this->c_id.'_rapid_search_l'.$i.'" onclick="lisha_input_result_click(\''.$this->c_id.'\','.$column.','.$i.',\''.$this->protect_js_txt($result).'\');"><td style="margin:0;padding:0;"><div class="__'.$this->matchcode['__id_theme'][2].'_column_header_input_result" id="lisha_input_result_'.$i.'_'.$this->c_id.'">'.preg_replace($motif,'<b>$0</b>',$result).'</div></td></tr>';
 					$i = $i + 1;
 				}
 				//==================================================================
@@ -4339,13 +4336,13 @@
 					$qtt = $count - 6;
 					($count == 1) ? $lib = $qtt.' '.$this->lib(37) : $lib = $qtt.' '.$this->lib(38);
 
-					$html .= '<tr style="margin:0;padding:0;border-collapse:collapse;"><td class="__'.$this->c_theme.'_column_header_menu_line_sep_top"></td></tr>';
+					$html .= '<tr style="margin:0;padding:0;border-collapse:collapse;"><td class="__'.$this->matchcode['__id_theme'][2].'_column_header_menu_line_sep_top"></td></tr>';
 					$html .= '<tr style="margin:0;padding:0;border-collapse:collapse;"><td style="margin:0;padding:0;"><div style="font-family: tahoma, arial, helvetica, sans-serif;font-size: 0.7em;">'.$lib.' ...</div></td></tr>';
 				}
 
 				if($i == 1)
 				{
-					$html .= '<tr style="margin:0;padding:0;border-collapse:collapse;" id="'.$this->c_id.'_rapid_search_l'.$i.'"><td style="margin:0;padding:0;"><div class="__'.$this->c_theme.'_column_header_input_result" id="lisha_input_result_'.$i.'_'.$this->c_id.'">'.$this->lib(43).'</div></td></tr>';
+					$html .= '<tr style="margin:0;padding:0;border-collapse:collapse;" id="'.$this->c_id.'_rapid_search_l'.$i.'"><td style="margin:0;padding:0;"><div class="__'.$this->matchcode['__id_theme'][2].'_column_header_input_result" id="lisha_input_result_'.$i.'_'.$this->c_id.'">'.$this->lib(43).'</div></td></tr>';
 				}
 
 				$html.= '</table></div>';
@@ -4871,13 +4868,13 @@
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_size(100,'%',100,'%');
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__id_theme',$this->c_theme);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__id_theme',$this->matchcode['__id_theme'][2]);
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__internal_color_mask',$this->c_color_mask);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__internal_color_mask',$this->matchcode['__internal_color_mask'][2]);
 
 			// Depend on Build dynamic css Background style for children in class_graphic.php
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_top_bar_page', $this->c_page_selection_display_header);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_bottom_bar_page', $this->c_page_selection_display_footer);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_top_bar_page', $this->matchcode['__active_top_bar_page'][2]);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_bottom_bar_page', $this->matchcode['__active_bottom_bar_page'][2]);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_nb_line(50);
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_tech_doc', false);
@@ -4886,8 +4883,8 @@
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__update_table_name', __LISHA_TABLE_INTERNAL_FILTER__);
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_column_separation',$this->c_cols_sep_display);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_row_separation',$this->c_rows_sep_display);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_column_separation',$this->matchcode['__active_column_separation'][2]);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_row_separation',$this->matchcode['__active_row_separation'][2]);
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_read_only_cells_edit', __RW__);
 			//==================================================================
@@ -4943,13 +4940,13 @@
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->prepare_query();
 			$json = $_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha_json_param();
 
-			$html = "<div class='__".$this->c_theme."_lisha_tab_filter_ind_included'>IN</div><div class='__".$this->c_theme."_lisha_tab_filter_ind_excluded grey_el'>OUT</div><div class='__".$this->c_theme."_lisha_tab_filter_ind_excluded grey_el'>RANGE IN</div><div class='__".$this->c_theme."_lisha_tab_filter_ind_excluded grey_el'>RANGE OUT</div><div>".$_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha().'
+			$html = "<div class='__".$this->matchcode['__id_theme'][2]."_lisha_tab_filter_ind_included'>IN</div><div class='__".$this->matchcode['__id_theme'][2]."_lisha_tab_filter_ind_excluded grey_el'>OUT</div><div class='__".$this->matchcode['__id_theme'][2]."_lisha_tab_filter_ind_excluded grey_el'>RANGE IN</div><div class='__".$this->matchcode['__id_theme'][2]."_lisha_tab_filter_ind_excluded grey_el'>RANGE OUT</div><div>".$_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha().'
 						<div style="float:left;">ADVANCED FILTER on '.$this->c_columns[$p_column]["name"].'</div>
 						<div style="float:right;">
 							<table style="margin:0;padding:0;border-collapse:collapse;">
 								<tr>
-								<td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$p_column.');" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td>
-								<td style="margin:0;padding:0;"><div id="'.$this->c_id.'_child_valide" onclick="lisha_child_list_column_ok(\''.$this->c_id.'\');" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_valide hover" '.$this->hover_out_lib(121,121,'_child').' style="margin-right:5px;"></div></td>
+								<td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$p_column.');" class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td>
+								<td style="margin:0;padding:0;"><div id="'.$this->c_id.'_child_valide" onclick="lisha_child_list_column_ok(\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_valide hover" '.$this->hover_out_lib(121,121,'_child').' style="margin-right:5px;"></div></td>
 								</tr>
 							</table>
 						</div>
@@ -5058,8 +5055,8 @@
 				}
 				else
 				{
-					$query_final_pos = strripos($this->c_query, $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-					$my_query =  'SELECT DISTINCT '.$this->c_columns[$column]['before_as'].' AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->c_query,$query_final_pos);
+					$query_final_pos = strripos($this->matchcode['__main_query'][2], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
+					$my_query =  'SELECT DISTINCT '.$this->c_columns[$column]['before_as'].' AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).' '.substr($this->matchcode['__main_query'][2],$query_final_pos);
 				}
 				$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$my_query);
 
@@ -5103,9 +5100,9 @@
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_readonly_mode',__R__);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_size(100,'%',100,'%');
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__id_theme',$this->c_theme);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__id_theme',$this->matchcode['__id_theme'][2]);
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__internal_color_mask',$this->c_color_mask);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__internal_color_mask',$this->matchcode['__internal_color_mask'][2]);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_nb_line(12);
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_top_bar_page', $_SESSION[$this->c_ssid]['lisha'][$this->c_id]->read_attribute('__active_top_bar_page'));
@@ -5117,8 +5114,8 @@
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->new_graphic_lisha();
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_column_separation',$this->c_cols_sep_display);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_row_separation',$this->c_rows_sep_display);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_column_separation',$this->matchcode['__active_column_separation'][2]);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_row_separation',$this->matchcode['__active_row_separation'][2]);
 
 			//==================================================================
 			// Execute the query and display the elements
@@ -5127,7 +5124,7 @@
 			// Prepare the query
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->prepare_query();
 
-			$html = '<div style="float:right;"><table style="margin:0;padding:0;border-collapse:collapse;"><tr><td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$column.');" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td><td style="margin:0;padding:0;"></td></tr></table></div>';
+			$html = '<div style="float:right;"><table style="margin:0;padding:0;border-collapse:collapse;"><tr><td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$column.');" class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td><td style="margin:0;padding:0;"></td></tr></table></div>';
 
 			$json = $_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha_json_param();
 
@@ -5240,13 +5237,13 @@
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_size(100,'%',100,'%');
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__id_theme',$this->c_theme);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__id_theme',$this->matchcode['__id_theme'][2]);
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__internal_color_mask',$this->c_color_mask);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__internal_color_mask',$this->matchcode['__internal_color_mask'][2]);
 
 			// Depend on Build dynamic css Background style for children in class_graphic.php
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_top_bar_page', $this->c_page_selection_display_header);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_bottom_bar_page', $this->c_page_selection_display_footer);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_top_bar_page', $this->matchcode['__active_top_bar_page'][2]);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_bottom_bar_page', $this->matchcode['__active_bottom_bar_page'][2]);
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_nb_line(50);
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_tech_doc', false);
@@ -5255,8 +5252,8 @@
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__update_table_name', __LISHA_TABLE_INTERNAL__);
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_column_separation',$this->c_cols_sep_display);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_row_separation',$this->c_rows_sep_display);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_column_separation',$this->matchcode['__active_column_separation'][2]);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_row_separation',$this->matchcode['__active_row_separation'][2]);
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_read_only_cells_edit', __RW__);
 			//==================================================================
@@ -5339,8 +5336,8 @@
 			$html = '<div style="float:right;">
 						<table style="margin:0;padding:0;border-collapse:collapse;">
 							<tr>
-							<td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$column.');" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td>
-							<td style="margin:0;padding:0;"><div id="'.$this->c_id.'_child_valide" onclick="lisha_child_list_column_ok(\''.$this->c_id.'\');" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_valide hover" '.$this->hover_out_lib(121,121,'_child').' style="margin-right:5px;"></div></td>
+							<td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$column.');" class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td>
+							<td style="margin:0;padding:0;"><div id="'.$this->c_id.'_child_valide" onclick="lisha_child_list_column_ok(\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_valide hover" '.$this->hover_out_lib(121,121,'_child').' style="margin-right:5px;"></div></td>
 							</tr>
 						</table>
 					</div>
@@ -5403,7 +5400,7 @@
 						WHERE 1 = 1
 							AND `id` = '".$this->c_ssid.$this->c_id."'
 							AND	`low` = 1
-							AND `name` = '".$this->c_default_input_focus."'
+							AND `name` = '".$this->matchcode['__column_name_focus'][2]."'
 					 ";
 			$resultat = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 
@@ -5411,7 +5408,7 @@
 			{
 				foreach($this->c_columns as $value)
 				{
-					if($this->c_default_input_focus == $value['sql_as'])
+					if($this->matchcode['__column_name_focus'][2] == $value['sql_as'])
 					{
 
 						$message .= str_replace('$1',$value['name'],$_SESSION[$this->c_ssid]['lisha']['lib'][123]).'<hr>';
@@ -5453,7 +5450,7 @@
 					 ";
 			$resultat = $this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 
-			if($resultat->num_rows == 0 && $this->c_default_input_focus == null)
+			if($resultat->num_rows == 0 && $this->matchcode['__column_name_focus'][2] == null)
 			{
 				// All rows hidden
 				// Will never happens...
@@ -5537,7 +5534,7 @@
 			$id_child = $this->c_id.'_child';
 			// Create an instance of a lisha
 			$_SESSION[$this->c_ssid]['lisha'][$id_child] = new lisha($id_child, $this->c_ssid, $this->c_db_engine, $this->c_ident,$this->c_dir_obj,__LOAD_FILTER__);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(4).' ('.$this->c_param_adv_filter.')');
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(4).' ('.$this->matchcode['__key_url_custom_view'][2].')');
 			$query_lov = "  SELECT
 								`main`.`A` AS `name`,
 								`main`.`B` AS `date`,
@@ -5572,9 +5569,9 @@
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_size(100,'%',100,'%');
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__id_theme',$this->c_theme);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__id_theme',$this->matchcode['__id_theme'][2]);
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__internal_color_mask',$this->c_color_mask);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__internal_color_mask',$this->matchcode['__internal_color_mask'][2]);
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_top_bar_page', $_SESSION[$this->c_ssid]['lisha'][$this->c_id]->read_attribute('__active_top_bar_page'));
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_bottom_bar_page', false);
@@ -5588,8 +5585,8 @@
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->new_graphic_lisha();
 
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_column_separation',$this->c_cols_sep_display);
-			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_row_separation',$this->c_rows_sep_display);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_column_separation',$this->matchcode['__active_column_separation'][2]);
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_row_separation',$this->matchcode['__active_row_separation'][2]);
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__active_read_only_cells_edit', __R__);
 
@@ -5614,7 +5611,7 @@
 			//==================================================================
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->prepare_query();
 
-			$html = '<div style="float:right;"><table style="margin:0;padding:0;border-collapse:collapse;"><tr><td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$column.');" class="__'.$this->c_theme.'_ico __'.$this->c_theme.'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td><td style="margin:0;padding:0;"></td></tr></table></div>';
+			$html = '<div style="float:right;"><table style="margin:0;padding:0;border-collapse:collapse;"><tr><td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$column.');" class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td><td style="margin:0;padding:0;"></td></tr></table></div>';
 
 			$json = $_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha_json_param();
 
@@ -5722,7 +5719,7 @@
 		====================================================================*/
 		private function hover_out_lib($id_lib,$id_help)
 		{
-			return 'onmouseout="lisha_lib_out(\''.$this->c_id.'\');" onmouseover="lisha_lib_hover('.$id_lib.','.$id_help.',\''.$this->c_id.'\',\''.$this->c_help_button.'\');"';
+			return 'onmouseout="lisha_lib_out(\''.$this->c_id.'\');" onmouseover="lisha_lib_hover('.$id_lib.','.$id_help.',\''.$this->c_id.'\',\''.$this->matchcode['__active_user_doc'][2].'\');"';
 		}
 		/**===================================================================*/
 

@@ -40,15 +40,15 @@
 	//==================================================================
 	// Lisha display setup
 	//==================================================================
-	$obj_lisha_tran->define_nb_line(20);											// Row by page								
+	$obj_lisha_tran->define_nb_line(30);											// Row by page
 	$obj_lisha_tran->define_size(100,'%',100,'%');									// Size of object
 	$obj_lisha_tran->define_attribute('__active_readonly_mode', __RW__);			// Read & Write
 	$obj_lisha_tran->define_attribute('__id_theme','red');							// Define style
 
-	$obj_lisha_tran->define_attribute('__active_title', true);						// Title bar	
-	$obj_lisha_tran->define_attribute('__title', 'Red Lisha');							// Title
+	//$obj_lisha_tran->define_attribute('__active_title', false);						// Display or Hide title bar
+	$obj_lisha_tran->define_attribute('__title', 'Red Lisha');						// Title
 
-	$obj_lisha_tran->define_attribute('__max_lines_by_page', 80);					// Limit rows by page	
+	$obj_lisha_tran->define_attribute('__max_lines_by_page', 20);					// Limit rows by page
 
 	$obj_lisha_tran->define_attribute('__active_column_separation',false);
 	$obj_lisha_tran->define_attribute('__active_row_separation',false);
@@ -56,19 +56,26 @@
 	$obj_lisha_tran->define_attribute('__active_top_bar_page',true);
 	$obj_lisha_tran->define_attribute('__active_bottom_bar_page',true);
 
-	$obj_lisha_tran->define_attribute('__active_user_doc', true);					// user documentation button
+	//$obj_lisha_tran->define_attribute('__active_user_doc', false);					// user documentation button
 	$obj_lisha_tran->define_attribute('__active_tech_doc', true);					// technical documentation button
 	$obj_lisha_tran->define_attribute('__active_ticket', true);						// Tickets link
 
+	$obj_lisha_tran->define_attribute('__active_read_only_cells_edit', false);		// quick edit cell
+	$obj_lisha_tran->define_attribute('__active_quick_search', true);				// Enable / disable total of entries left when typing ( False = Performance enhancement )
+
+
 	$obj_lisha_tran->define_attribute('__background_picture', 'iknow.png');
 
-	$obj_lisha_tran->define_attribute('__display_mode', __NMOD__);					// Display mode
+	//$obj_lisha_tran->define_attribute('__display_mode', __LMOD__);				// Display mode : Don't touch if no idea what is that thing
 
 	$obj_lisha_tran->define_attribute('__key_url_custom_view', 'f1');				// Defined key for quick custom view loader in url browser
 
 	$obj_lisha_tran->define_attribute('__update_table_name', "zdev_table");		// Define table to update
 
 	//$obj_lisha_tran->define_attribute('__active_insert_button', false);
+	//$obj_lisha_tran->define_attribute('__active_delete_button', false);				// Enable / disable delete button
+	//$obj_lisha_tran->define_attribute('__active_global_search', false);				// Enable / disable global search button
+
 
 	$obj_lisha_tran->define_attribute('__column_name_group_of_color', "MyGroupTheme");		// ( Optional ) Define csutom column color name
 	//==================================================================
