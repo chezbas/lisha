@@ -24,7 +24,7 @@
 				`demo_list_example`.`id`			AS `id`,
 				`demo_list_example`.`name`			AS `name`,
 				`demo_list_example`.`description`	AS `description`,
-				CONCAT('<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\"',`demo_list_example`.`link`,'</a>')	AS `link`,
+				CONCAT('<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\">',`demo_list_example`.`link`,'</a>')	AS `link`,
 				`demo_list_example`.`screen`		AS `screen`,
 				`demo_list_example`.`last_update`	AS `last_update`,
 				`demo_list_example`.`title`			AS `title`

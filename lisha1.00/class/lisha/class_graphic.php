@@ -92,29 +92,29 @@
 			// W : Write only
 			//==================================================================
 			$this->matchcode = array(
-			'__active_read_only_cells_edit'										=> array('','A',''),
-			'__column_name_group_of_color'										=> array('','A',''),
-			'__internal_color_mask'												=> array('','A',''),
-			'__id_theme'														=> array('','A',''),
-			'__return_column_id'												=> array('','A',''),
-			'__current_page'													=> array('','A',''),
-			'__display_mode'													=> array('','A',''),
-			'__active_top_bar_page'												=> array('','A',''),
-			'__active_bottom_bar_page'											=> array('','A',''),
-			'__active_column_separation'										=> array('','A',''),
-			'__active_row_separation'											=> array('','A',''),
-			'__title'															=> array('','A',''),
-			'__active_title'													=> array(true,'A',true),
-			'__active_readonly_mode'											=> array('','A',''),
-			'__active_user_doc'													=> array('','A',''),
-			'__active_tech_doc'													=> array(false,'A',false),
-			'__active_quick_search'												=> array(true,'A',true),
-			'__active_global_search'                                            => array(true,'A',true),
-			'__active_insert_button'                                            => array(true,'A',true),
-			'__active_delete_button'                                            => array(true,'A',true),
-			'__background_picture'												=> array('','A',''),
-			'__background_repeat'												=> array('no-repeat','A','no-repeat'),
-			'__active_ticket'													=> array(false,'A',false)
+			'__active_read_only_cells_edit'										=> array('','A'),
+			'__column_name_group_of_color'										=> array('','A'),
+			'__internal_color_mask'												=> array('','A'),
+			'__id_theme'														=> array('','A'),
+			'__return_column_id'												=> array('','A'),
+			'__current_page'													=> array('','A'),
+			'__display_mode'													=> array('','A'),
+			'__active_top_bar_page'												=> array('','A'),
+			'__active_bottom_bar_page'											=> array('','A'),
+			'__active_column_separation'										=> array('','A'),
+			'__active_row_separation'											=> array('','A'),
+			'__title'															=> array('','A'),
+			'__active_title'													=> array(true,'A'),
+			'__active_readonly_mode'											=> array('','A'),
+			'__active_user_doc'													=> array('','A'),
+			'__active_tech_doc'													=> array(false,'A'),
+			'__active_quick_search'												=> array(true,'A'),
+			'__active_global_search'                                            => array(true,'A'),
+			'__active_insert_button'                                            => array(true,'A'),
+			'__active_delete_button'                                            => array(true,'A'),
+			'__background_picture'												=> array('','A'),
+			'__background_repeat'												=> array('no-repeat','A'),
+			'__active_ticket'													=> array(false,'A')
 			);
 			//==================================================================
 
@@ -137,17 +137,17 @@
 				//==================================================================
 				// Create lisha container
 				//==================================================================
-				$lisha .=  '<div id="lis__'.$this->matchcode['__id_theme'][2].'__lisha_table_'.$this->c_id.'__" onclick="lisha_click(event,\''.$this->c_id.'\')">';
+				$lisha .=  '<div id="lis__'.$this->matchcode['__id_theme'][0].'__lisha_table_'.$this->c_id.'__" onclick="lisha_click(event,\''.$this->c_id.'\')">';
 				//==================================================================
 
 				//==================================================================
 				// Create message box ( Wait + Msgbox )
 				//==================================================================
 				// Begin container
-				$lisha .= '<div id="lis__'.$this->matchcode['__id_theme'][2].'__hide_container_'.$this->c_id.'__" onclick="lisha_hide_container_click(\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][2].'_hide_container">';
+				$lisha .= '<div id="lis__'.$this->matchcode['__id_theme'][0].'__hide_container_'.$this->c_id.'__" onclick="lisha_hide_container_click(\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][0].'_hide_container">';
 
 					// Wait
-					$lisha .= '<div id="lis__'.$this->matchcode['__id_theme'][2].'__wait_'.$this->c_id.'__" class="__'.$this->matchcode['__id_theme'][2].'_wait" style="display:none;"></div>';
+					$lisha .= '<div id="lis__'.$this->matchcode['__id_theme'][0].'__wait_'.$this->c_id.'__" class="__'.$this->matchcode['__id_theme'][0].'_wait" style="display:none;"></div>';
 
 					// Msgbox
 					$str_top = "";
@@ -165,22 +165,22 @@
 				// Create the div for column move function
 				//==================================================================
 				// Arrows
-				if($this->matchcode['__display_mode'][2] != __CMOD__)
+				if($this->matchcode['__display_mode'][0] != __CMOD__)
 				{
-					$lisha .= '<div class="__'.$this->matchcode['__id_theme'][2].'__arrow_move_column_top" id="arrow_move_column_top_'.$this->c_id.'"></div>';
-					$lisha .= '<div class="__'.$this->matchcode['__id_theme'][2].'__arrow_move_column_bottom" id="arrow_move_column_bottom_'.$this->c_id.'"></div>';
+					$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'__arrow_move_column_top" id="arrow_move_column_top_'.$this->c_id.'"></div>';
+					$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'__arrow_move_column_bottom" id="arrow_move_column_bottom_'.$this->c_id.'"></div>';
 				}
 
 				// Wait input 
-				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][2].'__wait_input" id="wait_input_'.$this->c_id.'"></div>';
+				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'__wait_input" id="wait_input_'.$this->c_id.'"></div>';
 
 				// Float div
-				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][2].'__float_move_column" id="lisha_column_move_div_float_'.$this->c_id.'">';
+				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'__float_move_column" id="lisha_column_move_div_float_'.$this->c_id.'">';
 				$lisha .= '<table class="shadow">';
 				$lisha .= '<tr><td class="shadow_l"></td><td class="shadow">';
-				$lisha .= '<table id="table_header_menu_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][2].'_column_header_menu">';
-				$lisha .= '<tr class="__'.$this->matchcode['__id_theme'][2].'_column_header_menu __'.$this->matchcode['__id_theme'][2].'__float_move_column_content">';
-				$lisha .= '<td><div id="lisha_column_move_div_float_forbidden_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][2].'__float_column"></div></td><td><div class="__'.$this->matchcode['__id_theme'][2].'__float_move_column_content" id="lisha_column_move_div_float_content_'.$this->c_id.'">..........</div></td>';
+				$lisha .= '<table id="table_header_menu_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][0].'_column_header_menu">';
+				$lisha .= '<tr class="__'.$this->matchcode['__id_theme'][0].'_column_header_menu __'.$this->matchcode['__id_theme'][0].'__float_move_column_content">';
+				$lisha .= '<td><div id="lisha_column_move_div_float_forbidden_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][0].'__float_column"></div></td><td><div class="__'.$this->matchcode['__id_theme'][0].'__float_move_column_content" id="lisha_column_move_div_float_content_'.$this->c_id.'">..........</div></td>';
 				$lisha .= '</tr>';
 				$lisha .= '</table>';
 				$lisha .= '</td></tr>';
@@ -191,10 +191,10 @@
 				//==================================================================
 				// Title bar
 				//==================================================================
-				if($this->matchcode['__active_title'][2] == true)
+				if($this->matchcode['__active_title'][0] == true)
 				{
-					$lisha .= '<div class="__'.$this->matchcode['__id_theme'][2].'_lisha_title" id="lisha_title_'.$this->c_id.'">';
-					$lisha .= $this->matchcode['__title'][2];
+					$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'_lisha_title" id="lisha_title_'.$this->c_id.'">';
+					$lisha .= $this->matchcode['__title'][0];
 					$lisha .= '</div>';
 				}
 				//==================================================================
@@ -202,7 +202,7 @@
 				//==================================================================
 				// Tools bar
 				//==================================================================
-				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][2].'_lisha_toolbar" id="lisha_toolbar_'.$this->c_id.'">';
+				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'_lisha_toolbar" id="lisha_toolbar_'.$this->c_id.'">';
 				$lisha .= $this->generate_toolbar($p_edit,$p_resultat);
 				$lisha .= '</div>';
 				//==================================================================
@@ -213,9 +213,9 @@
 			//==================================================================
 			// Header page selection
 			//==================================================================
-			if($this->matchcode['__active_top_bar_page'][2] == true && !$p_edit)
+			if($this->matchcode['__active_top_bar_page'][0] == true && !$p_edit)
 			{
-				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][2].'_lisha_header_page_selection" id="lisha_header_page_selection_'.$this->c_id.'">';
+				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'_lisha_header_page_selection" id="lisha_header_page_selection_'.$this->c_id.'">';
 				$lisha .= $this->generate_page_selection($p_resultat,__HEADER__);
 				$lisha .= '</div>';
 			}
@@ -224,7 +224,7 @@
 			//==================================================================
 			// Column header
 			//==================================================================
-			$lisha .= '<div class="__'.$this->matchcode['__id_theme'][2].'__lisha_header__" id="header_'.$this->c_id.'">';
+			$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'__lisha_header__" id="header_'.$this->c_id.'">';
 			$lisha .= '<table style="border-collapse:collapse;height:46px;" cellpadding="0" cellspacing="0" id="table_header_'.$this->c_id.'">';
 			$lisha .= '<tbody>';
 			$lisha .= $this->generate_columns_header($p_edit,$p_resultat,$p_result_header);
@@ -237,25 +237,25 @@
 			// Create the column header menu
 			//==================================================================
 			$lisha .= '<div class="column_menu" id="conteneur_menu_'.$this->c_id.'">';
-			$lisha .= '<div id="lis_column_header_menu_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][2].'_column_header_menu">...</div>';
+			$lisha .= '<div id="lis_column_header_menu_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][0].'_column_header_menu">...</div>';
 			$lisha .= '</div>';
-			$lisha .= '<div class="__'.$this->matchcode['__id_theme'][2].'__internal_lisha" id="internal_lisha_'.$this->c_id.'"></div>';
-			$lisha .= '<div class="__'.$this->matchcode['__id_theme'][2].'_calendar" id="lis_column_calendar_'.$this->c_id.'" >AAAA</div>';
+			$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'__internal_lisha" id="internal_lisha_'.$this->c_id.'"></div>';
+			$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'_calendar" id="lis_column_calendar_'.$this->c_id.'" >AAAA</div>';
 			//==================================================================
 
 			//==================================================================
 			// Data
 			//==================================================================
-			$lisha .= '<div id="lisha_table_mask_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][2].'_table_mask_'.$this->c_id.'"></div>';
+			$lisha .= '<div id="lisha_table_mask_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][0].'_table_mask_'.$this->c_id.'"></div>';
 			// Updating row in progress ?
 			if(!$p_edit)
 			{
-				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][2].'_lisha_content_'.$this->c_id.'" id="liste_'.$this->c_id.'">';
+				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'_lisha_content_'.$this->c_id.'" id="liste_'.$this->c_id.'">';
 			}
 			else
 			{
 				// Updating in progress... So, never page bar displayed so use independent css style from page tool bar
-				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][2].'_lisha_content_updating_'.$this->c_id.'" id="liste_'.$this->c_id.'">';
+				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'_lisha_content_updating_'.$this->c_id.'" id="liste_'.$this->c_id.'">';
 			}
 			$lisha .= '<table style="border-collapse:collapse;" cellpadding="0" cellspacing="0" id="table_liste_'.$this->c_id.'">';
 			$lisha .= $this->generate_data_content($p_resultat,$p_edit);
@@ -267,9 +267,9 @@
 			//==================================================================
 			// Footer page selection
 			//==================================================================
-			if($this->matchcode['__active_bottom_bar_page'][2] == true  && !$p_edit)
+			if($this->matchcode['__active_bottom_bar_page'][0] == true  && !$p_edit)
 			{
-				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][2].'_lisha_footer_page_selection" id="lisha_footer_page_selection_'.$this->c_id.'">';
+				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'_lisha_footer_page_selection" id="lisha_footer_page_selection_'.$this->c_id.'">';
 				$lisha .= $this->generate_page_selection($p_resultat,__FOOTER__);
 				$lisha .= '</div>';
 			}
@@ -349,7 +349,7 @@
 		private function generate_color_line_style()
 		{
 			$style = '/* ---------- Begin color line style ---------- */';
-			foreach($this->matchcode['__internal_color_mask'][2] as $clef => $valeur)
+			foreach($this->matchcode['__internal_color_mask'][0] as $clef => $valeur)
 			{
 				foreach($valeur as $key => $value)
 				{
@@ -445,7 +445,7 @@
 		 ====================================================================*/
 		private function generate_lisha_global_style()
 		{
-			$style = '#lis__'.$this->matchcode['__id_theme'][2].'__lisha_table_'.$this->c_id.'__';
+			$style = '#lis__'.$this->matchcode['__id_theme'][0].'__lisha_table_'.$this->c_id.'__';
 			$style .= '{';
 			$style .= 'width:'.$this->c_width.$this->c_w_unity.';';
 			$style .= 'height:'.$this->c_height.$this->c_h_unity.';';
@@ -464,7 +464,7 @@
 
 			$style .= '}';																																		
 
-			$style .= '#lis__'.$this->matchcode['__id_theme'][2].'__lisha_table_'.$this->c_id.'_child__';
+			$style .= '#lis__'.$this->matchcode['__id_theme'][0].'__lisha_table_'.$this->c_id.'_child__';
 			$style .= '{';
 			$style .= 'width:100%;';
 			$style .= 'height:300px;';
@@ -476,13 +476,13 @@
 			//==================================================================
 			// Build dynamic css background style for body data
 			//==================================================================
-			$style .= '.__'.$this->matchcode['__id_theme'][2].'_lisha_content_'.$this->c_id;
+			$style .= '.__'.$this->matchcode['__id_theme'][0].'_lisha_content_'.$this->c_id;
 			$style .= '{';
 			$style .= 'width: 100%;';
 			$style .= 'overflow-x: auto;';
 			$style .= 'overflow-y: auto;';
 
-			switch($this->matchcode['__id_theme'][2])
+			switch($this->matchcode['__id_theme'][0])
 			{
 				case 'red';
 					$bg_color = "#fff2f2";
@@ -500,13 +500,13 @@
 					$bg_color = "#E8E8E8";
 			}
 
-			if($this->matchcode['__background_picture'][2] == '')
+			if($this->matchcode['__background_picture'][0] == '')
 			{
 				$style .= 'background-color: '.$bg_color.';';
 			}
 			else
 			{
-				$style .= 'background: '.$bg_color.' url('.$this->matchcode['__background_picture'][2].') '.$this->matchcode['__background_repeat'][2].' center center;';
+				$style .= 'background: '.$bg_color.' url('.$this->matchcode['__background_picture'][0].') '.$this->matchcode['__background_repeat'][0].' center center;';
 			}
 
 			if($this->c_h_unity == '%')
@@ -514,19 +514,19 @@
 				$style .= 'position: absolute;';
 				$top_height = 71;
 				$bottom_size = 0;
-				if($this->matchcode['__active_title'][2]) $top_height += 22;
-				if($this->matchcode['__active_top_bar_page'][2]) $top_height += 25;
+				if($this->matchcode['__active_title'][0]) $top_height += 22;
+				if($this->matchcode['__active_top_bar_page'][0]) $top_height += 25;
 				$style .= 'top:'.$top_height.'px;';
-				if($this->matchcode['__active_bottom_bar_page'][2]) $bottom_size += 25;
+				if($this->matchcode['__active_bottom_bar_page'][0]) $bottom_size += 25;
 				$style .= 'bottom:'.$bottom_size.'px;';
 			}
 			else
 			{
 				$style .= 'position: relative;';
 				$height_size = $this->c_height - 142;
-				if(!$this->matchcode['__active_top_bar_page'][2]) $height_size += 25;
-				if(!$this->matchcode['__active_bottom_bar_page'][2]) $height_size += 25;
-				if(!$this->matchcode['__active_title'][2]) $height_size += 22;
+				if(!$this->matchcode['__active_top_bar_page'][0]) $height_size += 25;
+				if(!$this->matchcode['__active_bottom_bar_page'][0]) $height_size += 25;
+				if(!$this->matchcode['__active_title'][0]) $height_size += 22;
 				$style .= 'height: '.$height_size.$this->c_h_unity.';';
 			}
 
@@ -536,13 +536,13 @@
 			//==================================================================
 			// Build dynamic css background style for body data updating mode
 			//==================================================================
-			$style .= '.__'.$this->matchcode['__id_theme'][2].'_lisha_content_updating_'.$this->c_id;
+			$style .= '.__'.$this->matchcode['__id_theme'][0].'_lisha_content_updating_'.$this->c_id;
 			$style .= '{';
 			$style .= 'width: 100%;';
 			$style .= 'overflow-x: auto;';
 			$style .= 'overflow-y: auto;';
 
-			switch($this->matchcode['__id_theme'][2])
+			switch($this->matchcode['__id_theme'][0])
 			{
 				case 'red';
 					$bg_color = "#fff2f2";
@@ -561,13 +561,13 @@
 			}
 
 
-			if($this->matchcode['__background_picture'][2] == '')
+			if($this->matchcode['__background_picture'][0] == '')
 			{
 				$style .= 'background-color: '.$bg_color.';';
 			}
 			else
 			{
-				$style .= 'background: '.$bg_color.' url('.$this->matchcode['__background_picture'][2].') '.$this->matchcode['__background_repeat'][2].' center center;';
+				$style .= 'background: '.$bg_color.' url('.$this->matchcode['__background_picture'][0].') '.$this->matchcode['__background_repeat'][0].' center center;';
 			}
 
 			if($this->c_h_unity == '%')
@@ -575,19 +575,19 @@
 				$style .= 'position: absolute;';
 				$top_height = 71;
 				$bottom_size = 0;
-				if($this->matchcode['__active_title'][2]) $top_height += 22;
-				//if($this->matchcode['__active_top_bar_page'][2]) $top_height += 25;
+				if($this->matchcode['__active_title'][0]) $top_height += 22;
+				//if($this->matchcode['__active_top_bar_page'][0]) $top_height += 25;
 				$style .= 'top:'.$top_height.'px;';
-				//if($this->matchcode['__active_bottom_bar_page'][2]) $bottom_size += 25;
+				//if($this->matchcode['__active_bottom_bar_page'][0]) $bottom_size += 25;
 				$style .= 'bottom:'.$bottom_size.'px;';
 			}
 			else
 			{
 				$style .= 'position: relative;';
 				$height_size = $this->c_height - 142;
-				if(!$this->matchcode['__active_top_bar_page'][2]) $height_size += 25;
-				if(!$this->matchcode['__active_bottom_bar_page'][2]) $height_size += 25;
-				if(!$this->matchcode['__active_title'][2]) $height_size += 22;
+				if(!$this->matchcode['__active_top_bar_page'][0]) $height_size += 25;
+				if(!$this->matchcode['__active_bottom_bar_page'][0]) $height_size += 25;
+				if(!$this->matchcode['__active_title'][0]) $height_size += 22;
 				$style .= 'height: '.$height_size.$this->c_h_unity.';';
 			}
 
@@ -597,7 +597,7 @@
 			//==================================================================
 			// Build dynamic css ...
 			//==================================================================
-			$style .= '.__'.$this->matchcode['__id_theme'][2].'_table_mask_'.$this->c_id;
+			$style .= '.__'.$this->matchcode['__id_theme'][0].'_table_mask_'.$this->c_id;
 			$style .= '{';
 			$style .= 'width: 100%;';
 			$style .= 'overflow-x: auto;';
@@ -610,19 +610,19 @@
 				$style .= 'position: absolute;';
 				$top_height = 71;
 				$bottom_size = 0;
-				if($this->matchcode['__active_title'][2]) $top_height += 22;
-				if($this->matchcode['__active_top_bar_page'][2]) $top_height += 25;
+				if($this->matchcode['__active_title'][0]) $top_height += 22;
+				if($this->matchcode['__active_top_bar_page'][0]) $top_height += 25;
 				$style .= 'top:'.$top_height.'px;';
-				if($this->matchcode['__active_bottom_bar_page'][2]) $bottom_size += 25;
+				if($this->matchcode['__active_bottom_bar_page'][0]) $bottom_size += 25;
 				$style .= 'bottom:'.$bottom_size.'px;';
 			}
 			else
 			{
 				$style .= 'position: relative;';
 				$height_size = $this->c_height - 142;
-				if(!$this->matchcode['__active_top_bar_page'][2]) $height_size += 25;
-				if(!$this->matchcode['__active_bottom_bar_page'][2]) $height_size += 25;
-				if(!$this->matchcode['__active_title'][2]) $height_size += 22;
+				if(!$this->matchcode['__active_top_bar_page'][0]) $height_size += 25;
+				if(!$this->matchcode['__active_bottom_bar_page'][0]) $height_size += 25;
+				if(!$this->matchcode['__active_title'][0]) $height_size += 22;
 				$style .= 'height: '.$height_size.$this->c_h_unity.';';
 			}
 
@@ -632,25 +632,25 @@
 			//==================================================================
 			// Build dynamic css Background style for children
 			//==================================================================
-			$style .= '.__'.$this->matchcode['__id_theme'][2].'_lisha_content_'.$this->c_id.'_child';
+			$style .= '.__'.$this->matchcode['__id_theme'][0].'_lisha_content_'.$this->c_id.'_child';
 			$style .= '{';
 			$style .= 'width: 100%;';
 			$style .= 'overflow-x: auto;';
 			$style .= 'overflow-y: auto;';
 
-			if($this->matchcode['__background_picture'][2] == '')
+			if($this->matchcode['__background_picture'][0] == '')
 			{
 				$style .= 'background-color: '.$bg_color.';';
 			}
 			else
 			{
-				$style .= 'background: '.$bg_color.' url('.$this->matchcode['__background_picture'][2].') '.$this->matchcode['__background_repeat'][2].' center center;';
+				$style .= 'background: '.$bg_color.' url('.$this->matchcode['__background_picture'][0].') '.$this->matchcode['__background_repeat'][0].' center center;';
 			}
 
 			if($this->c_h_unity == '%')
 			{
 				$top_height_size = 118;
-				if(!$this->matchcode['__active_top_bar_page'][2]) $top_height_size -= 25;
+				if(!$this->matchcode['__active_top_bar_page'][0]) $top_height_size -= 25;
 				$style .= 'position: absolute;';
 				$style .= 'top:'.$top_height_size.'px;';
 				$style .= 'bottom:25px;';
@@ -711,7 +711,7 @@
 			$hover_ln_last = '';
 			$hover_ln_next = '';
 
-			if($this->matchcode['__current_page'][2] == 1)
+			if($this->matchcode['__current_page'][0] == 1)
 			{
 				// first, previous
 				$class_fp = ' grey_el';
@@ -731,7 +731,7 @@
 			}
 			else
 			{ 
-				if($this->matchcode['__current_page'][2] == ceil($this->c_recordset_line / $this->c_nb_line))
+				if($this->matchcode['__current_page'][0] == ceil($this->c_recordset_line / $this->c_nb_line))
 				{
 					$class_ln = ' grey_el';
 
@@ -752,7 +752,7 @@
 
 			$nb_line = $this->c_obj_bdd->rds_num_rows($p_resultat);
 
-			if($this->matchcode['__current_page'][2] == ceil($this->c_recordset_line / $this->c_nb_line))
+			if($this->matchcode['__current_page'][0] == ceil($this->c_recordset_line / $this->c_nb_line))
 			{
 				$to = $this->c_limit_min + $nb_line;
 			}
@@ -767,7 +767,7 @@
 			$onkeyup_line = '';
 			if($p_type == __HEADER__)
 			{
-				if($this->matchcode['__active_bottom_bar_page'][2])
+				if($this->matchcode['__active_bottom_bar_page'][0])
 				{
 					$onkeyup_page = 'document.getElementById(\''.$this->c_id.'_page_selection_footer\').value = this.value;';
 					$onkeyup_line = 'document.getElementById(\''.$this->c_id.'_line_selection_footer\').value = this.value;';
@@ -775,19 +775,19 @@
 			}
 			else
 			{
-				if($this->matchcode['__active_top_bar_page'][2])
+				if($this->matchcode['__active_top_bar_page'][0])
 				{
 					$onkeyup_page = 'document.getElementById(\''.$this->c_id.'_line_selection_header\').value = this.value;';
 					$onkeyup_line = 'document.getElementById(\''.$this->c_id.'_line_selection_footer\').value = this.value;';
 				}
 			}
 
-			$html  = '<table class="__'.$this->matchcode['__id_theme'][2].'_table_info" cellpadding="0" cellspacing="0">';
+			$html  = '<table class="__'.$this->matchcode['__id_theme'][0].'_table_info" cellpadding="0" cellspacing="0">';
 			$html .= '<tr>';
 			if($this->c_navbar_nav_button_activate)
 			{
-				$html .= '<td class="__'.$this->matchcode['__id_theme'][2].'_infobar"><div '.$hover_fp_first.' '.$style_fp.' '.$onclick_fp_first.' class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_first __'.$this->matchcode['__id_theme'][2].'_table_page_selection '.$class_fp.'" ></div></td>';
-				$html .= '<td class="__'.$this->matchcode['__id_theme'][2].'_infobar __'.$this->matchcode['__id_theme'][2].'_infobar_separator_right"><div '.$style_fp.' '.$onclick_fp_previous.' class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_previous __'.$this->matchcode['__id_theme'][2].'_table_page_selection '.$class_fp.'" '.$hover_fp_previous.'></div></td>';
+				$html .= '<td class="__'.$this->matchcode['__id_theme'][0].'_infobar"><div '.$hover_fp_first.' '.$style_fp.' '.$onclick_fp_first.' class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_first __'.$this->matchcode['__id_theme'][0].'_table_page_selection '.$class_fp.'" ></div></td>';
+				$html .= '<td class="__'.$this->matchcode['__id_theme'][0].'_infobar __'.$this->matchcode['__id_theme'][0].'_infobar_separator_right"><div '.$style_fp.' '.$onclick_fp_previous.' class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_previous __'.$this->matchcode['__id_theme'][0].'_table_page_selection '.$class_fp.'" '.$hover_fp_previous.'></div></td>';
 			}
 
 			//==================================================================
@@ -796,15 +796,15 @@
 			$nb_page_max = number_format(ceil($this->c_recordset_line / $this->c_nb_line),0,'', htmlentities($_SESSION[$this->c_ssid]['lisha']['thousand_symbol']));
 			$str_length_page = strlen($nb_page_max);
 
-			$html .= '<td class="__'.$this->matchcode['__id_theme'][2].'_infobar __'.$this->matchcode['__id_theme'][2].'_infobar_separator_right __'.$this->matchcode['__id_theme'][2].'_infobar_separator_left"> '.$this->lib(22).' <input id="'.$this->c_id.'_page_selection_'.$p_type.'" class="__'.$this->matchcode['__id_theme'][2].'_input_text __'.$this->matchcode['__id_theme'][2].'__input_h" onkeyup="'.$onkeyup_page.'lisha_input_page_change(event,\''.$this->c_id.'\',this);" type="text" size='.$str_length_page.' value="'.$this->matchcode['__current_page'][2].'"/> '.$this->lib(23).' '.$nb_page_max.'</td>';
+			$html .= '<td class="__'.$this->matchcode['__id_theme'][0].'_infobar __'.$this->matchcode['__id_theme'][0].'_infobar_separator_right __'.$this->matchcode['__id_theme'][0].'_infobar_separator_left"> '.$this->lib(22).' <input id="'.$this->c_id.'_page_selection_'.$p_type.'" class="__'.$this->matchcode['__id_theme'][0].'_input_text __'.$this->matchcode['__id_theme'][0].'__input_h" onkeyup="'.$onkeyup_page.'lisha_input_page_change(event,\''.$this->c_id.'\',this);" type="text" size='.$str_length_page.' value="'.$this->matchcode['__current_page'][0].'"/> '.$this->lib(23).' '.$nb_page_max.'</td>';
 			//==================================================================
 
 			if($this->c_navbar_nav_button_activate)
 			{
-				$html .= '<td class="__'.$this->matchcode['__id_theme'][2].'_infobar __'.$this->matchcode['__id_theme'][2].'_infobar_separator_left"><div '.$style_ln.' '.$onclick_ln_next.' class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_next __'.$this->matchcode['__id_theme'][2].'_table_page_selection '.$class_ln.'" '.$hover_ln_next.'></div></td>';
-				$html .= '<td class="__'.$this->matchcode['__id_theme'][2].'_infobar __'.$this->matchcode['__id_theme'][2].'_infobar_separator_right"><div '.$style_ln.' '.$onclick_ln_last.' class="__'.$this->matchcode['__id_theme'][2].'_table_page_selection '.$class_ln.' __'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_last" '.$hover_ln_last.'></div></td>';
+				$html .= '<td class="__'.$this->matchcode['__id_theme'][0].'_infobar __'.$this->matchcode['__id_theme'][0].'_infobar_separator_left"><div '.$style_ln.' '.$onclick_ln_next.' class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_next __'.$this->matchcode['__id_theme'][0].'_table_page_selection '.$class_ln.'" '.$hover_ln_next.'></div></td>';
+				$html .= '<td class="__'.$this->matchcode['__id_theme'][0].'_infobar __'.$this->matchcode['__id_theme'][0].'_infobar_separator_right"><div '.$style_ln.' '.$onclick_ln_last.' class="__'.$this->matchcode['__id_theme'][0].'_table_page_selection '.$class_ln.' __'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_last" '.$hover_ln_last.'></div></td>';
 			}
-			$html .= '<td class="__'.$this->matchcode['__id_theme'][2].'_infobar __'.$this->matchcode['__id_theme'][2].'_infobar_separator_right __'.$this->matchcode['__id_theme'][2].'_infobar_separator_left"><input id="'.$this->c_id.'_line_selection_'.$p_type.'" type="text" onkeyup="'.$onkeyup_line.'lisha_input_line_per_page_change(event,\''.$this->c_id.'\',this);" value="'.$this->c_nb_line.'" size="2" class="__'.$this->matchcode['__id_theme'][2].'_input_text __'.$this->matchcode['__id_theme'][2].'__input_h"/> ';
+			$html .= '<td class="__'.$this->matchcode['__id_theme'][0].'_infobar __'.$this->matchcode['__id_theme'][0].'_infobar_separator_right __'.$this->matchcode['__id_theme'][0].'_infobar_separator_left"><input id="'.$this->c_id.'_line_selection_'.$p_type.'" type="text" onkeyup="'.$onkeyup_line.'lisha_input_line_per_page_change(event,\''.$this->c_id.'\',this);" value="'.$this->c_nb_line.'" size="2" class="__'.$this->matchcode['__id_theme'][0].'_input_text __'.$this->matchcode['__id_theme'][0].'__input_h"/> ';
 			if($this->c_navbar_txt_line_per_page_activate)
 			{
 				$html .= $this->lib(24);
@@ -812,13 +812,13 @@
 
 			$html .= '</td>';
 			if($this->c_navbar_refresh_button_activate)
-			$html .= '<td class="__'.$this->matchcode['__id_theme'][2].'_infobar __'.$this->matchcode['__id_theme'][2].'_infobar_separator_left __'.$this->matchcode['__id_theme'][2].'_infobar_separator_right"><div onclick="lisha_refresh_page_ajax(\''.$this->c_id.'\');" class="c_pointer __'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_refresh" '.$this->hover_out_lib(11,11).'></div></td>';
+			$html .= '<td class="__'.$this->matchcode['__id_theme'][0].'_infobar __'.$this->matchcode['__id_theme'][0].'_infobar_separator_left __'.$this->matchcode['__id_theme'][0].'_infobar_separator_right"><div onclick="lisha_refresh_page_ajax(\''.$this->c_id.'\');" class="c_pointer __'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_refresh" '.$this->hover_out_lib(11,11).'></div></td>';
 
-			if($this->matchcode['__display_mode'][2] != __CMOD__ && $this->c_navbar_txt_activate)
+			if($this->matchcode['__display_mode'][0] != __CMOD__ && $this->c_navbar_txt_activate)
 			{
-				$html .= '<td class="__'.$this->matchcode['__id_theme'][2].'_infobar __'.$this->matchcode['__id_theme'][2].'_infobar_separator_left">'.$this->lib(25).' : '.number_format(($this->c_limit_min + 1),0,'', htmlentities($_SESSION[$this->c_ssid]['lisha']['thousand_symbol'])).' '.$this->lib(26).' '.$to.' '.$this->lib(27).' '.number_format($this->c_recordset_line,0,'', htmlentities($_SESSION[$this->c_ssid]['lisha']['thousand_symbol'])).' '.$this->lib(28).' ';
+				$html .= '<td class="__'.$this->matchcode['__id_theme'][0].'_infobar __'.$this->matchcode['__id_theme'][0].'_infobar_separator_left">'.$this->lib(25).' : '.number_format(($this->c_limit_min + 1),0,'', htmlentities($_SESSION[$this->c_ssid]['lisha']['thousand_symbol'])).' '.$this->lib(26).' '.$to.' '.$this->lib(27).' '.number_format($this->c_recordset_line,0,'', htmlentities($_SESSION[$this->c_ssid]['lisha']['thousand_symbol'])).' '.$this->lib(28).' ';
 
-				if($this->matchcode['__current_page'][2] == ceil($this->c_recordset_line / $this->c_nb_line) && ceil($this->c_recordset_line / $this->c_nb_line) > 1)
+				if($this->matchcode['__current_page'][0] == ceil($this->c_recordset_line / $this->c_nb_line) && ceil($this->c_recordset_line / $this->c_nb_line) > 1)
 					$html .= str_replace('$x',$nb_line,$this->lib(29));
 
 				$html .= '</td>';
@@ -845,13 +845,13 @@
 			//==================================================================
 			// Create the first column (checkbox and edit button)
 			//==================================================================
-			$html .= '<td align="left" id="header_th_0__'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][2].'__cell_opt_h"><div id="th0_'.$this->c_id.'">';
+			$html .= '<td align="left" id="header_th_0__'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][0].'__cell_opt_h"><div id="th0_'.$this->c_id.'">';
 
 			if(1==1) // Display lisha version or not todo
 			{
 				// Create the first column (checkbox and edit button)
-				$html .= '<div id="thf0_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][2].'__lisha_version" ';
-				if($this->matchcode['__active_ticket'][2])
+				$html .= '<div id="thf0_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][0].'__lisha_version" ';
+				if($this->matchcode['__active_ticket'][0])
 				{
 					$html .= ' style="cursor: pointer;" '.$this->hover_out_lib(79,79).' onclick="window.open(\''.$this->c_dir_obj.'/bugs\');"';
 				}
@@ -867,7 +867,7 @@
 			//==================================================================
 			// Display the resize cursor or not
 			//==================================================================
-			if($this->matchcode['__display_mode'][2] != __CMOD__)
+			if($this->matchcode['__display_mode'][0] != __CMOD__)
 			{
 				$cursor = ' cur_resize';
 			}
@@ -896,12 +896,12 @@
 						if($this->c_columns[$key_col]['order_by'] == __ASC__)
 						{
 							// ASC icon
-							$class_order = ' __'.$this->matchcode['__id_theme'][2].'_ico_sort-ascend __'.$this->matchcode['__id_theme'][2].'_ico';
+							$class_order = ' __'.$this->matchcode['__id_theme'][0].'_ico_sort-ascend __'.$this->matchcode['__id_theme'][0].'_ico';
 						}
 						else 
 						{
 							// DESC icon
-							$class_order = ' __'.$this->matchcode['__id_theme'][2].'_ico_sort-descend __'.$this->matchcode['__id_theme'][2].'_ico';
+							$class_order = ' __'.$this->matchcode['__id_theme'][0].'_ico_sort-descend __'.$this->matchcode['__id_theme'][0].'_ico';
 						}
 
 						// Display the number of order only if there is more than one order clause
@@ -916,12 +916,12 @@
 					//==================================================================
 
 					// Order column
-					$html .= '<td class="__'.$this->matchcode['__id_theme'][2].'_bloc_empty'.$class_order.'"><span class="__lisha_txt_mini_ lisha_txt_top">'.$order_prio.'</span></td>';
+					$html .= '<td class="__'.$this->matchcode['__id_theme'][0].'_bloc_empty'.$class_order.'"><span class="__lisha_txt_mini_ lisha_txt_top">'.$order_prio.'</span></td>';
 
 					//==================================================================
 					// Define order icon
 					//==================================================================
-					if($this->matchcode['__display_mode'][2] != __CMOD__)
+					if($this->matchcode['__display_mode'][0] != __CMOD__)
 					{
 						$onmousedown = 'onmousedown="lisha_resize_column_start('.$key_col.',\''.$this->c_id.'\');"';
 						$ondblclick = 'ondblclick="lisha_mini_size_column('.$key_col.',\''.$this->c_id.'\');" ';
@@ -957,11 +957,11 @@
 
 					$watermark = '';
 					// Cell edition only on non __FORBIDDEN__ column
-					if(isset($val_col["rw_flag"]) && $val_col["rw_flag"] == __FORBIDDEN__ || $val_col['sql_as'] == $this->matchcode['__column_name_group_of_color'][2])
+					if(isset($val_col["rw_flag"]) && $val_col["rw_flag"] == __FORBIDDEN__ || $val_col['sql_as'] == $this->matchcode['__column_name_group_of_color'][0])
 					{
 						// limited action
 						// Display mode ??
-						if(!$this->matchcode['__active_readonly_mode'][2])
+						if(!$this->matchcode['__active_readonly_mode'][0])
 						{
 							$watermark = 'style="opacity:	0.6;"';
 						}
@@ -978,33 +978,33 @@
 					switch($val_col['search_mode'])
 					{
 						case __EXACT__:
-							$operator_class = '__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_equal_operator_little';
+							$operator_class = '__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_equal_operator_little';
 							break;
 						case __CONTAIN__:
-							$operator_class = '__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_contain_operator_little';
+							$operator_class = '__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_contain_operator_little';
 							break;
 						case __PERCENT__:
-							$operator_class = '__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_like_operator_little';
+							$operator_class = '__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_like_operator_little';
 							break;
 						case __GT__:
-							$operator_class = '__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_greather_than_operator_little';
+							$operator_class = '__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_greather_than_operator_little';
 							break;
 						case __LT__:
-							$operator_class = '__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_less_than_operator_little';
+							$operator_class = '__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_less_than_operator_little';
 							break;
 						case __GE__:
-							$operator_class = '__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_greather_or_equal_than_operator_little';
+							$operator_class = '__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_greather_or_equal_than_operator_little';
 							break;
 						case __LE__:
-							$operator_class = '__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_less_or_equal_than_operator_little';
+							$operator_class = '__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_less_or_equal_than_operator_little';
 							break;
 						case __NULL__:
-							$operator_class = '__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_null_operator_little';
+							$operator_class = '__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_null_operator_little';
 							break;
 					}
 					$ope_div = '<span class="lisha_operator_title '.$operator_class.'"></span>';
 
-					$html .= '<td align="left" class="__'.$this->matchcode['__id_theme'][2].'__cell_h nowrap" id="header_th_'.$key_col.'__'.$this->c_id.'"><div '.$event.' class="align_'.$this->c_columns[$key_col]['alignment'].' __'.$this->matchcode['__id_theme'][2].'_column_title" id="th'.$key_col.'_'.$this->c_id.'" '.$watermark.'><span id="span_'.$key_col.'_'.$this->c_id.'">'.$this->c_columns[$key_col]['name'].$ope_div.'</span></div></td>';
+					$html .= '<td align="left" class="__'.$this->matchcode['__id_theme'][0].'__cell_h nowrap" id="header_th_'.$key_col.'__'.$this->c_id.'"><div '.$event.' class="align_'.$this->c_columns[$key_col]['alignment'].' __'.$this->matchcode['__id_theme'][0].'_column_title" id="th'.$key_col.'_'.$this->c_id.'" '.$watermark.'><span id="span_'.$key_col.'_'.$this->c_id.'">'.$this->c_columns[$key_col]['name'].$ope_div.'</span></div></td>';
 					//==================================================================
 
 					//==================================================================
@@ -1012,9 +1012,9 @@
 					//==================================================================
 					if($p_edit != false) $html .= '<td style="padding:0;margin:0;"></td>';
 
-					$html .= '<td '.$lib_redim.' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][2].'__cell_h_resizable'.$cursor.'"><div class="__'.$this->matchcode['__id_theme'][2].'__cell_resize"></div></td>';
-					$html .= '<td '.$lib_redim.' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][2].'__sep_h'.$cursor.'"></td>';
-					$html .= '<td id="right_mark_'.$key_col.'_'.$this->c_id.'" '.$lib_redim.' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][2].'__cell_h_resizable'.$cursor.'"><div class="__'.$this->matchcode['__id_theme'][2].'__cell_resize"></div></td>';
+					$html .= '<td '.$lib_redim.' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][0].'__cell_h_resizable'.$cursor.'"><div class="__'.$this->matchcode['__id_theme'][0].'__cell_resize"></div></td>';
+					$html .= '<td '.$lib_redim.' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][0].'__sep_h'.$cursor.'"></td>';
+					$html .= '<td id="right_mark_'.$key_col.'_'.$this->c_id.'" '.$lib_redim.' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][0].'__cell_h_resizable'.$cursor.'"><div class="__'.$this->matchcode['__id_theme'][0].'__cell_resize"></div></td>';
 					//==================================================================
 				}
 			}
@@ -1028,7 +1028,7 @@
 			$html .= '<tr id="tr_header_input_'.$this->c_id.'">';
 
 			// Create the first column (checkbox and edit button)
-			$html .= '<td align="left" class="__'.$this->matchcode['__id_theme'][2].'__cell_opt_h"><div id="thf0_'.$this->c_id.'" ></div></td>';
+			$html .= '<td align="left" class="__'.$this->matchcode['__id_theme'][0].'__cell_opt_h"><div id="thf0_'.$this->c_id.'" ></div></td>';
 
 			// Id column display counter
 			$id_col_display = 0;
@@ -1046,7 +1046,7 @@
 					}
 					else 
 					{
-						$html .= '<td id="th_0_c'.($key_col).'_'.$this->c_id.'" '.$this->hover_out_lib(17,17).' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][2].'__cell_h_resizable'.$cursor.'"><div class="__'.$this->matchcode['__id_theme'][2].'__cell_resize"></div></td>';
+						$html .= '<td id="th_0_c'.($key_col).'_'.$this->c_id.'" '.$this->hover_out_lib(17,17).' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][0].'__cell_h_resizable'.$cursor.'"><div class="__'.$this->matchcode['__id_theme'][0].'__cell_resize"></div></td>';
 					}
 
 					$onmousedown = 'onmousedown="lisha_resize_column_start('.$key_col.',\''.$this->c_id.'\');"';
@@ -1078,8 +1078,8 @@
 						if(
 							$p_edit != false
 							&& !isset($val_col['rw_flag'])
-							&& $val_col['sql_as'] != $this->matchcode['__column_name_group_of_color'][2]
-							|| ($p_edit != false && isset($val_col['rw_flag']) && $val_col['rw_flag'] != __FORBIDDEN__ && $val_col['sql_as'] != $this->matchcode['__column_name_group_of_color'][2])
+							&& $val_col['sql_as'] != $this->matchcode['__column_name_group_of_color'][0]
+							|| ($p_edit != false && isset($val_col['rw_flag']) && $val_col['rw_flag'] != __FORBIDDEN__ && $val_col['sql_as'] != $this->matchcode['__column_name_group_of_color'][0])
 						  )
 						{
 							// The lisha was in edit mode, search all same value in the column
@@ -1131,8 +1131,8 @@
 						{
 							if(
 								$p_edit != false
-								&& (isset($val_col['rw_flag']) || $val_col['sql_as'] == $this->matchcode['__column_name_group_of_color'][2])
-								&& (isset($val_col['rw_flag']) && $val_col['rw_flag'] == __FORBIDDEN__ || $val_col['sql_as'] == $this->matchcode['__column_name_group_of_color'][2] ) 
+								&& (isset($val_col['rw_flag']) || $val_col['sql_as'] == $this->matchcode['__column_name_group_of_color'][0])
+								&& (isset($val_col['rw_flag']) && $val_col['rw_flag'] == __FORBIDDEN__ || $val_col['sql_as'] == $this->matchcode['__column_name_group_of_color'][0] ) 
 							  )
 							{
 								$state_filter_input = 'disabled';									// Disable the input because edition is forbidden
@@ -1143,23 +1143,23 @@
 
 					if(isset($val_col['filter']))
 					{
-						$class_btn_menu = '__'.$this->matchcode['__id_theme'][2].'_menu_header_on __'.$this->matchcode['__id_theme'][2].'_men_head';
+						$class_btn_menu = '__'.$this->matchcode['__id_theme'][0].'_menu_header_on __'.$this->matchcode['__id_theme'][0].'_men_head';
 					}
 					else 
 					{
 						if(isset($val_col['lov']) && isset($val_col['is_lovable']) && $val_col['is_lovable'] == true)
 						{
-							$class_btn_menu = '__'.$this->matchcode['__id_theme'][2].'_menu_header_lovable __'.$this->matchcode['__id_theme'][2].'_men_head';
+							$class_btn_menu = '__'.$this->matchcode['__id_theme'][0].'_menu_header_lovable __'.$this->matchcode['__id_theme'][0].'_men_head';
 						}
 						else
 						{
 							if(isset($val_col['lov']))
 							{
-								$class_btn_menu = '__'.$this->matchcode['__id_theme'][2].'_menu_header_no_icon __'.$this->matchcode['__id_theme'][2].'_men_head';
+								$class_btn_menu = '__'.$this->matchcode['__id_theme'][0].'_menu_header_no_icon __'.$this->matchcode['__id_theme'][0].'_men_head';
 							}
 							else
 							{
-								$class_btn_menu = '__'.$this->matchcode['__id_theme'][2].'_menu_header __'.$this->matchcode['__id_theme'][2].'_men_head';
+								$class_btn_menu = '__'.$this->matchcode['__id_theme'][0].'_menu_header __'.$this->matchcode['__id_theme'][0].'_men_head';
 							}
 						}
 					}
@@ -1181,7 +1181,7 @@
 
 					/*if(
 						$p_edit != false
-						&& (isset($val_col["rw_flag"]) && $val_col["rw_flag"] == __FORBIDDEN__ || $val_col['sql_as'] == $this->matchcode['__column_name_group_of_color'][2])
+						&& (isset($val_col["rw_flag"]) && $val_col["rw_flag"] == __FORBIDDEN__ || $val_col['sql_as'] == $this->matchcode['__column_name_group_of_color'][0])
 						)
 					{
 						$html .= '<td id="th_1_c'.$key_col.'_'.$this->c_id.'" class="__lisha_unselectable" style="width:20px;"></td>';
@@ -1196,13 +1196,13 @@
 					}
 					else
 					{
-						$html .= '<td id="th_1_c'.$key_col.'_'.$this->c_id.'" class="__lisha_unselectable" style="width:20px;"><div style="width:20px;margin:0;" '.$this->hover_out_lib(21,78).' oncontextmenu="'.$oncontextmenu.'" class="'.$class_btn_menu.'" onclick="lisha_toggle_header_menu(\''.$this->c_id.'\','.$key_col.',\''.$this->matchcode['__active_user_doc'][2].'\');" id="th_menu_'.$key_col.'__'.$this->c_id.'"></div></td>';
+						$html .= '<td id="th_1_c'.$key_col.'_'.$this->c_id.'" class="__lisha_unselectable" style="width:20px;"><div style="width:20px;margin:0;" '.$this->hover_out_lib(21,78).' oncontextmenu="'.$oncontextmenu.'" class="'.$class_btn_menu.'" onclick="lisha_toggle_header_menu(\''.$this->c_id.'\','.$key_col.',\''.$this->matchcode['__active_user_doc'][0].'\');" id="th_menu_'.$key_col.'__'.$this->c_id.'"></div></td>';
 					}
 
 
 
 
-					$html .= '<td id="th_2_c'.$key_col.'_'.$this->c_id.'" align="left" class="__'.$this->matchcode['__id_theme'][2].'__cell_h">';
+					$html .= '<td id="th_2_c'.$key_col.'_'.$this->c_id.'" align="left" class="__'.$this->matchcode['__id_theme'][0].'__cell_h">';
 
 
 					// Add quick way to open calendar
@@ -1217,7 +1217,7 @@
 
 					// Active or not quick search on change into input text box area
 					// Event call when get/lost focus on inpiut box
-					if($this->matchcode['__active_quick_search'][2])
+					if($this->matchcode['__active_quick_search'][0])
 					{
 						$onchange = 'onchange="lisha_col_input_change(\''.$this->c_id.'\','.$key_col.');"';
 					}
@@ -1226,12 +1226,12 @@
 						$onchange = '';
 					}
 
-					$html .= '<div style="margin:0 3px;"><input value="'.str_replace('"','&quot;',$filter_input_value).'" class="__'.$this->matchcode['__id_theme'][2].'__input_h full_width" '.$state_filter_input.' id="th_input_'.$key_col.'__'.$this->c_id.'" '.$contextual_input.' type="text" style="margin: 2px 0;" size=1 onkeyup="lisha_input_keyup_pressed(event)" onkeydown="lisha_input_keydown_pressed(event,\''.$this->c_id.'\','.$key_col.',\''.$this->matchcode['__active_quick_search'][2].'\',\''.$p_edit.'\');" onkeypress="if(document.getElementById(\'chk_edit_c'.$key_col.'_'.$this->c_id.'\') && event.keyCode != 13){document.getElementById(\'chk_edit_c'.$key_col.'_'.$this->c_id.'\').checked=true;};lisha_input_keydown(event,this,\''.$this->c_id.'\','.$key_col.',\''.$this->matchcode['__active_quick_search'][2].'\',\''.$p_edit.'\');"'.$onchange.'/></div>';
+					$html .= '<div style="margin:0 3px;"><input value="'.str_replace('"','&quot;',$filter_input_value).'" class="__'.$this->matchcode['__id_theme'][0].'__input_h full_width" '.$state_filter_input.' id="th_input_'.$key_col.'__'.$this->c_id.'" '.$contextual_input.' type="text" style="margin: 2px 0;" size=1 onkeyup="lisha_input_keyup_pressed(event)" onkeydown="lisha_input_keydown_pressed(event,\''.$this->c_id.'\','.$key_col.',\''.$this->matchcode['__active_quick_search'][0].'\',\''.$p_edit.'\');" onkeypress="if(document.getElementById(\'chk_edit_c'.$key_col.'_'.$this->c_id.'\') && event.keyCode != 13){document.getElementById(\'chk_edit_c'.$key_col.'_'.$this->c_id.'\').checked=true;};lisha_input_keydown(event,this,\''.$this->c_id.'\','.$key_col.',\''.$this->matchcode['__active_quick_search'][0].'\',\''.$p_edit.'\');"'.$onchange.'/></div>';
 
 
 					if($p_edit != false)
 					{
-						if($state_filter_input == '' && $val_col['sql_as'] != $this->matchcode['__column_name_group_of_color'][2])
+						if($state_filter_input == '' && $val_col['sql_as'] != $this->matchcode['__column_name_group_of_color'][0])
 						{
 							$html .= '<td style="width:10px;padding:0;margin:0;"><input '.$this->hover_out_lib(76,76).' type="checkbox" id="chk_edit_c'.$key_col.'_'.$this->c_id.'" style="height:11px;width:11px;margin: 0 5px 0 2px;display:block;"/></td>';
 						}
@@ -1242,14 +1242,14 @@
 					}
 
 					$html .= '</td>';
-					$html .= '<td id="th_3_c'.$key_col.'_'.$this->c_id.'" '.$this->hover_out_lib(17,17).' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][2].'__cell_h_resizable'.$cursor.'"><div class="__'.$this->matchcode['__id_theme'][2].'__cell_resize"></div></td>';
-					$html .= '<td id="th_4_c'.$key_col.'_'.$this->c_id.'" '.$this->hover_out_lib(17,17).' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][2].'__sep_h'.$cursor.'"></td>';
+					$html .= '<td id="th_3_c'.$key_col.'_'.$this->c_id.'" '.$this->hover_out_lib(17,17).' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][0].'__cell_h_resizable'.$cursor.'"><div class="__'.$this->matchcode['__id_theme'][0].'__cell_resize"></div></td>';
+					$html .= '<td id="th_4_c'.$key_col.'_'.$this->c_id.'" '.$this->hover_out_lib(17,17).' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][0].'__sep_h'.$cursor.'"></td>';
 				}
 				$id_col_display = $id_col_display + 1;
 			}
 			//==================================================================
 
-			$html .= '<td id="th_0_c'.($id_col_display+1).'_'.$this->c_id.'" '.$this->hover_out_lib(17,17).' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][2].'__cell_h_resizable'.$cursor.'"><div class="__'.$this->matchcode['__id_theme'][2].'__cell_resize"></div></td>';
+			$html .= '<td id="th_0_c'.($id_col_display+1).'_'.$this->c_id.'" '.$this->hover_out_lib(17,17).' '.$ondblclick.' '.$onmousedown.' class="__'.$this->matchcode['__id_theme'][0].'__cell_h_resizable'.$cursor.'"><div class="__'.$this->matchcode['__id_theme'][0].'__cell_resize"></div></td>';
 			$html.= '<td><div style="width:200px"></div></td>';
 			$html .= '</tr>';
 
@@ -1291,9 +1291,9 @@
 			//==================================================================
 			// Define the columns & rows style
 			//==================================================================
-			($this->matchcode['__active_column_separation'][2]) ? $sep_column = '__'.$this->matchcode['__id_theme'][2].'_col_sep_on' : $sep_column = '__'.$this->matchcode['__id_theme'][2].'_col_sep_off';
-			($this->matchcode['__active_column_separation'][2]) ? $sep_column_end = '__'.$this->matchcode['__id_theme'][2].'_col_sep_end_on' : $sep_column_end = '__'.$this->matchcode['__id_theme'][2].'_col_sep_end_off';
-			($this->matchcode['__active_row_separation'][2]) ? $sep_cell = '__'.$this->matchcode['__id_theme'][2].'_cell_sep' : $sep_cell = '';
+			($this->matchcode['__active_column_separation'][0]) ? $sep_column = '__'.$this->matchcode['__id_theme'][0].'_col_sep_on' : $sep_column = '__'.$this->matchcode['__id_theme'][0].'_col_sep_off';
+			($this->matchcode['__active_column_separation'][0]) ? $sep_column_end = '__'.$this->matchcode['__id_theme'][0].'_col_sep_end_on' : $sep_column_end = '__'.$this->matchcode['__id_theme'][0].'_col_sep_end_off';
+			($this->matchcode['__active_row_separation'][0]) ? $sep_cell = '__'.$this->matchcode['__id_theme'][0].'_cell_sep' : $sep_cell = '';
 			//==================================================================
 
 			// Parsing sql result
@@ -1311,7 +1311,7 @@
 				}
 			   */
 				// Manages the end of line, add a cell_sep if it is the last line
-				if($num_rows == $line) $sep_cell = '__'.$this->matchcode['__id_theme'][2].'_cell_sep';
+				if($num_rows == $line) $sep_cell = '__'.$this->matchcode['__id_theme'][0].'_cell_sep';
 
 				//==================================================================
 				// Build group color
@@ -1320,10 +1320,10 @@
 				// Keep last group in memory
 				$last_group = $current_group_value;
 
-				if(isset($row[$this->matchcode['__column_name_group_of_color'][2]]))
+				if(isset($row[$this->matchcode['__column_name_group_of_color'][0]]))
 				{
-					$current_group_value = $row[$this->matchcode['__column_name_group_of_color'][2]];
-					if(!isset($this->matchcode['__internal_color_mask'][2][$current_group_value]))
+					$current_group_value = $row[$this->matchcode['__column_name_group_of_color'][0]];
+					if(!isset($this->matchcode['__internal_color_mask'][0][$current_group_value]))
 					{
 						// Ok, you try to use group color with no serie of color defined, so back to default group 0
 						$current_group_value = 0;
@@ -1342,9 +1342,9 @@
 				}
 
 				// Cound total lines in current group
-				if(isset($this->matchcode['__internal_color_mask'][2][$current_group_value]))
+				if(isset($this->matchcode['__internal_color_mask'][0][$current_group_value]))
 				{
-					$max_line_in_group = count($this->matchcode['__internal_color_mask'][2][$current_group_value]);
+					$max_line_in_group = count($this->matchcode['__internal_color_mask'][0][$current_group_value]);
 				}
 				else
 				{
@@ -1396,13 +1396,13 @@
 					switch($this->c_type_internal_lisha) 
 					{
 						case '__POSSIBLE_VALUES__':
-							$lisha .= '<tr onclick="lisha_child_insert_into_parent(\'div_td_l'.$line.'_c'.$this->get_id_col_lov($this->matchcode['__return_column_id'][2]).'_'.$this->c_id.'\',\''.$this->c_id_parent.'\','.$this->c_id_parent_column.');" id="l'.$line.'_'.$this->c_id.'" class="lc_'.$current_group_value.$i_color.'_'.$this->c_id.'" '.$this->hover_out_lib(65,65).'>';
+							$lisha .= '<tr onclick="lisha_child_insert_into_parent(\'div_td_l'.$line.'_c'.$this->get_id_col_lov($this->matchcode['__return_column_id'][0]).'_'.$this->c_id.'\',\''.$this->c_id_parent.'\','.$this->c_id_parent_column.');" id="l'.$line.'_'.$this->c_id.'" class="lc_'.$current_group_value.$i_color.'_'.$this->c_id.'" '.$this->hover_out_lib(65,65).'>';
 							break;
 						case '__ADV_FILTER__':
 							$lisha .= '<tr id="l'.$line.'_'.$this->c_id.'" class="lc_'.$current_group_value.$i_color.'_'.$this->c_id.'">';
 							break;
 						case '__LOAD_FILTER__':
-							$lisha .= '<tr onclick="lisha_load_filter(\''.$this->c_id_parent.'\',\'div_td_l'.$line.'_c'.$this->get_id_col_lov($this->matchcode['__return_column_id'][2]).'_'.$this->c_id.'\');" id="l'.$line.'_'.$this->c_id.'" class="lc_'.$current_group_value.$i_color.'_'.$this->c_id.'" >';
+							$lisha .= '<tr onclick="lisha_load_filter(\''.$this->c_id_parent.'\',\'div_td_l'.$line.'_c'.$this->get_id_col_lov($this->matchcode['__return_column_id'][0]).'_'.$this->c_id.'\');" id="l'.$line.'_'.$this->c_id.'" class="lc_'.$current_group_value.$i_color.'_'.$this->c_id.'" >';
 							break;
 						case '__COLUMN_LIST__':
 							if($p_edit)
@@ -1421,7 +1421,7 @@
 				//==================================================================
 				// Create the first column (checkbox and edit button)
 				//==================================================================
-				$lisha .= '<td align="left" id="td_l'.$line.'_c0_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][2].'__cell_opt '.$sep_cell.'"><div id="div_td_l'.$line.'_c0_'.$this->c_id.'"><table><tr>';
+				$lisha .= '<td align="left" id="td_l'.$line.'_c0_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][0].'__cell_opt '.$sep_cell.'"><div id="div_td_l'.$line.'_c0_'.$this->c_id.'"><table><tr>';
 				if(!$p_edit)
 				{
 					$lisha .= '<td><input class="lisha_checkbox" '.$checked.' onclick="lisha_checkbox('.$line.',event,true,\''.$this->c_id.'\');" id="chk_l'.$line.'_c0_'.$this->c_id.'" type="checkbox" '.$this->hover_out_lib(77,77).'/></td>';
@@ -1432,13 +1432,13 @@
 				}
 
 				// If the lisha is in read & write mode, add the edit button
-				if($this->matchcode['__active_readonly_mode'][2] == __RW__ && !$p_edit)
+				if($this->matchcode['__active_readonly_mode'][0] == __RW__ && !$p_edit)
 				{
-					$lisha .= '<td style="padding:0;vertical-align:middle;"><div '.$this->hover_out_lib(16,16).' onclick="edit_lines(event,'.$line.',\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_page_edit"></div></td>';
+					$lisha .= '<td style="padding:0;vertical-align:middle;"><div '.$this->hover_out_lib(16,16).' onclick="edit_lines(event,'.$line.',\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_page_edit"></div></td>';
 				}
 				else
 				{
-					$lisha .= '<td style="padding:0;vertical-align:middle;"><div '.$this->hover_out_lib(16,16).' onclick="edit_lines(event,'.$line.',\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_page_edit" style="visibility:hidden;"></div></td>';
+					$lisha .= '<td style="padding:0;vertical-align:middle;"><div '.$this->hover_out_lib(16,16).' onclick="edit_lines(event,'.$line.',\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_page_edit" style="visibility:hidden;"></div></td>';
 				}
 
 				$lisha .= '</tr></table></div></td>';
@@ -1454,7 +1454,7 @@
 						($line == 1) ? $key_cold_l = 'id="td_0_c'.$key_col.'_'.$this->c_id.'"' : $key_cold_l = '';
 
 
-						$lisha .= '<td '.$key_cold_l.' class="'.$sep_cell.$this->c_columns[$key_col]['nowrap'].'"><div class="__'.$this->matchcode['__id_theme'][2].'__cell_resize"></div></td>';
+						$lisha .= '<td '.$key_cold_l.' class="'.$sep_cell.$this->c_columns[$key_col]['nowrap'].'"><div class="__'.$this->matchcode['__id_theme'][0].'__cell_resize"></div></td>';
 
 						$content = $this->get_data_in_html($key_col,$row[$this->c_columns[$key_col]['sql_as']]);
 						// Data column
@@ -1487,7 +1487,7 @@
 
 							// Disable checkbox if you are currently updating set of rows
 							// Disable checkbox if cell update disable
-							if($p_edit || $this->matchcode['__active_read_only_cells_edit'][2] || $this->matchcode['__active_readonly_mode'][2])
+							if($p_edit || $this->matchcode['__active_read_only_cells_edit'][0] || $this->matchcode['__active_readonly_mode'][0])
 							{
 								$content .= ' DISABLED>';
 							}
@@ -1528,13 +1528,13 @@
 						if(
 							isset($this->c_columns[$key_col]["rw_flag"])
 							&& $val_col["rw_flag"] == __FORBIDDEN__
-							|| $val_col['sql_as'] == $this->matchcode['__column_name_group_of_color'][2]
+							|| $val_col['sql_as'] == $this->matchcode['__column_name_group_of_color'][0]
 							|| $p_edit
 						  )
 						{
 							// limited action
 							// Display mode ??
-							if(!$this->matchcode['__active_readonly_mode'][2])
+							if(!$this->matchcode['__active_readonly_mode'][0])
 							{
 								$watermark = 'style="opacity:	0.6;"';
 							}
@@ -1556,7 +1556,7 @@
 							}
 
 							// Currently forbidden any cell update if __LISTED__ compel on column
-							if($this->matchcode['__active_readonly_mode'][2] == __RW__ && !$p_edit && !$this->matchcode['__active_read_only_cells_edit'][2] && $this->c_columns[$key_col]["rw_flag"] != __LISTED__)
+							if($this->matchcode['__active_readonly_mode'][0] == __RW__ && !$p_edit && !$this->matchcode['__active_read_only_cells_edit'][0] && $this->c_columns[$key_col]["rw_flag"] != __LISTED__)
 							{
 								$edit_cell = 'onclick=lisha_StopEventHandler(event);edit_cell(event,\''.$line.'\',\''.$key_col.'\',\''.$this->c_id.'\',\''.$this->c_columns[$key_col]["data_type"].'\');';
 							}
@@ -1565,26 +1565,28 @@
 
 						// if no visible HTML content
 						// then click on whole <td>
-						if(strlen($content) == 0)
+						// TODO Manage invisible HTML string
+						$my_tmp = str_replace(' ','',$content); // Work around about blank string
+						if(strlen($content) == 0 || strlen($my_tmp) == 0)
 						{
-							$lisha .= '<td '.$edit_cell.$key_cold_id_l1.' align="'.$this->c_columns[$key_col]['alignment'].'"  class="__'.$this->matchcode['__id_theme'][2].'__cell '.$sep_cell.''.$this->c_columns[$key_col]['nowrap'].'"><div id="div_td_l'.$line.'_c'.$key_col.'_'.$this->c_id.'" class="div_content" '.$watermark.'>'.$content.'</div></td>';
+							$lisha .= '<td '.$edit_cell.$key_cold_id_l1.' align="'.$this->c_columns[$key_col]['alignment'].'"  class="__'.$this->matchcode['__id_theme'][0].'__cell '.$sep_cell.''.$this->c_columns[$key_col]['nowrap'].'"><div id="div_td_l'.$line.'_c'.$key_col.'_'.$this->c_id.'" class="div_content" '.$watermark.'>'.$content.'</div></td>';
 						}
 						else
 						{
-							$lisha .= '<td '.$key_cold_id_l1.' align="'.$this->c_columns[$key_col]['alignment'].'"  class="__'.$this->matchcode['__id_theme'][2].'__cell '.$sep_cell.''.$this->c_columns[$key_col]['nowrap'].'"><div id="div_td_l'.$line.'_c'.$key_col.'_'.$this->c_id.'" class="div_content" '.$watermark.'><span '.$edit_cell.'>'.$content.'</span></div></td>';
+							$lisha .= '<td '.$key_cold_id_l1.' align="'.$this->c_columns[$key_col]['alignment'].'"  class="__'.$this->matchcode['__id_theme'][0].'__cell '.$sep_cell.''.$this->c_columns[$key_col]['nowrap'].'"><div id="div_td_l'.$line.'_c'.$key_col.'_'.$this->c_id.'" class="div_content" '.$watermark.'><span '.$edit_cell.'>'.$content.'</span></div></td>';
 						}
 
 						// Right border column
-						$lisha .= '<td class="'.$sep_cell.$this->c_columns[$key_col]['nowrap'].'" '.$key_cold_id_l2.'><div class="__'.$this->matchcode['__id_theme'][2].'__cell_resize"></div></td>';
+						$lisha .= '<td class="'.$sep_cell.$this->c_columns[$key_col]['nowrap'].'" '.$key_cold_id_l2.'><div class="__'.$this->matchcode['__id_theme'][0].'__cell_resize"></div></td>';
 
 						// Sep column
 						if($key_col != $last_display_col)
 						{
-							$lisha .= '<td '.$key_cold_id_l3.' class="__'.$this->matchcode['__id_theme'][2].'__sep '.$sep_column.'"></td>';
+							$lisha .= '<td '.$key_cold_id_l3.' class="__'.$this->matchcode['__id_theme'][0].'__sep '.$sep_column.'"></td>';
 						}
 						else 
 						{
-							$lisha .= '<td '.$key_cold_id_l3.' class="__'.$this->matchcode['__id_theme'][2].'__sep '.$sep_column_end.'"></td>';
+							$lisha .= '<td '.$key_cold_id_l3.' class="__'.$this->matchcode['__id_theme'][0].'__sep '.$sep_column_end.'"></td>';
 						}
 					}
 				}
@@ -1601,23 +1603,26 @@
 		/**===================================================================*/
 
 
-		/**
+		/**==================================================================
 		 * Get the data in html format
-		 * @param integer $p_column id of the column
-		 * @param string $data data of the row
-		 */
-		private function get_data_in_html($p_column,$data)
+		 *
+		 * @p_column	: Column identifier
+		 * @p_data		: data to display in column cell
+		====================================================================*/
+		private function get_data_in_html($p_column,$p_data)
 		{
+			$p_data = str_replace(' ','&nbsp;',$p_data);
 			switch($this->c_columns[$p_column]['data_type'])
 			{
 				case __BBCODE__:
-					return $this->convertBBCodetoHTML($data);
+					return $this->convertBBCodetoHTML($p_data);
 					break;
 				default:
-					return $data;
+					return $p_data;
 					break;
 			}
 		}
+		/**===================================================================*/
 
 
 		/**==================================================================
@@ -1672,7 +1677,7 @@
 			$html  = '<table style="border:0 margin:0;padding:0;height:22px;" cellpadding="0" cellspacing="0">';
 			$html .= '<tr style="border:0;">';
 
-			if($this->matchcode['__active_global_search'][2] == true)
+			if($this->matchcode['__active_global_search'][0] == true)
 			{
 				if(count($this->c_columns) > 1)
 				{
@@ -1687,23 +1692,23 @@
 						{
 							$w_search_icon = '_ico_search_mode';
 						}
-						$html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].$w_search_icon.'" '.$this->hover_out_lib(0,57).' onclick="lisha_display_prompt_global_search(\''.$this->c_id.'\',\''.$this->string_global_search.'\');"></div></td>';
+						$html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].$w_search_icon.'" '.$this->hover_out_lib(0,57).' onclick="lisha_display_prompt_global_search(\''.$this->c_id.'\',\''.$this->string_global_search.'\');"></div></td>';
 					}
 					else
 					{
-						$html .= '<td class="btn_toolbar toolbar_separator_right grey_el"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_search_mode" '.$this->hover_out_lib(0,57).'></div></td>';
+						$html .= '<td class="btn_toolbar toolbar_separator_right grey_el"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_search_mode" '.$this->hover_out_lib(0,57).'></div></td>';
 					}
 				}
 			}
 
-			if($this->matchcode['__display_mode'][2] != __CMOD__)
+			if($this->matchcode['__display_mode'][0] != __CMOD__)
 			{
 				if($p_edit == false)
 				{
-					//$html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_column_display" onclick="/*lisha_hide_display_col_lov(\''.$this->c_id.'\',__HIDE_DISPLAY_COLUMN__);*/" '.$this->hover_out_lib(1,1).'></div></td>';
-					$html .= '<td class="toolbar_separator_right btn_toolbar"><div id="'.$this->c_id.'_button_columns_list" onclick="list_columns(\''.$this->c_id.'\',__COLUMN_LIST__);" class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_col_feat" '.$this->hover_out_lib(1,26).'></div></td>';
+					//$html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_column_display" onclick="/*lisha_hide_display_col_lov(\''.$this->c_id.'\',__HIDE_DISPLAY_COLUMN__);*/" '.$this->hover_out_lib(1,1).'></div></td>';
+					$html .= '<td class="toolbar_separator_right btn_toolbar"><div id="'.$this->c_id.'_button_columns_list" onclick="list_columns(\''.$this->c_id.'\',__COLUMN_LIST__);" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_col_feat" '.$this->hover_out_lib(1,26).'></div></td>';
 
-					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_save_pref" '.$this->hover_out_lib(3,54).' onclick="lisha_display_prompt_create_filter(\''.$this->c_id.'\');"></div></td>';
+					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_save_pref" '.$this->hover_out_lib(3,54).' onclick="lisha_display_prompt_create_filter(\''.$this->c_id.'\');"></div></td>';
 					if($this->any_filter)
 					{
 						// Load custom lov available
@@ -1714,43 +1719,43 @@
 						// Load custom disable
 						$load_lov_grey = 'grey_el"'.$this->hover_out_lib(129,62);
 					}
-					$html .= '<td class="btn_toolbar toolbar_separator_right"><div id="'.$this->c_id.'_button_load_filter" class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_load '.$load_lov_grey.'></div></td>';
+					$html .= '<td class="btn_toolbar toolbar_separator_right"><div id="'.$this->c_id.'_button_load_filter" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_load '.$load_lov_grey.'></div></td>';
 				}
 				else
 				{
-					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_save_pref grey_el" '.$this->hover_out_lib(3,54).'></div></td>';
-					$html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_load grey_el" '.$this->hover_out_lib(4,6).'></div></td>';
+					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_save_pref grey_el" '.$this->hover_out_lib(3,54).'></div></td>';
+					$html .= '<td class="btn_toolbar toolbar_separator_right"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_load grey_el" '.$this->hover_out_lib(4,6).'></div></td>';
 				}
 			}
 
 			if($p_edit)
 			{
-				$html .= '<td class="toolbar_separator_left toolbar_separator_right btn_toolbar"><div onclick="lisha_cancel_edit(\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_back" '.$this->hover_out_lib(78,53).'></div></td>';
+				$html .= '<td class="toolbar_separator_left toolbar_separator_right btn_toolbar"><div onclick="lisha_cancel_edit(\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_back" '.$this->hover_out_lib(78,53).'></div></td>';
 			}
 			else
 			{
-				$html .= '<td class="toolbar_separator_left btn_toolbar"><div onclick="lisha_reset(\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_display_table" '.$this->hover_out_lib(5,56).'></div></td>';
+				$html .= '<td class="toolbar_separator_left btn_toolbar"><div onclick="lisha_reset(\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_display_table" '.$this->hover_out_lib(5,56).'></div></td>';
 			}
 
-			if($this->matchcode['__active_readonly_mode'][2] == __RW__)
+			if($this->matchcode['__active_readonly_mode'][0] == __RW__)
 			{
-				if($this->matchcode['__active_insert_button'][2] == true && $this->c_type_internal_lisha != __LOAD_FILTER__ && $this->c_type_internal_lisha != __COLUMN_LIST__)
+				if($this->matchcode['__active_insert_button'][0] == true && $this->c_type_internal_lisha != __LOAD_FILTER__ && $this->c_type_internal_lisha != __COLUMN_LIST__)
 				{
-					$html .= '<td class="toolbar_separator_left btn_toolbar"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_add_line" onclick="add_line(\''.$this->c_id.'\');" '.$this->hover_out_lib(6,42).'></div></td>';
+					$html .= '<td class="toolbar_separator_left btn_toolbar"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_add_line" onclick="add_line(\''.$this->c_id.'\');" '.$this->hover_out_lib(6,42).'></div></td>';
 				}
 
 				if($p_edit != false)
 				{
-					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_save" onclick="save_lines(event,\''.$this->c_id.'\',\'add\');" '.$this->hover_out_lib(50,54).'></div></td>';
+					$html .= '<td class="btn_toolbar toolbar_separator_left"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_save" onclick="save_lines(event,\''.$this->c_id.'\',\'add\');" '.$this->hover_out_lib(50,54).'></div></td>';
 				}
 				else
 				{
-					$html .= '<td class="btn_toolbar grey_el" id="lisha_td_toolbar_edit_'.$this->c_id.'"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_page_edit " onclick="if(count_selected_lines(\''.$this->c_id.'\') > 0)edit_lines(event,null,\''.$this->c_id.'\');" '.$this->hover_out_lib(7,49).'></div></td>';
+					$html .= '<td class="btn_toolbar grey_el" id="lisha_td_toolbar_edit_'.$this->c_id.'"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_page_edit " onclick="if(count_selected_lines(\''.$this->c_id.'\') > 0)edit_lines(event,null,\''.$this->c_id.'\');" '.$this->hover_out_lib(7,49).'></div></td>';
 				}
 
-				if($this->matchcode['__active_delete_button'][2] == true && $this->c_type_internal_lisha != __COLUMN_LIST__)
+				if($this->matchcode['__active_delete_button'][0] == true && $this->c_type_internal_lisha != __COLUMN_LIST__)
 				{
-					$html .= '<td class="btn_toolbar toolbar_separator_right grey_el" id="lisha_td_toolbar_delete_'.$this->c_id.'"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_delete" onclick="if(count_selected_lines(\''.$this->c_id.'\') > 0)delete_lines(\''.$this->c_id.'\',false);" '.$this->hover_out_lib(8,48).'></div></td>';
+					$html .= '<td class="btn_toolbar toolbar_separator_right grey_el" id="lisha_td_toolbar_delete_'.$this->c_id.'"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_delete" onclick="if(count_selected_lines(\''.$this->c_id.'\') > 0)delete_lines(\''.$this->c_id.'\',false);" '.$this->hover_out_lib(8,48).'></div></td>';
 				}
 				else
 				{
@@ -1784,17 +1789,17 @@
 				$available_excel_export = 'grey_el';
 			}
 
-			$html .= '<td id="lisha_td_toolbar_excel_'.$this->c_id.'" onclick="export_list(\''.$this->c_id.'\');" class="toolbar_separator btn_toolbar toolbar_separator_left '.$available_excel_export.'"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_excel" '.$this->hover_out_lib(9,61).'></div></td>';
+			$html .= '<td id="lisha_td_toolbar_excel_'.$this->c_id.'" onclick="export_list(\''.$this->c_id.'\');" class="toolbar_separator btn_toolbar toolbar_separator_left '.$available_excel_export.'"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_excel" '.$this->hover_out_lib(9,61).'></div></td>';
 
 			//==================================================================
 
-			if($this->matchcode['__active_user_doc'][2])
+			if($this->matchcode['__active_user_doc'][0])
 			{
-				$html .= '<td class="btn_toolbar"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_help" onclick="window.open(\''.$this->c_dir_obj.'\');" '.$this->hover_out_lib(10,1).'></div></td>';
+				$html .= '<td class="btn_toolbar"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_help" onclick="window.open(\''.$this->c_dir_obj.'\');" '.$this->hover_out_lib(10,1).'></div></td>';
 			}
-			if($this->matchcode['__active_tech_doc'][2])
+			if($this->matchcode['__active_tech_doc'][0])
 			{
-				$html .= '<td class="btn_toolbar"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_tech_help" onclick="window.open(\''.$this->c_dir_obj.'/indextech.php\');" '.$this->hover_out_lib(80,1).'></div></td>';
+				$html .= '<td class="btn_toolbar"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_tech_help" onclick="window.open(\''.$this->c_dir_obj.'/indextech.php\');" '.$this->hover_out_lib(80,1).'></div></td>';
 			}
 			$html .= '<td><div id="lis__lisha_help_hover_'.$this->c_id.'__" class="nowrap"></div></td>';
 			$html .= '</tr>';
@@ -1814,17 +1819,17 @@
 		====================================================================*/
 		private function hover_out_lib($id_lib,$id_help)
 		{
-			return 'onmouseout="lisha_lib_out(\''.$this->c_id.'\');" onmouseover="lisha_lib_hover('.$id_lib.','.$id_help.',\''.$this->c_id.'\',\''.$this->matchcode['__active_user_doc'][2].'\');"';
+			return 'onmouseout="lisha_lib_out(\''.$this->c_id.'\');" onmouseover="lisha_lib_hover('.$id_lib.','.$id_help.',\''.$this->c_id.'\',\''.$this->matchcode['__active_user_doc'][0].'\');"';
 		}
 		/**===================================================================*/
 
 		public function generate_lmod_header()
 		{
-			$html = '<div id="lisha_lmod_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][2].'_lisha_lmod">
+			$html = '<div id="lisha_lmod_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][0].'_lisha_lmod">
 				<table class="shadow" summary="">
 					<tr>
 						<td class="shadow_l_t"></td>
-						<td colspan=2 rowspan=2 class="no_pad_marg"><div id="lmod_lisha_container_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][2].'_lmod_container"></div></td>
+						<td colspan=2 rowspan=2 class="no_pad_marg"><div id="lmod_lisha_container_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][0].'_lmod_container"></div></td>
 					</tr>
 					<tr>
 						<td class="shadow_l"></td>
@@ -1999,24 +2004,24 @@
 			}
 			//==================================================================
 
-			$calendar = '<div class="__'.$this->matchcode['__id_theme'][2].'_date_select" style="/*text-align:center;*/">
+			$calendar = '<div class="__'.$this->matchcode['__id_theme'][0].'_date_select" style="/*text-align:center;*/">
 							<form style="width:100px;margin:0 auto;" action="javascript:lisha_load_date(\''.$this->c_id.'\','.$p_column.');">
 								<table style="border-collapse:collapse;">
 									<input type="submit" value="" style="border:0;width:0;height:0;margin:0;padding:0;visibility:hidden;float:left;"/>
 										<tr>
-											<td><div class="'.$previous_year_class.' c_pointer __'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_top_calendar" '.$this->hover_out_lib(73,73).' onclick="'.$previous_year_click.'"></div></td>
-											<td><div class="'.$previous_month_class.' c_pointer __'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_top_calendar" '.$this->hover_out_lib(68,68).' onclick="'.$previous_month_click.'"></div></td>
-											<td><div class="'.$previous_day_class.' c_pointer __'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_top_calendar" '.$this->hover_out_lib(70,70).' onclick="'.$previous_day_click.'"></div></td>
+											<td><div class="'.$previous_year_class.' c_pointer __'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_top_calendar" '.$this->hover_out_lib(73,73).' onclick="'.$previous_year_click.'"></div></td>
+											<td><div class="'.$previous_month_class.' c_pointer __'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_top_calendar" '.$this->hover_out_lib(68,68).' onclick="'.$previous_month_click.'"></div></td>
+											<td><div class="'.$previous_day_class.' c_pointer __'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_top_calendar" '.$this->hover_out_lib(70,70).' onclick="'.$previous_day_click.'"></div></td>
 										</tr>
 										</tr>
-											<td><input id="lisha_cal_year_'.$this->c_id.'" type="text" class="__'.$this->matchcode['__id_theme'][2].'__input_h" style="width:40px;text-align:center;" value="'.$actual_year.'"/></td>
-											<td><input id="lisha_cal_month_'.$this->c_id.'" type="text" class="__'.$this->matchcode['__id_theme'][2].'__input_h" style="width:20px;text-align:center;" value="'.$actual_month.'"/></td>
-											<td><input id="lisha_cal_day_'.$this->c_id.'" type="text" class="__'.$this->matchcode['__id_theme'][2].'__input_h" style="width:20px;text-align:center;" value="'.$actual_day.'"/></td>
+											<td><input id="lisha_cal_year_'.$this->c_id.'" type="text" class="__'.$this->matchcode['__id_theme'][0].'__input_h" style="width:40px;text-align:center;" value="'.$actual_year.'"/></td>
+											<td><input id="lisha_cal_month_'.$this->c_id.'" type="text" class="__'.$this->matchcode['__id_theme'][0].'__input_h" style="width:20px;text-align:center;" value="'.$actual_month.'"/></td>
+											<td><input id="lisha_cal_day_'.$this->c_id.'" type="text" class="__'.$this->matchcode['__id_theme'][0].'__input_h" style="width:20px;text-align:center;" value="'.$actual_day.'"/></td>
 										</tr>
 										<tr>
-											<td><div class="c_pointer __'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_bottom_calendar" '.$this->hover_out_lib(72,72).' onclick="lisha_load_date(\''.$this->c_id.'\','.$p_column.','.$next_year.',null,null);"></div></td>
-											<td><div class="'.$next_month_class.' c_pointer __'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_bottom_calendar" '.$this->hover_out_lib(67,67).' onclick="'.$next_month_click.'"></div></td>
-											<td><div class="'.$next_day_class.' c_pointer __'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_bottom_calendar" '.$this->hover_out_lib(71,71).' onclick="'.$next_day_click.'"></div></td>
+											<td><div class="c_pointer __'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_bottom_calendar" '.$this->hover_out_lib(72,72).' onclick="lisha_load_date(\''.$this->c_id.'\','.$p_column.','.$next_year.',null,null);"></div></td>
+											<td><div class="'.$next_month_class.' c_pointer __'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_bottom_calendar" '.$this->hover_out_lib(67,67).' onclick="'.$next_month_click.'"></div></td>
+											<td><div class="'.$next_day_class.' c_pointer __'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_bottom_calendar" '.$this->hover_out_lib(71,71).' onclick="'.$next_day_click.'"></div></td>
 										</tr>
 								</table>
 							</form>
@@ -2082,11 +2087,11 @@
 			//==================================================================
 
 			$calendar .= '</table>';
-			$calendar .= '<div class="__'.$this->matchcode['__id_theme'][2].'_calendar_footer">
+			$calendar .= '<div class="__'.$this->matchcode['__id_theme'][0].'_calendar_footer">
 							<table>
 								<tr class="lisha_calendar">
 									<td class="lisha_calendar"><div style="width:130px;font-family: arial, sans-serif;font-size: 11px;overflow: hidden;height:15px;">'.$_SESSION[$this->c_ssid]['lisha']['lib'][$day_of_date+92].' '.$actual_day.' '.$_SESSION[$this->c_ssid]['lisha']['lib'][$actual_month+80].' '.$actual_year.'</div></td>
-									<td class="lisha_calendar"><div class="__'.$this->matchcode['__id_theme'][2].'_ico __'.$this->matchcode['__id_theme'][2].'_ico_cancel hover" '.$this->hover_out_lib(32,32).' style="float:right;margin-right:5px;" onclick="lisha_close_calendar(\''.$this->c_id.'\')"></div></td>
+									<td class="lisha_calendar"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_cancel hover" '.$this->hover_out_lib(32,32).' style="float:right;margin-right:5px;" onclick="lisha_close_calendar(\''.$this->c_id.'\')"></div></td>
 								</tr>
 							</table>
 						</div>';
@@ -2157,7 +2162,7 @@
 											$p_color_text_selected,
 											$p_group)
 		{
-			$this->matchcode['__internal_color_mask'][2][$p_group][] = array("color_code" => $p_color_hex,
+			$this->matchcode['__internal_color_mask'][0][$p_group][] = array("color_code" => $p_color_hex,
 													"size_text" => $p_size_hex,
 													"color_hover_code" => $p_color_hover_hex,
 													"size_hover_code" => $p_size_hover_hex,
@@ -2198,7 +2203,7 @@
 					if(!isset($p_column_name))
 					{
 						// No column name that means use internal feature recorded in matchcode array
-						$this->matchcode[$p_attribute][2] = $p_value;
+						$this->matchcode[$p_attribute][0] = $p_value;
 					}
 					else
 					{
@@ -2249,7 +2254,7 @@
 					if(!isset($p_column_name))
 					{
 						// No column name that means use internal feature is recorded in matchcode array
-						return $this->matchcode[$p_attribute][2];
+						return $this->matchcode[$p_attribute][0];
 					}
 					else
 					{
