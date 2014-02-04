@@ -40,7 +40,7 @@
 	//==================================================================
 	// Lisha display setup
 	//==================================================================
-	$obj_lisha_tran->define_nb_line(30);											// Row by page
+	$obj_lisha_tran->define_nb_line(10);											// Row by page
 	$obj_lisha_tran->define_size(100,'%',100,'%');									// Size of object
 	$obj_lisha_tran->define_attribute('__active_readonly_mode', __RW__);			// Read & Write
 	$obj_lisha_tran->define_attribute('__id_theme','red');							// Define style

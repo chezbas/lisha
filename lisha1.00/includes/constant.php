@@ -2,7 +2,6 @@
 	define("__R__",true);											// Readonly
 	define("__RW__",false);											// Read & Write
 	define("__TEXT__","text");										// text
-	define("__HTML__","html");										// html ??? TO check with content like <!--
 	define("__BBCODE__","bbcode");									// bbcode
 	define("__DATE__","date");										// date
 	define("__CHECKBOX__","checkbox");								// checkbox type

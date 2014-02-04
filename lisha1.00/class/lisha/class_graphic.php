@@ -804,7 +804,8 @@
 				$html .= '<td class="__'.$this->matchcode['__id_theme'][0].'_infobar __'.$this->matchcode['__id_theme'][0].'_infobar_separator_left"><div '.$style_ln.' '.$onclick_ln_next.' class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_next __'.$this->matchcode['__id_theme'][0].'_table_page_selection '.$class_ln.'" '.$hover_ln_next.'></div></td>';
 				$html .= '<td class="__'.$this->matchcode['__id_theme'][0].'_infobar __'.$this->matchcode['__id_theme'][0].'_infobar_separator_right"><div '.$style_ln.' '.$onclick_ln_last.' class="__'.$this->matchcode['__id_theme'][0].'_table_page_selection '.$class_ln.' __'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_last" '.$hover_ln_last.'></div></td>';
 			}
-			$html .= '<td class="__'.$this->matchcode['__id_theme'][0].'_infobar __'.$this->matchcode['__id_theme'][0].'_infobar_separator_right __'.$this->matchcode['__id_theme'][0].'_infobar_separator_left"><input id="'.$this->c_id.'_line_selection_'.$p_type.'" type="text" onkeyup="'.$onkeyup_line.'lisha_input_line_per_page_change(event,\''.$this->c_id.'\',this);" value="'.$this->c_nb_line.'" size="2" class="__'.$this->matchcode['__id_theme'][0].'_input_text __'.$this->matchcode['__id_theme'][0].'__input_h"/> ';
+			$str_length_page = strlen($this->c_nb_line)+1;
+			$html .= '<td class="__'.$this->matchcode['__id_theme'][0].'_infobar __'.$this->matchcode['__id_theme'][0].'_infobar_separator_right __'.$this->matchcode['__id_theme'][0].'_infobar_separator_left"><input id="'.$this->c_id.'_line_selection_'.$p_type.'" type="text" onkeyup="'.$onkeyup_line.'lisha_input_line_per_page_change(event,\''.$this->c_id.'\',this);" value="'.$this->c_nb_line.'" size="'.$str_length_page.'" class="__'.$this->matchcode['__id_theme'][0].'_input_text __'.$this->matchcode['__id_theme'][0].'__input_h"/> ';
 			if($this->c_navbar_txt_line_per_page_activate)
 			{
 				$html .= $this->lib(24);
@@ -1611,7 +1612,10 @@
 		====================================================================*/
 		private function get_data_in_html($p_column,$p_data)
 		{
+			// Wrong expected results if string like <a target="blank"...
+			// Do not have HTML in your field
 			$p_data = str_replace(' ','&nbsp;',$p_data);
+
 			switch($this->c_columns[$p_column]['data_type'])
 			{
 				case __BBCODE__:
@@ -2390,8 +2394,12 @@
 			$p_text = preg_replace('`\[bg=(.*?)\](.*?(\[/bg\]\[/bg\].*?)*)\[/bg\](?!(\[/bg\]))`ie','"<font style=\"background-color:\\1;\">".str_replace("[/bg][/bg]","[/bg]","\\2")."</font>"',$p_text);
 			$p_text = preg_replace('`\[size=(.*?)\](.*?(\[/size\]\[/size\].*?)*)\[/size\](?!(\[/size\]))`ie','"<font size=\"\\1\">".str_replace("[/size][/size]","[/size]","\\2")."</font>"',$p_text);
 			$p_text = preg_replace('`\[font=(.*?)\](.*?(\[/font\]\[/font\].*?)*)\[/font\](?!(\[/font\]))`ie','"<font face=\"\\1\">".str_replace("[/font][/font]","[/font]","\\2")."</font>"',$p_text);
+			// url
 			$p_text = preg_replace('`\[url\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" href=\"".str_replace("[/url][/url]","[/url]","\\1")."\">".str_replace("[/url][/url]","[/url]","\\1")."</a>"',$p_text);
 			$p_text = preg_replace('`\[url=(.*?)\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" href=\"\\1\">".str_replace("[/url][/url]","[/url]","\\2")."</a>"',$p_text);
+			// disable cascaded call on url using lisha_StopEventHandler
+			$p_text = preg_replace('`\[urloff\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\" href=\"".str_replace("[/url][/url]","[/url]","\\1")."\">".str_replace("[/url][/url]","[/url]","\\1")."</a>"',$p_text);
+			$p_text = preg_replace('`\[urloff=(.*?)\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\" href=\"\\1\">".str_replace("[/url][/url]","[/url]","\\2")."</a>"',$p_text);
 
 			// Found a randomized string do not exists in string to convert
 			$temp_str = '7634253332';while(stristr($p_text,$temp_str)){$temp_str = mt_rand();}

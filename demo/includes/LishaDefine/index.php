@@ -24,7 +24,7 @@
 				`demo_list_example`.`id`			AS `id`,
 				`demo_list_example`.`name`			AS `name`,
 				`demo_list_example`.`description`	AS `description`,
-				CONCAT('<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\">',`demo_list_example`.`link`,'</a>')	AS `link`,
+				`demo_list_example`.`link`	AS `link`,
 				`demo_list_example`.`screen`		AS `screen`,
 				`demo_list_example`.`last_update`	AS `last_update`,
 				`demo_list_example`.`title`			AS `title`
@@ -44,7 +44,7 @@
 	$obj_lisha_tran->define_attribute('__id_theme','grey');							// Define style	
 
 	$obj_lisha_tran->define_attribute('__active_title', true);						// Title bar	
-	$obj_lisha_tran->define_attribute('__title', 'Demo list example');							// Title
+	$obj_lisha_tran->define_attribute('__title', 'Demo list example');				// Title
 
 	$obj_lisha_tran->define_attribute('__max_lines_by_page', 80);					// Limit rows by page	
 
@@ -91,7 +91,7 @@
 		//==================================================================
 		// define column : HTML link
 		//==================================================================
-		$obj_lisha_tran->define_column("CONCAT('<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\"',`demo_list_example`.`link`,'</a>')",'link','Access',__BBCODE__,__WRAP__,__LEFT__);
+		$obj_lisha_tran->define_column("`demo_list_example`.`link`",'link','Access',__BBCODE__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'link');
 		//==================================================================
 
