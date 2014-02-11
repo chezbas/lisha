@@ -2378,43 +2378,149 @@
 		/**===================================================================*/
 
 
+		/**==================================================================
+		 * Translate BBcode string to HTML string
+		 *
+		 * @p_text	:	String to translate
+		====================================================================*/
 		private function convertBBCodetoHTML($p_text)
 		{
-			$p_text = preg_replace('`\[email\](.*?(\[/email\]\[/email\].*?)*)\[/email\](?!(\[/email\]))`ie','"<a href=\"mailto:".str_replace("[/email][/email]","[/email]","\\1")."\">".str_replace("[/email][/email]","[/email]","\\1")."</a>"',$p_text);
-			$p_text = preg_replace('`\[b\](.*?(\[/b\]\[/b\].*?)*)\[/b\](?!(\[/b\]))`ie','"<b>".str_replace("[/b][/b]","[/b]","\\1")."</b>"',$p_text);
-			$p_text = preg_replace('`\[i\](.*?(\[/i\]\[/i\].*?)*)\[/i\](?!(\[/i\]))`ie','"<i>".str_replace("[/i][/i]","[/i]","\\1")."</i>"',$p_text);
-			$p_text = preg_replace('`\[u\](.*?(\[/u\]\[/u\].*?)*)\[/u\](?!(\[/u\]))`ie','"<u>".str_replace("[/u][/u]","[/u]","\\1")."</u>"',$p_text);
-			$p_text = preg_replace('`\[s\](.*?(\[/s\]\[/s\].*?)*)\[/s\](?!(\[/s\]))`ie','"<s>".str_replace("[/s][/s]","[/s]","\\1")."</s>"',$p_text);
-			$p_text = preg_replace('`\[center\](.*?(\[/center\]\[/center\].*?)*)\[/center\](?!(\[/center\]))`ie','"<p style=\"text-align: center;\">".str_replace("[/center][/center]","[/center]","\\1")."</p>"',$p_text);
-			$p_text = preg_replace('`\[left\](.*?(\[/left\]\[/left\].*?)*)\[/left\](?!(\[/left\]))`ie','"<p style=\"text-align: left;\">".str_replace("[/left][/left]","[/left]","\\1")."</p>"',$p_text);
-			$p_text = preg_replace('`\[right\](.*?(\[/right\]\[/right\].*?)*)\[/right\](?!(\[/right\]))`ie','"<p style=\"text-align: right;\">".str_replace("[/right][/right]","[/right]","\\1")."</p>"',$p_text);
-			$p_text = preg_replace('`\[img\](.*?(\[/img\]\[/img\].*?)*)\[/img\](?!(\[/img\]))`ie','"<img src=\"".str_replace("[/img][/img]","[/img]","\\1")."\" />"',$p_text);
-			$p_text = preg_replace('`\[img=(.*?)\](.*?(\[/img\]\[/img\].*?)*)\[/img\](?!(\[/img\]))`ie','"<img width=\"\\1\" src=\"".str_replace("[/img][/img]","[/img]","\\2")."\" />"',$p_text);
-			$p_text = preg_replace('`\[color=(.*?)\](.*?(\[/color\]\[/color\].*?)*)\[/color\](?!(\[/color\]))`ie','"<font color=\"\\1\">".str_replace("[/color][/color]","[/color]","\\2")."</font>"',$p_text);
-			$p_text = preg_replace('`\[bg=(.*?)\](.*?(\[/bg\]\[/bg\].*?)*)\[/bg\](?!(\[/bg\]))`ie','"<font style=\"background-color:\\1;\">".str_replace("[/bg][/bg]","[/bg]","\\2")."</font>"',$p_text);
-			$p_text = preg_replace('`\[size=(.*?)\](.*?(\[/size\]\[/size\].*?)*)\[/size\](?!(\[/size\]))`ie','"<font size=\"\\1\">".str_replace("[/size][/size]","[/size]","\\2")."</font>"',$p_text);
-			$p_text = preg_replace('`\[font=(.*?)\](.*?(\[/font\]\[/font\].*?)*)\[/font\](?!(\[/font\]))`ie','"<font face=\"\\1\">".str_replace("[/font][/font]","[/font]","\\2")."</font>"',$p_text);
-			// url
-			$p_text = preg_replace('`\[url\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" href=\"".str_replace("[/url][/url]","[/url]","\\1")."\">".str_replace("[/url][/url]","[/url]","\\1")."</a>"',$p_text);
-			$p_text = preg_replace('`\[url=(.*?)\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" href=\"\\1\">".str_replace("[/url][/url]","[/url]","\\2")."</a>"',$p_text);
-			// disable cascaded call on url using lisha_StopEventHandler
-			$p_text = preg_replace('`\[urloff\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\" href=\"".str_replace("[/url][/url]","[/url]","\\1")."\">".str_replace("[/url][/url]","[/url]","\\1")."</a>"',$p_text);
-			$p_text = preg_replace('`\[urloff=(.*?)\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\" href=\"\\1\">".str_replace("[/url][/url]","[/url]","\\2")."</a>"',$p_text);
+			// Email
+			$p_text = preg_replace_callback('`\[email\](.*?(\[/email\]\[/email\].*?)*)\[/email\](?!(\[/email\]))`i',
+				function($matches) {
+					return "<a href=\"mailto:".str_replace("[/email][/email]","[/email]",$matches[1])."</a>";
+				},$p_text);
+
+			// Bold
+			$p_text = preg_replace_callback('`\[b\](.*?(\[/b\]\[/b\].*?)*)\[/b\](?!(\[/b\]))`i',
+				function($matches) {
+					return "<b>".str_replace("[/b][/b]","[/b]",$matches[1])."</b>";
+				},$p_text);
+
+			// Italic
+			$p_text = preg_replace_callback('`\[i\](.*?(\[/i\]\[/i\].*?)*)\[/i\](?!(\[/i\]))`i',
+				function($matches) {
+					return "<i>".str_replace("[/i][/i]","[/i]",$matches[1])."</i>";
+				},$p_text);
+
+			// Underline
+			$p_text = preg_replace_callback('`\[u\](.*?(\[/u\]\[/u\].*?)*)\[/u\](?!(\[/u\]))`i',
+				function($matches) {
+					return "<u>".str_replace("[/u][/u]","[/u]",$matches[1])."</u>";
+				},$p_text);
+
+			// Strike
+			$p_text = preg_replace_callback('`\[s\](.*?(\[/s\]\[/s\].*?)*)\[/s\](?!(\[/s\]))`i',
+				function($matches) {
+					return "<s>".str_replace("[/s][/s]","[/s]",$matches[1])."</s>";
+				},$p_text);
+
+			// Alignment : Center
+			$p_text = preg_replace_callback('`\[center\](.*?(\[/center\]\[/center\].*?)*)\[/center\](?!(\[/center\]))`i',
+				function($matches) {
+					return "<p style=\"text-align: center;\">".str_replace("[/center][/center]","[/center]",$matches[1])."</p>";
+				},$p_text);
+
+			// Alignment : Left
+			$p_text = preg_replace_callback('`\[left\](.*?(\[/left\]\[/left\].*?)*)\[/left\](?!(\[/left\]))`i',
+				function($matches) {
+					return "<p style=\"text-align: left;\">".str_replace("[/left][/left]","[/left]",$matches[1])."</p>";
+				},$p_text);
+
+			// Alignment : Right
+			$p_text = preg_replace_callback('`\[right\](.*?(\[/right\]\[/right\].*?)*)\[/right\](?!(\[/right\]))`i',
+				function($matches) {
+					return "<p style=\"text-align: right;\">".str_replace("[/right][/right]","[/right]",$matches[1])."</p>";
+				},$p_text);
+
+			// Image / Picture
+			$p_text = preg_replace_callback('`\[img\](.*?(\[/img\]\[/img\].*?)*)\[/img\](?!(\[/img\]))`i',
+				function($matches) {
+					return "<img src=\"".str_replace("[/img][/img]","[/img]",$matches[1])."\" />";
+				},$p_text);
+
+			// Image with specific width
+			$p_text = preg_replace_callback('`\[img=(.*?)\](.*?(\[/img\]\[/img\].*?)*)\[/img\](?!(\[/img\]))`i',
+				function($matches) {
+					return "<img width=\"".$matches[1]."\" src=\"".str_replace("[/img][/img]","[/img]",$matches[2])."\" />";
+				},$p_text);
+
+			// Text color
+			$p_text = preg_replace_callback('`\[color=(.*?)\](.*?(\[/color\]\[/color\].*?)*)\[/color\](?!(\[/color\]))`i',
+				function($matches) {
+					return "<font color=\"".$matches[1]."\">".str_replace("[/color][/color]","[/color]",$matches[2])."</font>";
+				},$p_text);
+
+			// Background color
+			$p_text = preg_replace_callback('`\[bg=(.*?)\](.*?(\[/bg\]\[/bg\].*?)*)\[/bg\](?!(\[/bg\]))`i',
+				function($matches) {
+					return "<font style=\"background-color:".$matches[1]."\">".str_replace("[/bg][/bg]","[/bg]",$matches[2])."</font>";
+				},$p_text);
+			//$p_text = preg_replace('`\[size=(.*?)\](.*?(\[/size\]\[/size\].*?)*)\[/size\](?!(\[/size\]))`ie','"<font size=\"\\1\">".str_replace("[/size][/size]","[/size]","\\2")."</font>"',$p_text);
+			$p_text = preg_replace_callback('`\[size=(.*?)\](.*?(\[/size\]\[/size\].*?)*)\[/size\](?!(\[/size\]))`i',
+				function($matches) {
+					return "<font size=\"".$matches[1]."\">".str_replace("[/size][/size]","[/size]",$matches[2])."</font>";
+				},$p_text);
+
+			// Font family
+			$p_text = preg_replace_callback('`\[font=(.*?)\](.*?(\[/font\]\[/font\].*?)*)\[/font\](?!(\[/font\]))`i',
+				function($matches) {
+					return "<font face=\"".$matches[1]."\">".str_replace("[/font][/font]","[/font]",$matches[2])."</font>";
+				},$p_text);
+
+			// URL with only address
+			$p_text = preg_replace_callback('`\[url\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`i',
+				function($matches) {
+					return "<a target=\"_blank\" href=\"".str_replace("[/url][/url]","[/url]",$matches[1])."</a>";
+				},$p_text);
+
+			// URL with address and display string
+			//$p_text = preg_replace('`\[url=(.*?)\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`ie','"<a target=\"_blank\" href=\"\\1\">".str_replace("[/url][/url]","[/url]","\\2")."</a>"',$p_text);
+			$p_text = preg_replace_callback('`\[url=(.*?)\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`i',
+				function($matches) {
+					return "<a target=\"_blank\" href=\"".$matches[1]."\">".str_replace("[/url][/url]","[/url]",$matches[2])."</a>";
+				},$p_text);
+
+			// Two URL and disable cascaded call using lisha_StopEventHandler
+			$p_text = preg_replace_callback('`\[urloff\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`i',
+				function($matches) {
+					return "<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\" href=\"".str_replace("[/url][/url]","[/url]",$matches[1])."</a>";
+				},$p_text);
+			$p_text = preg_replace_callback('`\[urloff=(.*?)\](.*?(\[/url\]\[/url\].*?)*)\[/url\](?!(\[/url\]))`i',
+				function($matches) {
+					return "<a target=\"_blank\" onclick=\"lisha_StopEventHandler(event);\" href=\"".$matches[1]."\">".str_replace("[/url][/url]","[/url]",$matches[2])."</a>";
+				},$p_text);
+
+			// div
+			$p_text = preg_replace_callback('`\[div=(.*?)\](.*?(\[/div\]\[/div\].*?)*)\[/div\](?!(\[/div\]))`i',
+				function($matches) {
+					return "<div class=\"".$matches[1]."\">".str_replace("[/div][/div]","[/div]",$matches[2])."</div>";
+				},$p_text);
+
 
 			// Found a randomized string do not exists in string to convert
 			$temp_str = '7634253332';while(stristr($p_text,$temp_str)){$temp_str = mt_rand();}
 			$p_text = str_replace('[br][br]',$temp_str,$p_text);
-			$p_text = preg_replace('`(?<!\[br\])\[br\](?!(\[br\]))`ie','str_replace("[br]","<br>","\\0")',$p_text);
+			//$p_text = preg_replace('`(?<!\[br\])\[br\](?!(\[br\]))`ie','str_replace("[br]","<br>","\\0")',$p_text);
+			$p_text = preg_replace_callback('`(?<!\[br\])\[br\](?!(\[br\]))`i',
+				function($matches) {
+					return str_replace("[br]","<br>",$matches[0]);
+				},$p_text);
 			$p_text = str_replace($temp_str,'[br]',$p_text);
 
 			// Found a randomized string do not exists in string to convert
 			$temp_str = '7634253332';while(stristr($p_text,$temp_str)){$temp_str = mt_rand();}
 			$p_text = str_replace('[hr][hr]',$temp_str,$p_text);
-			$p_text = preg_replace('`(?<!\[hr\])\[hr\](?!(\[hr\]))`ie','str_replace("[hr]","<hr>","\\0")',$p_text);
+			//$p_text = preg_replace('`(?<!\[hr\])\[hr\](?!(\[hr\]))`ie','str_replace("[hr]","<hr>","\\0")',$p_text);
+			$p_text = preg_replace_callback('`(?<!\[hr\])\[hr\](?!(\[hr\]))`i',
+				function($matches) {
+					return str_replace("[hr]","<hr>",$matches[0]);
+				},$p_text);
 			$p_text = str_replace($temp_str,'[hr]',$p_text);
 
 			return $p_text;
 		}
-
 		/**===================================================================*/
+
+
 	}

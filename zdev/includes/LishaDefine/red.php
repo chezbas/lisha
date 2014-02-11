@@ -29,6 +29,13 @@
 				`zdev_table`.`amount`			AS `amount`,
 				UPPER(`zdev_table`.`amount`)	AS `upper`,
 				`zdev_table`.`status`			AS `status`,
+				CASE `zdev_table`.`status`
+								WHEN 0
+								THEN
+									CONCAT('[div=home][size=3][b]     zerg[/b][/size]:',`zdev_table`.`status`,':[/div]')
+								ELSE
+									'OTHER'
+								END AS `icon`,
 				`zdev_table`.`status`			AS `MyGroupTheme`
 			".$_SESSION[$ssid]['lisha']['configuration'][10]."
 				`zdev_table`
@@ -140,6 +147,19 @@
 		$obj_lisha_tran->define_column('`zdev_table`.`index`','index','id',__TEXT__,__WRAP__,__CENTER__);
 		//$obj_lisha_tran->define_attribute('__column_display_mode',true,'index');
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'index');
+		//==================================================================
+
+		//==================================================================
+		// define column : icon
+		//==================================================================
+		$obj_lisha_tran->define_column("CASE `zdev_table`.`status`
+								WHEN 0
+								THEN
+									CONCAT('[div=home][size=3][b]     zerg[/b][/size]:',`zdev_table`.`status`,':[/div]')
+								ELSE
+									'OTHER'
+								END",'icon','my_icon',__BBCODE__,__WRAP__,__CENTER__);
+		$obj_lisha_tran->define_attribute('__column_input_check_update', __FORBIDDEN__,'icon');
 		//==================================================================
 
 		//==================================================================

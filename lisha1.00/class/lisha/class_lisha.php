@@ -2056,7 +2056,7 @@
 				{
 					foreach($this->c_db_keys as $value)
 					{
-						$json .= $json_base.'.lines.L'.$i.'.key.'.$value.' = \''.$row[$value].'\';';
+						$json .= $json_base.'.lines.L'.$i.'.key.'.$value.' = \''.str_replace("'","\\'",$row[$value]).'\';';
 					}
 				}
 
@@ -2448,7 +2448,7 @@
 
 			foreach($array_key as $clef => $value)
 			{
-				$string_where .= ' AND `'.$this->matchcode['__update_table_name'][0].'`.`'.$clef.'` = \''.$value.'\'';
+				$string_where .= ' AND `'.$this->matchcode['__update_table_name'][0].'`.`'.$clef.'` = \''.str_replace("'","\\'",$value).'\'';
 			}
 
 			$column_compel = '';
@@ -2641,7 +2641,7 @@
 			//==================================================================
 			foreach($array_key as $clef => $value)
 			{
-				$string_where .= 'AND `'.$clef.'` = \''.$value.'\'';
+				$string_where .= 'AND `'.$clef.'` = \''.str_replace("'","\\'",$value).'\'';
 			}
 			$string_where = substr($string_where,4);
 			//==================================================================
