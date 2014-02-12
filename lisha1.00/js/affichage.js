@@ -661,12 +661,21 @@ function lisha_load_filter_lov(lisha_id,lisha_type,ajax_return)
 
 /**==================================================================
  * Sub internal lisha position of window from toolbar menu
+ *
  * @lisha_id	: Internal lisha identifier
  ====================================================================*/
 function internal_sub_lisha_toolbar_top_position(lisha_id){
 	var myid = 'lisha_toolbar_'+lisha_id;
 	var my_title = 'lisha_title_'+lisha_id;
-	document.getElementById('internal_lisha_'+lisha_id).style.top = document.getElementById(myid).offsetHeight + document.getElementById(my_title).offsetHeight+'px';
+
+	var title_height = 0;	// title bar disable
+	if(document.getElementById(my_title) != undefined)
+	{
+		// Title bar exist
+		title_height = document.getElementById(my_title).offsetHeight;
+	}
+
+	document.getElementById('internal_lisha_'+lisha_id).style.top = document.getElementById(myid).offsetHeight + title_height+'px';
 }
 /**==================================================================*/
 

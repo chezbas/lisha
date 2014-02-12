@@ -42,7 +42,7 @@
 									SELECT
 										CASE IFNULL( LENGTH( `".__LISHA_TABLE_EXTRA_TICK__."`.`details` ) , 0 ) + IFNULL( LENGTH( `".__LISHA_TABLE_EXTRA_TICK__."`.`solution` ) , 0 )
 											WHEN 0
-											THEN CONCAT('[URL=./editbug.php?ssid=".$ssid."&MTLNG=".$_GET['lng']."&ID=',`".__LISHA_TABLE_EXTRA_TICK__."`.`ID`,']".$_SESSION[$ssid]['lisha']['page_text'][15]['TX']."[/URL]')
+											THEN CONCAT('[URLoff=./editbug.php?ssid=".$ssid."&MTLNG=".$_GET['lng']."&ID=',`".__LISHA_TABLE_EXTRA_TICK__."`.`ID`,']".$_SESSION[$ssid]['lisha']['page_text'][15]['TX']."[/URL]')
 											ELSE CONCAT('[URLoff=./viewbug.php?ssid=".$ssid."&MTLNG=".$_GET['lng']."&ID=',`".__LISHA_TABLE_EXTRA_TICK__."`.`ID`,']".$_SESSION[$ssid]['lisha']['page_text'][13]['TX']."[/URL]',' / ','[URLoff=./editbug.php?ssid=".$ssid."&MTLNG=".$_GET['lng']."&ID=',`".__LISHA_TABLE_EXTRA_TICK__."`.`ID`,']".$_SESSION[$ssid]['lisha']['page_text'][14]['TX']."[/URL]')
 										END
 								)
