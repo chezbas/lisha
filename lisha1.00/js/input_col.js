@@ -20,7 +20,10 @@ function lisha_input_keyup_pressed(evt)
  ====================================================================*/
 function lisha_input_keydown_pressed(evt,lisha_id,column, quick_search_mode, edit_mode)
 {
-	if(evt.keyCode == 17) { isCtrl=true; }
+	if(evt.keyCode == 17)
+	{
+		isCtrl=true;
+	}
 
 	if(evt.keyCode == 186) // key ;
 	{
@@ -45,7 +48,6 @@ function lisha_input_keydown_pressed(evt,lisha_id,column, quick_search_mode, edi
 		}
 	}
 
-	//alert(evt.keyCode);
 	if( evt.keyCode == 8 || evt.keyCode == 46 ) // Del or suppr
 	{
 		//==================================================================
@@ -61,6 +63,12 @@ function lisha_input_keydown_pressed(evt,lisha_id,column, quick_search_mode, edi
 		}
 		//==================================================================
 		document.getElementById('liste_'+lisha_id).scrollLeft = document.getElementById('header_'+lisha_id).scrollLeft;
+
+		if(edit_mode)
+		{
+			// Active update checkbox
+			document.getElementById('chk_edit_c'+column+'_'+lisha_id).checked = true;
+		}
 	}
 
 	if(evt.keyCode == 27 ) // Escape
