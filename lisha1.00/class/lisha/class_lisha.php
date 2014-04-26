@@ -1860,7 +1860,7 @@
 						$json .= $json_base.'.selected_line.L'.$i.'.key = new Object();';
 						foreach($value as $key_key => $value_key)
 						{
-							$json .= $json_base.'.selected_line.L'.$i.'.key.'.$key_key.' = \''.$value_key.'\';';
+							$json .= $json_base.'.selected_line.L'.$i.'.key.'.$key_key.' = \''.$this->protect_js_txt($value_key).'\';';
 						}
 						$json .= $json_base.'.selected_line.L'.$i.'.selected = true;';
 						$i = $i + 1;
@@ -2829,11 +2829,11 @@
 				{
 					if($j == 0)
 					{
-						$only_selected_lines .= $this->get_quote_col($this->matchcode['__update_table_name'][0]).'.`'.$key.'` = "'.$value_key.'"';
+						$only_selected_lines .= $this->get_quote_col($this->matchcode['__update_table_name'][0]).'.`'.$key.'` = "'.str_replace('"','\"',$value_key).'"';
 					}
 					else
 					{
-						$only_selected_lines .= ' AND '.$this->get_quote_col($this->matchcode['__update_table_name'][0]).'.`'.$key.'` = "'.$value_key.'"';
+						$only_selected_lines .= ' AND '.$this->get_quote_col($this->matchcode['__update_table_name'][0]).'.`'.$key.'` = "'.str_replace('"','\"',$value_key).'"';
 					}
 
 					$j = $j + 1;
@@ -3601,7 +3601,7 @@
 								($j > 0) ? $sql_update .= ' AND ' : $sql_update .= '';
 
 								// WHERE clause
-								$sql_update .= $this->get_quote_col($this->c_columns[$this->get_id_column($selected_key)]['sql_as']).' = '.$this->get_quote_string($selected_value);
+								$sql_update .= $this->get_quote_col($this->c_columns[$this->get_id_column($selected_key)]['sql_as']).' = '.$this->get_quote_string(str_replace('"','\"',$selected_value));
 
 								// Counter of the selected line keys
 								$j = $j + 1;
