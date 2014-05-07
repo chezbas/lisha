@@ -895,6 +895,28 @@ html,body
 	cursor: pointer;
 }
 
+.cells_update_enable_path
+{
+	height:20px;
+	width:20px;
+	float:left;
+	background-image: url(../../images/icons/img_16.png);
+	background-repeat: no-repeat;
+	background-position: -1180px 0;
+}
+
+.cells_update_enable_path
+{
+	height:20px;
+	width:20px;
+	float:left;
+	background-image: url(../../images/icons/img_16.png);
+	background-repeat: no-repeat;
+	background-position: -1180px -20px;
+	cursor: pointer;
+}
+
+
 .cancel_path
 {
 	height:20px;

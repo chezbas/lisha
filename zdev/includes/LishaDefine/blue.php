@@ -66,6 +66,8 @@
 	$obj_lisha_tran->define_attribute('__update_table_name', "zdev_table");		// Define table to update
 
 	$obj_lisha_tran->define_attribute('__column_name_group_of_color', "MyGroupTheme");		// ( Optional ) Define csutom column color name
+
+	$obj_lisha_tran->define_attribute('__active_user_cells_update', false);			// User cell update ( Optional : default true )
 	//==================================================================
 
 	//==================================================================

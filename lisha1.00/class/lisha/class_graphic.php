@@ -92,6 +92,7 @@
 			// W : Write only
 			//==================================================================
 			$this->matchcode = array(
+			'__active_user_cells_update'										=> array(true,'A'),
 			'__active_read_only_cells_edit'										=> array('','A'),
 			'__column_name_group_of_color'										=> array('','A'),
 			'__internal_color_mask'												=> array('','A'),
@@ -1559,7 +1560,7 @@
 							// Currently forbidden any cell update if __LISTED__ compel on column
 							if($this->matchcode['__active_readonly_mode'][0] == __RW__ && !$p_edit && !$this->matchcode['__active_read_only_cells_edit'][0] && $this->c_columns[$key_col]["rw_flag"] != __LISTED__)
 							{
-								$edit_cell = 'onclick=lisha_StopEventHandler(event);edit_cell(event,\''.$line.'\',\''.$key_col.'\',\''.$this->c_id.'\',\''.$this->c_columns[$key_col]["data_type"].'\');';
+								$edit_cell = 'onclick="lisha_StopEventHandler(event);if(document.getElementById(\'lisha_td_toolbar_cells_'.$this->c_id.'\').className.substr(-2) == \'on\'){edit_cell(event,\''.$line.'\',\''.$key_col.'\',\''.$this->c_id.'\',\''.$this->c_columns[$key_col]["data_type"].'\');}"';
 							}
 						}
 						//==================================================================
@@ -1764,6 +1765,18 @@
 				else
 				{
 					$html .= '<td class="toolbar_separator_right"></td>';
+				}
+
+				if($this->matchcode['__active_read_only_cells_edit'][0] == false && $p_edit == false && $this->c_type_internal_lisha != __COLUMN_LIST__)
+				{
+					if($this->matchcode['__active_user_cells_update'][0] == true)
+					{
+						$html .= '<td class="btn_toolbar toolbar_separator_right"><div id="lisha_td_toolbar_cells_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_cells_update_on" onclick="switch_user_cell_update(\''.$this->c_id.'\');" '.$this->hover_out_lib(161,90).'></div></td>';
+					}
+					else
+					{
+						$html .= '<td class="btn_toolbar toolbar_separator_right"><div id="lisha_td_toolbar_cells_'.$this->c_id.'" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_cells_update_off" onclick="switch_user_cell_update(\''.$this->c_id.'\');" '.$this->hover_out_lib(162,90).'></div></td>';
+					}
 				}
 			}
 

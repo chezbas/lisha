@@ -422,6 +422,46 @@ function ok_edit_cell(lisha_id,ajax_return)
 
 
 /**==================================================================
+ * Switch direct cell update button access
+ * @lisha_id	: internal lisha identifier
+ * @status		: if undefined, then just switch. if 0 force disable and 1 force enable
+ ====================================================================*/
+function switch_user_cell_update(lisha_id, status)
+{
+	var l_ref = document.getElementById('lisha_td_toolbar_cells_'+lisha_id).className;
+
+	if(status == undefined)
+	{
+		if(l_ref.substr(-2) == 'on')
+		{
+			l_ref = l_ref.substr(0,l_ref.length - 1)+'ff';
+			document.getElementById('lisha_td_toolbar_cells_'+lisha_id).onmouseover = function() {lisha_lib_hover(162,90,lisha_id,'1')};
+		}
+		else
+		{
+			l_ref = l_ref.substr(0,l_ref.length - 2)+'n';
+			document.getElementById('lisha_td_toolbar_cells_'+lisha_id).onmouseover = function() {lisha_lib_hover(161,90,lisha_id,'1')};
+		}
+	}
+	else
+	{
+		if(status)
+		{
+			// Force on
+			document.getElementById('lisha_td_toolbar_cells_'+lisha_id).onmouseover = function() {lisha_lib_hover(161,90,lisha_id,'1')};
+		}
+		else
+		{
+			// Force off
+			document.getElementById('lisha_td_toolbar_cells_'+lisha_id).onmouseover = function() {lisha_lib_hover(162,90,lisha_id,'1')};
+		}
+	}
+	document.getElementById('lisha_td_toolbar_cells_'+lisha_id).className = l_ref;
+}
+/**==================================================================*/
+
+
+/**==================================================================
  * edit_lines : update a full line
  * @evt			: catch event
  * @line		: line of cell

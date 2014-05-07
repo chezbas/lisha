@@ -83,6 +83,9 @@
 	//$obj_lisha_tran->define_attribute('__active_delete_button', false);           // Hide or display Delete button
 
 	$obj_lisha_tran->define_attribute('__active_quick_search', true);				        // Quick search mode ( Optional : default true )
+
+	//$obj_lisha_tran->define_attribute('__active_user_cells_update', false);			// User cell update ( Optional : default true )
+
 	//==================================================================
 
 	//==================================================================

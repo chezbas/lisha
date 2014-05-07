@@ -159,5 +159,7 @@
 	"157" : "La valeur <b>$value</b> de <b>$name</b> n'est pas un nombre décimal",
 	"158" : "n'est pas un entier",
 	"159" : "n'est pas un nombre décimal",
-	"160" : "L'aide utilisateur est désactivée<br>Ceci implique que l'aide contextuelle est désactivée également."
+	"160" : "L'aide utilisateur est désactivée<br>Ceci implique que l'aide contextuelle est désactivée également.",
+	"161" : "Edition directe des cellules possible",
+	"162" : "Edition directe des cellules bloquée"
 }

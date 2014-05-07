@@ -199,6 +199,22 @@
 	background-position: -260px -20px;
 }
 
+.__red_ico_cells_update_on {
+	background-position: -1180px 0;
+}
+
+.__red_ico_cells_update_on:hover {
+	background-position: -1180px -20px;
+}
+
+.__red_ico_cells_update_off {
+	background-position: -1200px 0;
+}
+
+.__red_ico_cells_update_off:hover {
+	background-position: -1200px -20px;
+}
+
 .__red_ico_filter {
 	background-position: -360px 0;
 }

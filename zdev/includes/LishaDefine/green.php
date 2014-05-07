@@ -41,7 +41,7 @@
 	//==================================================================
 	$obj_lisha_tran->define_nb_line(20);											// Row by page								
 	$obj_lisha_tran->define_size(100,'%',100,'%');									// Size of object
-	$obj_lisha_tran->define_attribute('__active_readonly_mode', __RW__);			// Read & Write	
+	$obj_lisha_tran->define_attribute('__active_readonly_mode', __RW__);			// Read & Write
 	$obj_lisha_tran->define_attribute('__id_theme','green');							// Define style
 
 	$obj_lisha_tran->define_attribute('__active_title', true);						// Title bar	
@@ -68,6 +68,9 @@
 	$obj_lisha_tran->define_attribute('__update_table_name', "zdev_table");		// Define table to update
 
 	$obj_lisha_tran->define_attribute('__column_name_group_of_color', "MyGroupTheme");		// ( Optional ) Define csutom column color name
+
+	$obj_lisha_tran->define_attribute('__active_user_cells_update', false);			// User cell update ( Optional : default true )
+
 	//==================================================================
 
 	//==================================================================
