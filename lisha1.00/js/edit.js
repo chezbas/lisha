@@ -436,11 +436,13 @@ function switch_user_cell_update(lisha_id, status)
 		{
 			l_ref = l_ref.substr(0,l_ref.length - 1)+'ff';
 			document.getElementById('lisha_td_toolbar_cells_'+lisha_id).onmouseover = function() {lisha_lib_hover(162,90,lisha_id,'1')};
+			lisha_lib_hover(162,90,lisha_id,'1'); // Direct caption update
 		}
 		else
 		{
 			l_ref = l_ref.substr(0,l_ref.length - 2)+'n';
 			document.getElementById('lisha_td_toolbar_cells_'+lisha_id).onmouseover = function() {lisha_lib_hover(161,90,lisha_id,'1')};
+			lisha_lib_hover(161,90,lisha_id,'1'); // Direct caption update
 		}
 	}
 	else
@@ -449,11 +451,13 @@ function switch_user_cell_update(lisha_id, status)
 		{
 			// Force on
 			document.getElementById('lisha_td_toolbar_cells_'+lisha_id).onmouseover = function() {lisha_lib_hover(161,90,lisha_id,'1')};
+			lisha_lib_hover(161,90,lisha_id,'1'); // Direct caption update
 		}
 		else
 		{
 			// Force off
 			document.getElementById('lisha_td_toolbar_cells_'+lisha_id).onmouseover = function() {lisha_lib_hover(162,90,lisha_id,'1')};
+			lisha_lib_hover(162,90,lisha_id,'1'); // Direct caption update
 		}
 	}
 	document.getElementById('lisha_td_toolbar_cells_'+lisha_id).className = l_ref;
