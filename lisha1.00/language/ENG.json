@@ -161,5 +161,6 @@
 	"159" : "is not a float value",
 	"160" : "User documentation is disabled that means that contextual help is disable too.",
 	"161" : "Direct cells update enable",
-	"162" : "Locked direct cells update"
+	"162" : "Locked direct cells update",
+	"163" : "Close this window"
 }

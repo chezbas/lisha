@@ -825,15 +825,17 @@
 
 
 		/**==================================================================
-		 * define_parent
+		 * Setup parent information for sub lisha
 		 *
 		 * @p_parent		: Name of column definition
-		 * @p_column		:  id of column
+		 * @p_column		: id of column
 		 ====================================================================*/
-		public function define_parent($p_parent,$p_column)
+		public function define_parent($p_parent,$p_column = null)
 		{
 			$this->c_id_parent = $p_parent;
 			$this->c_id_parent_column = $p_column;
+
+			// Copy parent information in graphic part
 			$this->c_obj_graphic->define_parent($p_parent,$p_column);
 		}
 		/**==================================================================*/
@@ -5124,15 +5126,13 @@
 			// Prepare the query
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->prepare_query();
 
-			$html = '<div style="float:right;"><table style="margin:0;padding:0;border-collapse:collapse;"><tr><td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$column.');" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td><td style="margin:0;padding:0;"></td></tr></table></div>';
-
 			$json = $_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha_json_param();
 
 			// XML return
 			header("Content-type: text/xml");
 			$xml = "<?xml version='1.0' encoding='UTF8'?>";
 			$xml .= "<lisha>";
-			$xml .= "<content>".$this->protect_xml($_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha().$html)."</content>";
+			$xml .= "<content>".$this->protect_xml($_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha())."</content>";
 			$xml .= "<json>".$this->protect_xml($json)."</json>";
 			$xml .= "</lisha>";
 
@@ -5148,9 +5148,6 @@
 		 ====================================================================*/
 		public function column_list()
 		{
-			// Means no column
-			$column = 1;
-
 			$id_child = $this->c_id.'_child';
 
 			//==================================================================
@@ -5224,6 +5221,9 @@
 							WHERE 1 = 1
 								AND `".__LISHA_TABLE_INTERNAL__."`.`id` = '".$this->c_ssid.$this->c_id."'
 						  ";
+
+			// Setup parent information
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_parent($this->c_id);
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$main_query);
 
@@ -5336,7 +5336,6 @@
 			$html = '<div style="float:right;">
 						<table style="margin:0;padding:0;border-collapse:collapse;">
 							<tr>
-							<td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$column.');" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td>
 							<td style="margin:0;padding:0;"><div id="'.$this->c_id.'_child_valide" onclick="lisha_child_list_column_ok(\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_valide hover" '.$this->hover_out_lib(121,121,'_child').' style="margin-right:5px;"></div></td>
 							</tr>
 						</table>
@@ -5390,7 +5389,7 @@
 			//==================================================================
 
 			//==================================================================
-			// Focus column hidden ??
+			// Try to hide a focus column ??
 			//==================================================================
 			$query = "  SELECT
 							`name`  AS   'name',
@@ -5611,15 +5610,13 @@
 			//==================================================================
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->prepare_query();
 
-			$html = '<div style="float:right;"><table style="margin:0;padding:0;border-collapse:collapse;"><tr><td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$column.');" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td><td style="margin:0;padding:0;"></td></tr></table></div>';
-
 			$json = $_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha_json_param();
 
 			// XML return
 			header("Content-type: text/xml");
 			$xml = "<?xml version='1.0' encoding='UTF8'?>";
 			$xml .= "<lisha>";
-			$xml .= "<content>".$this->protect_xml($_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha().$html)."</content>";
+			$xml .= "<content>".$this->protect_xml($_SESSION[$this->c_ssid]['lisha'][$id_child]->generate_lisha())."</content>";
 			$xml .= "<json>".$this->protect_xml($json)."</json>";
 			$xml .= "</lisha>";
 

@@ -161,5 +161,6 @@
 	"159" : "n'est pas un nombre décimal",
 	"160" : "L'aide utilisateur est désactivée<br>Ceci implique que l'aide contextuelle est désactivée également.",
 	"161" : "Edition directe des cellules possible",
-	"162" : "Edition directe des cellules bloquée"
+	"162" : "Edition directe des cellules bloquée",
+	"163" : "Fermer cette fenêtre"
 }

@@ -716,6 +716,17 @@ input.__red__input_h_forbidden
 	position: absolute;
 }
 
+.__red__window_button_function
+{
+	width:20px;
+	height: 20px;
+	z-index:50;
+	top: 0;
+	right:0;
+	float:right;
+	position: absolute;
+}
+
 .__red__internal_lisha
 {
 	background-color: #fff2f2;

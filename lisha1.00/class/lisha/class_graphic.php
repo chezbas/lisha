@@ -175,6 +175,28 @@
 				// Wait input 
 				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'__wait_input" id="wait_input_'.$this->c_id.'"></div>';
 
+
+				// window button bar only on sub lisha
+				if(isset($this->c_id_parent))
+				{
+					$_visible = 'lisha_disp';
+					if(isset($this->c_id_parent_column))
+					{
+						$l_index = $this->c_id_parent_column;
+					}
+					else
+					{
+						$l_index = 1;
+					}
+				}
+				else
+				{
+					$_visible = 'lisha_hide';
+					$l_index = 1;
+				}
+				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'__window_button_function '.$_visible.'" id="window_function_'.$this->c_id.'"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_cancel hover" '.$this->hover_out_lib(163,32).' style="float:right;margin-right:5px;" onclick="lisha_child_cancel(\''.substr($this->c_id,0,-6).'\',\''.$l_index.'\')"></div></div>';
+
+
 				// Float div
 				$lisha .= '<div class="__'.$this->matchcode['__id_theme'][0].'__float_move_column" id="lisha_column_move_div_float_'.$this->c_id.'">';
 				$lisha .= '<table class="shadow">';
@@ -1560,7 +1582,16 @@
 							// Currently forbidden any cell update if __LISTED__ compel on column
 							if($this->matchcode['__active_readonly_mode'][0] == __RW__ && !$p_edit && !$this->matchcode['__active_read_only_cells_edit'][0] && $this->c_columns[$key_col]["rw_flag"] != __LISTED__)
 							{
-								$edit_cell = 'onclick="lisha_StopEventHandler(event);if(document.getElementById(\'lisha_td_toolbar_cells_'.$this->c_id.'\').className.substr(-2) == \'on\'){edit_cell(event,\''.$line.'\',\''.$key_col.'\',\''.$this->c_id.'\',\''.$this->c_columns[$key_col]["data_type"].'\');}"';
+								// Do not read stat of cell update button if sub lisha
+								if(isset($this->c_id_parent))
+								{
+									$edit_cell = 'onclick=lisha_StopEventHandler(event);edit_cell(event,\''.$line.'\',\''.$key_col.'\',\''.$this->c_id.'\',\''.$this->c_columns[$key_col]["data_type"].'\');';
+								}
+								else
+								{
+									// Get direct stat of direct cell button to enable or disable direct update
+									$edit_cell = 'onclick="lisha_StopEventHandler(event);if(document.getElementById(\'lisha_td_toolbar_cells_'.$this->c_id.'\').className.substr(-2) == \'on\'){edit_cell(event,\''.$line.'\',\''.$key_col.'\',\''.$this->c_id.'\',\''.$this->c_columns[$key_col]["data_type"].'\');}"';
+								}
 							}
 						}
 						//==================================================================

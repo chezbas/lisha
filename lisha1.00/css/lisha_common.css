@@ -134,3 +134,13 @@ tr.lisha_line_separator
 	display: inline-block;
 	opacity: 0.4;
 }
+
+.lisha_hide
+{
+	display: none;
+}
+
+.lisha_disp
+{
+	display: block;
+}
