@@ -1420,7 +1420,7 @@
 					switch($this->c_type_internal_lisha) 
 					{
 						case '__POSSIBLE_VALUES__':
-							$lisha .= '<tr onclick="lisha_child_insert_into_parent(\'div_td_l'.$line.'_c'.$this->get_id_col_lov($this->matchcode['__return_column_id'][0]).'_'.$this->c_id.'\',\''.$this->c_id_parent.'\','.$this->c_id_parent_column.');" id="l'.$line.'_'.$this->c_id.'" class="lc_'.$current_group_value.$i_color.'_'.$this->c_id.'" '.$this->hover_out_lib(65,65).'>';
+							$lisha .= '<tr onclick="lisha_child_insert_into_parent(\'div_td_l'.$line.'_c'.$this->get_id_col_lov($this->matchcode['__return_column_id'][0]).'_'.$this->c_id.'\',\''.$this->c_id_parent.'\','.$this->c_id_parent_column.');" id="l'.$line.'_'.$this->c_id.'" class="lc_'.$current_group_value.$i_color.'_'.$this->c_id.'">';
 							break;
 						case '__ADV_FILTER__':
 							$lisha .= '<tr id="l'.$line.'_'.$this->c_id.'" class="lc_'.$current_group_value.$i_color.'_'.$this->c_id.'">';
@@ -2053,8 +2053,9 @@
 			//==================================================================
 
 			$calendar = '<div class="__'.$this->matchcode['__id_theme'][0].'_date_select" style="/*text-align:center;*/">
-							<form style="width:100px;margin:0 auto;" action="javascript:lisha_load_date(\''.$this->c_id.'\','.$p_column.');">
-								<table style="border-collapse:collapse;">
+							<form style="width:100px;margin:0 auto;" action="javascript:lisha_load_date(\''.$this->c_id.'\','.$p_column.');">';
+			$calendar .= '<div class="__'.$this->matchcode['__id_theme'][0].'__window_button_function lisha_disp" id="window_function_'.$this->c_id.'"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_cancel hover" '.$this->hover_out_lib(164,32).' style="float:right;margin-right:5px;" onclick="lisha_close_calendar(\''.$this->c_id.'\')"></div></div>';
+			$calendar .= '	<table style="border-collapse:collapse;">
 									<input type="submit" value="" style="border:0;width:0;height:0;margin:0;padding:0;visibility:hidden;float:left;"/>
 										<tr>
 											<td><div class="'.$previous_year_class.' c_pointer __'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_top_calendar" '.$this->hover_out_lib(73,73).' onclick="'.$previous_year_click.'"></div></td>
@@ -2136,10 +2137,9 @@
 
 			$calendar .= '</table>';
 			$calendar .= '<div class="__'.$this->matchcode['__id_theme'][0].'_calendar_footer">
-							<table>
+							<table width=100%>
 								<tr class="lisha_calendar">
-									<td class="lisha_calendar"><div style="width:130px;font-family: arial, sans-serif;font-size: 11px;overflow: hidden;height:15px;">'.$_SESSION[$this->c_ssid]['lisha']['lib'][$day_of_date+92].' '.$actual_day.' '.$_SESSION[$this->c_ssid]['lisha']['lib'][$actual_month+80].' '.$actual_year.'</div></td>
-									<td class="lisha_calendar"><div class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_cancel hover" '.$this->hover_out_lib(32,32).' style="float:right;margin-right:5px;" onclick="lisha_close_calendar(\''.$this->c_id.'\')"></div></td>
+									<td class="lisha_calendar"><div style="width:100%;font-family: arial, sans-serif;font-size: 11px;overflow: hidden;height:15px;">'.$_SESSION[$this->c_ssid]['lisha']['lib'][$day_of_date+92].' '.$actual_day.' '.$_SESSION[$this->c_ssid]['lisha']['lib'][$actual_month+80].' '.$actual_year.'</div></td>
 								</tr>
 							</table>
 						</div>';

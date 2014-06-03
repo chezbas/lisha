@@ -4860,6 +4860,8 @@
 								AND `".__LISHA_TABLE_INTERNAL_FILTER__."`.`name` = '".$this->c_columns[$p_column]["sql_as"]."'
 						  ";
 
+			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_parent($this->c_id,$p_column);
+
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__main_query',$adv_filter_query_in_single);
 
 			$_SESSION[$this->c_ssid]['lisha'][$id_child]->define_attribute('__title',$this->lib(131));
@@ -4947,7 +4949,6 @@
 						<div style="float:right;">
 							<table style="margin:0;padding:0;border-collapse:collapse;">
 								<tr>
-								<td style="margin:0;padding:0;"><div onclick="lisha_child_cancel(\''.$this->c_id.'\','.$p_column.');" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_cancel hover" '.$this->hover_out_lib(45,45,'_child').' style="margin-right:5px;"></div></td>
 								<td style="margin:0;padding:0;"><div id="'.$this->c_id.'_child_valide" onclick="lisha_child_list_column_ok(\''.$this->c_id.'\');" class="__'.$this->matchcode['__id_theme'][0].'_ico __'.$this->matchcode['__id_theme'][0].'_ico_valide hover" '.$this->hover_out_lib(121,121,'_child').' style="margin-right:5px;"></div></td>
 								</tr>
 							</table>

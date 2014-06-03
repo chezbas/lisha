@@ -162,5 +162,6 @@
 	"160" : "L'aide utilisateur est désactivée<br>Ceci implique que l'aide contextuelle est désactivée également.",
 	"161" : "Edition directe des cellules possible",
 	"162" : "Edition directe des cellules bloquée",
-	"163" : "Fermer cette fenêtre"
+	"163" : "Fermer cette fenêtre",
+	"164" : "Fermer le calendrier"
 }
