@@ -230,7 +230,7 @@ function lisha_display_internal_lis(lisha_id,lisha_type,column,ajax_return)
 				var pos = lisha_getPosition('th_menu_'+column+'__'+lisha_id);
 
 				var pos_th = document.getElementById('th_menu_'+column+'__'+lisha_id).offsetLeft - document.getElementById('liste_'+lisha_id).scrollLeft;
-				document.getElementById('internal_lisha_'+lisha_id).style.left =  pos_th-5+'px';
+				document.getElementById('internal_lisha_'+lisha_id).style.left =  pos_th-4+'px';
 
 				// Back to default focued column : SRX_DEFAULT_FOCUS_COLUMN_CHILD
 				var my_default_focus_column = eval('lisha.'+lisha_id+'_child.default_input_focus');
@@ -257,18 +257,19 @@ function lisha_display_internal_lis(lisha_id,lisha_type,column,ajax_return)
 				}
 				//==================================================================
 
-				var pos_item = FindXY(document.getElementById('th_1_c'+column+'_'+lisha_id),lisha_id);
 
 				// Compute sub lisha real top position
 				var myid = 'th_menu_'+column+'__'+lisha_id;
-				document.getElementById('internal_lisha_'+lisha_id).style.top = document.getElementById(myid).style.top+'px';
+				var pos_item = FindXY(document.getElementById(myid),lisha_id);
+
+				document.getElementById('internal_lisha_'+lisha_id).style.top = (pos_item.y+22)+'px';
 
 				eval('lisha.'+lisha_id+'.menu_left = '+document.getElementById('internal_lisha_'+lisha_id).offsetLeft+';');
 				size_table(lisha_id+'_child');
 
 				// Browser bug, force refresh sub lisha
 				lisha_reset(lisha_id+'_child');
-			} 
+			}
 			catch(e) 
 			{
 				lisha_display_error(lisha_id,e);
