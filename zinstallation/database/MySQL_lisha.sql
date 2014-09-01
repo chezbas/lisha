@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.37, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.5.38, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: lisha
 -- ------------------------------------------------------
--- Server version	5.5.37-0+wheezy1-log
+-- Server version	5.5.38-0+wheezy1-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -667,4 +667,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-08 22:24:13
+-- Dump completed on 2014-09-01 21:39:55

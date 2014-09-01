@@ -7,7 +7,7 @@
 	//==================================================================
 	define("__LISHA_DATABASE_HOST__","localhost");							// Host			
 	define("__LISHA_DATABASE_SCHEMA__","lisha");							// Schema
-	define("__LISHA_DATABASE_USER__","adminl");								// user
+	define("__LISHA_DATABASE_USER__", "adminl");								// user
 	define("__LISHA_DATABASE_PASSWORD__","demo");							// password
 	//==================================================================
 
