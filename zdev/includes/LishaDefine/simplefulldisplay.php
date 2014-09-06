@@ -155,7 +155,7 @@
 										".$_SESSION[$ssid]['lisha']['configuration'][10]."
 												`transaction2` TRANS2
 										WHERE 1 = 1
-												AND TRANS2.`mode` = '||TAGLOV_mode**mode||'
+												AND TRANS2.`mode` = '||TAGLOV_mode**TRANS.`mode`||'
 												",
 										'Title of description',
 										'TRANS2.`text`',
