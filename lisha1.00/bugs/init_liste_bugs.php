@@ -118,19 +118,19 @@
 
 		$obj_lisha_bug->define_lov("	SELECT
 											`CLAS`.`id` AS 'ID',
-											`TEX`.`text` AS 'Libelle',
+											`TEXD`.`text` AS 'Libelle',
 											`CLAS`.`order` AS 'ord'
 										".$_SESSION[$ssid]['lisha']['configuration'][10]."
-											`".__LISHA_TABLE_EXTRA_TICK_CLAS__."` `CLAS`, `bugstexts` `TEX`
+											`".__LISHA_TABLE_EXTRA_TICK_CLAS__."` `CLAS`, `bugstexts` `TEXD`
 										WHERE 1 = 1
-											AND `TEX`.`id` = `CLAS`.`id`
-											AND `TEX`.`id_lang` = '".$_GET['lng']."'
+											AND `TEXD`.`id` = `CLAS`.`id`
+											AND `TEXD`.`id_lang` = '".$_GET['lng']."'
 											AND `CLAS`.`class` = 'business'",
 									$_SESSION[$ssid]['lisha']['page_text'][17]['TX'],
 									'`CLAS`.`id`',
 									'ID'
 								   );
-		$obj_lisha_bug->define_column_lov('`TEX`.`text`','Libelle',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_column_lov('`TEXD`.`text`','Libelle',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_bug->define_column_lov('`CLAS`.`order`','ord',$_SESSION[$ssid]['lisha']['page_text'][18]['TX'],__TEXT__,__WRAP__,__LEFT__,__PERCENT__,__DISPLAY__,true);
 		$obj_lisha_bug->define_column_lov('`CLAS`.`id`','ID',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_bug->define_column_lov_order('ord',__ASC__);
@@ -139,23 +139,8 @@
 		//==================================================================
 		// define column : Theme
 		//==================================================================
-		$obj_lisha_bug->define_column('`'.__LISHA_TABLE_EXTRA_TICK__.'`.`Type`','type',$_SESSION[$ssid]['lisha']['page_text'][3]['TX'],__TEXT__,__WRAP__,__LEFT__);
-		$obj_lisha_bug->define_attribute('__column_input_check_update', __REQUIRED__,'type');
-
-		$obj_lisha_bug->define_lov("	SELECT
-											DISTINCT
-											`BUG`.`Type` AS 'Type',
-											MAX(`BUG`.`Last_mod`) AS 'Lastmod'
-										".$_SESSION[$ssid]['lisha']['configuration'][10]."
-											`".__LISHA_TABLE_EXTRA_TICK__."` `BUG`
-										GROUP BY `Type`",
-									$_SESSION[$ssid]['lisha']['page_text'][19]['TX'],
-									'`BUG`.`Type`',
-									'Type'
-								   );
-		$obj_lisha_bug->define_column_lov('`BUG`.`Type`','Type',$_SESSION[$ssid]['lisha']['page_text'][3]['TX'],__TEXT__,__WRAP__,__LEFT__,__PERCENT__,__DISPLAY__,true);
-		$obj_lisha_bug->define_column_lov('MAX(`BUG`.`Last_mod`)','Lastmod',$_SESSION[$ssid]['lisha']['page_text'][12]['TX'],__TEXT__,__WRAP__,__LEFT__);
-		$obj_lisha_bug->define_column_lov_order('Lastmod',__DESC__);
+		$obj_lisha_bug->define_column('`'.__LISHA_TABLE_EXTRA_TICK__.'`.`Type`','Type',$_SESSION[$ssid]['lisha']['page_text'][3]['TX'],__TEXT__,__WRAP__,__LEFT__);
+		$obj_lisha_bug->define_attribute('__column_input_check_update', __REQUIRED__,'Type');
 		//==================================================================
 
 		//==================================================================
@@ -165,19 +150,19 @@
 
 		$obj_lisha_bug->define_lov("	SELECT
 											CLAS.`id` AS `ID`,
-											TEX.`text` AS `Libelle`,
+											TEXC.`text` AS `Libelle`,
 											CLAS.`order` AS `ord`
 										".$_SESSION[$ssid]['lisha']['configuration'][10]."
-											`".__LISHA_TABLE_EXTRA_TICK_CLAS__."` CLAS, `bugstexts` TEX
+											`".__LISHA_TABLE_EXTRA_TICK_CLAS__."` CLAS, `bugstexts` TEXC
 										WHERE 1 = 1
-											AND TEX.`id` = CLAS.`id`
-											AND TEX.`id_lang` = '".$_GET['lng']."'
+											AND TEXC.`id` = CLAS.`id`
+											AND TEXC.`id_lang` = '".$_GET['lng']."'
 											AND CLAS.`class` = 'class'",
 									$_SESSION[$ssid]['lisha']['page_text'][17]['TX'],
 									'CLAS.`id`',
 									'ID'
 								   );
-		$obj_lisha_bug->define_column_lov('TEX.`text`','Libelle',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__TEXT__,__WRAP__,__LEFT__,__PERCENT__,__DISPLAY__,true);
+		$obj_lisha_bug->define_column_lov('TEXC.`text`','Libelle',$_SESSION[$ssid]['lisha']['page_text'][8]['TX'],__TEXT__,__WRAP__,__LEFT__,__PERCENT__,__DISPLAY__,true);
 		$obj_lisha_bug->define_column_lov('CLAS.`order`','ord',$_SESSION[$ssid]['lisha']['page_text'][18]['TX'],__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_bug->define_column_lov('CLAS.`id`','ID','Iden',__TEXT__,__WRAP__,__LEFT__);
 		$obj_lisha_bug->define_column_lov_order('ord',__ASC__);

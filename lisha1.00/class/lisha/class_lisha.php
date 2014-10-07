@@ -2913,13 +2913,22 @@ class lisha extends class_sgbd
 				$j = 0;
 				foreach ($value as $key => $value_key)
 				{
+					// found root column name
+					foreach($this->c_columns as $val_col)
+					{
+						if($val_col['sql_as'] == $key)
+						{
+							$my_key = $val_col['before_as'];
+							break;
+						}
+					}
 					if($j == 0)
 					{
-						$only_selected_lines .= $this->get_quote_col($this->matchcode['__update_table_name'][0]).'.`'.$key.'` = "'.$value_key.'"';
+						$only_selected_lines .= $my_key.' = "'.$value_key.'"';
 					}
 					else
 					{
-						$only_selected_lines .= ' AND '.$this->get_quote_col($this->matchcode['__update_table_name'][0]).'.`'.$key.'` = "'.$value_key.'"';
+						$only_selected_lines .= ' AND '.$my_key.' = "'.$value_key.'"';
 					}
 
 					$j = $j + 1;
@@ -3020,11 +3029,6 @@ class lisha extends class_sgbd
 		$k=0;
 		while($row = $this->rds_fetch_array($this->resultat))
 		{
-			//session_name($this->c_ssid);
-			//session_start();
-			//$_SESSION[$this->c_ssid]['lisha']['myexport'] = $_SESSION[$this->c_ssid]['lisha']['myexport'] + 1;
-			//session_write_close();
-
 			$j=0; // Displayed column
 			$i=0;
 			$export = '';
@@ -3041,11 +3045,11 @@ class lisha extends class_sgbd
 				if(!isset($exclude_column[$i]))
 				{
 					$export .= '"'.str_replace('"','""',html_entity_decode($valeur,ENT_QUOTES,"UTF-8")).'";';
-					$j = $j + 1;
 					if($j==$max_column)
 					{
 						break;
 					}
+					$j = $j + 1;
 				}
 				$i = $i + 1;
 			}
@@ -4170,7 +4174,7 @@ class lisha extends class_sgbd
 				}
 
 				//operator_build_query_condition
-				$sql_condition_quick_search = $this->operator_build_query_condition($column,$this->c_columns[$column],$txt,'lov');
+				$sql_condition_quick_search = $this->operator_build_query_condition($column,$this->c_columns[$column],$txt,'no');
 
 				if(isset($this->c_columns[$column]['lov']['taglov_possible']) || !isset($this->c_columns[$column]['lov']['taglov']))
 				{
@@ -4194,7 +4198,8 @@ class lisha extends class_sgbd
 					// Few first rows found
 					//==================================================================
 					$query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-					$sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).$sql_condition_quick_search;
+					//$sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).$sql_condition_quick_search;
+					$sql =  'SELECT DISTINCT '.$this->c_columns[$column]['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).$sql_condition_quick_search;
 					$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 					//==================================================================
 				}
@@ -4355,14 +4360,13 @@ class lisha extends class_sgbd
 	 * Build sql part on condition with setup operator
 	 *
 	 * @p_column_id			: Id column identifier
-	 * @p_current_column 	: Whole Column array involved
+	 * @p_current_column 	: [Array] pointer on current column fields
 	 * @p_input_text	    : Input string in input head column
 	 * @p_lov            	: false means main before_as field, lov or lov_return
 	====================================================================*/
 	private function operator_build_query_condition($p_column_id,$p_current_column,$p_input_text,$p_lov = 'no')
 	{
 		$sql_filter = "";
-
 		//==================================================================
 		// localization decimal symbol
 		//==================================================================
