@@ -106,6 +106,7 @@
 		//==================================================================
 		$obj_lisha_tran->define_column("`transaction`.`description`",'description','⏩ ♌',__BBCODE__,__WRAP__,__LEFT__);
 		$obj_lisha_tran->define_attribute('__column_input_check_update', __REQUIRED__,'description');
+		$obj_lisha_tran->define_attribute('__column_display_mode', __HIDE__,'description');
 		//==================================================================
 
 		//==================================================================

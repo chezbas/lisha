@@ -2,6 +2,7 @@
 	define("__R__",true);											// Readonly
 	define("__RW__",false);											// Read & Write
 	define("__TEXT__","text");										// text
+    define("__RAW__","raw");										// Raw : no translation or conversion
 	define("__BBCODE__","bbcode");									// bbcode
 	define("__DATE__","date");										// date
 	define("__CHECKBOX__","checkbox");								// checkbox type

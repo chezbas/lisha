@@ -16,13 +16,13 @@
 
 .TreeView_dev_overflow
 {
-	float: left;
+	position: absolute;
 	display: block;
 	overflow:auto;
-	top: 10%;
+	top: 24px;
 	left: 0;
-    height: 90%;  
-    width: 100%;  
+	bottom: 0;
+	width: 100%;
 }
 
 /*========== Waiting Ajax ============*/

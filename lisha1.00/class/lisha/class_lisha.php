@@ -4174,7 +4174,7 @@ class lisha extends class_sgbd
 				}
 
 				//operator_build_query_condition
-				$sql_condition_quick_search = $this->operator_build_query_condition($column,$this->c_columns[$column],$txt,'no');
+				$sql_condition_quick_search = $this->operator_build_query_condition($column,$this->c_columns[$column],$txt,'lov');
 
 				if(isset($this->c_columns[$column]['lov']['taglov_possible']) || !isset($this->c_columns[$column]['lov']['taglov']))
 				{
@@ -4198,8 +4198,7 @@ class lisha extends class_sgbd
 					// Few first rows found
 					//==================================================================
 					$query_final_pos = strripos($this->c_columns[$column]['lov']['sql'], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
-					//$sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).$sql_condition_quick_search;
-					$sql =  'SELECT DISTINCT '.$this->c_columns[$column]['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).$sql_condition_quick_search;
+					$sql =  'SELECT DISTINCT '.$this->c_columns[$column]['lov']['before_as'].'  AS '.$this->get_quote_col($this->c_columns[$column]['sql_as']).substr($this->c_columns[$column]['lov']['sql'],$query_final_pos).$sql_condition_quick_search;
 					$this->exec_sql($sql,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
 					//==================================================================
 				}

@@ -1644,16 +1644,18 @@
 		====================================================================*/
 		private function get_data_in_html($p_column,$p_data)
 		{
-			// Wrong expected results if string like <a target="blank"...
-			// Do not have HTML in your field
-			$p_data = str_replace(' ','&nbsp;',$p_data);
-
 			switch($this->c_columns[$p_column]['data_type'])
 			{
 				case __BBCODE__:
+                    $p_data = str_replace(' ','&nbsp;',$p_data);
 					return $this->convertBBCodetoHTML($p_data);
 					break;
+                case __TEXT__:
+                    $p_data = str_replace(' ','&nbsp;',$p_data);
+                case __RAW__:
+                    // No transformation, no translation.. Raw data as recorded
 				default:
+                    // Undefined type means no transformation ( like __RAW__ format )
 					return $p_data;
 					break;
 			}

@@ -156,7 +156,7 @@ if(!isset($_SESSION[$ssid]['lisha']['doc']['tree']['user']))
 		<!-- ===============================================  END MSGBOX ==============================================  -->
 		<div id="ikdoc" style="width:500px;"></div><!-- SAME IN INDEX.CSS AND INDEX.JS CONFIGURATION  -->
 		<div id="gauche" style="float: left; width:30%; height:100%; display:block;"></div>
-		<div id="main_details" style="float: left;">
+		<div id="main_details" style="float: right;">
 			<div id="headdetails" class="headdetails" <?php if(!$_SESSION[$ssid]['MT']['tree']['id']['ikdoc']["edit_mode"]) echo 'onclick=\'MainTimer.add_event(1,"reduce_tool_bar()");\'';echo 'MagicTree_'.$mt_tech_id.'();';?> style="height: 0px;">
 				<?php
 				echo '<div class="welcome">'.str_replace('&1',__LISHA_APPLICATION_NAME__,$_SESSION[$ssid]['lisha']['page_text'][2]['TX']).'</div>';
