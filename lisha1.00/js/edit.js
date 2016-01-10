@@ -288,7 +288,7 @@ function input_key_manager(evt,lisha_id,line,column)
 	}
 	if(charCode == 17) { isCtrl=true; }
 
-	if(charCode == 186) // key ;
+	if(charCode == 186  || evt.keyCode == 59) // key ;
 	{
 		if(isCtrl)
 		{

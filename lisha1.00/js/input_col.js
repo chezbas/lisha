@@ -25,7 +25,7 @@ function lisha_input_keydown_pressed(evt,lisha_id,column, quick_search_mode, edi
 		isCtrl=true;
 	}
 
-	if(evt.keyCode == 186) // key ;
+	if(evt.keyCode == 186 || evt.keyCode == 59) // key ;
 	{
 		if(isCtrl)
 		{

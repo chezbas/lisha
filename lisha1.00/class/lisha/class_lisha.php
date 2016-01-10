@@ -1160,7 +1160,7 @@ class lisha extends class_sgbd
 	/**==================================================================
 	 * get_and_set_filter
 	 * Save and restore customer filter
-	 * @filter_name			: Define filter name if any
+	 * @param null $filter_name		: Define filter name if any
 	====================================================================*/
 	private function get_and_set_filter($filter_name = null)
 	{
@@ -2450,8 +2450,8 @@ class lisha extends class_sgbd
 	/**==================================================================
 	 * recover_cell method
 	 * Return content of clicked cell
-	 * @array_key 		: clicked cell json format of primary key
-	 * @column			: relative column position
+	 * @param $array_key		: clicked cell json format of primary key
+	 * @param $column			: relative column position
 	====================================================================*/
 	public function recover_cell($array_key, $column)
 	{
