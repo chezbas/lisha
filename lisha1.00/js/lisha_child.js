@@ -43,6 +43,8 @@ function lisha_child_insert_into_parent(el,parent,parent_column)
 	else
 	{
 		var valeur = document.getElementById(el).textContent;
+		valeur = valeur.replace(/[\xA0]/g,' '); // TextContent return issue
+
 		if(eval('lisha.'+parent+'.columns.c'+parent_column+'.data_type') == __CHECKBOX__)
 		{
 			if(lisha_get_innerHTML(el).search("checked") == -1)

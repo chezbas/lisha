@@ -174,9 +174,9 @@
 											`main`.`A` AS `mode`
 											".$_SESSION[$ssid]['lisha']['configuration'][10]."
 											(
-												SELECT 0 AS `A`
+												SELECT '0 0' AS `A`
 												UNION
-												SELECT 1 AS `A`
+												SELECT '1 1' AS `A`
 												UNION
 												SELECT 2 AS `A`
 											 ) `main`

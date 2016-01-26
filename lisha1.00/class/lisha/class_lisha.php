@@ -3382,6 +3382,7 @@ class lisha extends class_sgbd
 		// Data control
 		//==================================================================
 		$check = $this->update_data_check($tab_val_col);
+
 		//==================================================================
 
 		if($check[0] == 'true')
