@@ -173,7 +173,6 @@ function lisha_child_cancel(parent,parent_column)
 function lisha_display_internal_lis(lisha_id,lisha_type,column,ajax_return)
 {
 	var is_lovable = eval('lisha.'+lisha_id+'.columns.c'+column+'.is_lovable');
-
 	if(is_lovable != undefined && is_lovable == true)
 	{
 		if(typeof(ajax_return) == 'undefined')
