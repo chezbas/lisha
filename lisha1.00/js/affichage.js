@@ -1284,29 +1284,37 @@ function lisha_toggle_header_menu(id,column)
 		//==================================================================
 		var obj = new lisha_menu(id);
 
-		// Calendar menu
+		// Calendar contextual menu
 		if(eval('lisha.'+id+'.columns.c'+column+'.data_type') == 'date')
 		{
 			obj.add_line(lis_lib[66],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_calendar','lisha_generate_calendar(\''+id+'\','+column+');',true,undefined,145,31);
 			obj.add_sep();
 		}
 
-		// Order
-		obj.add_line(lis_lib[39],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend',null,true,obj_order,144,79);
+		// Display Sort menu only in Display mode
+		if(eval('lisha.'+id+'.edit_mode') == '__DISPLAY_MODE__')
+		{
+			obj.add_line(lis_lib[39],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-ascend',null,true,obj_order,144,79);
+		}
 
-		// Alignment
-		obj.add_line(lis_lib[46],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_left',null,true,obj_alignment,146,76);
-
+		// Display Alignment menu only in Display mode
+		if(eval('lisha.'+id+'.edit_mode') == '__DISPLAY_MODE__')
+		{
+			// Alignment
+			obj.add_line(lis_lib[46],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_left',null,true,obj_alignment,146,76);
+		}
 		// Advanced column filter menu
 		if(eval('lisha.'+id+'.mode') != __CMOD__)
 		{
-			obj.add_sep();
-			// Search operator
-			obj.add_line(lis_lib[41],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_advanced_search','column_advanced_filter(\''+id+'\','+column+');',true,undefined,41,1);
+			if(eval('lisha.'+id+'.edit_mode') == '__DISPLAY_MODE__')
+			{
+				obj.add_sep();
+				// Search operator
+				obj.add_line(lis_lib[41], '__' + eval('lisha.' + id + '.theme') + '_ico __' + eval('lisha.' + id + '.theme') + '_ico_advanced_search', 'column_advanced_filter(\'' + id + '\',' + column + ');', true, undefined, 41, 1);
 
-			obj.add_line(lis_lib[34],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_filter',null,true,obj_search_mode,34,22);
-			obj.add_sep();
-
+				obj.add_line(lis_lib[34], '__' + eval('lisha.' + id + '.theme') + '_ico __' + eval('lisha.' + id + '.theme') + '_ico_filter', null, true, obj_search_mode, 34, 22);
+				obj.add_sep();
+			}
 			var is_lovable = eval('lisha.'+id+'.columns.c'+column+'.is_lovable');
 
 			if(is_lovable != undefined && is_lovable == true)
@@ -1327,16 +1335,18 @@ function lisha_toggle_header_menu(id,column)
 				obj.add_line(eval('lisha.'+id+'.columns.c'+column+'.lov_title'),'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_values','lisha_display_internal_lis(\''+id+'\',__POSSIBLE_VALUES__,'+column+');',line_enable);
 			}
 
-			obj.add_sep();
-			// Hide column
-			// Do not display if this column is default focus column
-			if(eval('lisha.'+id+'.c_col_return_id') != column && column != eval('lisha.'+id+'.default_input_focus'))
+			// Hide column contextual menu option
+			if(eval('lisha.'+id+'.edit_mode') == '__DISPLAY_MODE__')
 			{
-				obj.add_line(lis_lib[20],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-hide','lisha_toggle_column(\''+id+'\','+column+');',true,undefined,20,29);
-			}
-			else
-			{
-				obj.add_line(lis_lib[20],'__'+eval('lisha.'+id+'.theme')+'_ico __'+eval('lisha.'+id+'.theme')+'_ico_sort-hide','lisha_toggle_column(\''+id+'\','+column+');',false,undefined,125,29);
+				obj.add_sep();
+				if (eval('lisha.' + id + '.c_col_return_id') != column && column != eval('lisha.' + id + '.default_input_focus')) {
+					obj.add_line(lis_lib[20], '__' + eval('lisha.' + id + '.theme') + '_ico __' + eval('lisha.' + id + '.theme') + '_ico_sort-hide', 'lisha_toggle_column(\'' + id + '\',' + column + ');', true, undefined, 20, 29);
+				}
+				else
+				{
+					// Display in grey contextual hide column option because this is the focused column
+					obj.add_line(lis_lib[20], '__' + eval('lisha.' + id + '.theme') + '_ico __' + eval('lisha.' + id + '.theme') + '_ico_sort-hide', 'lisha_toggle_column(\'' + id + '\',' + column + ');', false, undefined, 125, 29);
+				}
 			}
 		}
 		else
@@ -1366,6 +1376,7 @@ function lisha_toggle_header_menu(id,column)
 			}
 			*/
 		}
+
 		//==================================================================
 
 		// Display the menu
