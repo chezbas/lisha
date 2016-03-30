@@ -2329,16 +2329,20 @@ class lisha extends class_sgbd
 		// Defined all user php constants in javascript space
 		//==================================================================
 		$defined_user_constants = get_defined_constants(true);
-		echo '<script type="text/javascript">
-			';
+		echo '<script type="text/javascript">';
 		foreach($defined_user_constants['user'] as $key => $value)
 		{
-			echo "var ".$key." = '".$value."';
+			// Security issue !!!!!! Remove database information and access from javascript
+			if	(
+				strpos($key, 'ACCESS') == false
+				and strpos($key, 'DATABASE') == false
+				)
+			{
+				echo "var ".$key." = '".$value."';
 				";
+			}
 		}
-		echo "
-			</script>
-			";
+		echo "</script>";
 		//==================================================================
 
 		echo '
