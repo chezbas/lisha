@@ -27,6 +27,7 @@ function edit_cell(evt,line,column,lisha_id, column_format, ajax_return)
 			}
 
 			var array_primary_key= JSON.stringify(eval('lisha.'+lisha_id+'.lines.L'+line+'.key'));
+
 			//==================================================================
 			// Setup Ajax configuration
 			//==================================================================
@@ -36,7 +37,7 @@ function edit_cell(evt,line,column,lisha_id, column_format, ajax_return)
 			conf['delai_tentative'] = 15000;
 			conf['max_tentative'] = 4;
 			conf['type_retour'] = false;		// ReponseText
-			conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=22&arraykey='+array_primary_key+'&column='+column;
+			conf['param'] = 'lisha_id='+lisha_id+'&ssid='+eval('lisha.'+lisha_id+'.ssid')+'&action=22&arraykey='+encodeURIComponent(array_primary_key)+'&column='+column;
 			conf['fonction_a_executer_reponse'] = 'edit_cell';
 			conf['param_fonction_a_executer_reponse'] = "'"+evt+"',"+line+",'"+column+"','"+lisha_id+"','"+column_format+"'";
 
