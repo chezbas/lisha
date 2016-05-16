@@ -9,7 +9,6 @@
 			break;
 		case 2:
 			// Refresh page
-			// if $_POST['qtt'] != 'NA' then that means lines by page changed
 			echo $_SESSION[$ssid]['lisha'][$lisha_id]->refresh_page($_POST['selected_lines'],$_POST['qtt']);
 			break;
 		case 3:

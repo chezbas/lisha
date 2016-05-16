@@ -1053,6 +1053,7 @@ class lisha extends class_sgbd
 		$xml .= "<json_line>".$this->protect_xml($json_line)."</json_line>";
 		$xml .= "<json>".$this->protect_xml($json)."</json>";
 		$xml .= "</lisha>";
+
 		echo $xml;
 		//==================================================================
 	}
@@ -1439,6 +1440,7 @@ class lisha extends class_sgbd
 		// Get Column filter
 		//==================================================================
 		$sql_filter = '';
+
 		foreach($this->c_columns AS $column_value)
 		{
 			if(isset($column_value['filter']))
@@ -2378,9 +2380,9 @@ class lisha extends class_sgbd
 
 	/**==================================================================
 	 * get_id_column
-	 * @column_name : column name
-	 * return column id or null if not found
-	====================================================================*/
+	 * @param $column_name
+	 * @return column id or null if not found
+	 */
 	private function get_id_column($column_name)
 	{
 		if(!is_null($column_name) && isset($this->c_columns))
@@ -2459,6 +2461,7 @@ class lisha extends class_sgbd
 	====================================================================*/
 	public function recover_cell($array_key, $column)
 	{
+
 		$array_key = json_decode($array_key);
 
 		$string_where = '';
@@ -2515,6 +2518,7 @@ class lisha extends class_sgbd
 		$query_final_pos = strripos($this->matchcode['__main_query'][0], $_SESSION[$this->c_ssid]['lisha']['configuration'][10]);
 		//$sql =  'SELECT COUNT( DISTINCT '.$this->c_columns[$column]['before_as'].' ) AS `total` '.substr($this->matchcode['__main_query'][0],$query_final_pos).' AND '.$this->c_columns[$column]['before_as'].' '.$this->get_like($this->c_columns[$column]['search_mode'].$this->protect_sql($this->escape_special_char($txt),$this->link).$this->c_columns[$column]['search_mode']).' '.$sql_filter;
 		$prepared_query = 'SELECT DISTINCT '.$temp_columns.substr($this->matchcode['__main_query'][0],$query_final_pos).$string_where;
+
 
 		$p_result_header = $this->exec_sql($prepared_query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link,false);
 
@@ -5182,19 +5186,10 @@ class lisha extends class_sgbd
 
 			// Display feature : low
 			// Search mode : low1
-
-			if($value["search_mode"] == '')
-			{
-				$search_mode = 0;
-			}
-			else
-			{
-				$search_mode = 1;
-			}
 			$query = 'INSERT
 								INTO `'.__LISHA_TABLE_INTERNAL__.'`
 								(`id`, `name`, `display`, `low`, `low1`, `ordre`)
-								VALUES ("'.$this->c_ssid.$this->c_id.'", "'.$value["sql_as"].'", "'.$value["name"].'", "'.$value["display"].'", "'.$search_mode.'", "'.$key.'")
+								VALUES ("'.$this->c_ssid.$this->c_id.'", "'.$value["sql_as"].'", "'.$value["name"].'", "'.$value["display"].'", "'.$value["search_mode"].'", "'.$key.'")
 						 ';
 
 			$this->exec_sql($query,__LINE__,__FILE__,__FUNCTION__,__CLASS__,$this->link);
@@ -5476,14 +5471,7 @@ class lisha extends class_sgbd
 						$this->c_columns[$clef]['display'] = $row['low'];
 
 						// Record search mode
-						if($row['low1'] == '1')
-						{
-							$this->c_columns[$clef]['search_mode'] = '%';
-						}
-						else
-						{
-							$this->c_columns[$clef]['search_mode'] = '';
-						}
+						$this->c_columns[$clef]['search_mode'] = $row['low1'];
 						break;
 					}
 				}

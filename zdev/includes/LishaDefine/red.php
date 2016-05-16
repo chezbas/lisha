@@ -205,7 +205,7 @@
 	// Table columns primary key
 	// Caution : Can't change key column name from origine query column name
 	// It's not required to declare column key with define_column method
-	$obj_lisha_tran->define_key(Array('index'));
+	$obj_lisha_tran->define_key(Array('index','description'));
 
 	//==================================================================
 	// Define extra events actions 
