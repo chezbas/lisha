@@ -1,5 +1,5 @@
 <?php
-	require('header_ajax.php');
+	require('header_ajax.php'); //FBE
 
 	switch($_POST['action'])
 	{
