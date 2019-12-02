@@ -1,5 +1,5 @@
 <?php
-	require('header_ajax.php');
+	require('header_ajax.php'); // SRO
 
 	switch($_POST['action'])
 	{
